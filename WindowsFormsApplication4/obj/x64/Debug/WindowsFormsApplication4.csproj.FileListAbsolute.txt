@@ -1,0 +1,1 @@
+C:\Users\Adrian\documents\visual studio 2012\Projects\WindowsFormsApplication4\WindowsFormsApplication4\obj\x64\Debug\Interop.CAMCTRLLib.dll

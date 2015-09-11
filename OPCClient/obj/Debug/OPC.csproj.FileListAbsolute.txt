@@ -1,0 +1,8 @@
+C:\Users\Adrian\documents\visual studio 2012\Projects\WindowsFormsApplication4\OPCClient\bin\Debug\OPCClient.dll
+C:\Users\Adrian\documents\visual studio 2012\Projects\WindowsFormsApplication4\OPCClient\bin\Debug\OPCClient.pdb
+C:\Users\Adrian\documents\visual studio 2012\Projects\WindowsFormsApplication4\OPCClient\bin\Debug\Interop.OPCAutomation.dll
+C:\Users\Adrian\documents\visual studio 2012\Projects\WindowsFormsApplication4\OPCClient\bin\Debug\myOPC.dll
+C:\Users\Adrian\documents\visual studio 2012\Projects\WindowsFormsApplication4\OPCClient\bin\Debug\myOPC.xml
+C:\Users\Adrian\documents\visual studio 2012\Projects\WindowsFormsApplication4\OPCClient\obj\Debug\OPC.csprojResolveAssemblyReference.cache
+C:\Users\Adrian\documents\visual studio 2012\Projects\WindowsFormsApplication4\OPCClient\obj\Debug\OPCClient.dll
+C:\Users\Adrian\documents\visual studio 2012\Projects\WindowsFormsApplication4\OPCClient\obj\Debug\OPCClient.pdb
