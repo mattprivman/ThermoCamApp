@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ThermoVision;
+using ThermoVision.Models;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -14,6 +14,8 @@ namespace WindowsFormsApplication4
         public static void Start()
         {
             bool atras = false;
+
+            System.IO.File.Delete("Data.ocl");
 
             do
             {
@@ -38,7 +40,7 @@ namespace WindowsFormsApplication4
                     cns.Dispose();
                     cc.ShowDialog();
 
-                    //Helpers.serializeThermoCams(cc.getThermoCams(), "Data.ocl");            //SERIALIZE THERMOCAM OBJECTS
+                    Helpers.serializeThermoCams(cc.getThermoCams(), "Data.ocl");            //SERIALIZE THERMOCAM OBJECTS
 
                     if (cc.Salir == true)
                     {
@@ -48,6 +50,8 @@ namespace WindowsFormsApplication4
 
                     atras = cc.Atras;
                     cc.Dispose();
+
+                    _ThermoCams = Helpers.deserializeThermoCams("Data.ocl");
                 }
                 #endregion    
 
@@ -63,8 +67,8 @@ namespace WindowsFormsApplication4
                     return;
                 }
 
-                //atras = ccWith.Atras;
-                //ccWith.Dispose();
+                atras = ccWith.Atras;
+                ccWith.Dispose();
 
 
             } while (atras == true);

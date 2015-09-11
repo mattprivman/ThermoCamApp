@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using ThermoVision.Tipos;
+using ThermoVision.Models;
 
 namespace ThermoVision.CustomControls
 {
     public partial class CamConfigControl : UserControl
     {
-        public ThermoVision.ThermoCam camara;
+        public ThermoCam camara;
 
         Bitmap      bmp;
         Bitmap      bmpModified;

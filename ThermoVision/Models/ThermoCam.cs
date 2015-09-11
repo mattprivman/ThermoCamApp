@@ -10,7 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using ThermoVision.Helpers;
 using ThermoVision.Tipos;
 
-namespace ThermoVision
+namespace ThermoVision.Models
 {
     [Serializable()]
     public class ThermoCam : ISerializable
@@ -532,10 +532,17 @@ namespace ThermoVision
 
                     //////////////////////////////////////////////// NO PERTENECE A LA ZONA ÚTIL O NO ESTA EL MODO DE CONFIGURACIÓN
                     // Escalar valores a escala 255- 0
-                    this.pixel = ((this.Val - this.minZonaNoUtil) * 255) / this.rangeZonaNoUtil;
+                    try
+                    {
+                        this.pixel = ((this.Val - this.minZonaNoUtil) * 255) / this.rangeZonaNoUtil;
 
-                    // Dibujar pixel
-                    this.bmp.SetPixel(i, j, System.Drawing.Color.FromArgb((int)pixel, (int)pixel, (int)pixel));
+                        // Dibujar pixel
+                        this.bmp.SetPixel(i, j, System.Drawing.Color.FromArgb((int)pixel, (int)pixel, (int)pixel));
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.ToString();
+                    }
                 }
             }
 

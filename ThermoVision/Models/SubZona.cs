@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace ThermoVision.Tipos
+namespace ThermoVision.Models
 {
     [Serializable]
     public class SubZona : ISerializable

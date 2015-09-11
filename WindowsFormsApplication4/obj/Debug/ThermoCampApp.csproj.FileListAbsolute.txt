@@ -36,3 +36,20 @@ C:\Users\Adrian\Documents\Visual Studio 2012\Projects\ThermoCamApp\WindowsFormsA
 C:\Users\Adrian\Documents\Visual Studio 2012\Projects\ThermoCamApp\WindowsFormsApplication4\bin\Debug\Interop.CAMCTRLLib.dll
 C:\Users\Adrian\Documents\Visual Studio 2012\Projects\ThermoCamApp\WindowsFormsApplication4\bin\Debug\OPCClient.pdb
 C:\Users\Adrian\Documents\Visual Studio 2012\Projects\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoVision.pdb
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.exe.config
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.exe
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.pdb
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.exe
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.pdb
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\OPCClient.dll
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoVision.dll
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\Interop.OPCAutomation.dll
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\AxInterop.CAMCTRLLib.dll
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\Interop.CAMCTRLLib.dll
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\OPCClient.pdb
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoVision.pdb
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCampApp.csprojResolveAssemblyReference.cache
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.Camaras.CameraNumberSelection.resources
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.Camaras.CamerasConfiguration.resources
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Properties.Resources.resources
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCampApp.csproj.GenerateResource.Cache

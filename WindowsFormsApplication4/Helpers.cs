@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ThermoVision;
+using ThermoVision.Models;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -34,7 +34,7 @@ namespace WindowsFormsApplication4
             Properties.Settings.Default.Save();
         }
 
-        public static void serializeThermoCams(List<ThermoCam> ThermoCams, string _file)
+        public static void serializeThermoCams(List<ThermoVision.Models.ThermoCam> ThermoCams, string _file)
         {
             try
             {

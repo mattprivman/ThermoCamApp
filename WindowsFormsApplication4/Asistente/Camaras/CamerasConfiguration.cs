@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ThermoVision;
+using ThermoVision.Models;
 using ThermoVision.CustomControls;
 using System.IO;
 using System.Runtime.Serialization;

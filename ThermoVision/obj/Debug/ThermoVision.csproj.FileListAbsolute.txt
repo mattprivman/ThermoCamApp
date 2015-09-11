@@ -18,3 +18,12 @@ C:\Users\Adrian\Documents\Visual Studio 2012\Projects\ThermoCamApp\ThermoVision\
 C:\Users\Adrian\Documents\Visual Studio 2012\Projects\ThermoCamApp\ThermoVision\bin\Debug\AxInterop.CAMCTRLLib.dll
 C:\Users\Adrian\Documents\Visual Studio 2012\Projects\ThermoCamApp\ThermoVision\obj\Debug\ThermoVision.CustomControls.CamConfigControl.resources
 C:\Users\Adrian\Documents\Visual Studio 2012\Projects\ThermoCamApp\ThermoVision\obj\Debug\ThermoVision.CustomControls.CamControl.resources
+E:\Repositories\ThermoCamApp\ThermoVision\obj\Debug\ThermoVision.csprojResolveAssemblyReference.cache
+E:\Repositories\ThermoCamApp\ThermoVision\obj\Debug\ThermoVision.CustomControls.CamConfigControl.resources
+E:\Repositories\ThermoCamApp\ThermoVision\obj\Debug\ThermoVision.CustomControls.CamControl.resources
+E:\Repositories\ThermoCamApp\ThermoVision\obj\Debug\ThermoVision.CustomControls.NumericTextBox.resources
+E:\Repositories\ThermoCamApp\ThermoVision\obj\Debug\ThermoVision.csproj.GenerateResource.Cache
+E:\Repositories\ThermoCamApp\ThermoVision\obj\Debug\ThermoVision.dll
+E:\Repositories\ThermoCamApp\ThermoVision\obj\Debug\ThermoVision.pdb
+E:\Repositories\ThermoCamApp\ThermoVision\bin\Debug\ThermoVision.dll
+E:\Repositories\ThermoCamApp\ThermoVision\bin\Debug\ThermoVision.pdb
