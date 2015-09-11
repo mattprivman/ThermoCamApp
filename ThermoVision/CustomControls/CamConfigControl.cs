@@ -527,5 +527,22 @@ namespace ThermoVision.CustomControls
                 camara.addDivision(div);
             }
         }
+
+        private void buttonAutoAdjust_Click(object sender, EventArgs e)                 
+        {
+            this.camara.autoAdjust();
+        }
+        private void buttonAutoFocus_Click(object sender, EventArgs e)                  
+        {
+            this.camara.autoFocus();
+        }
+        private void buttonInternalImageCorrection_Click(object sender, EventArgs e)    
+        {
+            this.camara.InternalImageCorrection();
+        }
+        private void buttonExternalImageCorrection_Click(object sender, EventArgs e)    
+        {
+            this.camara.ExternalImageCorrection();
+        }
     }
 }

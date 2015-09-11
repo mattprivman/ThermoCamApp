@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using ThermoVision.Tipos;
 
 namespace ThermoVision.Models
 {
@@ -23,6 +24,10 @@ namespace ThermoVision.Models
 
         int _filas;
         int _columnas;
+
+        //Matriz de temperaturas
+
+        public tempElement[,] tempMatrix;
 
         #endregion
 
@@ -76,10 +81,13 @@ namespace ThermoVision.Models
             {
                 if (value > 0)
                 {
-                    _filas = value;
+                    lock("lockRejilla")
+                    {
+                        _filas = value;
 
-                    if (ParametersChanged != null)
-                        ParametersChanged(this, null);
+                        if (ParametersChanged != null)
+                            ParametersChanged(this, null);
+                    }
                 }
             }
         }
@@ -93,10 +101,13 @@ namespace ThermoVision.Models
             {
                 if (value > 0)
                 {
-                    _columnas = value;
+                    lock ("lockRejilla")
+                    {
+                        _columnas = value;
 
-                    if (ParametersChanged != null)
-                        ParametersChanged(this, null);
+                        if (ParametersChanged != null)
+                            ParametersChanged(this, null);
+                    }
                 }
             }
         }
@@ -121,7 +132,11 @@ namespace ThermoVision.Models
 
         #region "Constructores"
 
-        public SubZona() { }
+        public SubZona() 
+        {
+            this._filas     = 1;
+            this._columnas  = 1;
+        }
 
         public SubZona(SerializationInfo info, StreamingContext ctxt)
         {

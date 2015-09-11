@@ -15,15 +15,8 @@ namespace ThermoVision.Tipos
 
     public struct tempElement
     {
-        public float maxTemp;
-        public float minTemp;
-        public float meanTemp;
-    }
-
-    public struct dataElement
-    {
-        public uint maxTemp;
-        public uint minTemp;
-        public float meanTemp;
+        public float max;
+        public float min;
+        public double mean;
     }
 }

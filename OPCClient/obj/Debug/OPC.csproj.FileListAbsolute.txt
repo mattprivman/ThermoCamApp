@@ -6,3 +6,9 @@ C:\Users\Adrian\documents\visual studio 2012\Projects\WindowsFormsApplication4\O
 C:\Users\Adrian\documents\visual studio 2012\Projects\WindowsFormsApplication4\OPCClient\obj\Debug\OPC.csprojResolveAssemblyReference.cache
 C:\Users\Adrian\documents\visual studio 2012\Projects\WindowsFormsApplication4\OPCClient\obj\Debug\OPCClient.dll
 C:\Users\Adrian\documents\visual studio 2012\Projects\WindowsFormsApplication4\OPCClient\obj\Debug\OPCClient.pdb
+E:\Repositories\ThermoCamApp\OPCClient\bin\Debug\OPCClient.dll
+E:\Repositories\ThermoCamApp\OPCClient\bin\Debug\OPCClient.pdb
+E:\Repositories\ThermoCamApp\OPCClient\bin\Debug\myOPC.xml
+E:\Repositories\ThermoCamApp\OPCClient\obj\Debug\OPC.csprojResolveAssemblyReference.cache
+E:\Repositories\ThermoCamApp\OPCClient\obj\Debug\OPCClient.dll
+E:\Repositories\ThermoCamApp\OPCClient\obj\Debug\OPCClient.pdb

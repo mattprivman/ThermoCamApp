@@ -15,7 +15,8 @@ namespace WindowsFormsApplication4
         {
             bool atras = false;
 
-            System.IO.File.Delete("Data.ocl");
+            //Borrar archivo de datos
+            //System.IO.File.Delete("Data.ocl");
 
             do
             {

@@ -234,12 +234,16 @@ namespace ThermoVision.Models
         #endregion
 
         #region "CONEXIÓN"
-        public void Conectar()    
+        public void Conectar()                  
         {
-            if(this._address != "")
-                (new Thread(new ThreadStart(_conectar))).Start();
+            if (this._address != "")
+            {
+                Thread tConectar = new Thread(new ThreadStart(_conectar));
+                tConectar.Name = "Thread Conectar";
+                tConectar.Start();
+            }
         }
-        public void Desconectar() 
+        public void Desconectar()               
         {
             try
             {
@@ -251,7 +255,7 @@ namespace ThermoVision.Models
                 procesarExcepcion(ex, "Desconectar");
             }
         }
-        public void Dispose()     
+        public void Dispose()                   
         {
             try
             {
@@ -263,6 +267,24 @@ namespace ThermoVision.Models
                 procesarExcepcion(ex, "Dispose");
             }
         }
+
+        public void autoAdjust()
+        {
+            doCameraAction(10);
+        }
+        public void autoFocus()
+        {
+            doCameraAction(12);
+        }
+        public void InternalImageCorrection()
+        {
+            doCameraAction(8);
+        }
+        public void ExternalImageCorrection()
+        {
+            doCameraAction(9);
+        }
+
         #endregion
 
         #region "SUBZONAS"
@@ -340,7 +362,7 @@ namespace ThermoVision.Models
 
         #region "Conectar"
 
-        private void _conectar()                  
+        private void _conectar()                    
         {
             try
             {
@@ -360,12 +382,24 @@ namespace ThermoVision.Models
                 procesarExcepcion(ex, "Conectar");
             }
         }
+        public short doCameraAction(short action)   
+        {
+            try
+            {
+                return this.camara.DoCameraAction(action);
+            }
+            catch (Exception ex)
+            {
+                procesarExcepcion(ex, "DoCameraAction");
+                return -1;
+            }
+        }
 
         #endregion
 
         #region "GET IMAGES"
 
-        private void getImages()                  
+        private void getImages()                    
         {
             // Generar paleta de colores para reproducir la escala RAINBOW
             this.colorPalette = ColorUtils.getColors();
@@ -376,7 +410,7 @@ namespace ThermoVision.Models
                 //try
                 //{
                     //Request Image
-                    getImage(ref this.imgData);
+                    getImage();
 
                     if (this.imgData != null)
                     {
@@ -400,7 +434,7 @@ namespace ThermoVision.Models
 
                         procesarImagen();
 
-                        (new Thread(new ThreadStart(triggerImgReceivedEvent))).Start();
+                        triggerImgReceivedEvent();
 
                     }
                 //}
@@ -417,7 +451,7 @@ namespace ThermoVision.Models
                 //}
             }
         }
-        private void getImage(ref short[,] Image) 
+        private void getImage()                     
         {
             try
             {
@@ -426,10 +460,10 @@ namespace ThermoVision.Models
                     object data = this.camara.GetImage(0);
 
                     if (data is short[,])
-                        Image = (short[,])data;
+                        this.imgData = (short[,])data;
                     else
                     {
-                        Image = null;
+                        this.imgData = null;
                         if (data is short)
                         {
                             if ((short) data == 14)     //TIMEOUT
@@ -439,17 +473,20 @@ namespace ThermoVision.Models
                                 //Subir el timeout 100 ms
                                 object actualTimeout = this.camara.GetCameraProperty(93);
 
+                                short status;
+
                                 if (actualTimeout is int)
                                 {
-                                    this.camara.SetCameraProperty(93, (int) actualTimeout + 100);
+                                    status = this.camara.SetCameraProperty(93, (int)actualTimeout + 100);
                                 }
                                 
 
                                 if (framesObject is double[])
                                 {
+                                    //CAMBIAR FRAMERATE 
                                     double[] frames = (double[])framesObject;
 
-                                    this.camara.SetCameraProperty(43, frames[0]);
+                                    status = this.camara.SetCameraProperty(43, frames[0]);
                                 }
                             }
                         }
@@ -464,7 +501,7 @@ namespace ThermoVision.Models
                 procesarExcepcion(ex, "GetImage");
             }
         }
-        private void getLutTable()                
+        private void getLutTable()                  
         {
             try
             {
@@ -484,8 +521,10 @@ namespace ThermoVision.Models
                 procesarExcepcion(ex, "GetLuTTable");
             }
         }
-        private void procesarImagen()             
+        private void procesarImagen()               
         {
+            #region "Dibujar en blanco y negro"
+
             maxZonaNoUtil = 0x0;             // Reinicializar las variables 
             minZonaNoUtil = 0xFFFF;          // para
 
@@ -545,6 +584,8 @@ namespace ThermoVision.Models
                     }
                 }
             }
+
+            #endregion
 
             #region "MODO CONFIGURACIÓN"
             if (this._configuracionMode)
@@ -631,6 +672,63 @@ namespace ThermoVision.Models
             }
             #endregion
 
+            #region "Modo funcionamiento"
+
+            //Obtener temperaturas maximas, mínima y media de cada división de cada subzona
+            lock (this.sync)                    //Bloqueo para evitar cambios en la coleccion de subzonas
+            {
+                foreach (SubZona s in this.SubZonas)
+                {
+                    lock ("lockRejilla")        //Bloqueo para evitar cambios en las rejillas
+                    {
+                        //Redimensionar matriz de temperaturas
+                        if(s.tempMatrix == null || s.tempMatrix.GetLength(0) != s.Filas || s.tempMatrix.GetLength(1) != s.Columnas)
+                            s.tempMatrix = new tempElement[s.Filas, s.Columnas];
+
+                        //Reinicializar variables
+                        for (int i = 0; i < s.Filas; i++)
+                        {
+                            for (int j = 0; j < s.Columnas; j++)
+                            {
+                                s.tempMatrix[i, j].max = this.lutTable[0]; ;
+                                s.tempMatrix[i, j].min = this.lutTable[this.lutTable.Length - 1];
+                                s.tempMatrix[i, j].mean = 0D;
+                            }
+                        }
+
+                        int Heigth = (s.Fin.Y - s.Inicio.Y);    //Altura de la subzona
+                        int Width = (s.Fin.X - s.Inicio.X);    //Ancho de la subzona
+
+                        int elements = Heigth / s.Filas * Width / s.Columnas;          //Numero de elementos
+
+                        for (int x = s.Inicio.X; x < s.Fin.X; x++)
+                        {
+                            for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
+                            {
+                                //Coordenadas de la matriz de temperaturas
+                                int fila    = (y - s.Inicio.Y) *    s.Filas / Heigth;
+                                int columna = (x - s.Inicio.X) * s.Columnas /  Width;
+
+                                short actualValue = this.imgData[x, y];
+                                float actualTemp = this.lutTable[actualValue];
+
+                                float maxTemp = s.tempMatrix[fila, columna].max + 273.15f;
+                                float minTemp = s.tempMatrix[fila, columna].min + 273.15f;
+
+                                if (this.lutTable[this.imgData[x, y]] > (s.tempMatrix[fila, columna].max + 273.15f))                    //Maximo
+                                    s.tempMatrix[fila, columna].max = this.lutTable[this.imgData[x, y]] - 273.15f;
+
+                                if (this.lutTable[this.imgData[x, y]] < (s.tempMatrix[fila, columna].min + 273.15f))                    //Mínimo
+                                    s.tempMatrix[fila, columna].min = this.lutTable[this.imgData[x, y]] - 273.15f;
+
+                                s.tempMatrix[fila, columna].mean += (this.lutTable[this.imgData[x, y]] - 273.15f) / elements;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #endregion
 
             //Dibujar rejilla en caso de ser necesario
             //if (this._rejilla)
@@ -799,6 +897,7 @@ namespace ThermoVision.Models
                             this.connected = true;
 
                             tGetImages = new Thread(new ThreadStart(getImages));
+                            tGetImages.Name = "Thread GetImages";
                             tGetImages.IsBackground = true;
                             tGetImages.Priority = ThreadPriority.Highest;
                             tGetImages.Start();
@@ -839,6 +938,7 @@ namespace ThermoVision.Models
                         this.connected = true;
 
                         tGetImages = new Thread(new ThreadStart(getImages));
+                        tGetImages.Name = "Thread GetImages Reconnected";
                         tGetImages.IsBackground = true;
                         tGetImages.Start();
 
@@ -890,7 +990,7 @@ namespace ThermoVision.Models
                     {
                         double[] frames = (double[]) framesObject;
 
-                        this.camara.SetCameraProperty(43, frames[0]);
+                        short status = this.camara.SetCameraProperty(43, frames[0]);
                     }
 
                     break;
