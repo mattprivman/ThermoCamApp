@@ -49,10 +49,9 @@ namespace WindowsFormsApplication4.Asistente.Camaras
 
                 this.Controls.Add(c);
 
-                c.Initialize(this);
+                c.Initialize(this, this._System);
 
                 this.camaras.Add(c);
-                this._System.addThermoCam(c.camara);
             }
             // 
             // buttonAtras

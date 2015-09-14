@@ -92,6 +92,7 @@
             this.comboBoxNumeroZonas.Name = "comboBoxNumeroZonas";
             this.comboBoxNumeroZonas.Size = new System.Drawing.Size(121, 21);
             this.comboBoxNumeroZonas.TabIndex = 4;
+            this.comboBoxNumeroZonas.SelectedIndexChanged += new System.EventHandler(this.comboBoxNumeroZonas_SelectedIndexChanged);
             // 
             // CameraNumberSelection
             // 

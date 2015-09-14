@@ -14,6 +14,7 @@ namespace ThermoVision.CustomControls
 {
     public partial class CamConfigControl : UserControl
     {
+        Sistema          _system;
         public ThermoCam camara;
 
         Bitmap      bmp;
@@ -37,26 +38,25 @@ namespace ThermoVision.CustomControls
             this.numericTextBoxCol.maxVal   = 50;
         }
 
-        public void Initialize(Form f, ThermoCam _thermoCam = null)                 
+        public void Initialize(Form f, Sistema _system)                             
         {
             //////////////////////  INICIALIZACIÓN CAMARAS //////////////////////////
-            if (_thermoCam == null)
-            {
-                this.camara = new ThermoCam(f,
-                    CameraType.FLIR_A3X0,
-                    DeviceType.Ethernet16bits,
-                    InterfaceType.TCP);
-            }
-            else
-            {
-                this.camara = _thermoCam;
-                this.camara.InitializeForm(f);
 
-                this.textBoxCamName.Text     = this.camara.Nombre;
-                this.textBoxDireccionIP.Text = this.camara.Address;
-            }
+            this.camara = new ThermoCam(
+                f,
+                CameraType.FLIR_A3X0,
+                DeviceType.Ethernet16bits,
+                InterfaceType.TCP);
+
+            this._system = _system;
+            this._system.addThermoCam(this.camara);     // Añadir cammara al sistema
 
             this.camara.ConfiguracionMode = true;
+
+            for (int i = 0; i < this._system.Zonas.Count; i++)
+            {
+                this.comboBoxZonas.Items.Add(this._system.Zonas[i].Nombre);
+            }
 
             //////////////////////  EVENTO CONEXIÓN Y DESCONEXIÓN   //////////////////
             this.camara.ThermoCamConnected      += camara_ThremoCamConnected;
@@ -69,10 +69,6 @@ namespace ThermoVision.CustomControls
             //////////////////////  EVENTOS CONECTAR Y DESCONECTAR  //////////////////
             this.buttonConectar.Click    += buttonConectar_Click;
             this.buttonDesconectar.Click += buttonDesconectar_Click;
-
-            //this.textBoxDireccionIP.Text = "172.16.100.1";
-            if(_thermoCam != null)
-                this.camara.Conectar();
         }
 
         ////////////////////////////  EVENTOS CONEXIÓN Y DESCONEXIÓN DE LA CAMARA  /////////////
@@ -529,7 +525,7 @@ namespace ThermoVision.CustomControls
             }
         }   //UPDATE DIVISION 
 
-        #region "Cámaras settings"
+        #region "Camara settings"
 
         private void buttonAutoAdjust_Click(object sender, EventArgs e)                 
         {

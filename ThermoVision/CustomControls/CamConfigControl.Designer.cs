@@ -84,6 +84,8 @@
             this.textBoxDivName = new System.Windows.Forms.TextBox();
             this.buttonAddZone = new System.Windows.Forms.Button();
             this.listBoxZonas = new System.Windows.Forms.ListBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboBoxZonas = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -293,6 +295,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.comboBoxZonas);
+            this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.buttonRemoveZona);
             this.tabPage1.Controls.Add(this.label1);
@@ -591,8 +595,25 @@
             this.listBoxZonas.FormattingEnabled = true;
             this.listBoxZonas.Location = new System.Drawing.Point(419, 3);
             this.listBoxZonas.Name = "listBoxZonas";
-            this.listBoxZonas.Size = new System.Drawing.Size(207, 186);
+            this.listBoxZonas.Size = new System.Drawing.Size(207, 147);
             this.listBoxZonas.TabIndex = 0;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(419, 162);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Zona";
+            // 
+            // comboBoxZonas
+            // 
+            this.comboBoxZonas.FormattingEnabled = true;
+            this.comboBoxZonas.Location = new System.Drawing.Point(462, 159);
+            this.comboBoxZonas.Name = "comboBoxZonas";
+            this.comboBoxZonas.Size = new System.Drawing.Size(152, 21);
+            this.comboBoxZonas.TabIndex = 7;
             // 
             // CamConfigControl
             // 
@@ -675,5 +696,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button buttonReloadCalibration;
+        private System.Windows.Forms.ComboBox comboBoxZonas;
+        private System.Windows.Forms.Label label4;
     }
 }

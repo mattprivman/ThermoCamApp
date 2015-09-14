@@ -10,8 +10,31 @@ namespace ThermoVision.Models
 {
     public class Sistema : ISerializable
     {
+        #region "Variables"
+
         List<Zona>      _zonas;
         List<ThermoCam> _thermoCams;
+
+        #endregion
+
+        #region "Propiedades"
+
+        public List<Zona>       Zonas            // -r 
+        {
+            get
+            {
+                return this._zonas;
+            }
+        }
+        public List<ThermoCam>  ThermoCams       // -r 
+        {
+            get
+            {
+                return this._thermoCams;
+            }
+        }
+
+        #endregion
 
         #region "Constructores"
 
@@ -38,20 +61,32 @@ namespace ThermoVision.Models
 
         public void addZona(Zona z)                 
         {
-            this._zonas.Add(z);
+            lock ("Zonas")
+            {
+                this._zonas.Add(z);
+            }
         }
         public void removeZona(Zona z)              
         {
-            this._zonas.Remove(z);
+            lock ("Zonas")
+            {
+                this._zonas.Remove(z);
+            }
         }
 
         public void addThermoCam(ThermoCam t)       
         {
-            this._thermoCams.Add(t);
+            lock("ThermoCams")
+            {
+                this._thermoCams.Add(t);
+            }
         }
         public void removeThermoCam(ThermoCam t)    
         {
-            this._thermoCams.Remove(t);
+            lock ("ThermoCams")
+            {
+                this._thermoCams.Remove(t);
+            }
         }
 
         #endregion

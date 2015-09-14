@@ -19,10 +19,12 @@ namespace WindowsFormsApplication4.Asistente.Camaras
     {
         Sistema _System;
 
-        public CamerasConfiguration(int numerocamaras)
+        public CamerasConfiguration(int numerocamaras, Sistema system)
         {
-            InitializeComponent(numerocamaras);
+            this._System = system;
+
             this.Salir = true;
+            InitializeComponent(numerocamaras);
         }
 
 
@@ -42,17 +44,5 @@ namespace WindowsFormsApplication4.Asistente.Camaras
         }
 
         #endregion
-
-        private List<ThermoCam> getThermoCams()
-        {
-            List<ThermoCam> thermoCams = new List<ThermoCam>();
-
-            foreach (CamConfigControl cc in this.camaras)
-            {
-                thermoCams.Add(cc.camara);
-            }
-
-            return thermoCams;
-        }
     }
 }
