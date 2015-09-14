@@ -11,22 +11,26 @@ namespace ThermoVision.Models
     {
         #region "Variables"
 
-        int _id;
-        string _Nombre;
+        int     _id;
+        string  _Nombre;
+
+        //ZONA A LA QUE PERTENECE ESTA DIVISIÓN
+        Zona    _parent;
+        bool    _hasParent;
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// COORDENADAS ZONA ÚTIL
         //////////////////////////////// Delimitar la zona útil que se quiere medir 
 
-        Point _inicio;
-        Point _fin;
+        Point   _inicio;
+        Point   _fin;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// REJILLA ZONA ÚTIL
         /////////////////////////////// La zona útil queda seccioada por una rejilla 
 
-        int _filas;
-        int _columnas;
+        int     _filas;
+        int     _columnas;
 
         //Matriz de temperaturas
-
         public tempElement[,] tempMatrix;
 
         #endregion
@@ -66,6 +70,22 @@ namespace ThermoVision.Models
 
                 if (NameChanged != null)
                     NameChanged(this, null);
+            }
+        }
+
+        //ZONA DE PERTENENCIA
+        public Zona Parent                          // -r  
+        {
+            get
+            {
+                return this._parent;
+            }
+        }
+        public bool HasParent                       // -r  
+        {
+            get
+            {
+                return this._hasParent;
             }
         }
 
@@ -132,16 +152,17 @@ namespace ThermoVision.Models
 
         #region "Constructores"
 
-        public SubZona() 
+        public SubZona()                                                        
         {
             this._filas     = 1;
             this._columnas  = 1;
         }
-
-        public SubZona(SerializationInfo info, StreamingContext ctxt)
+        public SubZona(SerializationInfo info, StreamingContext ctxt)           
         {
             this._id        = (int)     info.GetValue("Id", typeof(int));
             this._Nombre    = (string)  info.GetValue("Nombre", typeof(string));
+            this._parent    = (Zona)    info.GetValue("Parent", typeof(Zona));
+            this._hasParent = (bool)    info.GetValue("HasParent", typeof(bool));
             this._filas     = (int)     info.GetValue("Filas", typeof(int));
             this._columnas  = (int)     info.GetValue("Columnas", typeof(int));
             this._inicio    = (Point)   info.GetValue("Inicio", typeof(Point));
@@ -154,15 +175,17 @@ namespace ThermoVision.Models
 
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
-            info.AddValue("Id",       this.Id);
-            info.AddValue("Nombre",   this.Nombre);
-            info.AddValue("Filas",    this.Filas);
-            info.AddValue("Columnas", this.Columnas);
-            info.AddValue("Inicio",   this.Inicio);
-            info.AddValue("Fin",      this.Fin);
+            info.AddValue("Id",        this.Id);
+            info.AddValue("Nombre",    this.Nombre);
+            info.AddValue("Parent",    this.Parent);
+            info.AddValue("HasParent", this.HasParent);
+            info.AddValue("Filas",     this.Filas);
+            info.AddValue("Columnas",  this.Columnas);
+            info.AddValue("Inicio",    this.Inicio);
+            info.AddValue("Fin",       this.Fin);
         }
 
-        public void addCoordinates(Point p1, Point p2)
+        public void addCoordinates(Point p1, Point p2)                          
         {
             // El punto de inicio sera el menor y el de fin el mayor.
             if (p1.X > p2.X)
@@ -189,6 +212,20 @@ namespace ThermoVision.Models
 
             if (ParametersChanged != null)
                 ParametersChanged(this, null);
+        }
+
+        public void addParent(Zona parent)                                      
+        {
+            this._parent = parent;
+            this._hasParent = true;
+        }
+        public void removeParent()
+        {
+            if (this._hasParent == true)
+            {
+                this._parent    = null;
+                this._hasParent = false;
+            }
         }
 
         #endregion

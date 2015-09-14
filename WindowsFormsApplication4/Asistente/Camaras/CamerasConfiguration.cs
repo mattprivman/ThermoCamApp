@@ -17,17 +17,14 @@ namespace WindowsFormsApplication4.Asistente.Camaras
 {
     public partial class CamerasConfiguration : flowControl
     {
+        Sistema _System;
+
         public CamerasConfiguration(int numerocamaras)
         {
             InitializeComponent(numerocamaras);
             this.Salir = true;
         }
 
-        public CamerasConfiguration(List<ThermoCam> _thermoCams)
-        {
-            InitializeComponent(_thermoCams.Count, _thermoCams);
-            this.Salir = true;
-        }
 
         #region "BOTONES"
 
@@ -46,7 +43,7 @@ namespace WindowsFormsApplication4.Asistente.Camaras
 
         #endregion
 
-        public List<ThermoCam> getThermoCams()
+        private List<ThermoCam> getThermoCams()
         {
             List<ThermoCam> thermoCams = new List<ThermoCam>();
 

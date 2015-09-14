@@ -39,15 +39,28 @@
             this.labelCam1MinTemp = new System.Windows.Forms.Label();
             this.labelCam1MaxTemp = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.textBoxCamName = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.textBoxDireccionIP = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.buttonReloadCalibration = new System.Windows.Forms.Button();
+            this.buttonAutoFocus = new System.Windows.Forms.Button();
+            this.buttonExternalImageCorrection = new System.Windows.Forms.Button();
+            this.buttonAutoAdjust = new System.Windows.Forms.Button();
+            this.buttonInternalImageCorrection = new System.Windows.Forms.Button();
             this.buttonDesconectar = new System.Windows.Forms.Button();
             this.buttonConectar = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.numericTextBoxCol = new ThermoVision.CustomControls.NumericTextBox();
+            this.numericTextBoxYfin = new ThermoVision.CustomControls.NumericTextBox();
+            this.numericTextBoxXfin = new ThermoVision.CustomControls.NumericTextBox();
+            this.numericTextBoxFilas = new ThermoVision.CustomControls.NumericTextBox();
+            this.numericTextBoxYinit = new ThermoVision.CustomControls.NumericTextBox();
+            this.numericTextBoxXinit = new ThermoVision.CustomControls.NumericTextBox();
             this.buttonColSubstract = new System.Windows.Forms.Button();
             this.buttonColAdd = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
@@ -71,25 +84,13 @@
             this.textBoxDivName = new System.Windows.Forms.TextBox();
             this.buttonAddZone = new System.Windows.Forms.Button();
             this.listBoxZonas = new System.Windows.Forms.ListBox();
-            this.buttonAutoAdjust = new System.Windows.Forms.Button();
-            this.buttonInternalImageCorrection = new System.Windows.Forms.Button();
-            this.buttonAutoFocus = new System.Windows.Forms.Button();
-            this.buttonExternalImageCorrection = new System.Windows.Forms.Button();
-            this.numericTextBoxCol = new ThermoVision.CustomControls.NumericTextBox();
-            this.numericTextBoxYfin = new ThermoVision.CustomControls.NumericTextBox();
-            this.numericTextBoxXfin = new ThermoVision.CustomControls.NumericTextBox();
-            this.numericTextBoxFilas = new ThermoVision.CustomControls.NumericTextBox();
-            this.numericTextBoxYinit = new ThermoVision.CustomControls.NumericTextBox();
-            this.numericTextBoxXinit = new ThermoVision.CustomControls.NumericTextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -153,12 +154,34 @@
             this.tabPage4.Text = "Conexión";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.textBoxCamName);
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.textBoxDireccionIP);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Location = new System.Drawing.Point(20, 33);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(233, 110);
+            this.groupBox3.TabIndex = 42;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Parametros";
+            // 
             // textBoxCamName
             // 
             this.textBoxCamName.Location = new System.Drawing.Point(86, 28);
             this.textBoxCamName.Name = "textBoxCamName";
             this.textBoxCamName.Size = new System.Drawing.Size(129, 20);
             this.textBoxCamName.TabIndex = 50;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(9, 74);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(71, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Dirección IP: ";
             // 
             // textBoxDireccionIP
             // 
@@ -176,9 +199,73 @@
             this.label5.TabIndex = 6;
             this.label5.Text = "Nombre:";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.buttonReloadCalibration);
+            this.groupBox2.Controls.Add(this.buttonAutoFocus);
+            this.groupBox2.Controls.Add(this.buttonExternalImageCorrection);
+            this.groupBox2.Controls.Add(this.buttonAutoAdjust);
+            this.groupBox2.Controls.Add(this.buttonInternalImageCorrection);
+            this.groupBox2.Location = new System.Drawing.Point(278, 33);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(310, 150);
+            this.groupBox2.TabIndex = 60;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Image Settings";
+            // 
+            // buttonReloadCalibration
+            // 
+            this.buttonReloadCalibration.Location = new System.Drawing.Point(21, 109);
+            this.buttonReloadCalibration.Name = "buttonReloadCalibration";
+            this.buttonReloadCalibration.Size = new System.Drawing.Size(109, 23);
+            this.buttonReloadCalibration.TabIndex = 60;
+            this.buttonReloadCalibration.Text = "Reload calibration";
+            this.buttonReloadCalibration.UseVisualStyleBackColor = true;
+            this.buttonReloadCalibration.Click += new System.EventHandler(this.buttonReloadCalibration_Click);
+            // 
+            // buttonAutoFocus
+            // 
+            this.buttonAutoFocus.Location = new System.Drawing.Point(21, 69);
+            this.buttonAutoFocus.Name = "buttonAutoFocus";
+            this.buttonAutoFocus.Size = new System.Drawing.Size(75, 23);
+            this.buttonAutoFocus.TabIndex = 58;
+            this.buttonAutoFocus.Text = "Auto focus";
+            this.buttonAutoFocus.UseVisualStyleBackColor = true;
+            this.buttonAutoFocus.Click += new System.EventHandler(this.buttonAutoFocus_Click);
+            // 
+            // buttonExternalImageCorrection
+            // 
+            this.buttonExternalImageCorrection.Location = new System.Drawing.Point(142, 69);
+            this.buttonExternalImageCorrection.Name = "buttonExternalImageCorrection";
+            this.buttonExternalImageCorrection.Size = new System.Drawing.Size(152, 23);
+            this.buttonExternalImageCorrection.TabIndex = 59;
+            this.buttonExternalImageCorrection.Text = "External image correction";
+            this.buttonExternalImageCorrection.UseVisualStyleBackColor = true;
+            this.buttonExternalImageCorrection.Click += new System.EventHandler(this.buttonExternalImageCorrection_Click);
+            // 
+            // buttonAutoAdjust
+            // 
+            this.buttonAutoAdjust.Location = new System.Drawing.Point(21, 26);
+            this.buttonAutoAdjust.Name = "buttonAutoAdjust";
+            this.buttonAutoAdjust.Size = new System.Drawing.Size(75, 23);
+            this.buttonAutoAdjust.TabIndex = 56;
+            this.buttonAutoAdjust.Text = "Auto adjust";
+            this.buttonAutoAdjust.UseVisualStyleBackColor = true;
+            this.buttonAutoAdjust.Click += new System.EventHandler(this.buttonAutoAdjust_Click);
+            // 
+            // buttonInternalImageCorrection
+            // 
+            this.buttonInternalImageCorrection.Location = new System.Drawing.Point(142, 26);
+            this.buttonInternalImageCorrection.Name = "buttonInternalImageCorrection";
+            this.buttonInternalImageCorrection.Size = new System.Drawing.Size(152, 23);
+            this.buttonInternalImageCorrection.TabIndex = 57;
+            this.buttonInternalImageCorrection.Text = "Internal image correction";
+            this.buttonInternalImageCorrection.UseVisualStyleBackColor = true;
+            this.buttonInternalImageCorrection.Click += new System.EventHandler(this.buttonInternalImageCorrection_Click);
+            // 
             // buttonDesconectar
             // 
-            this.buttonDesconectar.Location = new System.Drawing.Point(541, 171);
+            this.buttonDesconectar.Location = new System.Drawing.Point(132, 160);
             this.buttonDesconectar.Name = "buttonDesconectar";
             this.buttonDesconectar.Size = new System.Drawing.Size(85, 23);
             this.buttonDesconectar.TabIndex = 54;
@@ -187,21 +274,12 @@
             // 
             // buttonConectar
             // 
-            this.buttonConectar.Location = new System.Drawing.Point(460, 171);
+            this.buttonConectar.Location = new System.Drawing.Point(51, 160);
             this.buttonConectar.Name = "buttonConectar";
             this.buttonConectar.Size = new System.Drawing.Size(75, 23);
             this.buttonConectar.TabIndex = 53;
             this.buttonConectar.Text = "Conectar";
             this.buttonConectar.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 74);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Dirección IP: ";
             // 
             // tabControl1
             // 
@@ -261,6 +339,54 @@
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Rejilla";
+            // 
+            // numericTextBoxCol
+            // 
+            this.numericTextBoxCol.Location = new System.Drawing.Point(305, 94);
+            this.numericTextBoxCol.Name = "numericTextBoxCol";
+            this.numericTextBoxCol.Size = new System.Drawing.Size(64, 23);
+            this.numericTextBoxCol.TabIndex = 33;
+            this.numericTextBoxCol.Texto = "0";
+            // 
+            // numericTextBoxYfin
+            // 
+            this.numericTextBoxYfin.Location = new System.Drawing.Point(169, 94);
+            this.numericTextBoxYfin.Name = "numericTextBoxYfin";
+            this.numericTextBoxYfin.Size = new System.Drawing.Size(64, 23);
+            this.numericTextBoxYfin.TabIndex = 32;
+            this.numericTextBoxYfin.Texto = "0";
+            // 
+            // numericTextBoxXfin
+            // 
+            this.numericTextBoxXfin.Location = new System.Drawing.Point(41, 94);
+            this.numericTextBoxXfin.Name = "numericTextBoxXfin";
+            this.numericTextBoxXfin.Size = new System.Drawing.Size(64, 23);
+            this.numericTextBoxXfin.TabIndex = 31;
+            this.numericTextBoxXfin.Texto = "0";
+            // 
+            // numericTextBoxFilas
+            // 
+            this.numericTextBoxFilas.Location = new System.Drawing.Point(305, 27);
+            this.numericTextBoxFilas.Name = "numericTextBoxFilas";
+            this.numericTextBoxFilas.Size = new System.Drawing.Size(64, 23);
+            this.numericTextBoxFilas.TabIndex = 30;
+            this.numericTextBoxFilas.Texto = "0";
+            // 
+            // numericTextBoxYinit
+            // 
+            this.numericTextBoxYinit.Location = new System.Drawing.Point(173, 27);
+            this.numericTextBoxYinit.Name = "numericTextBoxYinit";
+            this.numericTextBoxYinit.Size = new System.Drawing.Size(64, 23);
+            this.numericTextBoxYinit.TabIndex = 29;
+            this.numericTextBoxYinit.Texto = "0";
+            // 
+            // numericTextBoxXinit
+            // 
+            this.numericTextBoxXinit.Location = new System.Drawing.Point(42, 27);
+            this.numericTextBoxXinit.Name = "numericTextBoxXinit";
+            this.numericTextBoxXinit.Size = new System.Drawing.Size(64, 23);
+            this.numericTextBoxXinit.TabIndex = 28;
+            this.numericTextBoxXinit.Texto = "0";
             // 
             // buttonColSubstract
             // 
@@ -468,120 +594,6 @@
             this.listBoxZonas.Size = new System.Drawing.Size(207, 186);
             this.listBoxZonas.TabIndex = 0;
             // 
-            // buttonAutoAdjust
-            // 
-            this.buttonAutoAdjust.Location = new System.Drawing.Point(21, 26);
-            this.buttonAutoAdjust.Name = "buttonAutoAdjust";
-            this.buttonAutoAdjust.Size = new System.Drawing.Size(75, 23);
-            this.buttonAutoAdjust.TabIndex = 56;
-            this.buttonAutoAdjust.Text = "Auto adjust";
-            this.buttonAutoAdjust.UseVisualStyleBackColor = true;
-            this.buttonAutoAdjust.Click += new System.EventHandler(this.buttonAutoAdjust_Click);
-            // 
-            // buttonInternalImageCorrection
-            // 
-            this.buttonInternalImageCorrection.Location = new System.Drawing.Point(142, 26);
-            this.buttonInternalImageCorrection.Name = "buttonInternalImageCorrection";
-            this.buttonInternalImageCorrection.Size = new System.Drawing.Size(152, 23);
-            this.buttonInternalImageCorrection.TabIndex = 57;
-            this.buttonInternalImageCorrection.Text = "Internal image correction";
-            this.buttonInternalImageCorrection.UseVisualStyleBackColor = true;
-            this.buttonInternalImageCorrection.Click += new System.EventHandler(this.buttonInternalImageCorrection_Click);
-            // 
-            // buttonAutoFocus
-            // 
-            this.buttonAutoFocus.Location = new System.Drawing.Point(21, 69);
-            this.buttonAutoFocus.Name = "buttonAutoFocus";
-            this.buttonAutoFocus.Size = new System.Drawing.Size(75, 23);
-            this.buttonAutoFocus.TabIndex = 58;
-            this.buttonAutoFocus.Text = "Auto focus";
-            this.buttonAutoFocus.UseVisualStyleBackColor = true;
-            this.buttonAutoFocus.Click += new System.EventHandler(this.buttonAutoFocus_Click);
-            // 
-            // buttonExternalImageCorrection
-            // 
-            this.buttonExternalImageCorrection.Location = new System.Drawing.Point(142, 69);
-            this.buttonExternalImageCorrection.Name = "buttonExternalImageCorrection";
-            this.buttonExternalImageCorrection.Size = new System.Drawing.Size(152, 23);
-            this.buttonExternalImageCorrection.TabIndex = 59;
-            this.buttonExternalImageCorrection.Text = "External image correction";
-            this.buttonExternalImageCorrection.UseVisualStyleBackColor = true;
-            this.buttonExternalImageCorrection.Click += new System.EventHandler(this.buttonExternalImageCorrection_Click);
-            // 
-            // numericTextBoxCol
-            // 
-            this.numericTextBoxCol.Location = new System.Drawing.Point(305, 94);
-            this.numericTextBoxCol.Name = "numericTextBoxCol";
-            this.numericTextBoxCol.Size = new System.Drawing.Size(64, 23);
-            this.numericTextBoxCol.TabIndex = 33;
-            this.numericTextBoxCol.Texto = "0";
-            // 
-            // numericTextBoxYfin
-            // 
-            this.numericTextBoxYfin.Location = new System.Drawing.Point(169, 94);
-            this.numericTextBoxYfin.Name = "numericTextBoxYfin";
-            this.numericTextBoxYfin.Size = new System.Drawing.Size(64, 23);
-            this.numericTextBoxYfin.TabIndex = 32;
-            this.numericTextBoxYfin.Texto = "0";
-            // 
-            // numericTextBoxXfin
-            // 
-            this.numericTextBoxXfin.Location = new System.Drawing.Point(41, 94);
-            this.numericTextBoxXfin.Name = "numericTextBoxXfin";
-            this.numericTextBoxXfin.Size = new System.Drawing.Size(64, 23);
-            this.numericTextBoxXfin.TabIndex = 31;
-            this.numericTextBoxXfin.Texto = "0";
-            // 
-            // numericTextBoxFilas
-            // 
-            this.numericTextBoxFilas.Location = new System.Drawing.Point(305, 27);
-            this.numericTextBoxFilas.Name = "numericTextBoxFilas";
-            this.numericTextBoxFilas.Size = new System.Drawing.Size(64, 23);
-            this.numericTextBoxFilas.TabIndex = 30;
-            this.numericTextBoxFilas.Texto = "0";
-            // 
-            // numericTextBoxYinit
-            // 
-            this.numericTextBoxYinit.Location = new System.Drawing.Point(173, 27);
-            this.numericTextBoxYinit.Name = "numericTextBoxYinit";
-            this.numericTextBoxYinit.Size = new System.Drawing.Size(64, 23);
-            this.numericTextBoxYinit.TabIndex = 29;
-            this.numericTextBoxYinit.Texto = "0";
-            // 
-            // numericTextBoxXinit
-            // 
-            this.numericTextBoxXinit.Location = new System.Drawing.Point(42, 27);
-            this.numericTextBoxXinit.Name = "numericTextBoxXinit";
-            this.numericTextBoxXinit.Size = new System.Drawing.Size(64, 23);
-            this.numericTextBoxXinit.TabIndex = 28;
-            this.numericTextBoxXinit.Texto = "0";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.buttonAutoFocus);
-            this.groupBox2.Controls.Add(this.buttonExternalImageCorrection);
-            this.groupBox2.Controls.Add(this.buttonAutoAdjust);
-            this.groupBox2.Controls.Add(this.buttonInternalImageCorrection);
-            this.groupBox2.Location = new System.Drawing.Point(278, 33);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(310, 109);
-            this.groupBox2.TabIndex = 60;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Image Settings";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.textBoxCamName);
-            this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.textBoxDireccionIP);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Location = new System.Drawing.Point(20, 33);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(233, 110);
-            this.groupBox3.TabIndex = 42;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Parametros";
-            // 
             // CamConfigControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -597,14 +609,14 @@
             this.Size = new System.Drawing.Size(640, 751);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage4.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -662,5 +674,6 @@
         private System.Windows.Forms.Button buttonAutoAdjust;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button buttonReloadCalibration;
     }
 }

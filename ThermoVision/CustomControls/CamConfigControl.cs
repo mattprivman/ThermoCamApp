@@ -37,7 +37,7 @@ namespace ThermoVision.CustomControls
             this.numericTextBoxCol.maxVal   = 50;
         }
 
-        public void Initialize(Form f, ThermoCam _thermoCam = null)                                              
+        public void Initialize(Form f, ThermoCam _thermoCam = null)                 
         {
             //////////////////////  INICIALIZACIÓN CAMARAS //////////////////////////
             if (_thermoCam == null)
@@ -71,7 +71,8 @@ namespace ThermoVision.CustomControls
             this.buttonDesconectar.Click += buttonDesconectar_Click;
 
             //this.textBoxDireccionIP.Text = "172.16.100.1";
-            this.camara.Conectar();
+            if(_thermoCam != null)
+                this.camara.Conectar();
         }
 
         ////////////////////////////  EVENTOS CONEXIÓN Y DESCONEXIÓN DE LA CAMARA  /////////////
@@ -267,12 +268,12 @@ namespace ThermoVision.CustomControls
                 this.numericTextBoxCol.textoCambiado   -= updateDivision;
                 this.numericTextBoxFilas.textoCambiado -= updateDivision;
 
-                this.numericTextBoxCol.Texto   = d.Columnas.ToString();
-                this.numericTextBoxFilas.Texto = d.Filas.ToString();
-                this.numericTextBoxXinit.Texto = d.Inicio.X.ToString();
-                this.numericTextBoxYinit.Texto = d.Inicio.Y.ToString();
-                this.numericTextBoxXfin.Texto  = d.Fin.X.ToString();
-                this.numericTextBoxYfin.Texto  = d.Fin.Y.ToString();
+                this.numericTextBoxCol.Texto            = d.Columnas.ToString();
+                this.numericTextBoxFilas.Texto          = d.Filas.ToString();
+                this.numericTextBoxXinit.Texto          = d.Inicio.X.ToString();
+                this.numericTextBoxYinit.Texto          = d.Inicio.Y.ToString();
+                this.numericTextBoxXfin.Texto           = d.Fin.X.ToString();
+                this.numericTextBoxYfin.Texto           = d.Fin.Y.ToString();
 
                 this.numericTextBoxXinit.textoCambiado += updateDivision;
                 this.numericTextBoxYinit.textoCambiado += updateDivision;
@@ -282,7 +283,7 @@ namespace ThermoVision.CustomControls
                 this.numericTextBoxFilas.textoCambiado += updateDivision;
             }
         }   //ACTUALIZAR DATOS DE LA DIVISION
-        void textBoxDivName_TextChanged(object sender, EventArgs e)                 
+        private void textBoxDivName_TextChanged(object sender, EventArgs e)         
         {
             if (this.listBoxZonas.SelectedIndex != -1)
             {
@@ -344,7 +345,7 @@ namespace ThermoVision.CustomControls
 
                 suscribeEvents();
             }
-        }
+        }   //MOUSE LEFT DOWN
         void pictureBox1_MouseMove(object sender, MouseEventArgs e)                 
         {
             if (this.bmp != null)
@@ -409,7 +410,7 @@ namespace ThermoVision.CustomControls
 
                 updatePictureBox(pictureBox1, ref bmpModified);
             }
-        }
+        }   //MOUSE LEFT MOVE WHILE CLIKED
         void pictureBox1_MouseUp(object sender, MouseEventArgs e)                   
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
@@ -434,14 +435,14 @@ namespace ThermoVision.CustomControls
                 suscribeEvents();
 
             }
-        }
+        }   //MOUSE LEFT UP
 
         void camara_ThermoCamImgReceived(object sender, ThermoCamImgArgs e)         
         {
             bmp = e.Imagen;
 
             updatePictureBox(this.pictureBox1, ref bmp);
-        }
+        }   //IMAGE RECEIVED
 
         #endregion
 
@@ -449,20 +450,20 @@ namespace ThermoVision.CustomControls
         void textBoxCamName_TextChanged(object sender, EventArgs e)                 
         {
             this.camara.Nombre = this.textBoxCamName.Text;
-        }
+        }   //CAMERA NAME CHANGED
         void textBoxDireccionIP_TextChanged(object sender, EventArgs e)             
         {
             this.camara.Address = this.textBoxDireccionIP.Text;
-        }
+        }   //IP CHANGED
 
         void buttonConectar_Click(object sender, EventArgs e)                       
         {
             this.camara.Conectar();
-        }
+        }   //BUTTON CONECTAR CLICKED
         void buttonDesconectar_Click(object sender, EventArgs e)                    
         {
             this.camara.Desconectar();
-        }
+        }   //BUTTON DESCONECTAR CLICKED
         #endregion
 
         #region ACTUALIZAR CONTROLES
@@ -510,7 +511,7 @@ namespace ThermoVision.CustomControls
         }
         #endregion
 
-        private void updateDivision(object sender, EventArgs e)                     
+        private void updateDivision(object sender, EventArgs e)                         
         {
             if (this.listBoxZonas.SelectedIndex != -1)
             {
@@ -526,7 +527,9 @@ namespace ThermoVision.CustomControls
 
                 camara.addDivision(div);
             }
-        }
+        }   //UPDATE DIVISION 
+
+        #region "Cámaras settings"
 
         private void buttonAutoAdjust_Click(object sender, EventArgs e)                 
         {
@@ -544,5 +547,11 @@ namespace ThermoVision.CustomControls
         {
             this.camara.ExternalImageCorrection();
         }
+        private void buttonReloadCalibration_Click(object sender, EventArgs e)          
+        {
+            this.camara.reloadCalibration();
+        }
+
+        #endregion
     }
 }

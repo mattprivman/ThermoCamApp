@@ -81,6 +81,12 @@
     <Compile Include="Asistente\flowControl.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Asistente\selectAppType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Asistente\selectAppType.Designer.cs">
+      <DependentUpon>selectAppType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProgramFlow.cs" />
@@ -90,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Asistente\Camaras\CamerasConfiguration.resx">
       <DependentUpon>CamerasConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Asistente\selectAppType.resx">
+      <DependentUpon>selectAppType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

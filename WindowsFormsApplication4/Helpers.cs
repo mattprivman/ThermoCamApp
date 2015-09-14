@@ -12,28 +12,28 @@ namespace WindowsFormsApplication4
 {
     class Helpers
     {
-        public static string getAppStringSetting(string property)
+        //CAMBIAR CONFIGURACIONES
+        public static string getAppStringSetting(string property)               
         {
             return (string) Properties.Settings.Default[property];
         }
-
         public static void changeAppStringSetting(string property, string value)
         {
             Properties.Settings.Default[property] = value;
             Properties.Settings.Default.Save();
         }
 
-        public static int getAppIntSetting(string property)
+        public static int getAppIntSetting(string property)                     
         {
             return (int) Properties.Settings.Default[property];
         }
-
-        public static void changeAppIntSetting(string property, int value)
+        public static void changeAppIntSetting(string property, int value)      
         {
             Properties.Settings.Default[property] = value;
             Properties.Settings.Default.Save();
         }
 
+        //DESERIALIZAR
         public static void serializeThermoCams(List<ThermoVision.Models.ThermoCam> ThermoCams, string _file)
         {
             try
@@ -51,8 +51,7 @@ namespace WindowsFormsApplication4
                 ex.ToString();
             }
         }
-
-        public static List<ThermoCam> deserializeThermoCams(string _file)
+        public static List<ThermoCam> deserializeThermoCams(string _file)                                   
         {
             List<ThermoCam> ThermoCams = null;
 

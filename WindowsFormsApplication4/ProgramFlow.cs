@@ -11,68 +11,115 @@ namespace WindowsFormsApplication4
 {
     class ProgramFlow
     {
+        internal enum windowIds : int
+        {
+            appMode                 = 0,
+            appCameraNumber         = 1,
+            appCameraConfiguration  = 2,
+            appCreateOPCVarsCSV     = 3
+        }
+
         public static void Start()
         {
-            bool atras = false;
+            int numeroCamaras = 0;
+
+            bool finAsistente   = false;
+            int  step           = 0;
 
             //Borrar archivo de datos
             //System.IO.File.Delete("Data.ocl");
+            Helpers.changeAppStringSetting("Mode", "");
 
-            do
+            while (finAsistente == false)
             {
-                List<ThermoCam> _ThermoCams = Helpers.deserializeThermoCams("Data.ocl");
-
-                //IF THERMOCAMS IS NULL START FROM SELECTING NUMBER OF CAMERAS
-                #region "Inicio"
-                if (_ThermoCams == null)
+                switch (step)
                 {
-                    //Elegir numero de camaras
-                    Asistente.Camaras.CameraNumberSelection cns = new Asistente.Camaras.CameraNumberSelection();
-                    cns.ShowDialog();
+                    case (int) windowIds.appMode:                       //ELEGIR MODO DE APLICACIÓN
 
-                    if (cns.Salir == true)
-                    {
-                        cns.Dispose();
-                        return;
-                    }
+                        #region "Modo de aplicación"
+                        if (Helpers.getAppStringSetting("Mode") == "")
+                        {
+                            using (Asistente.selectAppType AppType = new Asistente.selectAppType())
+                            {
+                                AppType.ShowDialog();
 
-                    //Configurar camaras
-                    Asistente.Camaras.CamerasConfiguration cc = new Asistente.Camaras.CamerasConfiguration(cns.NumeroCamaras);
-                    cns.Dispose();
-                    cc.ShowDialog();
+                                if (AppType.Salir)
+                                {
+                                    AppType.Dispose();
+                                    return;
+                                }
+                                AppType.Dispose();
+                            }
+                        }
 
-                    Helpers.serializeThermoCams(cc.getThermoCams(), "Data.ocl");            //SERIALIZE THERMOCAM OBJECTS
+                        step = (int) windowIds.appCameraNumber;
+                        #endregion
 
-                    if (cc.Salir == true)
-                    {
+                        break;
+                    case (int) windowIds.appCameraNumber:               //ELEGIR NÚMERO DE CAMARAS Y NUMERO DE ZONAS
+
+                        #region "Número de camaras"
+
+                        using (Asistente.Camaras.CameraNumberSelection cns = new Asistente.Camaras.CameraNumberSelection())
+                        {
+                            cns.ShowDialog();
+                            numeroCamaras = cns.NumeroCamaras;          //Establecer el numero de camaras elegido para la aplicación
+
+                            if (cns.Salir == true)
+                            {
+                                cns.Dispose();
+                                return;
+                            }
+
+                            if (cns.Atras)
+                            {
+                                step = (int)windowIds.appMode; ;
+                                Helpers.changeAppStringSetting("Mode", "");
+                            }
+                            else
+                                step = (int)windowIds.appCameraConfiguration; ;
+
+                            cns.Dispose();
+                        }
+
+                        #endregion
+
+                        break;
+                    case (int) windowIds.appCameraConfiguration:        //CONFIGURAR CAMARAS Y CREAR FICHERO PARA ALMACENAR LAS VARIABLES
+
+                        #region "Configurar cámaras"
+
+                        Asistente.Camaras.CamerasConfiguration cc = new Asistente.Camaras.CamerasConfiguration(numeroCamaras);
+                        cc.ShowDialog();
+
+                        if (cc.Salir == true)
+                        {
+                            cc.Dispose();
+                            return;
+                        }
+
+                        if (cc.Atras)
+                            step = (int) windowIds.appCameraNumber;
+                        else
+                            step ++;//step = (int) windowIds.appCameraNumber;
+
                         cc.Dispose();
-                        return;
-                    }
 
-                    atras = cc.Atras;
-                    cc.Dispose();
+                        #endregion
 
-                    _ThermoCams = Helpers.deserializeThermoCams("Data.ocl");
-                }
-                #endregion    
+                        break;
+                    case (int) windowIds.appCreateOPCVarsCSV:           //CREAR CSV PARA VARIABLES OPC
 
-                //Configurar camaras
-                Asistente.Camaras.CamerasConfiguration ccWith = new Asistente.Camaras.CamerasConfiguration(_ThermoCams);
-                ccWith.ShowDialog();
+                        #region "Crear variables OPC"
 
-                //Helpers.serializeThermoCams(ccWith.getThermoCams(), "Data.ocl");            //SERIALIZE THERMOCAM OBJECTS
 
-                if (ccWith.Salir == true)
-                {
-                    ccWith.Dispose();
-                    return;
+
+                        #endregion
+
+                        break;
                 }
 
-                atras = ccWith.Atras;
-                ccWith.Dispose();
-
-
-            } while (atras == true);
+            }
         }
 
         private static void startCameraAsistant()

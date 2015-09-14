@@ -53,3 +53,4 @@ E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsAppl
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.Camaras.CamerasConfiguration.resources
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Properties.Resources.resources
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCampApp.csproj.GenerateResource.Cache
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.selectAppType.resources

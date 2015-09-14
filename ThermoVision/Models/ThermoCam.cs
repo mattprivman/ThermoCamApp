@@ -63,9 +63,6 @@ namespace ThermoVision.Models
         uint                    minZonaNoUtil;
         uint                    rangeZonaNoUtil;
 
-        uint                    maxZonaUtil;
-        uint                    minZonaUtil;
-        uint                    rangeZonaUtil;
 
         List    <Color>         colorPalette;
 
@@ -261,6 +258,7 @@ namespace ThermoVision.Models
             {
                 this.Desconectar();
                 this.camara.Dispose();
+                this.camara = null;
             }
             catch (Exception ex)
             {
@@ -268,21 +266,25 @@ namespace ThermoVision.Models
             }
         }
 
-        public void autoAdjust()
+        public void autoAdjust()                
         {
             doCameraAction(10);
         }
-        public void autoFocus()
+        public void autoFocus()                 
         {
             doCameraAction(12);
         }
-        public void InternalImageCorrection()
+        public void InternalImageCorrection()   
         {
             doCameraAction(8);
         }
-        public void ExternalImageCorrection()
+        public void ExternalImageCorrection()   
         {
             doCameraAction(9);
+        }
+        public void reloadCalibration()         
+        {
+            this.camara.DoCameraAction(15);
         }
 
         #endregion
@@ -382,7 +384,7 @@ namespace ThermoVision.Models
                 procesarExcepcion(ex, "Conectar");
             }
         }
-        public short doCameraAction(short action)   
+        private short doCameraAction(short action)   
         {
             try
             {
@@ -404,7 +406,7 @@ namespace ThermoVision.Models
             // Generar paleta de colores para reproducir la escala RAINBOW
             this.colorPalette = ColorUtils.getColors();
 
-            while (this.connected == true)
+            while (this.connected == true && this.camara != null)
             {
 
                 //try
@@ -457,7 +459,10 @@ namespace ThermoVision.Models
             {
                 if (this.connected == true)
                 {
-                    object data = this.camara.GetImage(0);
+                    object data = null;
+
+                    if(this.camara != null)
+                        data = this.camara.GetImage(0);
 
                     if (data is short[,])
                         this.imgData = (short[,])data;
@@ -528,9 +533,6 @@ namespace ThermoVision.Models
             maxZonaNoUtil = 0x0;             // Reinicializar las variables 
             minZonaNoUtil = 0xFFFF;          // para
 
-            maxZonaUtil  = 0x0;              // encontrar
-            minZonaUtil  = 0xFFFF;           // los extremos
-
             //Buscar los extremos para dibujar la imagen en blanco y negro
             for (int i = 0; i < this.imgData.GetLength(0); i++)
             {
@@ -544,20 +546,8 @@ namespace ThermoVision.Models
                 }
             }
 
+            //Definir rango
             rangeZonaNoUtil = maxZonaNoUtil - minZonaNoUtil;
-
-            //Calcular las temperaturas máximas de la zona útil y de la zona no útil
-            //Comprobar que haya zona útil
-            if (minZonaNoUtil < maxZonaUtil)
-            {
-                this.maxTemp = lutTable[maxZonaUtil] - 273.15f;
-                this.minTemp = lutTable[minZonaUtil] - 273.15f;
-            }
-            else
-            {
-                this.maxTemp = 0;
-                this.minTemp = 0;
-            }
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// PROCESAR IMAGENES CON ESCALA DE GRISES 
             ////////////////// Se procesa la parte de la imagen no correspondiente a la zona útil con escala de GRISES
@@ -716,12 +706,12 @@ namespace ThermoVision.Models
                                 float minTemp = s.tempMatrix[fila, columna].min + 273.15f;
 
                                 if (this.lutTable[this.imgData[x, y]] > (s.tempMatrix[fila, columna].max + 273.15f))                    //Maximo
-                                    s.tempMatrix[fila, columna].max = this.lutTable[this.imgData[x, y]] - 273.15f;
+                                    s.tempMatrix[fila, columna].max = this.lutTable[this.imgData[x, y]]  - 273.15f;
 
                                 if (this.lutTable[this.imgData[x, y]] < (s.tempMatrix[fila, columna].min + 273.15f))                    //Mínimo
-                                    s.tempMatrix[fila, columna].min = this.lutTable[this.imgData[x, y]] - 273.15f;
+                                    s.tempMatrix[fila, columna].min = this.lutTable[this.imgData[x, y]]  - 273.15f;
 
-                                s.tempMatrix[fila, columna].mean += (this.lutTable[this.imgData[x, y]] - 273.15f) / elements;
+                                s.tempMatrix[fila, columna].mean += (this.lutTable[this.imgData[x, y]]   - 273.15f) / elements;
                             }
                         }
                     }
@@ -1007,11 +997,13 @@ namespace ThermoVision.Models
                     break;
 
                 case 17:
-                    //MEASUREMENT RANE CHANGECOMPLETED (AFTER SETTIG PROPERTY 12)
+                    //MEASUREMENT RANE CHANGE COMPLETED (AFTER SETTIG PROPERTY 12)
                     break;
 
                 case 18:
                     //IMAGE SIZE HAS CHANGED
+                    int a;
+                    a = 1;
 
                     break;
             }
