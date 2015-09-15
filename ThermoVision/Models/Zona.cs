@@ -56,8 +56,10 @@ namespace ThermoVision.Models
 
         #region "Constructores"
 
-        public Zona(Sistema parent)                                     
+        public Zona(String Name, Sistema parent)                        
         {
+            this._nombre = Name;
+
             this._hasChildren = false;
             this._children = new List<SubZona>();
 
@@ -65,15 +67,34 @@ namespace ThermoVision.Models
         }
         public Zona(SerializationInfo info, StreamingContext ctxt)      
         {
-            this._nombre      = (string)        info.GetValue("Nombre",      typeof(string));
-            this._children    = (List<SubZona>) info.GetValue("Children",    typeof(SubZona));
-            this._hasChildren = (bool)          info.GetValue("HasChildren", typeof(bool));
-            this._parent      = (Sistema)       info.GetValue("Parent",      typeof(Sistema));
+            this._nombre = (string)info.GetValue("Nombre", typeof(string));
+            this._children = (List<SubZona>)info.GetValue("Children", typeof(SubZona));
+            this._hasChildren = (bool)info.GetValue("HasChildren", typeof(bool));
+            this._parent = (Sistema)info.GetValue("Parent", typeof(Sistema));
         }
 
         #endregion
 
         #region "Metodos públicos"
+
+        #region "Seleccionar y deseleccionar subzonas"
+
+        public void selectSubZonas()        
+        {
+            foreach (SubZona s in this._children)
+            {
+                s.Selected = true;
+            }
+        }
+        public void unSelectSubZonas()      
+        {
+            foreach (SubZona s in this._children)
+            {
+                s.Selected = false;
+            }
+        }
+
+        #endregion
 
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)    
         {
@@ -82,6 +103,8 @@ namespace ThermoVision.Models
             info.AddValue("HasChildren", this._hasChildren);
             info.AddValue("Parent",      this._parent);
         }
+
+        #region "Añadir  borrar hijos"
 
         public void addChildren(SubZona child)      
         {
@@ -97,6 +120,8 @@ namespace ThermoVision.Models
             if (this._children.Count == 0)
                 this._hasChildren = false;
         }
+
+        #endregion
 
         #endregion
     }

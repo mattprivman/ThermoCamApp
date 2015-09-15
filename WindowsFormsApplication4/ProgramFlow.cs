@@ -15,15 +15,13 @@ namespace WindowsFormsApplication4
         {
             appMode                 = 0,
             appCameraNumber         = 1,
-            appZoneConfiguration    = 2,
-            appCameraConfiguration  = 3,
-            appCreateOPCVarsCSV     = 4
+            appCameraConfiguration  = 2,
+            appCreateOPCVarsCSV     = 3
         }
 
         public static void Start()
         {
             int numeroCamaras   = 0;
-            int numeroZonas     = 0;
 
             Sistema _system     = null;
 
@@ -68,7 +66,6 @@ namespace WindowsFormsApplication4
                         {
                             cns.ShowDialog();
                             numeroCamaras   = cns.NumeroCamaras;          //Establecer el numero de camaras elegido para la aplicación
-                            numeroZonas     = cns.NumeroZonas;            //Establecer el numero de zonas elegido para la aplicación
 
                             if (cns.Salir == true)
                             {
@@ -82,45 +79,9 @@ namespace WindowsFormsApplication4
                                 Helpers.changeAppStringSetting("Mode", "");
                             }
                             else
-                                step = (int)windowIds.appZoneConfiguration; ;
+                                step = (int)windowIds.appCameraConfiguration; ;
 
                             cns.Dispose();
-                        }
-
-                        #endregion
-
-                        break;
-                    case (int) windowIds.appZoneConfiguration:          //CONFIGURAR NOMBRES DE ZONAS
-
-                        #region "Nombres de zonas"
-                        if(numeroZonas > 0)
-                        {
-                            using (Asistente.Camaras.ZoneConfiguration zC = new Asistente.Camaras.ZoneConfiguration(numeroZonas))
-                            {
-                                zC.ShowDialog();
-
-                                if (zC.Salir == true)
-                                {
-                                    zC.Dispose();
-                                    return;
-                                }
-
-                                if (zC.Atras)
-                                {
-                                    step = (int)windowIds.appCameraNumber;
-                                    Helpers.changeAppStringSetting("Mode", "");
-                                }
-                                else
-                                    step = (int)windowIds.appCameraConfiguration; ;
-
-                                _system = zC.Sistema;
-
-                                zC.Dispose();
-                            }
-                        } 
-                        else
-                        {
-                            step = (int)windowIds.appCameraNumber;
                         }
 
                         #endregion
@@ -130,8 +91,11 @@ namespace WindowsFormsApplication4
 
                         #region "Configurar cámaras"
 
-                        if (numeroCamaras > 0 && _system != null)
+                        if (numeroCamaras > 0)
                         {
+                            if (_system == null)
+                                _system = new Sistema();
+
                             Asistente.Camaras.CamerasConfiguration cc = new Asistente.Camaras.CamerasConfiguration(numeroCamaras, _system);
                             cc.ShowDialog();
 
@@ -142,7 +106,7 @@ namespace WindowsFormsApplication4
                             }
 
                             if (cc.Atras)
-                                step = (int) windowIds.appZoneConfiguration;
+                                step = (int) windowIds.appCameraNumber;
                             else
                                 step = (int) windowIds.appCreateOPCVarsCSV;         //step = (int) windowIds.appCameraNumber;
 

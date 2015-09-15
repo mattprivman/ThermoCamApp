@@ -15,6 +15,8 @@ namespace ThermoVision.Models
         List<Zona>      _zonas;
         List<ThermoCam> _thermoCams;
 
+        public Zona            selectedZona;
+
         #endregion
 
         #region "Propiedades"
@@ -52,6 +54,23 @@ namespace ThermoVision.Models
         #endregion
 
         #region "Métodos públicos"
+
+        public void selectZona(string name)             
+        {
+            foreach (Zona z in this._zonas)                                             //Deseleccionar todas las zonas
+                z.unSelectSubZonas();
+
+            if (this._zonas.Exists(x => x.Nombre == name))                              //Seleccionar las subzonas de la subzona a activar
+            {
+                Zona z = this._zonas.Where(x => x.Nombre == name).First();
+                this.selectedZona = z;
+                z.selectSubZonas();
+            }
+        }
+        public void addSubZona(SubZona s)
+        {
+            this.selectedZona.addChildren(s);
+        }
 
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {

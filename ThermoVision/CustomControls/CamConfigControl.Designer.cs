@@ -54,13 +54,9 @@
             this.buttonConectar = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.comboBoxZonas = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.numericTextBoxCol = new ThermoVision.CustomControls.NumericTextBox();
-            this.numericTextBoxYfin = new ThermoVision.CustomControls.NumericTextBox();
-            this.numericTextBoxXfin = new ThermoVision.CustomControls.NumericTextBox();
-            this.numericTextBoxFilas = new ThermoVision.CustomControls.NumericTextBox();
-            this.numericTextBoxYinit = new ThermoVision.CustomControls.NumericTextBox();
-            this.numericTextBoxXinit = new ThermoVision.CustomControls.NumericTextBox();
             this.buttonColSubstract = new System.Windows.Forms.Button();
             this.buttonColAdd = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
@@ -84,8 +80,12 @@
             this.textBoxDivName = new System.Windows.Forms.TextBox();
             this.buttonAddZone = new System.Windows.Forms.Button();
             this.listBoxZonas = new System.Windows.Forms.ListBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.comboBoxZonas = new System.Windows.Forms.ComboBox();
+            this.numericTextBoxCol = new ThermoVision.CustomControls.NumericTextBox();
+            this.numericTextBoxYfin = new ThermoVision.CustomControls.NumericTextBox();
+            this.numericTextBoxXfin = new ThermoVision.CustomControls.NumericTextBox();
+            this.numericTextBoxFilas = new ThermoVision.CustomControls.NumericTextBox();
+            this.numericTextBoxYinit = new ThermoVision.CustomControls.NumericTextBox();
+            this.numericTextBoxXinit = new ThermoVision.CustomControls.NumericTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -311,6 +311,23 @@
             this.tabPage1.Text = "Subzonas";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // comboBoxZonas
+            // 
+            this.comboBoxZonas.FormattingEnabled = true;
+            this.comboBoxZonas.Location = new System.Drawing.Point(462, 159);
+            this.comboBoxZonas.Name = "comboBoxZonas";
+            this.comboBoxZonas.Size = new System.Drawing.Size(152, 21);
+            this.comboBoxZonas.TabIndex = 7;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(419, 162);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Zona";
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.numericTextBoxCol);
@@ -343,54 +360,6 @@
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Rejilla";
-            // 
-            // numericTextBoxCol
-            // 
-            this.numericTextBoxCol.Location = new System.Drawing.Point(305, 94);
-            this.numericTextBoxCol.Name = "numericTextBoxCol";
-            this.numericTextBoxCol.Size = new System.Drawing.Size(64, 23);
-            this.numericTextBoxCol.TabIndex = 33;
-            this.numericTextBoxCol.Texto = "0";
-            // 
-            // numericTextBoxYfin
-            // 
-            this.numericTextBoxYfin.Location = new System.Drawing.Point(169, 94);
-            this.numericTextBoxYfin.Name = "numericTextBoxYfin";
-            this.numericTextBoxYfin.Size = new System.Drawing.Size(64, 23);
-            this.numericTextBoxYfin.TabIndex = 32;
-            this.numericTextBoxYfin.Texto = "0";
-            // 
-            // numericTextBoxXfin
-            // 
-            this.numericTextBoxXfin.Location = new System.Drawing.Point(41, 94);
-            this.numericTextBoxXfin.Name = "numericTextBoxXfin";
-            this.numericTextBoxXfin.Size = new System.Drawing.Size(64, 23);
-            this.numericTextBoxXfin.TabIndex = 31;
-            this.numericTextBoxXfin.Texto = "0";
-            // 
-            // numericTextBoxFilas
-            // 
-            this.numericTextBoxFilas.Location = new System.Drawing.Point(305, 27);
-            this.numericTextBoxFilas.Name = "numericTextBoxFilas";
-            this.numericTextBoxFilas.Size = new System.Drawing.Size(64, 23);
-            this.numericTextBoxFilas.TabIndex = 30;
-            this.numericTextBoxFilas.Texto = "0";
-            // 
-            // numericTextBoxYinit
-            // 
-            this.numericTextBoxYinit.Location = new System.Drawing.Point(173, 27);
-            this.numericTextBoxYinit.Name = "numericTextBoxYinit";
-            this.numericTextBoxYinit.Size = new System.Drawing.Size(64, 23);
-            this.numericTextBoxYinit.TabIndex = 29;
-            this.numericTextBoxYinit.Texto = "0";
-            // 
-            // numericTextBoxXinit
-            // 
-            this.numericTextBoxXinit.Location = new System.Drawing.Point(42, 27);
-            this.numericTextBoxXinit.Name = "numericTextBoxXinit";
-            this.numericTextBoxXinit.Size = new System.Drawing.Size(64, 23);
-            this.numericTextBoxXinit.TabIndex = 28;
-            this.numericTextBoxXinit.Texto = "0";
             // 
             // buttonColSubstract
             // 
@@ -562,7 +531,7 @@
             this.buttonRemoveZona.TabIndex = 4;
             this.buttonRemoveZona.Text = "Borrar subzona";
             this.buttonRemoveZona.UseVisualStyleBackColor = true;
-            this.buttonRemoveZona.Click += new System.EventHandler(this.buttonRemoveZona_Click);
+            this.buttonRemoveZona.Click += new System.EventHandler(this.buttonRemoveSubZona_Click);
             // 
             // label1
             // 
@@ -588,32 +557,63 @@
             this.buttonAddZone.TabIndex = 1;
             this.buttonAddZone.Text = "Agregar subzona";
             this.buttonAddZone.UseVisualStyleBackColor = true;
-            this.buttonAddZone.Click += new System.EventHandler(this.buttonAddZone_Click);
+            this.buttonAddZone.Click += new System.EventHandler(this.buttonAddSubZone_Click);
             // 
             // listBoxZonas
             // 
-            this.listBoxZonas.FormattingEnabled = true;
             this.listBoxZonas.Location = new System.Drawing.Point(419, 3);
             this.listBoxZonas.Name = "listBoxZonas";
             this.listBoxZonas.Size = new System.Drawing.Size(207, 147);
             this.listBoxZonas.TabIndex = 0;
             // 
-            // label4
+            // numericTextBoxCol
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(419, 162);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(32, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Zona";
+            this.numericTextBoxCol.Location = new System.Drawing.Point(305, 94);
+            this.numericTextBoxCol.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.numericTextBoxCol.Name = "numericTextBoxCol";
+            this.numericTextBoxCol.Size = new System.Drawing.Size(64, 23);
+            this.numericTextBoxCol.TabIndex = 33;
+            this.numericTextBoxCol.Texto = "0";
             // 
-            // comboBoxZonas
+            // numericTextBoxYfin
             // 
-            this.comboBoxZonas.FormattingEnabled = true;
-            this.comboBoxZonas.Location = new System.Drawing.Point(462, 159);
-            this.comboBoxZonas.Name = "comboBoxZonas";
-            this.comboBoxZonas.Size = new System.Drawing.Size(152, 21);
-            this.comboBoxZonas.TabIndex = 7;
+            this.numericTextBoxYfin.Location = new System.Drawing.Point(169, 94);
+            this.numericTextBoxYfin.Name = "numericTextBoxYfin";
+            this.numericTextBoxYfin.Size = new System.Drawing.Size(64, 23);
+            this.numericTextBoxYfin.TabIndex = 32;
+            this.numericTextBoxYfin.Texto = "0";
+            // 
+            // numericTextBoxXfin
+            // 
+            this.numericTextBoxXfin.Location = new System.Drawing.Point(41, 94);
+            this.numericTextBoxXfin.Name = "numericTextBoxXfin";
+            this.numericTextBoxXfin.Size = new System.Drawing.Size(64, 23);
+            this.numericTextBoxXfin.TabIndex = 31;
+            this.numericTextBoxXfin.Texto = "0";
+            // 
+            // numericTextBoxFilas
+            // 
+            this.numericTextBoxFilas.Location = new System.Drawing.Point(305, 27);
+            this.numericTextBoxFilas.Name = "numericTextBoxFilas";
+            this.numericTextBoxFilas.Size = new System.Drawing.Size(64, 23);
+            this.numericTextBoxFilas.TabIndex = 30;
+            this.numericTextBoxFilas.Texto = "0";
+            // 
+            // numericTextBoxYinit
+            // 
+            this.numericTextBoxYinit.Location = new System.Drawing.Point(173, 27);
+            this.numericTextBoxYinit.Name = "numericTextBoxYinit";
+            this.numericTextBoxYinit.Size = new System.Drawing.Size(64, 23);
+            this.numericTextBoxYinit.TabIndex = 29;
+            this.numericTextBoxYinit.Texto = "0";
+            // 
+            // numericTextBoxXinit
+            // 
+            this.numericTextBoxXinit.Location = new System.Drawing.Point(42, 27);
+            this.numericTextBoxXinit.Name = "numericTextBoxXinit";
+            this.numericTextBoxXinit.Size = new System.Drawing.Size(64, 23);
+            this.numericTextBoxXinit.TabIndex = 28;
+            this.numericTextBoxXinit.Texto = "0";
             // 
             // CamConfigControl
             // 

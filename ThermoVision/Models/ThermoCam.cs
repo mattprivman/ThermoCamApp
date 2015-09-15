@@ -590,11 +590,11 @@ namespace ThermoVision.Models
                     int minValue = 0xFFFF;
                     int range;
 
-                    foreach (SubZona d in this.SubZonas)
+                    foreach (SubZona s in this.SubZonas)
                     {
-                        for (int x = d.Inicio.X; x < d.Fin.X; x++)
+                        for (int x = s.Inicio.X; x < s.Fin.X; x++)
                         {
-                            for (int y = d.Inicio.Y; y < d.Fin.Y; y++)
+                            for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
                             {
                                 if (this.imgData[x, y] > maxValue)
                                     maxValue = this.imgData[x, y];
@@ -606,55 +606,58 @@ namespace ThermoVision.Models
                     range = maxValue - minValue;
 
                     // Se dibujan las zonas en escala Raibow
-                    foreach (SubZona d in SubZonas)
+                    foreach (SubZona s in SubZonas)
                     {
-                        //Dibujar subzonas con escala rainbow
-                        for (int x = d.Inicio.X; x < d.Fin.X; x++)
+                        if (s.Selected)
                         {
-                            for (int y = d.Inicio.Y; y < d.Fin.Y; y++)
+                            //Dibujar subzonas con escala rainbow
+                            for (int x = s.Inicio.X; x < s.Fin.X; x++)
                             {
-                                this.Val = (uint)this.imgData[x, y];
+                                for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
+                                {
+                                    this.Val = (uint)this.imgData[x, y];
 
-                                Color c = this.colorPalette[(int)(((this.Val - minValue) * 255) / range)];
-                                this.bmp.SetPixel(x, y, c);
+                                    Color c = this.colorPalette[(int)(((this.Val - minValue) * 255) / range)];
+                                    this.bmp.SetPixel(x, y, c);
+                                }
                             }
-                        }
 
-                        //Columnas
-                        for (int i = 1; i < d.Columnas; i++)
-                        {
-                            int x = (i * (d.Fin.X - d.Inicio.X) / d.Columnas) + d.Inicio.X;
-
-                            for (int y = d.Inicio.Y; y < d.Fin.Y; y++)
+                            //Columnas
+                            for (int i = 1; i < s.Columnas; i++)
                             {
-                                this.bmp.SetPixel(x, y, Color.Black);
+                                int x = (i * (s.Fin.X - s.Inicio.X) / s.Columnas) + s.Inicio.X;
+
+                                for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
+                                {
+                                    this.bmp.SetPixel(x, y, Color.Black);
+                                }
                             }
-                        }
 
-                        //Filas
-                        for (int i = 1; i < d.Filas; i++)
-                        {
-                            int y = (i * (d.Fin.Y - d.Inicio.Y) / d.Filas) + d.Inicio.Y;
-
-                            for (int x = d.Inicio.X; x < d.Fin.X; x++)
+                            //Filas
+                            for (int i = 1; i < s.Filas; i++)
                             {
-                                this.bmp.SetPixel(x, y, Color.Black);
+                                int y = (i * (s.Fin.Y - s.Inicio.Y) / s.Filas) + s.Inicio.Y;
+
+                                for (int x = s.Inicio.X; x < s.Fin.X; x++)
+                                {
+                                    this.bmp.SetPixel(x, y, Color.Black);
+                                }
                             }
-                        }
 
-                        //Escribir el nombre de la división
-                        using (Graphics graphics = Graphics.FromImage(this.bmp))
-                        {
-                            using (Font arialFont = new Font("Calibri Light", 6))
+                            //Escribir el nombre de la división
+                            using (Graphics graphics = Graphics.FromImage(this.bmp))
                             {
-                                //test1 = (((j) * this._widthPerCol) + this._inicio.X);
-                                //test2 = (((i + 1) * this._heigthPerRow) + this._inicio.Y) - 10;
-                                graphics.DrawString(d.Nombre,
-                                    arialFont,
-                                    Brushes.Black,
-                                    new Point(
-                                        d.Inicio.X + 2,
-                                        d.Inicio.Y + 2));
+                                using (Font arialFont = new Font("Calibri Light", 6))
+                                {
+                                    //test1 = (((j) * this._widthPerCol) + this._inicio.X);
+                                    //test2 = (((i + 1) * this._heigthPerRow) + this._inicio.Y) - 10;
+                                    graphics.DrawString(s.Nombre,
+                                        arialFont,
+                                        Brushes.Black,
+                                        new Point(
+                                            s.Inicio.X + 2,
+                                            s.Inicio.Y + 2));
+                                }
                             }
                         }
                     }
@@ -672,7 +675,7 @@ namespace ThermoVision.Models
                     lock ("lockRejilla")        //Bloqueo para evitar cambios en las rejillas
                     {
                         //Redimensionar matriz de temperaturas
-                        if(s.tempMatrix == null || s.tempMatrix.GetLength(0) != s.Filas || s.tempMatrix.GetLength(1) != s.Columnas)
+                        if (s.tempMatrix == null || s.tempMatrix.GetLength(0) != s.Filas || s.tempMatrix.GetLength(1) != s.Columnas)
                             s.tempMatrix = new tempElement[s.Filas, s.Columnas];
 
                         //Reinicializar variables
@@ -696,8 +699,8 @@ namespace ThermoVision.Models
                             for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
                             {
                                 //Coordenadas de la matriz de temperaturas
-                                int fila    = (y - s.Inicio.Y) *    s.Filas / Heigth;
-                                int columna = (x - s.Inicio.X) * s.Columnas /  Width;
+                                int fila = (y - s.Inicio.Y) * s.Filas / Heigth;
+                                int columna = (x - s.Inicio.X) * s.Columnas / Width;
 
                                 short actualValue = this.imgData[x, y];
                                 float actualTemp = this.lutTable[actualValue];
@@ -706,151 +709,19 @@ namespace ThermoVision.Models
                                 float minTemp = s.tempMatrix[fila, columna].min + 273.15f;
 
                                 if (this.lutTable[this.imgData[x, y]] > (s.tempMatrix[fila, columna].max + 273.15f))                    //Maximo
-                                    s.tempMatrix[fila, columna].max = this.lutTable[this.imgData[x, y]]  - 273.15f;
+                                    s.tempMatrix[fila, columna].max = this.lutTable[this.imgData[x, y]] - 273.15f;
 
                                 if (this.lutTable[this.imgData[x, y]] < (s.tempMatrix[fila, columna].min + 273.15f))                    //Mínimo
-                                    s.tempMatrix[fila, columna].min = this.lutTable[this.imgData[x, y]]  - 273.15f;
+                                    s.tempMatrix[fila, columna].min = this.lutTable[this.imgData[x, y]] - 273.15f;
 
-                                s.tempMatrix[fila, columna].mean += (this.lutTable[this.imgData[x, y]]   - 273.15f) / elements;
+                                s.tempMatrix[fila, columna].mean += (this.lutTable[this.imgData[x, y]] - 273.15f) / elements;
                             }
-                        }
+                        }                        
                     }
                 }
             }
 
             #endregion
-
-            //Dibujar rejilla en caso de ser necesario
-            //if (this._rejilla)
-            //{
-            //    //try
-            //    //{
-            //        Color c = (this._configuracionMode) ? Color.FromArgb(0, 0, 0) : Color.FromArgb(255, 255, 255);
-            //        // Lineas verticales
-            //        for (int i = 0; i <= this._columnas; i++)
-            //        {
-            //            for (int y = this._inicio.Y; y < this._fin.Y; y++)
-            //            {
-            //                if (this._inicio.X + (i * (this._fin.X - this._inicio.X) / this._columnas) < this._width)
-            //                    this.bmp.SetPixel(this._inicio.X + (i * (this._fin.X - this._inicio.X) / this._columnas), y, c);
-            //                else
-            //                    this.bmp.SetPixel((this._inicio.X + (i * (this._fin.X - this._inicio.X)/ this._columnas) - 1), y, c);
-            //            }
-            //        }
-
-            //        // Lineas horizontales
-            //        for (int i = 0; i <= this._filas; i++)
-            //        {
-            //            for (int x = this._inicio.X; x < this._fin.X; x++)
-            //            {
-            //                if ((this._inicio.Y + (i * (this._fin.Y - this._inicio.Y) / this._filas) < this._height))
-            //                    this.bmp.SetPixel(x, this._inicio.Y + (i * (this._fin.Y - this._inicio.Y) / this._filas), c);
-            //                else
-            //                    this.bmp.SetPixel(x, (this._inicio.Y + (i * (this._fin.Y - this._inicio.Y) / this._filas) - 1), c);
-            //            }
-            //        }
-            //    //}
-            //    //catch (Exception ex)
-            //    //{
-            //    //    procesarExcepcion(ex, "Poner rejilla");
-            //    //}
-            //}
-
-            ////GET TEMP MATRIX SI LA CONDICIÓN ES CIERTA
-            //if (this._matrixTemp)
-            //{
-            //    try
-            //    {
-            //        // Calcular máximo, mínimo, y media por celda
-            //        for (int i = 0; i < this._columnas; i++)
-            //        {
-            //            for (int j = 0; j < this._filas; j++)
-            //            {
-            //                this._matrixDataCell[i, j].maxTemp = 0x0000;
-            //                this._matrixDataCell[i, j].minTemp = 0xFFFF;
-            //                this._matrixDataCell[i, j].meanTemp = 0;
-
-            //                for (int y = ((j * this._heigthPerRow) + this._inicio.Y);
-            //                    y <  (((this._fin.Y - this._inicio.Y) / this._filas) * (j + 1)) + this._inicio.Y;
-            //                    y++)
-            //                {
-            //                    for (int x = ((i * this._widthPerCol) + this._inicio.X);
-            //                        x < (((this._fin.X - this._inicio.X) / this._columnas) * (i + 1)) + this._inicio.X;
-            //                        x++)
-            //                    {
-            //                        //// Maximo
-
-            //                        //if (x < this._width && y < this._height)
-            //                        //{
-
-            //                        if (this.imgData[x, y] > this._matrixDataCell[i, j].maxTemp)
-            //                        {
-            //                            this._matrixDataCell[i, j].maxTemp = (uint)this.imgData[x, y];
-            //                        }
-
-            //                        //// Minimo
-            //                        test1 = this.imgData[x, y];
-            //                        test2 = (int)this._matrixDataCell[i, j].minTemp;
-
-            //                        if (this.imgData[x, y] < this._matrixDataCell[i, j].minTemp)
-            //                            this._matrixDataCell[i, j].minTemp = (uint)this.imgData[x, y];
-            //                        //// Media
-            //                        this._matrixDataCell[i, j].meanTemp += this.lutTable[this.imgData[x, y]] / this._elementsPerCell;
-            //                        //}
-            //                        //dataStruct.bmp.SetPixel(x, y, Color.FromArgb(0, 0, 0));
-            //                    }
-            //                }
-
-            //                //COPIAR VALORES A LA TABLA
-            //                this.tempMatrix[i, j].maxTemp = this.lutTable[this._matrixDataCell[i, j].maxTemp] - 273.15f;
-            //                this.tempMatrix[i, j].minTemp = this.lutTable[this._matrixDataCell[i, j].minTemp] - 273.15f;
-            //                this.tempMatrix[i, j].meanTemp = this._matrixDataCell[i, j].meanTemp - 273.15f;
-
-            //                using (Graphics graphics = Graphics.FromImage(this.bmp))
-            //                {
-            //                    using (Font arialFont = new Font("Calibri Light", 6))
-            //                    {
-            //                        //test1 = (((j) * this._widthPerCol) + this._inicio.X);
-            //                        //test2 = (((i + 1) * this._heigthPerRow) + this._inicio.Y) - 10;
-            //                        graphics.DrawString("M: " + this.tempMatrix[i, j].maxTemp,
-            //                            arialFont,
-            //                            Brushes.White,
-            //                            new Point(
-            //                                (((i) * this._widthPerCol) + this._inicio.X),
-            //                                (((j) * this._heigthPerRow) + this._inicio.Y)));
-            //                    }
-            //                    using (Font arialFont = new Font("Calibri Light", 6))
-            //                    {
-            //                        //test1 = (((j) * this._widthPerCol) + this._inicio.X);
-            //                        //test2 = (((i + 1) * this._heigthPerRow) + this._inicio.Y) - 10;
-            //                        graphics.DrawString("m: " + this.tempMatrix[i, j].minTemp,
-            //                            arialFont,
-            //                            Brushes.White,
-            //                            new Point(
-            //                                (((i) * this._widthPerCol) + this._inicio.X),
-            //                                (((j) * this._heigthPerRow) + this._inicio.Y + 8)));
-            //                    }
-
-            //                    using (Font arialFont = new Font("Calibri Light", 6))
-            //                    {
-            //                        //test1 = (((j) * this._widthPerCol) + this._inicio.X);
-            //                        //test2 = (((i + 1) * this._heigthPerRow) + this._inicio.Y) - 10;
-            //                        graphics.DrawString("X: " + this.tempMatrix[i, j].meanTemp,
-            //                            arialFont,
-            //                            Brushes.White,
-            //                            new Point(
-            //                                (((i) * this._widthPerCol) + this._inicio.X),
-            //                                (((j) * this._heigthPerRow) + this._inicio.Y + 16)));
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        procesarExcepcion(ex, "Temperaturas por celda");
-            //    }
-            //}
         }
 
         #endregion
@@ -880,8 +751,8 @@ namespace ThermoVision.Models
             {
                 case 2:
                     //EVENTO CONECTADO
-                    try
-                    {
+                    //try
+                    //{
                         if (this.connected == false)
                         {
                             this.connected = true;
@@ -895,11 +766,11 @@ namespace ThermoVision.Models
                             if (this.ThermoCamConnected != null)
                                 this.ThermoCamConnected(this, null);
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        procesarExcepcion(ex, "Evento conectado");
-                    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    procesarExcepcion(ex, "Evento conectado");
+                    //}
 
                     break;
 

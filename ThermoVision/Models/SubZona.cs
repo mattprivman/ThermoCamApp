@@ -10,9 +10,11 @@ namespace ThermoVision.Models
     public class SubZona : ISerializable
     {
         #region "Variables"
-
+        
         int     _id;
         string  _Nombre;
+
+        bool    _selected;
 
         //ZONA A LA QUE PERTENECE ESTA DIVISIÓN
         Zona    _parent;
@@ -73,19 +75,39 @@ namespace ThermoVision.Models
             }
         }
 
-        //ZONA DE PERTENENCIA
-        public Zona Parent                          // -r  
+        public bool Selected                        // -rw 
         {
+            get
+            {
+                return this._selected;
+            }
+            set
+            {
+                this._selected = value;
+            }
+        }
+
+        //ZONA DE PERTENENCIA
+        public Zona Parent                          // -rw 
+        {
+            set
+            {
+                this._parent = value;
+            }
             get
             {
                 return this._parent;
             }
         }
-        public bool HasParent                       // -r  
+        public bool HasParent                       // -rw 
         {
             get
             {
                 return this._hasParent;
+            }
+            set
+            {
+                this._hasParent = value;
             }
         }
 
@@ -152,7 +174,7 @@ namespace ThermoVision.Models
 
         #region "Constructores"
 
-        public SubZona()                                                        
+        public SubZona()                                             
         {
             this._filas     = 1;
             this._columnas  = 1;
@@ -212,20 +234,6 @@ namespace ThermoVision.Models
 
             if (ParametersChanged != null)
                 ParametersChanged(this, null);
-        }
-
-        public void addParent(Zona parent)                                      
-        {
-            this._parent = parent;
-            this._hasParent = true;
-        }
-        public void removeParent()
-        {
-            if (this._hasParent == true)
-            {
-                this._parent    = null;
-                this._hasParent = false;
-            }
         }
 
         #endregion

@@ -59,7 +59,7 @@ namespace ThermoVision.CustomControls
             }
 
             //////////////////////  EVENTO CONEXIÓN Y DESCONEXIÓN   //////////////////
-            this.camara.ThermoCamConnected      += camara_ThremoCamConnected;
+            this.camara.ThermoCamConnected      += camara_ThermoCamConnected;
             this.camara.ThermoCamDisConnected   += camara_ThermoCamDisConnected;
 
             //////////////////////  EVENTO CAMBIO DE NOMBRE CAMARA  //////////////////
@@ -72,7 +72,7 @@ namespace ThermoVision.CustomControls
         }
 
         ////////////////////////////  EVENTOS CONEXIÓN Y DESCONEXIÓN DE LA CAMARA  /////////////
-        void camara_ThremoCamConnected(object sender, EventArgs e)                  
+        void camara_ThermoCamConnected(object sender, EventArgs e)                  
         {
             //EVENTO RECIBIR IMAGENES Y DIVISIONES
             this.camara.ThermoCamImgReceived    += camara_ThermoCamImgReceived;
@@ -221,19 +221,24 @@ namespace ThermoVision.CustomControls
 
         void actualizarListBox()                                                    
         {
-            this.listBoxZonas.BeginUpdate();
-            this.listBoxZonas.Items.Clear();
+            if (this._system.selectedZona != null)
+            {
+                this.listBoxZonas.BeginUpdate();
+                this.listBoxZonas.Items.Clear();
 
-            foreach (SubZona d in this.camara.SubZonas)
-                this.listBoxZonas.Items.Add(d.Nombre);
+                foreach (SubZona d in this._system.selectedZona.Children)
+                {
+                    this.listBoxZonas.Items.Add(d.Nombre);
+                }
 
-            this.listBoxZonas.Refresh();
+                this.listBoxZonas.Refresh();
 
-            this.listBoxZonas.EndUpdate();
+                this.listBoxZonas.EndUpdate();
 
-            if (this.selectedIndex != -1)
-                if(this.listBoxZonas.Items.Count > 0)
-                this.listBoxZonas.SelectedIndex = this.selectedIndex;
+                if (this.selectedIndex != -1)
+                    if (this.listBoxZonas.Items.Count > 0 && this.selectedIndex < this.listBoxZonas.Items.Count)
+                        this.listBoxZonas.SelectedIndex = this.selectedIndex;
+            }
         }
         void borrarListBox()                                                        
         {
@@ -288,24 +293,30 @@ namespace ThermoVision.CustomControls
             }
 
         }   //NOMBRE ZONA CHANGED
-        private void buttonAddZone_Click(object sender, EventArgs e)                
+        private void buttonAddSubZone_Click(object sender, EventArgs e)             
         {
             unSuscribeEvents();
 
-            SubZona d  = new SubZona();
-            d.Id = this.camara.SubZonas.Count;
-            d.Nombre    = "Division";
-            d.addCoordinates(new Point(0, 0), new Point(0, 0));
-            d.Filas     = 0;
-            d.Columnas  = 0;
+            SubZona s  = new SubZona();
+            s.Id = this.camara.SubZonas.Count;
+            s.Nombre    = "Division";
+            s.Selected = true;
+            s.addCoordinates(new Point(0, 0), new Point(0, 0));
+            s.Filas     = 0;
+            s.Columnas  = 0;
 
-            this.selectedIndex = d.Id;
-            this.camara.addDivision(d);
+            if (this._system.selectedZona != null)
+            {
+                this.camara.addDivision(s);
+                this._system.addSubZona(s);
+
+                this.selectedIndex = s.Id;
+            }
 
             suscribeEvents();
 
         }   //AÑADIR ZONA
-        private void buttonRemoveZona_Click(object sender, EventArgs e)             
+        private void buttonRemoveSubZona_Click(object sender, EventArgs e)          
         {
             if (this.listBoxZonas.SelectedIndex != -1)
             {
@@ -511,17 +522,17 @@ namespace ThermoVision.CustomControls
         {
             if (this.listBoxZonas.SelectedIndex != -1)
             {
+                SubZona sub = new SubZona();
 
-                SubZona div = new SubZona();
-
-                div.Id = this.listBoxZonas.SelectedIndex;
-                div.Nombre = this.textBoxDivName.Text;
-                div.Filas = int.Parse(this.numericTextBoxFilas.Texto);
-                div.Columnas = int.Parse(this.numericTextBoxCol.Texto);
-                div.addCoordinates(new Point(int.Parse(this.numericTextBoxXinit.Texto), int.Parse(this.numericTextBoxYinit.Texto)), 
+                sub.Id          = this.listBoxZonas.SelectedIndex;
+                sub.Nombre      = this.textBoxDivName.Text;
+                sub.Filas       = int.Parse(this.numericTextBoxFilas.Texto);
+                sub.Columnas    = int.Parse(this.numericTextBoxCol.Texto);
+                sub.addCoordinates(new Point(int.Parse(this.numericTextBoxXinit.Texto), int.Parse(this.numericTextBoxYinit.Texto)), 
                                    new Point(int.Parse(this.numericTextBoxXfin.Texto) , int.Parse(this.numericTextBoxYfin.Texto)));
 
-                camara.addDivision(div);
+                if(this._system.selectedZona != null)
+                    camara.addDivision(sub);
             }
         }   //UPDATE DIVISION 
 
