@@ -20,6 +20,8 @@ namespace ThermoVision.Models
         Zona    _parent;
         bool    _hasParent;
 
+        ThermoCam _thermoParent;
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// COORDENADAS ZONA ÚTIL
         //////////////////////////////// Delimitar la zona útil que se quiere medir 
 
@@ -108,6 +110,18 @@ namespace ThermoVision.Models
             set
             {
                 this._hasParent = value;
+            }
+        }
+
+        public ThermoCam ThermoParent               // -rw 
+        {
+            get
+            {
+                return this._thermoParent;
+            }
+            set
+            {
+                this._thermoParent = value;
             }
         }
 

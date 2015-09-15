@@ -301,16 +301,16 @@ namespace ThermoVision.Models
 
         public void addDivision(SubZona d)        
         {
-            lock (this.sync)
+            lock ("Zonas")
             {
-                if (this.SubZonas.Exists(x => x.Id == d.Id))
+                if (this.SubZonas.Exists(x => x.Nombre == d.Nombre))
                 {
                     //Ya existe, hay que modificarla
-                    this.SubZonas.Where(x => x.Id == d.Id).First().Nombre = d.Nombre;
-                    this.SubZonas.Where(x => x.Id == d.Id).First().addCoordinates(new Point(d.Inicio.X, d.Inicio.Y),
+                    //this.SubZonas.Where(x => x.Nombre == d.Nombre).First().Nombre = d.Nombre;
+                    this.SubZonas.Where(x => x.Nombre == d.Nombre).First().addCoordinates(new Point(d.Inicio.X, d.Inicio.Y),
                         new Point(d.Fin.X, d.Fin.Y));
-                    this.SubZonas.Where(x => x.Id == d.Id).First().Filas = d.Filas;
-                    this.SubZonas.Where(x => x.Id == d.Id).First().Columnas = d.Columnas;
+                    this.SubZonas.Where(x => x.Nombre == d.Nombre).First().Filas = d.Filas;
+                    this.SubZonas.Where(x => x.Nombre == d.Nombre).First().Columnas = d.Columnas;
 
                     //Trigger event that indicates that a division has been modified
                     if (DivisionesChanged != null)
@@ -333,11 +333,11 @@ namespace ThermoVision.Models
                 }
             }
         }
-        public void RemoveDivision(int id)        
+        public void RemoveDivision(string Nombre)        
         {
-            lock (this.sync)
+            lock ("Zonas")
             {
-                this.SubZonas.Remove(this.SubZonas.Where(x => x.Id == id).First());
+                this.SubZonas.Remove(this.SubZonas.Where(x => x.Nombre == Nombre).First());
 
                 //Reordenar ids
                 int index = 0;
@@ -581,7 +581,7 @@ namespace ThermoVision.Models
             if (this._configuracionMode)
             {
                 //BLOQUEO PARA EVITAR MODIFICACIONES EN LA LISTA DE DIVISIONES MIENTRAS SE EJECUTA ESTE CÓDIGO
-                lock (this.sync)
+                lock ("Zonas")
                 {
                     //Si esta el modo de configuración activado se dibujan las divisiones seleccionadas con escala Rainbow
 
@@ -745,32 +745,50 @@ namespace ThermoVision.Models
 
         #region EVENTOS
 
+        private void start()
+        {
+            
+            //try
+            //{
+            if (this.connected == false)
+            {
+                this.connected = true;
+
+                if (this.tGetImages != null)
+                {
+                    try
+                    {
+                        if(this.tGetImages.IsAlive)
+                            this.tGetImages.Abort();
+                    }
+                    catch (Exception e)
+                    { 
+                    }
+                }
+
+                tGetImages = new Thread(new ThreadStart(getImages));
+                tGetImages.Name = "Thread GetImages";
+                tGetImages.IsBackground = true;
+                tGetImages.Priority = ThreadPriority.Highest;
+                tGetImages.Start();
+
+                if (this.ThermoCamConnected != null)
+                    this.ThermoCamConnected(this, null);
+            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    procesarExcepcion(ex, "Evento conectado");
+            //}
+        }
+
         void camara_CameraEvent(object sender, _DLVCamEvents_CameraEventEvent e)                        
         {
             switch (e.id)
             {
                 case 2:
-                    //EVENTO CONECTADO
-                    //try
-                    //{
-                        if (this.connected == false)
-                        {
-                            this.connected = true;
-
-                            tGetImages = new Thread(new ThreadStart(getImages));
-                            tGetImages.Name = "Thread GetImages";
-                            tGetImages.IsBackground = true;
-                            tGetImages.Priority = ThreadPriority.Highest;
-                            tGetImages.Start();
-                            
-                            if (this.ThermoCamConnected != null)
-                                this.ThermoCamConnected(this, null);
-                        }
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    procesarExcepcion(ex, "Evento conectado");
-                    //}
+                   //EVENTO CONECTADO
+                    this.start();
 
                     break;
 
@@ -794,18 +812,7 @@ namespace ThermoVision.Models
 
                 case 5:
                     //DEVICE RECCONECTED FROM BROKEN CONNECTION
-                    if (this.connected == false)
-                    {
-                        this.connected = true;
-
-                        tGetImages = new Thread(new ThreadStart(getImages));
-                        tGetImages.Name = "Thread GetImages Reconnected";
-                        tGetImages.IsBackground = true;
-                        tGetImages.Start();
-
-                        if (this.ThermoCamConnected != null)
-                            this.ThermoCamConnected(this, null);
-                    }
+                    this.start();
 
                     break;
 

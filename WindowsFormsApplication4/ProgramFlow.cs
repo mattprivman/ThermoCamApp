@@ -93,7 +93,7 @@ namespace WindowsFormsApplication4
 
                         if (numeroCamaras > 0)
                         {
-                            if (_system == null)
+                            //if (_system == null)
                                 _system = new Sistema();
 
                             Asistente.Camaras.CamerasConfiguration cc = new Asistente.Camaras.CamerasConfiguration(numeroCamaras, _system);

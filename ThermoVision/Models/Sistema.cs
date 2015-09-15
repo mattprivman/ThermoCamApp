@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -16,6 +16,12 @@ namespace ThermoVision.Models
         List<ThermoCam> _thermoCams;
 
         public Zona            selectedZona;
+
+        #endregion
+
+        #region "Eventos"
+
+        public event EventHandler zonasListChanged;
 
         #endregion
 
@@ -55,7 +61,58 @@ namespace ThermoVision.Models
 
         #region "Métodos públicos"
 
-        public void selectZona(string name)             
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
+        {
+            info.AddValue("Zonas",      this._zonas);
+            info.AddValue("ThermoCams", this._thermoCams);
+        }
+
+        #region "ZONAS"
+        public void addZona(Zona z)                 
+        {
+            lock ("Zonas")
+            {
+                //Comprobar que no haya una zona con el mismo nombre
+                foreach (Zona item in this._zonas)
+                {
+                    if (item.Nombre == z.Nombre)
+                    {
+                        throw new Exception("Ya hay una zona con el nombre " + z.Nombre + ".");
+                    }
+                }
+
+                this._zonas.Add(z);
+
+                if (zonasListChanged != null)
+                    zonasListChanged(this, null);
+            }
+        }       //AÑADIR ZONA
+        public void removeZona(Zona z)              
+        {
+            lock ("Zonas")
+            {
+                foreach (SubZona t in z.Children)
+                {
+                    t.ThermoParent.SubZonas.Remove(t);
+                }
+
+                z.Children.Clear();
+                this._zonas.Remove(z);
+
+                this.selectedZona = null;
+
+                if (zonasListChanged != null)
+                    zonasListChanged(this, null);
+            }
+        }       //BORRAR ZONA
+        public Zona getZona(string Nombre)          
+        {
+            if (this._zonas.Exists(x => x.Nombre == Nombre))
+                return this._zonas.Where(x => x.Nombre == Nombre).First();
+
+            return null;
+        }       //DEVOLVER ZONA
+        public void selectZona(string name)         
         {
             foreach (Zona z in this._zonas)                                             //Deseleccionar todas las zonas
                 z.unSelectSubZonas();
@@ -66,32 +123,8 @@ namespace ThermoVision.Models
                 this.selectedZona = z;
                 z.selectSubZonas();
             }
-        }
-        public void addSubZona(SubZona s)
-        {
-            this.selectedZona.addChildren(s);
-        }
-
-        public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
-        {
-            info.AddValue("Zonas",      this._zonas);
-            info.AddValue("ThermoCams", this._thermoCams);
-        }
-
-        public void addZona(Zona z)                 
-        {
-            lock ("Zonas")
-            {
-                this._zonas.Add(z);
-            }
-        }
-        public void removeZona(Zona z)              
-        {
-            lock ("Zonas")
-            {
-                this._zonas.Remove(z);
-            }
-        }
+        }       //SELECCIONAR ZONA
+        #endregion
 
         public void addThermoCam(ThermoCam t)       
         {
