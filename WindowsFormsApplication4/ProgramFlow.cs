@@ -14,14 +14,13 @@ namespace WindowsFormsApplication4
         internal enum windowIds : int
         {
             appMode                 = 0,
-            appCameraNumber         = 1,
-            appCameraConfiguration  = 2,
-            appCreateOPCVarsCSV     = 3
+            appCameraConfiguration  = 1,
+            appCreateOPCVarsCSV     = 2
         }
 
         public static void Start()
         {
-            int numeroCamaras   = 0;
+            int numeroCamaras   = 1;
 
             Sistema _system     = null;
 
@@ -36,7 +35,7 @@ namespace WindowsFormsApplication4
             {
                 switch (step)
                 {
-                    case (int) windowIds.appMode:                       //ELEGIR MODO DE APLICACIÓN
+                    case (int) windowIds.appMode:                       //ELEGIR MODO DE APLICACIÓN Y NÚMERO DE CÁMARAS
 
                         #region "Modo de aplicación"
                         if (Helpers.getAppStringSetting("Mode") == "")
@@ -50,40 +49,13 @@ namespace WindowsFormsApplication4
                                     AppType.Dispose();
                                     return;
                                 }
+
+                                numeroCamaras = AppType.NumeroCamaras;
                                 AppType.Dispose();
                             }
                         }
 
-                        step = (int) windowIds.appCameraNumber;
-                        #endregion
-
-                        break;
-                    case (int) windowIds.appCameraNumber:               //ELEGIR NÚMERO DE CAMARAS Y NUMERO DE ZONAS
-
-                        #region "Número de camaras"
-
-                        using (Asistente.Camaras.CameraNumberSelection cns = new Asistente.Camaras.CameraNumberSelection())
-                        {
-                            cns.ShowDialog();
-                            numeroCamaras   = cns.NumeroCamaras;          //Establecer el numero de camaras elegido para la aplicación
-
-                            if (cns.Salir == true)
-                            {
-                                cns.Dispose();
-                                return;
-                            }
-
-                            if (cns.Atras)
-                            {
-                                step = (int)windowIds.appMode; ;
-                                Helpers.changeAppStringSetting("Mode", "");
-                            }
-                            else
-                                step = (int)windowIds.appCameraConfiguration; ;
-
-                            cns.Dispose();
-                        }
-
+                        step = (int) windowIds.appCameraConfiguration;
                         #endregion
 
                         break;
@@ -106,7 +78,7 @@ namespace WindowsFormsApplication4
                             }
 
                             if (cc.Atras)
-                                step = (int) windowIds.appCameraNumber;
+                                step = (int) windowIds.appMode;
                             else
                                 step = (int) windowIds.appCreateOPCVarsCSV;         //step = (int) windowIds.appCameraNumber;
 
@@ -114,7 +86,7 @@ namespace WindowsFormsApplication4
                         }
                         else
                         {
-                            step = (int) windowIds.appCameraNumber;
+                            step = (int) windowIds.appMode;
                         }
 
                         #endregion

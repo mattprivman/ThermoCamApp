@@ -17,10 +17,26 @@ namespace WindowsFormsApplication4.Asistente.Camaras
 {
     public partial class CamerasConfiguration : flowControl
     {
+        #region "Variables"
+
         Sistema _system;
         int     selectedIndex;
 
-        public CamerasConfiguration(int numerocamaras, Sistema _system)
+        #endregion
+
+        #region "Propiedades"
+
+        public Sistema Sistema          // -r   
+        {
+            get
+            {
+                return this._system;
+            }
+        }
+
+        #endregion
+
+        public CamerasConfiguration(int numerocamaras, Sistema _system)     
         {
             this._system = _system;
 
@@ -34,6 +50,9 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             this.buttonRemoveZona.Click             += buttonRemoveZona_Click;
         }
 
+
+        #region "ZONAS"
+
         void _system_zonasListChanged(object sender, EventArgs e)           
         {
             this.listBoxZonas.BeginUpdate();
@@ -45,16 +64,21 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             }
 
             //Seleccionar item
-            if (this.selectedIndex != -1 && this.selectedIndex > 0 && this.selectedIndex < this.listBoxZonas.Items.Count)
+            if (this.selectedIndex != -1 && 
+                this.selectedIndex >=  0 && 
+                this.selectedIndex < this.listBoxZonas.Items.Count &&
+                this.listBoxZonas.Items.Count > 0)
             {
                 this.listBoxZonas.SelectedIndex = this.selectedIndex;
             }
             this.listBoxZonas.EndUpdate();
 
             this.listBoxZonas.Update();
-        }
+        }       //RECIBIR EVENTO DE LA CLASE SISTEMA DE QUE LAS ZONAS HAN CAMBIADO
         void listBoxZonas_SelectedIndexChanged(object sender, EventArgs e)  
         {
+            this.selectedIndex = this.listBoxZonas.SelectedIndex;
+
             if (this.listBoxZonas.SelectedIndex != -1)
             {
                 this._system.selectZona(this.listBoxZonas.Items[this.listBoxZonas.SelectedIndex].ToString());
@@ -69,7 +93,7 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             {
                 this._system.selectedZona = null;
             }
-        }
+        }       //ITEM LISTBOX CHANGED
         void buttonAddZone_Click(object sender, EventArgs e)                
         {
             lock("Zonas")
@@ -102,13 +126,15 @@ namespace WindowsFormsApplication4.Asistente.Camaras
                     }
                 } //IF (this.textBoxZonaName.Text != "")
             }
-        }
+        }       //AÑADIR ZONA
         void buttonRemoveZona_Click(object sender, EventArgs e)             
         {
             if (this.listBoxZonas.SelectedIndex != -1)
             {
                 lock ("Zonas")
                 {
+                    this.selectedIndex = this.listBoxZonas.Items.Count - 2;
+
                     Zona z = this._system.getZona(this.listBoxZonas.SelectedItem.ToString());
 
                     if (z != null)
@@ -124,8 +150,9 @@ namespace WindowsFormsApplication4.Asistente.Camaras
                     }
                 }
             }
-        }
+        }       //BORRAR ZONA
 
+        #endregion
 
         #region "BOTONES"
 

@@ -49,7 +49,6 @@ E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\Interop.CAMCTRLL
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\OPCClient.pdb
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoVision.pdb
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCampApp.csprojResolveAssemblyReference.cache
-E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.Camaras.CameraNumberSelection.resources
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.Camaras.CamerasConfiguration.resources
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Properties.Resources.resources
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCampApp.csproj.GenerateResource.Cache

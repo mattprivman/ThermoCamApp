@@ -77,6 +77,7 @@ namespace ThermoVision.CustomControls
             //EVENTO RECIBIR IMAGENES Y DIVISIONES
             this.camara.ThermoCamImgReceived    += camara_ThermoCamImgReceived;
             this.camara.DivisionesChanged       += camara_DivisionesChanged;
+            this.camara.SubZonaRemoved          += camara_SubZonaRemoved;
 
             //EVENTO CLICK EN PICTUREBOX
             this.pictureBox1.MouseDown          += pictureBox1_MouseDown;
@@ -105,6 +106,7 @@ namespace ThermoVision.CustomControls
             actualizarListBox();
 
         }
+
         void camara_ThermoCamDisConnected(object sender, EventArgs e)               
         {
             //CAMARA DESCONECTADA
@@ -200,9 +202,11 @@ namespace ThermoVision.CustomControls
 
         public void ZonaChanged()                                                   
         {
+            unSuscribeEvents();
             clearTextBoxes();
             //ACTUALIZAR LISTBOX
             actualizarListBox();
+            suscribeEvents();
 
         }   //RECIBIR EVENTO DE QUE LA ZONA SELECCIONADA HA CAMBIADO
 
@@ -281,33 +285,36 @@ namespace ThermoVision.CustomControls
             {
                 this.selectedIndex = this.listBoxZonas.SelectedIndex;
 
-                SubZona d = this.camara.SubZonas.Where(x => x.Nombre == this.listBoxZonas.SelectedItem.ToString()).First();
+                if (this.camara.SubZonas.Exists(x => x.Nombre == this.listBoxZonas.SelectedItem.ToString()))
+                {
+                    SubZona d = this.camara.SubZonas.Where(x => x.Nombre == this.listBoxZonas.SelectedItem.ToString()).First();
 
-                //updateText(this.textBoxDivName, d.Nombre);
+                    //updateText(this.textBoxDivName, d.Nombre);
 
-                this.numericTextBoxXinit.textoCambiado -= updateDivision;
-                this.numericTextBoxYinit.textoCambiado -= updateDivision;
-                this.numericTextBoxXfin.textoCambiado  -= updateDivision;
-                this.numericTextBoxYfin.textoCambiado  -= updateDivision;
-                this.numericTextBoxCol.textoCambiado   -= updateDivision;
-                this.numericTextBoxFilas.textoCambiado -= updateDivision;
+                    this.numericTextBoxXinit.textoCambiado -= updateDivision;
+                    this.numericTextBoxYinit.textoCambiado -= updateDivision;
+                    this.numericTextBoxXfin.textoCambiado -= updateDivision;
+                    this.numericTextBoxYfin.textoCambiado -= updateDivision;
+                    this.numericTextBoxCol.textoCambiado -= updateDivision;
+                    this.numericTextBoxFilas.textoCambiado -= updateDivision;
 
-                this.numericTextBoxCol.Texto            = d.Columnas.ToString();
-                this.numericTextBoxFilas.Texto          = d.Filas.ToString();
-                this.numericTextBoxXinit.Texto          = d.Inicio.X.ToString();
-                this.numericTextBoxYinit.Texto          = d.Inicio.Y.ToString();
-                this.numericTextBoxXfin.Texto           = d.Fin.X.ToString();
-                this.numericTextBoxYfin.Texto           = d.Fin.Y.ToString();
+                    this.numericTextBoxCol.Texto = d.Columnas.ToString();
+                    this.numericTextBoxFilas.Texto = d.Filas.ToString();
+                    this.numericTextBoxXinit.Texto = d.Inicio.X.ToString();
+                    this.numericTextBoxYinit.Texto = d.Inicio.Y.ToString();
+                    this.numericTextBoxXfin.Texto = d.Fin.X.ToString();
+                    this.numericTextBoxYfin.Texto = d.Fin.Y.ToString();
 
-                this.numericTextBoxXinit.textoCambiado += updateDivision;
-                this.numericTextBoxYinit.textoCambiado += updateDivision;
-                this.numericTextBoxXfin.textoCambiado  += updateDivision;
-                this.numericTextBoxYfin.textoCambiado  += updateDivision;
-                this.numericTextBoxCol.textoCambiado   += updateDivision;
-                this.numericTextBoxFilas.textoCambiado += updateDivision;
+                    this.numericTextBoxXinit.textoCambiado += updateDivision;
+                    this.numericTextBoxYinit.textoCambiado += updateDivision;
+                    this.numericTextBoxXfin.textoCambiado += updateDivision;
+                    this.numericTextBoxYfin.textoCambiado += updateDivision;
+                    this.numericTextBoxCol.textoCambiado += updateDivision;
+                    this.numericTextBoxFilas.textoCambiado += updateDivision;
+                }
             }
         }   //ACTUALIZAR DATOS DE LA DIVISION
-        private void textBoxDivName_TextChanged(object sender, EventArgs e)         
+        void textBoxDivName_TextChanged(object sender, EventArgs e)                 
         {
             //if (this.listBoxZonas.SelectedIndex != -1)
             //{
@@ -316,7 +323,7 @@ namespace ThermoVision.CustomControls
             //}
 
         }   //NOMBRE ZONA CHANGED
-        private void buttonAddSubZone_Click(object sender, EventArgs e)             
+        void buttonAddSubZone_Click(object sender, EventArgs e)                     
         {
             if (this._system.selectedZona != null && this.textBoxDivName.Text != "")
             {
@@ -331,6 +338,7 @@ namespace ThermoVision.CustomControls
                         return;
                     }
                 }
+                this.selectedIndex = this.camara.SubZonas.Count;
 
                 SubZona s       = new SubZona();
                 s.Id = this.camara.SubZonas.Count;
@@ -344,22 +352,27 @@ namespace ThermoVision.CustomControls
                 this._system.selectedZona.addChildren(s);
                 this.camara.addDivision(s);
 
-                this.selectedIndex = this.camara.SubZonas.Count - 1;
-
                 this.textBoxDivName.Text = "";
 
                 suscribeEvents();
             }
 
         }   //AÑADIR ZONA
-        private void buttonRemoveSubZona_Click(object sender, EventArgs e)          
+        void buttonRemoveSubZona_Click(object sender, EventArgs e)                  
         {
             if (this.listBoxZonas.SelectedIndex != -1)
             {
+                this.selectedIndex = this.camara.SubZonas.Count - 2;
                 this.camara.RemoveDivision(this.listBoxZonas.SelectedItem.ToString());
-                this.selectedIndex = this.camara.SubZonas.Count - 1;
+                
             }
         }   //BORRAR ZONA
+
+        void camara_SubZonaRemoved(object sender, string e)
+        {
+            if (this._system.selectedZona.Children.Exists(x => x.Nombre == e))
+                this._system.selectedZona.removeChildren(this._system.selectedZona.Children.Where(x => x.Nombre == e).First());
+        }
 
         #endregion
 
@@ -554,7 +567,7 @@ namespace ThermoVision.CustomControls
         }
         #endregion
 
-        private void updateDivision(object sender, EventArgs e)                         
+        private void updateDivision(object sender, EventArgs e)                     
         {
             if (this.listBoxZonas.SelectedIndex != -1 && this._system.selectedZona != null)
             {

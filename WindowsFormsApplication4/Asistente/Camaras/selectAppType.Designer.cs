@@ -31,6 +31,8 @@
             this.comboBoxAppType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonNext = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBoxNumberCameras = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // comboBoxAppType
@@ -53,7 +55,7 @@
             // 
             // buttonNext
             // 
-            this.buttonNext.Location = new System.Drawing.Point(210, 72);
+            this.buttonNext.Location = new System.Drawing.Point(214, 124);
             this.buttonNext.Name = "buttonNext";
             this.buttonNext.Size = new System.Drawing.Size(75, 23);
             this.buttonNext.TabIndex = 2;
@@ -61,12 +63,33 @@
             this.buttonNext.UseVisualStyleBackColor = true;
             this.buttonNext.Click += new System.EventHandler(this.buttonNext_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(36, 82);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(77, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Nº de camaras";
+            // 
+            // comboBoxNumberCameras
+            // 
+            this.comboBoxNumberCameras.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxNumberCameras.FormattingEnabled = true;
+            this.comboBoxNumberCameras.Location = new System.Drawing.Point(154, 79);
+            this.comboBoxNumberCameras.Name = "comboBoxNumberCameras";
+            this.comboBoxNumberCameras.Size = new System.Drawing.Size(135, 21);
+            this.comboBoxNumberCameras.TabIndex = 3;
+            this.comboBoxNumberCameras.SelectedIndexChanged += new System.EventHandler(this.comboBoxNumberCameras_SelectedIndexChanged);
+            // 
             // selectAppType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(312, 107);
+            this.ClientSize = new System.Drawing.Size(312, 159);
             this.ControlBox = false;
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.comboBoxNumberCameras);
             this.Controls.Add(this.buttonNext);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxAppType);
@@ -82,5 +105,7 @@
         private System.Windows.Forms.ComboBox comboBoxAppType;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonNext;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBoxNumberCameras;
     }
 }

@@ -12,7 +12,13 @@ namespace WindowsFormsApplication4.Asistente
 {
     public partial class selectAppType : flowControl
     {
-        public selectAppType()
+        public int NumeroCamaras                                          // -rw    
+        {
+            get;
+            set;
+        }
+
+        public selectAppType()                                                      
         {
             InitializeComponent();
 
@@ -26,12 +32,22 @@ namespace WindowsFormsApplication4.Asistente
                     "Tuberias",
                     "Coque"
                 };
+            this.comboBoxNumberCameras.DataSource = new List<int>()
+            {
+                1,
+                2,
+                3
+            };
         }
 
-        void comboBoxAppType_TextChanged(object sender, EventArgs e)
+        void comboBoxAppType_TextChanged(object sender, EventArgs e)                
         {
             //Cambiar modo de funcionamiento de la aplicación
             Helpers.changeAppStringSetting("Mode", this.comboBoxAppType.Text);
+        }
+        void comboBoxNumberCameras_SelectedIndexChanged(object sender, EventArgs e) 
+        {
+            this.NumeroCamaras = int.Parse(this.comboBoxNumberCameras.Text.ToString());
         }
 
         private void buttonNext_Click(object sender, EventArgs e)

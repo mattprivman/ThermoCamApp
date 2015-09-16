@@ -157,17 +157,19 @@ namespace ThermoVision.Models
 
         public delegate void ThermoCamImgEventCallback(object sender, ThermoCamImgArgs e);
         public delegate void ThermoCamEventCallback(object sender, EventArgs e);
+        public delegate void ThermoCamZonaRemovedCallback(object sender, string e);
 
         #endregion
 
         #region EVENTOS
 
-        public event ThermoCamEventCallback     ThermoCamConnected;
-        public event ThermoCamEventCallback     ThermoCamDisConnected;
-        public event ThermoCamImgEventCallback  ThermoCamImgReceived;
-        public event ThermoCamEventCallback     DivisionesChanged;
-        public event ThermoCamEventCallback     ThermoCamNameChanged;
-        public event ThermoCamEventCallback     ThermoCamAddressChanged;
+        public event ThermoCamEventCallback         ThermoCamConnected;
+        public event ThermoCamEventCallback         ThermoCamDisConnected;
+        public event ThermoCamImgEventCallback      ThermoCamImgReceived;
+        public event ThermoCamEventCallback         DivisionesChanged;
+        public event ThermoCamZonaRemovedCallback   SubZonaRemoved;
+        public event ThermoCamEventCallback         ThermoCamNameChanged;
+        public event ThermoCamEventCallback         ThermoCamAddressChanged;
 
         #endregion
 
@@ -337,21 +339,30 @@ namespace ThermoVision.Models
         {
             lock ("Zonas")
             {
-                this.SubZonas.Remove(this.SubZonas.Where(x => x.Nombre == Nombre).First());
-
-                //Reordenar ids
-                int index = 0;
-
-                for (int i = 0; i < this.SubZonas.Count; i++)
+                if (this.SubZonas.Exists(x => x.Nombre == Nombre))
                 {
-                    this.SubZonas[i].Id = index;
-                    index++;
-                }
+                    this.SubZonas.Remove(this.SubZonas.Where(x => x.Nombre == Nombre).First());
 
-                //Trigger event that indicates that a division has been removed
-                if (DivisionesChanged != null)
-                {
-                    DivisionesChanged(this, null);
+                    //Reordenar ids
+                    int index = 0;
+
+                    for (int i = 0; i < this.SubZonas.Count; i++)
+                    {
+                        this.SubZonas[i].Id = index;
+                        index++;
+                    }
+
+                    //Anunciar que se borra una zona 
+                    if (this.SubZonaRemoved != null)
+                    {
+                        this.SubZonaRemoved(this, Nombre);      //Borrar zona de la clase system seleccionada
+                    }
+
+                    //Trigger event that indicates that a division has been removed
+                    if (DivisionesChanged != null)
+                    {
+                        DivisionesChanged(this, null);          //Actualizar listBox
+                    }
                 }
             }
         }
@@ -592,14 +603,17 @@ namespace ThermoVision.Models
 
                     foreach (SubZona s in this.SubZonas)
                     {
-                        for (int x = s.Inicio.X; x < s.Fin.X; x++)
+                        if (s.Selected)
                         {
-                            for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
+                            for (int x = s.Inicio.X; x < s.Fin.X; x++)
                             {
-                                if (this.imgData[x, y] > maxValue)
-                                    maxValue = this.imgData[x, y];
-                                if (this.imgData[x, y] < minValue)
-                                    minValue = imgData[x, y];
+                                for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
+                                {
+                                    if (this.imgData[x, y] > maxValue)
+                                        maxValue = this.imgData[x, y];
+                                    if (this.imgData[x, y] < minValue)
+                                        minValue = imgData[x, y];
+                                }
                             }
                         }
                     }
@@ -668,7 +682,7 @@ namespace ThermoVision.Models
             #region "Modo funcionamiento"
 
             //Obtener temperaturas maximas, mínima y media de cada división de cada subzona
-            lock (this.sync)                    //Bloqueo para evitar cambios en la coleccion de subzonas
+            lock ("zonas")                    //Bloqueo para evitar cambios en la coleccion de subzonas
             {
                 foreach (SubZona s in this.SubZonas)
                 {

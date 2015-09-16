@@ -66,12 +66,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Asistente\Camaras\CameraNumberSelection.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Asistente\Camaras\CameraNumberSelection.Designer.cs">
-      <DependentUpon>CameraNumberSelection.cs</DependentUpon>
-    </Compile>
     <Compile Include="Asistente\Camaras\CamerasConfiguration.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,26 +81,23 @@
     <Compile Include="Asistente\flowControl.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Asistente\selectAppType.cs">
+    <Compile Include="Asistente\Camaras\selectAppType.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Asistente\selectAppType.Designer.cs">
+    <Compile Include="Asistente\Camaras\selectAppType.Designer.cs">
       <DependentUpon>selectAppType.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProgramFlow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Asistente\Camaras\CameraNumberSelection.resx">
-      <DependentUpon>CameraNumberSelection.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Asistente\Camaras\CamerasConfiguration.resx">
       <DependentUpon>CamerasConfiguration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Asistente\Camaras\CustomControls\customTextBox.resx">
       <DependentUpon>customTextBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Asistente\selectAppType.resx">
+    <EmbeddedResource Include="Asistente\Camaras\selectAppType.resx">
       <DependentUpon>selectAppType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
