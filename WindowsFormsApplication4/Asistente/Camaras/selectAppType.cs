@@ -39,6 +39,29 @@ namespace WindowsFormsApplication4.Asistente
                 3
             };
         }
+        public selectAppType(int nCamaras)
+        {
+            InitializeComponent();
+
+            this.Salir = true;
+
+            this.comboBoxAppType.TextChanged += comboBoxAppType_TextChanged;
+
+            this.comboBoxAppType.DataSource = new List<String>()
+                {
+                    "Standart",
+                    "Tuberias",
+                    "Coque"
+                };
+            this.comboBoxNumberCameras.DataSource = new List<int>()
+            {
+                1,
+                2,
+                3
+            };
+
+            this.comboBoxNumberCameras.SelectedIndex = nCamaras - 1;
+        }
 
         void comboBoxAppType_TextChanged(object sender, EventArgs e)                
         {

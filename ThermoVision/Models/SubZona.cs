@@ -195,14 +195,15 @@ namespace ThermoVision.Models
         }
         public SubZona(SerializationInfo info, StreamingContext ctxt)           
         {
-            this._id        = (int)     info.GetValue("Id", typeof(int));
-            this._Nombre    = (string)  info.GetValue("Nombre", typeof(string));
-            this._parent    = (Zona)    info.GetValue("Parent", typeof(Zona));
-            this._hasParent = (bool)    info.GetValue("HasParent", typeof(bool));
-            this._filas     = (int)     info.GetValue("Filas", typeof(int));
-            this._columnas  = (int)     info.GetValue("Columnas", typeof(int));
-            this._inicio    = (Point)   info.GetValue("Inicio", typeof(Point));
-            this._fin       = (Point)   info.GetValue("Fin", typeof(Point));
+            this._id            = (int)       info.GetValue("Id",           typeof(int));
+            this._Nombre        = (string)    info.GetValue("Nombre",       typeof(string));
+            this._parent        = (Zona)      info.GetValue("Parent",       typeof(Zona));
+            this._hasParent     = (bool)      info.GetValue("HasParent",    typeof(bool));
+            this._filas         = (int)       info.GetValue("Filas",        typeof(int));
+            this._columnas      = (int)       info.GetValue("Columnas",     typeof(int));
+            this._inicio        = (Point)     info.GetValue("Inicio",       typeof(Point));
+            this._fin           = (Point)     info.GetValue("Fin",          typeof(Point));
+            this._thermoParent  = (ThermoCam) info.GetValue("ThermoParent", typeof(ThermoCam));
         }
 
         #endregion
@@ -211,14 +212,15 @@ namespace ThermoVision.Models
 
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
-            info.AddValue("Id",        this.Id);
-            info.AddValue("Nombre",    this.Nombre);
-            info.AddValue("Parent",    this.Parent);
-            info.AddValue("HasParent", this.HasParent);
-            info.AddValue("Filas",     this.Filas);
-            info.AddValue("Columnas",  this.Columnas);
-            info.AddValue("Inicio",    this.Inicio);
-            info.AddValue("Fin",       this.Fin);
+            info.AddValue("Id",             this.Id);
+            info.AddValue("Nombre",         this.Nombre);
+            info.AddValue("Parent",         this.Parent);
+            info.AddValue("HasParent",      this.HasParent);
+            info.AddValue("Filas",          this.Filas);
+            info.AddValue("Columnas",       this.Columnas);
+            info.AddValue("Inicio",         this.Inicio);
+            info.AddValue("Fin",            this.Fin);
+            info.AddValue("ThermoParent",   this._thermoParent);
         }
 
         public void addCoordinates(Point p1, Point p2)                          

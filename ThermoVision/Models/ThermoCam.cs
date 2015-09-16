@@ -47,7 +47,6 @@ namespace ThermoVision.Models
         bool                    _matrixTemp;
 
         public List<SubZona>    SubZonas;
-        object                  sync            = new object();
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// VARIABLES PROCESAMIENTO
         /////////////////////////////// Variables para procesar las imagenes 
@@ -301,7 +300,7 @@ namespace ThermoVision.Models
             }
         }
 
-        public void addDivision(SubZona d)        
+        public void addDivision(SubZona d)                              
         {
             lock ("Zonas")
             {
@@ -375,7 +374,7 @@ namespace ThermoVision.Models
 
         #region "Conectar"
 
-        private void _conectar()                    
+        private void _conectar()                     
         {
             try
             {
@@ -682,7 +681,7 @@ namespace ThermoVision.Models
             #region "Modo funcionamiento"
 
             //Obtener temperaturas maximas, mínima y media de cada división de cada subzona
-            lock ("zonas")                    //Bloqueo para evitar cambios en la coleccion de subzonas
+            lock ("Zonas")                    //Bloqueo para evitar cambios en la coleccion de subzonas
             {
                 foreach (SubZona s in this.SubZonas)
                 {
@@ -894,9 +893,6 @@ namespace ThermoVision.Models
 
                 case 18:
                     //IMAGE SIZE HAS CHANGED
-                    int a;
-                    a = 1;
-
                     break;
             }
         }

@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ThermoVision.Models
 {
+    [Serializable]
     public class Sistema : ISerializable
     {
         #region "Variables"
@@ -53,8 +54,10 @@ namespace ThermoVision.Models
         }
         public Sistema(SerializationInfo info, StreamingContext ctxt)   
         {
-            this._zonas      =  (List<Zona>)      info.GetValue("Zonas",        typeof(List<Zona>));
-            this._thermoCams =  (List<ThermoCam>) info.GetValue("ThermoCams",   typeof(List<ThermoCam>));
+            this._zonas         = (List<Zona>)      info.GetValue("Zonas",        typeof(List<Zona>));
+            this._thermoCams    = (List<ThermoCam>)info.GetValue("ThermoCams",    typeof(List<ThermoCam>));
+            this.selectedZona   = (Zona)            info.GetValue("SelectedZona", typeof(Zona));
+            this.selectedZona   = null;
         }
 
         #endregion
@@ -63,8 +66,9 @@ namespace ThermoVision.Models
 
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt) 
         {
-            info.AddValue("Zonas",      this._zonas);
-            info.AddValue("ThermoCams", this._thermoCams);
+            info.AddValue("Zonas",        this._zonas);
+            info.AddValue("ThermoCams",   this._thermoCams);
+            info.AddValue("SelectedZona", this.selectedZona);
         }
 
         #region "ZONAS"

@@ -29,6 +29,17 @@ namespace WindowsFormsApplication4
 
             //Borrar archivo de datos
             //System.IO.File.Delete("Data.ocl");
+            _system = Helpers.deserializeSistema("data.ocl");
+
+            if (_system != null)
+            {
+                if (_system.ThermoCams.Count > 0)
+                {
+                    numeroCamaras = _system.ThermoCams.Count;
+                    step          = (int)windowIds.appCameraConfiguration;
+                }
+            }
+
             Helpers.changeAppStringSetting("Mode", "");
 
             while (finAsistente == false)
@@ -40,7 +51,14 @@ namespace WindowsFormsApplication4
                         #region "Modo de aplicación"
                         if (Helpers.getAppStringSetting("Mode") == "")
                         {
-                            using (Asistente.selectAppType AppType = new Asistente.selectAppType())
+                            _system = Helpers.deserializeSistema("data.ocl");
+
+                            if (_system != null)
+                            {
+                                numeroCamaras = _system.ThermoCams.Count;
+                            }
+
+                            using (Asistente.selectAppType AppType = new Asistente.selectAppType(numeroCamaras))
                             {
                                 AppType.ShowDialog();
 
@@ -65,8 +83,7 @@ namespace WindowsFormsApplication4
 
                         if (numeroCamaras > 0)
                         {
-                            //if (_system == null)
-                                _system = new Sistema();
+                            _system = Helpers.deserializeSistema("data.ocl");
 
                             Asistente.Camaras.CamerasConfiguration cc = new Asistente.Camaras.CamerasConfiguration(numeroCamaras, _system);
                             cc.ShowDialog();
@@ -78,9 +95,18 @@ namespace WindowsFormsApplication4
                             }
 
                             if (cc.Atras)
-                                step = (int) windowIds.appMode;
+                            {
+                                step = (int)windowIds.appMode;
+                                Helpers.changeAppStringSetting("Mode", "");
+                                Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                            }
                             else
-                                step = (int) windowIds.appCreateOPCVarsCSV;         //step = (int) windowIds.appCameraNumber;
+                            {
+                                step = (int)windowIds.appCreateOPCVarsCSV;         //step = (int) windowIds.appCameraNumber;
+                                //Guardar sistema
+                                Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                            }
+
 
                             cc.Dispose();
                         }
@@ -96,7 +122,7 @@ namespace WindowsFormsApplication4
 
                         #region "Crear variables OPC"
 
-
+                        _system = Helpers.deserializeSistema("data.ocl");
 
                         #endregion
 

@@ -13,28 +13,28 @@ namespace WindowsFormsApplication4
     class Helpers
     {
         //CAMBIAR CONFIGURACIONES
-        public static string getAppStringSetting(string property)               
+        public static string getAppStringSetting(string property)                
         {
             return (string) Properties.Settings.Default[property];
         }
-        public static void changeAppStringSetting(string property, string value)
+        public static void changeAppStringSetting(string property, string value) 
         {
             Properties.Settings.Default[property] = value;
             Properties.Settings.Default.Save();
         }
 
-        public static int getAppIntSetting(string property)                     
+        public static int getAppIntSetting(string property)                      
         {
             return (int) Properties.Settings.Default[property];
         }
-        public static void changeAppIntSetting(string property, int value)      
+        public static void changeAppIntSetting(string property, int value)       
         {
             Properties.Settings.Default[property] = value;
             Properties.Settings.Default.Save();
         }
 
         //DESERIALIZAR
-        public static void serializeThermoCams(List<ThermoVision.Models.ThermoCam> ThermoCams, string _file)
+        public static void serializeSistema(Sistema sistema, string _file) 
         {
             try
             {
@@ -42,7 +42,7 @@ namespace WindowsFormsApplication4
                 {
                     BinaryFormatter bformatter = new BinaryFormatter();
 
-                    bformatter.Serialize(stream, ThermoCams);
+                    bformatter.Serialize(stream, sistema);
                     stream.Close();
                 }
             }
@@ -51,9 +51,9 @@ namespace WindowsFormsApplication4
                 ex.ToString();
             }
         }
-        public static List<ThermoCam> deserializeThermoCams(string _file)                                   
+        public static Sistema deserializeSistema(string _file)                                    
         {
-            List<ThermoCam> ThermoCams = null;
+            Sistema sistema = null;
 
             try
             {
@@ -61,7 +61,7 @@ namespace WindowsFormsApplication4
                 {
                     BinaryFormatter bformatter = new BinaryFormatter();
 
-                    ThermoCams = (List<ThermoCam>)bformatter.Deserialize(stream);
+                    sistema = (Sistema)bformatter.Deserialize(stream);
                     stream.Close();
                 }
             }
@@ -70,7 +70,7 @@ namespace WindowsFormsApplication4
                 ex.ToString();
             }
 
-            return ThermoCams;
+            return sistema;
         }
 
     }

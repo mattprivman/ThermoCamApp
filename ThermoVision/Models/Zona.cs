@@ -67,10 +67,10 @@ namespace ThermoVision.Models
         }
         public Zona(SerializationInfo info, StreamingContext ctxt)      
         {
-            this._nombre = (string)info.GetValue("Nombre", typeof(string));
-            this._children = (List<SubZona>)info.GetValue("Children", typeof(SubZona));
-            this._hasChildren = (bool)info.GetValue("HasChildren", typeof(bool));
-            this._parent = (Sistema)info.GetValue("Parent", typeof(Sistema));
+            this._nombre        = (string)          info.GetValue("Nombre",         typeof(string));
+            this._children      = (List<SubZona>)   info.GetValue("Children",       typeof(List<SubZona>));
+            this._hasChildren   = (bool)            info.GetValue("HasChildren",    typeof(bool));
+            this._parent        = (Sistema)         info.GetValue("Parent",         typeof(Sistema));
         }
 
         #endregion

@@ -38,18 +38,33 @@ namespace WindowsFormsApplication4.Asistente.Camaras
 
         public CamerasConfiguration(int numerocamaras, Sistema _system)     
         {
+            this.Salir = true;
             this._system = _system;
 
-            this.Salir   = true;
-            InitializeComponent(numerocamaras);
+            if (this._system == null)    //Asistente iniciado por primera vez
+            {
+                this._system = new Sistema();
+                InitializeComponent(numerocamaras);
+            }
+            else                   //Se ha pulsado atras o se desea cambiar la configuración
+            {                
+                InitializeComponentWithSistema(numerocamaras);
+                _system_zonasListChanged(this, null);                
+            }
 
             this._system.zonasListChanged += _system_zonasListChanged;
 
             this.listBoxZonas.SelectedIndexChanged  += listBoxZonas_SelectedIndexChanged;
             this.buttonAddZone.Click                += buttonAddZone_Click;
             this.buttonRemoveZona.Click             += buttonRemoveZona_Click;
-        }
 
+            if (this.listBoxZonas.Items.Count > 0)
+            {
+                this.listBoxZonas.SelectedIndex = 0;
+                this.listBoxZonas.Refresh();
+                this._system.selectZona(this.listBoxZonas.Items[this.listBoxZonas.SelectedIndex].ToString());
+            }
+        }
 
         #region "ZONAS"
 

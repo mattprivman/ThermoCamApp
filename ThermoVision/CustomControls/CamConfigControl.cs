@@ -38,18 +38,26 @@ namespace ThermoVision.CustomControls
             this.numericTextBoxCol.maxVal   = 50;
         }
 
-        public void Initialize(Form f, Sistema _system)                             
+        public void Initialize(Form f, Sistema _system, ThermoCam thermo = null)                             
         {
             //////////////////////  INICIALIZACIÓN CAMARAS //////////////////////////
-
-            this.camara = new ThermoCam(
-                f,
-                CameraType.FLIR_A3X0,
-                DeviceType.Ethernet16bits,
-                InterfaceType.TCP);
-
             this._system = _system;
-            this._system.addThermoCam(this.camara);     // Añadir cammara al sistema
+
+            if (thermo == null)
+            {
+                this.camara = new ThermoCam(
+                    f,
+                    CameraType.FLIR_A3X0,
+                    DeviceType.Ethernet16bits,
+                    InterfaceType.TCP);
+                                    
+                    this._system.addThermoCam(this.camara);     // Añadir cammara al sistema
+            }
+            else
+            {
+                this.camara = thermo;
+                this.camara.InitializeForm(f);
+            }
 
             this.camara.ConfiguracionMode = true;
 
@@ -69,6 +77,17 @@ namespace ThermoVision.CustomControls
             //////////////////////  EVENTOS CONECTAR Y DESCONECTAR  //////////////////
             this.buttonConectar.Click    += buttonConectar_Click;
             this.buttonDesconectar.Click += buttonDesconectar_Click;
+
+            if (thermo != null)
+            {
+                if (thermo.Address != null)
+                {
+                    this.textBoxDireccionIP.Text = thermo.Address;
+
+                    this.camara.Conectar();
+                    this.actualizarListBox();
+                }
+            }
         }
 
         ////////////////////////////  EVENTOS CONEXIÓN Y DESCONEXIÓN DE LA CAMARA  /////////////
