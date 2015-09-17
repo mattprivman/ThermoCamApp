@@ -18,7 +18,6 @@ namespace ThermoVision.Models
 
         //ZONA A LA QUE PERTENECE ESTA DIVISIÓN
         Zona    _parent;
-        bool    _hasParent;
 
         ThermoCam _thermoParent;
 
@@ -101,17 +100,6 @@ namespace ThermoVision.Models
                 return this._parent;
             }
         }
-        public bool HasParent                       // -rw 
-        {
-            get
-            {
-                return this._hasParent;
-            }
-            set
-            {
-                this._hasParent = value;
-            }
-        }
 
         public ThermoCam ThermoParent               // -rw 
         {
@@ -188,8 +176,9 @@ namespace ThermoVision.Models
 
         #region "Constructores"
 
-        public SubZona()                                             
+        public SubZona(string Name)                                             
         {
+            this._Nombre    = Name;
             this._filas     = 1;
             this._columnas  = 1;
         }
@@ -198,7 +187,6 @@ namespace ThermoVision.Models
             this._id            = (int)       info.GetValue("Id",           typeof(int));
             this._Nombre        = (string)    info.GetValue("Nombre",       typeof(string));
             this._parent        = (Zona)      info.GetValue("Parent",       typeof(Zona));
-            this._hasParent     = (bool)      info.GetValue("HasParent",    typeof(bool));
             this._filas         = (int)       info.GetValue("Filas",        typeof(int));
             this._columnas      = (int)       info.GetValue("Columnas",     typeof(int));
             this._inicio        = (Point)     info.GetValue("Inicio",       typeof(Point));
@@ -215,7 +203,6 @@ namespace ThermoVision.Models
             info.AddValue("Id",             this.Id);
             info.AddValue("Nombre",         this.Nombre);
             info.AddValue("Parent",         this.Parent);
-            info.AddValue("HasParent",      this.HasParent);
             info.AddValue("Filas",          this.Filas);
             info.AddValue("Columnas",       this.Columnas);
             info.AddValue("Inicio",         this.Inicio);

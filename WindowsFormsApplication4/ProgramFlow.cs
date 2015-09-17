@@ -29,7 +29,7 @@ namespace WindowsFormsApplication4
 
             //Borrar archivo de datos
             //System.IO.File.Delete("Data.ocl");
-            _system = Helpers.deserializeSistema("data.ocl");
+            //_system = Helpers.deserializeSistema("data.ocl");
 
             if (_system != null)
             {
@@ -51,7 +51,7 @@ namespace WindowsFormsApplication4
                         #region "Modo de aplicación"
                         if (Helpers.getAppStringSetting("Mode") == "")
                         {
-                            _system = Helpers.deserializeSistema("data.ocl");
+                            //_system = Helpers.deserializeSistema("data.ocl");
 
                             if (_system != null)
                             {
@@ -83,7 +83,7 @@ namespace WindowsFormsApplication4
 
                         if (numeroCamaras > 0)
                         {
-                            _system = Helpers.deserializeSistema("data.ocl");
+                            //_system = Helpers.deserializeSistema("data.ocl");
 
                             Asistente.Camaras.CamerasConfiguration cc = new Asistente.Camaras.CamerasConfiguration(numeroCamaras, _system);
                             cc.ShowDialog();
@@ -98,13 +98,13 @@ namespace WindowsFormsApplication4
                             {
                                 step = (int)windowIds.appMode;
                                 Helpers.changeAppStringSetting("Mode", "");
-                                Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                                //Helpers.serializeSistema(cc.Sistema, "data.ocl");
                             }
                             else
                             {
                                 step = (int)windowIds.appCreateOPCVarsCSV;         //step = (int) windowIds.appCameraNumber;
                                 //Guardar sistema
-                                Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                                //Helpers.serializeSistema(cc.Sistema, "data.ocl");
                             }
 
 

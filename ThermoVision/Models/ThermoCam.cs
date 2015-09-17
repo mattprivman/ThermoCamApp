@@ -156,19 +156,21 @@ namespace ThermoVision.Models
 
         public delegate void ThermoCamImgEventCallback(object sender, ThermoCamImgArgs e);
         public delegate void ThermoCamEventCallback(object sender, EventArgs e);
-        public delegate void ThermoCamZonaRemovedCallback(object sender, string e);
+        public delegate void ThermoCamStringCallback(object sender, string e);
 
         #endregion
 
         #region EVENTOS
 
+        public event ThermoCamImgEventCallback      ThermoCamImgReceived;
+        public event ThermoCamEventCallback         ThermoCamNameChanged;
+
+        //CONEXIÓN
         public event ThermoCamEventCallback         ThermoCamConnected;
         public event ThermoCamEventCallback         ThermoCamDisConnected;
-        public event ThermoCamImgEventCallback      ThermoCamImgReceived;
-        public event ThermoCamEventCallback         DivisionesChanged;
-        public event ThermoCamZonaRemovedCallback   SubZonaRemoved;
-        public event ThermoCamEventCallback         ThermoCamNameChanged;
         public event ThermoCamEventCallback         ThermoCamAddressChanged;
+        public event ThermoCamStringCallback        ThermoCamFrameRateChanged;
+        public event ThermoCamStringCallback        ThermoCamImgRceceivedTimeoutChanged;
 
         #endregion
 
@@ -225,8 +227,6 @@ namespace ThermoVision.Models
             info.AddValue("DevType"  , this._devType);
             info.AddValue("InterType", this._interfaceType);
             info.AddValue("SubZonas" , this.SubZonas);
-            int a;
-            a = 1;
         }
 
         #endregion
@@ -292,80 +292,22 @@ namespace ThermoVision.Models
 
         #region "SUBZONAS"
 
-        void ThermoCam_DivisionesChanged(object sender, EventArgs e)    
+        public void addSubZona(SubZona s)       
         {
-            if (DivisionesChanged != null)
-            {
-                DivisionesChanged(this, null);
-            }
+            this.SubZonas.Add(s);
+            s.ThermoParent = this;
         }
-
-        public void addDivision(SubZona d)                              
+        public void removeSubZona(SubZona s)    
         {
-            lock ("Zonas")
+            foreach (SubZona subZonas in this.SubZonas)
             {
-                if (this.SubZonas.Exists(x => x.Nombre == d.Nombre))
+                if (subZonas.Equals(s))
                 {
-                    //Ya existe, hay que modificarla
-                    //this.SubZonas.Where(x => x.Nombre == d.Nombre).First().Nombre = d.Nombre;
-                    this.SubZonas.Where(x => x.Nombre == d.Nombre).First().addCoordinates(new Point(d.Inicio.X, d.Inicio.Y),
-                        new Point(d.Fin.X, d.Fin.Y));
-                    this.SubZonas.Where(x => x.Nombre == d.Nombre).First().Filas = d.Filas;
-                    this.SubZonas.Where(x => x.Nombre == d.Nombre).First().Columnas = d.Columnas;
-
-                    //Trigger event that indicates that a division has been modified
-                    if (DivisionesChanged != null)
-                    {
-                        DivisionesChanged(this, null);
-                    }
-                }
-                else
-                {
-                    //No existe dicha división, se crea.
-                    this.SubZonas.Add(d);
-
-                    //Trigger event that indicates that a division has been added
-                    if (DivisionesChanged != null)
-                    {
-                        DivisionesChanged(this, null);
-                    }
-
-                    //this.DivisionesChanged += ThermoCam_DivisionesChanged;
+                    this.SubZonas.Remove(s);
                 }
             }
         }
-        public void RemoveDivision(string Nombre)        
-        {
-            lock ("Zonas")
-            {
-                if (this.SubZonas.Exists(x => x.Nombre == Nombre))
-                {
-                    this.SubZonas.Remove(this.SubZonas.Where(x => x.Nombre == Nombre).First());
-
-                    //Reordenar ids
-                    int index = 0;
-
-                    for (int i = 0; i < this.SubZonas.Count; i++)
-                    {
-                        this.SubZonas[i].Id = index;
-                        index++;
-                    }
-
-                    //Anunciar que se borra una zona 
-                    if (this.SubZonaRemoved != null)
-                    {
-                        this.SubZonaRemoved(this, Nombre);      //Borrar zona de la clase system seleccionada
-                    }
-
-                    //Trigger event that indicates that a division has been removed
-                    if (DivisionesChanged != null)
-                    {
-                        DivisionesChanged(this, null);          //Actualizar listBox
-                    }
-                }
-            }
-        }
-
+        
         #endregion
 
         #endregion
@@ -398,7 +340,10 @@ namespace ThermoVision.Models
         {
             try
             {
-                return this.camara.DoCameraAction(action);
+                if (this.connected)
+                    return this.camara.DoCameraAction(action);
+                else
+                    return -1;
             }
             catch (Exception ex)
             {
@@ -493,8 +438,12 @@ namespace ThermoVision.Models
                                 if (actualTimeout is int)
                                 {
                                     status = this.camara.SetCameraProperty(93, (int)actualTimeout + 100);
+
+                                    if (ThermoCamImgRceceivedTimeoutChanged != null)
+                                    {
+                                        ThermoCamImgRceceivedTimeoutChanged(this, ((int) actualTimeout + 100).ToString());
+                                    }                                        
                                 }
-                                
 
                                 if (framesObject is double[])
                                 {
@@ -758,7 +707,7 @@ namespace ThermoVision.Models
 
         #region EVENTOS
 
-        private void start()
+        private void start()                
         {
             
             //try
@@ -787,6 +736,14 @@ namespace ThermoVision.Models
 
                 if (this.ThermoCamConnected != null)
                     this.ThermoCamConnected(this, null);
+
+                object actualTimeout = this.camara.GetCameraProperty(93);
+
+                if (actualTimeout is int)
+                {
+                    if (this.ThermoCamImgRceceivedTimeoutChanged != null)
+                        this.ThermoCamImgRceceivedTimeoutChanged(this, ((int)actualTimeout).ToString());
+                }
             }
             //}
             //catch (Exception ex)
@@ -879,7 +836,12 @@ namespace ThermoVision.Models
                 case 15:
                     //FRAME RATE CHANGED COMPLETED (PROPERTY 43)
                     object frame = this.camara.GetCameraProperty(43);
-                    frame.ToString();
+
+                    if (frame is double)
+                    {
+                        if (this.ThermoCamFrameRateChanged != null)
+                            this.ThermoCamFrameRateChanged(this, ((double)frame).ToString());
+                    }
 
                     break;
 

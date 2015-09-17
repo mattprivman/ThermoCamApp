@@ -16,7 +16,6 @@ namespace ThermoVision.Models
         string          _nombre;
 
         List<SubZona>   _children;
-        bool            _hasChildren;
 
         Sistema         _parent;
 
@@ -24,7 +23,7 @@ namespace ThermoVision.Models
 
         #region "Propiedades"
 
-        public string Nombre                        
+        public string        Nombre                 
         {
             get
             {
@@ -35,21 +34,12 @@ namespace ThermoVision.Models
                 this._nombre = value;
             }
         }
-
         public List<SubZona> Children               
         {
             get
             {
                 return this._children;
             }
-        }
-        public bool HasChildren                     
-        {
-            get
-            {
-                return this._hasChildren;
-            }
-
         }
 
         #endregion
@@ -60,7 +50,6 @@ namespace ThermoVision.Models
         {
             this._nombre = Name;
 
-            this._hasChildren = false;
             this._children = new List<SubZona>();
 
             this._parent = parent;
@@ -69,7 +58,6 @@ namespace ThermoVision.Models
         {
             this._nombre        = (string)          info.GetValue("Nombre",         typeof(string));
             this._children      = (List<SubZona>)   info.GetValue("Children",       typeof(List<SubZona>));
-            this._hasChildren   = (bool)            info.GetValue("HasChildren",    typeof(bool));
             this._parent        = (Sistema)         info.GetValue("Parent",         typeof(Sistema));
         }
 
@@ -79,14 +67,14 @@ namespace ThermoVision.Models
 
         #region "Seleccionar y deseleccionar subzonas"
 
-        public void selectSubZonas()        
+        public void selectSubZonas()                
         {
             foreach (SubZona s in this._children)
             {
                 s.Selected = true;
             }
         }
-        public void unSelectSubZonas()      
+        public void unSelectSubZonas()              
         {
             foreach (SubZona s in this._children)
             {
@@ -100,7 +88,6 @@ namespace ThermoVision.Models
         {
             info.AddValue("Nombre",      this._nombre);
             info.AddValue("Children",    this._children);
-            info.AddValue("HasChildren", this._hasChildren);
             info.AddValue("Parent",      this._parent);
         }
 
@@ -108,17 +95,22 @@ namespace ThermoVision.Models
 
         public void addChildren(SubZona child)      
         {
-            this._children.Add(child);
-
-            if (!this._hasChildren)
-                this._hasChildren = true;
+            //COMPROBAR QUE NO EXISTA NINGÚNA SUBZONA CON EL MISMO NOMBRE
+            if (!this._children.Exists(x => x.Nombre == child.Nombre))
+                this._children.Add(child);
+            else
+                throw new Exception("Ya existe una subzona con ese nombre");
         }
         public void removeChildren(SubZona child)   
         {
             this._children.Remove(child);
-
-            if (this._children.Count == 0)
-                this._hasChildren = false;
+        }
+        public SubZona getChildren(string name)     
+        {
+            if (this._children.Exists(x => x.Nombre == name))
+                return this._children.Where(x => x.Nombre == name).First();
+            else
+                return null;
         }
 
         #endregion

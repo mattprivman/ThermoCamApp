@@ -97,7 +97,8 @@ namespace ThermoVision.Models
             {
                 foreach (SubZona t in z.Children)
                 {
-                    t.ThermoParent.SubZonas.Remove(t);
+                    if(t.ThermoParent != null)
+                        t.ThermoParent.SubZonas.Remove(t);
                 }
 
                 z.Children.Clear();
@@ -126,6 +127,10 @@ namespace ThermoVision.Models
                 Zona z = this._zonas.Where(x => x.Nombre == name).First();
                 this.selectedZona = z;
                 z.selectSubZonas();
+            }
+            else
+            {
+                this.selectedZona = null;
             }
         }       //SELECCIONAR ZONA
         #endregion
