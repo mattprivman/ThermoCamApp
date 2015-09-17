@@ -330,7 +330,6 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             this.buttonAddYini.TabIndex = 8;
             this.buttonAddYini.Text     = "+";
             this.buttonAddYini.UseVisualStyleBackColor = true;
-            this.buttonAddYini.Click += new System.EventHandler(this.buttonAddYini_Click);
             // 
             // numericTextBoxYinit
             // 

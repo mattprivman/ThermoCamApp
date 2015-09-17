@@ -2,7 +2,7 @@
 using System.Drawing;
 
 
-namespace ThermoVision.Tipos
+namespace ThermoVision.Enumeraciones
 {
     public struct ThermoCamImgArgs
     {

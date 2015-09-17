@@ -107,7 +107,6 @@ namespace WindowsFormsApplication4
                                 //Helpers.serializeSistema(cc.Sistema, "data.ocl");
                             }
 
-
                             cc.Dispose();
                         }
                         else

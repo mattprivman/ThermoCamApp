@@ -95,15 +95,21 @@ namespace ThermoVision.Models
 
         public void addChildren(SubZona child)      
         {
-            //COMPROBAR QUE NO EXISTA NINGÚNA SUBZONA CON EL MISMO NOMBRE
-            if (!this._children.Exists(x => x.Nombre == child.Nombre))
-                this._children.Add(child);
-            else
-                throw new Exception("Ya existe una subzona con ese nombre");
+            lock ("Zonas")
+            {
+                //COMPROBAR QUE NO EXISTA NINGÚNA SUBZONA CON EL MISMO NOMBRE
+                if (!this._children.Exists(x => x.Nombre == child.Nombre))
+                    this._children.Add(child);
+                else
+                    throw new Exception("Ya existe una subzona con ese nombre");
+            }
         }
         public void removeChildren(SubZona child)   
         {
-            this._children.Remove(child);
+            lock ("Zonas")
+            {
+                this._children.Remove(child);
+            }
         }
         public SubZona getChildren(string name)     
         {

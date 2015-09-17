@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using ThermoVision.Tipos;
+using ThermoVision.Enumeraciones;
 using ThermoVision.Models;
 
 namespace ThermoVision.CustomControls
 {
     public partial class CamConfigControl : UserControl
     {
+        #region "Variables"
         Sistema          _system;
         public ThermoCam camara;
 
@@ -21,9 +22,9 @@ namespace ThermoVision.CustomControls
         Bitmap      bmpModified;
         Point       coordenada;
         Point       Fin;
+        #endregion
 
-        int         selectedIndex;
-        
+        #region "Metodos públicos"
 
         public CamConfigControl()                                                   
         {
@@ -64,7 +65,6 @@ namespace ThermoVision.CustomControls
             this.buttonReloadCalibration.Click          += buttonReloadCalibration_Click;
             this.buttonExternalImageCorrection.Click    += buttonExternalImageCorrection_Click;
         }
-
         ////////////////////////////  EVENTOS CONEXIÓN Y DESCONEXIÓN DE LA CAMARA  /////////////
         void camara_ThermoCamConnected(object sender, EventArgs e)                  
         {
@@ -79,6 +79,18 @@ namespace ThermoVision.CustomControls
             this.labelConectionStatusString.Text    = "Conectado";
             this.labelConexionStatusColor.BackColor = Color.Green;
         }
+
+        #endregion
+
+        public delegate void coordenadasEventHandler(ThermoCam sender, coordenadasEventArgs e);
+
+        public struct coordenadasEventArgs                                          
+        {
+            public Point Inicio;
+            public Point Fin;
+        }
+
+        public event coordenadasEventHandler CoordenadasGeneradas;
 
         void camara_ThermoCamDisConnected(object sender, EventArgs e)               
         {
@@ -198,6 +210,16 @@ namespace ThermoVision.CustomControls
                 //Add coordinate
                 Fin = new Point(e.X * camara.Width / ((PictureBox)sender).Width,
                     e.Y * camara.Heigth / ((PictureBox)sender).Height);
+
+                //Lanzar evento coordenadas Generadas
+                if(this.CoordenadasGeneradas != null)
+                {
+                    this.CoordenadasGeneradas(this.camara, new coordenadasEventArgs()
+                                    {
+                                        Inicio = this.coordenada,
+                                        Fin    = this.Fin
+                                    });
+                }
 
             }
         }   //MOUSE LEFT UP

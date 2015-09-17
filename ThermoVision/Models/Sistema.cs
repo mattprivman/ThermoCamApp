@@ -28,14 +28,14 @@ namespace ThermoVision.Models
 
         #region "Propiedades"
 
-        public List<Zona>       Zonas            // -r 
+        public List<Zona>       Zonas                             // -r 
         {
             get
             {
                 return this._zonas;
             }
         }
-        public List<ThermoCam>  ThermoCams       // -r 
+        public List<ThermoCam>  ThermoCams                        // -r 
         {
             get
             {
@@ -119,18 +119,21 @@ namespace ThermoVision.Models
         }       //DEVOLVER ZONA
         public void selectZona(string name)         
         {
-            foreach (Zona z in this._zonas)                                             //Deseleccionar todas las zonas
-                z.unSelectSubZonas();
+            lock ("Zonas")
+            {
+                foreach (Zona z in this._zonas)                                             //Deseleccionar todas las zonas
+                    z.unSelectSubZonas();
 
-            if (this._zonas.Exists(x => x.Nombre == name))                              //Seleccionar las subzonas de la subzona a activar
-            {
-                Zona z = this._zonas.Where(x => x.Nombre == name).First();
-                this.selectedZona = z;
-                z.selectSubZonas();
-            }
-            else
-            {
-                this.selectedZona = null;
+                if (this._zonas.Exists(x => x.Nombre == name))                              //Seleccionar las subzonas de la subzona a activar
+                {
+                    Zona z = this._zonas.Where(x => x.Nombre == name).First();
+                    this.selectedZona = z;
+                    z.selectSubZonas();
+                }
+                else
+                {
+                    this.selectedZona = null;
+                }
             }
         }       //SELECCIONAR ZONA
         #endregion

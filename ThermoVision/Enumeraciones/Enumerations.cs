@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ThermoVision.Tipos
+namespace ThermoVision.Enumeraciones
 {
     public enum  appType : int
     {

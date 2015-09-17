@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using ThermoVision.Tipos;
+using ThermoVision.Enumeraciones;
 
 namespace ThermoVision.Models
 {
@@ -91,11 +91,11 @@ namespace ThermoVision.Models
         //ZONA DE PERTENENCIA
         public Zona Parent                          // -rw 
         {
-            set
+            set 
             {
                 this._parent = value;
             }
-            get
+            get 
             {
                 return this._parent;
             }
@@ -109,7 +109,16 @@ namespace ThermoVision.Models
             }
             set
             {
-                this._thermoParent = value;
+                if (this._parent == null || !this._parent.Equals(value))
+                {
+                    lock ("Zonas")
+                    {
+                        if(ThermoParent != null)
+                            this.ThermoParent.removeSubZona(this);
+                        this._thermoParent = value;
+                        this.ThermoParent.addSubZona(this);
+                    }
+                }
             }
         }
 
@@ -179,6 +188,7 @@ namespace ThermoVision.Models
         public SubZona(string Name)                                             
         {
             this._Nombre    = Name;
+
             this._filas     = 1;
             this._columnas  = 1;
         }
@@ -212,31 +222,39 @@ namespace ThermoVision.Models
 
         public void addCoordinates(Point p1, Point p2)                          
         {
-            // El punto de inicio sera el menor y el de fin el mayor.
-            if (p1.X > p2.X)
+            if (p1.X >= 0 && p1.Y >= 0 && p2.X > 0 && p2.Y >= 0 &&
+                p1.X < ThermoParent.Width && p1.Y < ThermoParent.Heigth &&
+                p2.X < ThermoParent.Width && p2.Y < ThermoParent.Heigth)
             {
-                this._inicio.X = p2.X;
-                this._fin.X = p1.X;
-            }
-            else
-            {
-                this._inicio.X = p1.X;
-                this._fin.X = p2.X;
-            }
+                lock ("SUbZonas")
+                {
+                    // El punto de inicio sera el menor y el de fin el mayor.
+                    if (p1.X > p2.X)
+                    {
+                        this._inicio.X = p2.X;
+                        this._fin.X = p1.X;
+                    }
+                    else
+                    {
+                        this._inicio.X = p1.X;
+                        this._fin.X = p2.X;
+                    }
 
-            if (p1.Y > p2.Y)
-            {
-                this._inicio.Y = p2.Y;
-                this._fin.Y = p1.Y;
-            }
-            else
-            {
-                this._inicio.Y = p1.Y;
-                this._fin.Y = p2.Y;
-            }
+                    if (p1.Y > p2.Y)
+                    {
+                        this._inicio.Y = p2.Y;
+                        this._fin.Y = p1.Y;
+                    }
+                    else
+                    {
+                        this._inicio.Y = p1.Y;
+                        this._fin.Y = p2.Y;
+                    }
 
-            if (ParametersChanged != null)
-                ParametersChanged(this, null);
+                    if (ParametersChanged != null)
+                        ParametersChanged(this, null);
+                }
+            }
         }
 
         #endregion

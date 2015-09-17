@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ThermoVision.Tipos;
+using ThermoVision.Enumeraciones;
 using ThermoVision.Models;
 
 namespace ThermoVision.CustomControls

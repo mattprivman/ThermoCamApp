@@ -8,7 +8,7 @@ using AxCAMCTRLLib;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using ThermoVision.Helpers;
-using ThermoVision.Tipos;
+using ThermoVision.Enumeraciones;
 
 namespace ThermoVision.Models
 {
@@ -294,17 +294,17 @@ namespace ThermoVision.Models
 
         public void addSubZona(SubZona s)       
         {
-            this.SubZonas.Add(s);
-            s.ThermoParent = this;
+            lock ("Zonas")
+            {
+                this.SubZonas.Add(s);
+            }
         }
         public void removeSubZona(SubZona s)    
         {
-            foreach (SubZona subZonas in this.SubZonas)
+            lock ("Zonas")
             {
-                if (subZonas.Equals(s))
-                {
+                if (this.SubZonas.Contains(s))
                     this.SubZonas.Remove(s);
-                }
             }
         }
         
@@ -579,8 +579,11 @@ namespace ThermoVision.Models
                                 {
                                     this.Val = (uint)this.imgData[x, y];
 
-                                    Color c = this.colorPalette[(int)(((this.Val - minValue) * 255) / range)];
-                                    this.bmp.SetPixel(x, y, c);
+                                    if (range > 0)
+                                    {
+                                        Color c = this.colorPalette[(int)(((this.Val - minValue) * 255) / range)];
+                                        this.bmp.SetPixel(x, y, c);
+                                    }
                                 }
                             }
 
