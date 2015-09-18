@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using OPC;
 
 namespace ThermoVision.Models
 {
@@ -13,10 +14,13 @@ namespace ThermoVision.Models
     {
         #region "Variables"
 
-        List<Zona>      _zonas;
-        List<ThermoCam> _thermoCams;
+        List<Zona>          _zonas;
+        List<ThermoCam>     _thermoCams;
 
-        public Zona            selectedZona;
+        string              _OPCServerName;
+        OPCClient           _OPCClient;
+
+        public Zona         selectedZona;
 
         #endregion
 
@@ -28,18 +32,40 @@ namespace ThermoVision.Models
 
         #region "Propiedades"
 
-        public List<Zona>       Zonas                             // -r 
+        public List<Zona>       Zonas                             // -r  
         {
             get
             {
                 return this._zonas;
             }
         }
-        public List<ThermoCam>  ThermoCams                        // -r 
+        public List<ThermoCam>  ThermoCams                        // -r  
         {
             get
             {
                 return this._thermoCams;
+            }
+        }
+        public string OPCServerName                               // -rw 
+        {
+            get
+            {
+                return this._OPCServerName;
+            }
+            set
+            {
+                this._OPCServerName = value;
+            }
+        }
+        public OPCClient OPCClient                                // -rw 
+        {
+            get
+            {
+                return this._OPCClient;
+            }
+            set
+            {
+                this._OPCClient = value;
             }
         }
 

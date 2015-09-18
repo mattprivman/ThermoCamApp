@@ -205,6 +205,11 @@ namespace ThermoVision.Models
         }
         public void InitializeForm(System.Windows.Forms.Form f)
         {
+            if (this.camara == null)
+            {
+                this.camara = new AxLVCam();
+            }
+
             ((System.ComponentModel.ISupportInitialize)(camara)).BeginInit();
             camara.Visible = false;
             f.Controls.Add(camara);

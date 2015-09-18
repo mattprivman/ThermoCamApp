@@ -84,12 +84,17 @@ namespace OPC
 
         public void Desconectar()                               
         {
-            this._OPCBranch.Dispose();
-            this._OPCServer.Disconnect();
-            this._OPCServer.ServerShutDown  -= _OPCServer_ServerShutDown;
-            this._OPCBranch.DataChanged     -= _OPCBranch_DataChanged;
-
-
+            if (_OPCBranch != null)
+            {
+                this._OPCBranch.Dispose();
+                this._OPCBranch.DataChanged -= _OPCBranch_DataChanged;
+            }
+            if (_OPCServer != null)
+            {
+                this._OPCServer.Disconnect();
+                this._OPCServer.ServerShutDown -= _OPCServer_ServerShutDown;
+            }
+            
             this._Connected = false;
 
             if (Disconnected != null)

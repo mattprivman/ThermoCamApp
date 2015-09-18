@@ -15,7 +15,8 @@ namespace WindowsFormsApplication4
         {
             appMode                 = 0,
             appCameraConfiguration  = 1,
-            appCreateOPCVarsCSV     = 2
+            appCreateOPCVarsCSV     = 2,
+            appSelectOPServer       = 3
         }
 
         public static void Start()
@@ -85,29 +86,32 @@ namespace WindowsFormsApplication4
                         {
                             //_system = Helpers.deserializeSistema("data.ocl");
 
-                            Asistente.Camaras.CamerasConfiguration cc = new Asistente.Camaras.CamerasConfiguration(numeroCamaras, _system);
-                            cc.ShowDialog();
-
-                            if (cc.Salir == true)
+                            using (Asistente.Camaras.CamerasConfiguration cc = new Asistente.Camaras.CamerasConfiguration(numeroCamaras, _system))
                             {
+                                cc.ShowDialog();
+
+                                if (cc.Salir == true)
+                                {
+                                    cc.Dispose();
+                                    return;
+                                }
+
+                                if (cc.Atras)
+                                {
+                                    step = (int)windowIds.appMode;
+                                    Helpers.changeAppStringSetting("Mode", "");
+                                    //Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                                }
+                                else
+                                {
+                                    step = (int)windowIds.appCreateOPCVarsCSV;         //step = (int) windowIds.appCameraNumber;
+                                    //Guardar sistema
+                                    //Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                                }
+
+                                _system = cc.Sistema;
                                 cc.Dispose();
-                                return;
                             }
-
-                            if (cc.Atras)
-                            {
-                                step = (int)windowIds.appMode;
-                                Helpers.changeAppStringSetting("Mode", "");
-                                //Helpers.serializeSistema(cc.Sistema, "data.ocl");
-                            }
-                            else
-                            {
-                                step = (int)windowIds.appCreateOPCVarsCSV;         //step = (int) windowIds.appCameraNumber;
-                                //Guardar sistema
-                                //Helpers.serializeSistema(cc.Sistema, "data.ocl");
-                            }
-
-                            cc.Dispose();
                         }
                         else
                         {
@@ -121,7 +125,78 @@ namespace WindowsFormsApplication4
 
                         #region "Crear variables OPC"
 
-                        _system = Helpers.deserializeSistema("data.ocl");
+                        if (_system != null)
+                        {
+                            using (Asistente.OPC.appCreateOPCVars cov = new Asistente.OPC.appCreateOPCVars(_system))
+                            {
+                                cov.ShowDialog();
+
+                                if (cov.Salir == true)
+                                {
+                                    cov.Dispose();
+                                    return;
+                                }
+
+                                if (cov.Atras)
+                                {
+                                    step = (int)windowIds.appCameraConfiguration;
+                                    //Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                                }
+                                else
+                                {
+                                    step = (int)windowIds.appSelectOPServer;         //step = (int) windowIds.appCameraNumber;
+                                    //Guardar sistema
+                                    //Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                                }
+
+                                cov.Dispose();
+                            }
+                        }
+                        else
+                        {
+                            Helpers.changeAppStringSetting("Mode", "");
+                            step = (int) windowIds.appMode;
+                        }
+
+                        #endregion
+
+                        break;
+                    case (int) windowIds.appSelectOPServer:
+
+                        #region "Seleccionar servidor OPC"
+
+                        if (_system != null)
+                        {
+                            using (Asistente.OPC.appSelectOPCServer sos = new Asistente.OPC.appSelectOPCServer(_system))
+                            {
+                                sos.ShowDialog();
+
+                                if (sos.Salir == true)
+                                {
+                                    sos.Dispose();
+                                    return;
+                                }
+
+                                if (sos.Atras)
+                                {
+                                    step = (int)windowIds.appCameraConfiguration;
+                                    //Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                                }
+                                else
+                                {
+                                    step = (int)windowIds.appSelectOPServer;         //step = (int) windowIds.appCameraNumber;
+                                    //Guardar sistema
+                                    //Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                                }
+
+                                sos.Dispose();
+                            }
+                        }
+                        else
+                        {
+                            Helpers.changeAppStringSetting("Mode", "");
+                            step = (int)windowIds.appMode;
+                        }
 
                         #endregion
 

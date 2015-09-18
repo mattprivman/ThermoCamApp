@@ -59,5 +59,15 @@ namespace WindowsFormsApplication4.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FLIR_A320 {
+            get {
+                object obj = ResourceManager.GetObject("FLIR_A320", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

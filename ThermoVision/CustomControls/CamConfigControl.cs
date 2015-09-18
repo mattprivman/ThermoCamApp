@@ -15,7 +15,7 @@ namespace ThermoVision.CustomControls
     public partial class CamConfigControl : UserControl
     {
         #region "Variables"
-        Sistema          _system;
+        //Sistema          _system;
         public ThermoCam camara;
 
         Bitmap      bmp;
@@ -31,19 +31,24 @@ namespace ThermoVision.CustomControls
             InitializeComponent();
         }
 
-        public void Initialize(Form f, Sistema _system)                             
+        public void Initialize(Form f, ThermoCam t = null)                          
         {
             //////////////////////  INICIALIZACIÓN CAMARAS //////////////////////////
-            this._system = _system;
-
-            this.camara = new ThermoCam(
-                f,
-                CameraType.FLIR_A3X0,
-                DeviceType.Ethernet16bits,
-                InterfaceType.TCP);
-
-            this._system.addThermoCam(this.camara);     // Añadir cammara al sistema
-
+            if (t == null)
+            {
+                this.camara = new ThermoCam(
+                    f,
+                    CameraType.FLIR_A3X0,
+                    DeviceType.Ethernet16bits,
+                    InterfaceType.TCP);
+            }
+            else
+            {
+                t.InitializeForm(f);
+                this.camara                  = t;
+                this.textBoxCamName.Text     = t.Nombre;
+                this.textBoxDireccionIP.Text = t.Address;
+            }
 
             this.camara.ConfiguracionMode = true;
 
@@ -56,8 +61,8 @@ namespace ThermoVision.CustomControls
             this.textBoxDireccionIP.TextChanged += textBoxDireccionIP_TextChanged;
 
             //////////////////////  EVENTOS CONECTAR Y DESCONECTAR  //////////////////
-            this.buttonConectar.Click    += buttonConectar_Click;
-            this.buttonDesconectar.Click += buttonDesconectar_Click;
+            this.buttonConectar.Click           += buttonConectar_Click;
+            this.buttonDesconectar.Click        += buttonDesconectar_Click;
             
             this.buttonAutoAdjust.Click                 += buttonAutoAdjust_Click;
             this.buttonAutoFocus.Click                  += buttonAutoFocus_Click;
@@ -78,6 +83,10 @@ namespace ThermoVision.CustomControls
 
             this.labelConectionStatusString.Text    = "Conectado";
             this.labelConexionStatusColor.BackColor = Color.Green;
+        }
+        public void Conectar()                                                      
+        {
+            this.camara.Conectar();
         }
 
         #endregion

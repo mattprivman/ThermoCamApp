@@ -81,6 +81,7 @@
             this.Controls.Add(this.buttonAceptar);
             this.Controls.Add(this.textBoxNameZona);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "AddZona";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Añadir zona";

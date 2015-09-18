@@ -93,6 +93,7 @@
             this.Controls.Add(this.buttonNext);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxAppType);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "selectAppType";
             this.Text = "Seleccione el tipo de aplicación";
             this.ResumeLayout(false);

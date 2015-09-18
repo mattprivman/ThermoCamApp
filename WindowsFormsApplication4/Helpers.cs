@@ -34,7 +34,7 @@ namespace WindowsFormsApplication4
         }
 
         //DESERIALIZAR
-        public static void serializeSistema(Sistema sistema, string _file) 
+        public static void serializeSistema(Sistema sistema, string _file)       
         {
             try
             {
@@ -51,7 +51,7 @@ namespace WindowsFormsApplication4
                 ex.ToString();
             }
         }
-        public static Sistema deserializeSistema(string _file)                                    
+        public static Sistema deserializeSistema(string _file)                   
         {
             Sistema sistema = null;
 
@@ -72,6 +72,5 @@ namespace WindowsFormsApplication4
 
             return sistema;
         }
-
     }
 }

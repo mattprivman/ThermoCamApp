@@ -99,6 +99,18 @@
     <Compile Include="Asistente\Camaras\selectAppType.Designer.cs">
       <DependentUpon>selectAppType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Asistente\OPC\appCreateOPCVars.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Asistente\OPC\appCreateOPCVars.Designer.cs">
+      <DependentUpon>appCreateOPCVars.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Asistente\OPC\appSelectOPCServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Asistente\OPC\appSelectOPCServer.Designer.cs">
+      <DependentUpon>appSelectOPCServer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProgramFlow.cs" />
@@ -117,6 +129,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Asistente\Camaras\selectAppType.resx">
       <DependentUpon>selectAppType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Asistente\OPC\appCreateOPCVars.resx">
+      <DependentUpon>appCreateOPCVars.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Asistente\OPC\appSelectOPCServer.resx">
+      <DependentUpon>appSelectOPCServer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -154,7 +172,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Asistente\OPC\" />
+    <Content Include="Resources\FLIR_A320.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

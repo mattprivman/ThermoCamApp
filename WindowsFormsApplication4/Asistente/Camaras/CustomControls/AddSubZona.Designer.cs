@@ -81,9 +81,10 @@
             this.Controls.Add(this.buttonAceptar);
             this.Controls.Add(this.textBoxNameZona);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "AddSubZona";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "AddSubZona";
+            this.Text = "Añadir subzona";
             this.ResumeLayout(false);
             this.PerformLayout();
 

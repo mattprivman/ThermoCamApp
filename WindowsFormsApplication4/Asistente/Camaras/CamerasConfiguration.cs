@@ -39,6 +39,7 @@ namespace WindowsFormsApplication4.Asistente.Camaras
 
         public CamerasConfiguration(int numerocamaras, Sistema _system)         
         {
+
             this.Salir   = true;
             this._system = _system;
 
@@ -46,6 +47,20 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             {
                 this._system = new Sistema();
                 InitializeComponent(numerocamaras);
+            }
+            else
+            {
+                if (this._system.ThermoCams.Count != numerocamaras)
+                {
+                    this._system = new Sistema();
+                    InitializeComponent(numerocamaras);
+                }
+                else
+                {
+                    InitializeWithComponent();
+                    actualizarListBoxZonas();
+                    actualizarListBoxSubZonas();
+                }
             }
 
             this.numericTextBoxCol.maxVal   = 100;
@@ -94,12 +109,23 @@ namespace WindowsFormsApplication4.Asistente.Camaras
 
         private void buttonAtras_Click(object sender, System.EventArgs e)       
         {
+            //DESCONECTAR CAMARAS
+            foreach (ThermoCam t in this._system.ThermoCams)
+            {
+                t.Desconectar();
+            }
             this.Salir = false;
             this.Atras = true;
             this.Close();
         }
         private void buttonNext_Click(object sender, System.EventArgs e)        
         {
+            //DESCONECTAR CAMARAS
+            foreach (ThermoCam t in this._system.ThermoCams)
+            {
+                t.Desconectar();
+            }
+
             this.Salir = false;
             this.Atras = false;
             this.Close();
@@ -418,13 +444,21 @@ namespace WindowsFormsApplication4.Asistente.Camaras
         {
             if (this._system.selectedZona != null)
             {
-                this.selectedIndexSubZona = this.listBoxSubZonas.Items.Count;
-
                 CustomControls.AddSubZona f = new CustomControls.AddSubZona();
                 f.ShowDialog();
 
-                if(f.nameSubZona != "" && f.nameSubZona != null)
-                    this._system.selectedZona.addChildren(new SubZona(f.nameSubZona));
+                if (f.nameSubZona != "" && f.nameSubZona != null)
+                {
+                    try
+                    {
+                        this._system.selectedZona.addChildren(new SubZona(f.nameSubZona));
+                        this.selectedIndexSubZona = this.listBoxSubZonas.Items.Count;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
 
                 f.Dispose();
 
@@ -460,7 +494,7 @@ namespace WindowsFormsApplication4.Asistente.Camaras
                 }
             }
 
-            if(this.selectedIndexSubZona >= 0 && this.listBoxSubZonas.Items.Count > 0 )
+            if(this.selectedIndexSubZona >= 0 && this.listBoxSubZonas.Items.Count > 0 && this.selectedIndexSubZona < this.listBoxSubZonas.Items.Count)
             {
                 this.listBoxSubZonas.SelectedIndex = this.selectedIndexSubZona;
             }
@@ -477,11 +511,13 @@ namespace WindowsFormsApplication4.Asistente.Camaras
                 //this._system.selectedZona.Sub
                 foreach (SubZona s in this._system.selectedZona.Children)
                 {
-                    //s.ParametersChanged -
+                        s.ParametersChanged -= sub_ParametersChanged;
                 }
 
                 SubZona sub            = this.getSelectedSubZona();
                 sub.ParametersChanged += sub_ParametersChanged;
+
+                sub_ParametersChanged(this, null);
             }
         }
 
