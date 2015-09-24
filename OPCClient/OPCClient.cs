@@ -68,18 +68,24 @@ namespace OPC
 
         public void Conectar()                                  
         {
-            this._OPCServer.Connect(_serverName);
-            this._OPCServer.ServerShutDown += _OPCServer_ServerShutDown;
+            try
+            {
+                this._OPCServer.Connect(_serverName);
+                this._OPCServer.ServerShutDown += _OPCServer_ServerShutDown;
 
-            this._OPCBranch = new Branch(Name: _serverName);
-            this._OPCBranch.DataChanged += _OPCBranch_DataChanged;
+                this._OPCBranch = new Branch(Name: _serverName);
+                this._OPCBranch.DataChanged += _OPCBranch_DataChanged;
 
-            this._OPCBrowser = this._OPCServer.CreateBrowser();
+                this._OPCBrowser = this._OPCServer.CreateBrowser();
 
-            this._Connected = true;
+                this._Connected = true;
 
-            if (Connected != null)
-                Connected(this, null);
+                if (Connected != null)
+                    Connected(this, null);
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         public void Desconectar()                               
@@ -103,6 +109,7 @@ namespace OPC
         public void Dispose()                                   
         {
             Desconectar();
+            GC.SuppressFinalize(this._OPCServer);
         }
 
         public Branch Browse()                                  
@@ -119,13 +126,12 @@ namespace OPC
             return this._OPCBranch;
         }
 
-        public bool Writte(string group, string item, object value)
+        public bool Writte(string group, string item, object value) 
         {
             Branch b = GetBranch(group);
 
             try
             {
-
                 if (b.Leafs.Exists(x => x.Name == item))
                 {
                     OPCItem i = (b.Leafs.Where(x => x.Name == item).First()).OPCItem;
@@ -137,8 +143,9 @@ namespace OPC
             }
             catch (Exception e)
             {
-
+                e.ToString();
             }
+
             return false;
         }
 
@@ -158,38 +165,47 @@ namespace OPC
         {
             if (this._OPCBrowser != null)
             {
-                string BranchName = Group;
-                Branch b = this._OPCBranch;
-
-                List<string> Niveles = new List<string>();
-
-                while (BranchName.Contains("."))
+                try
                 {
-                    Niveles.Add(BranchName.Substring(0, BranchName.IndexOf(".")));
-                    BranchName = BranchName.Substring(BranchName.IndexOf(".") + 1);
-                }
+                    string BranchName = Group;
+                    Branch b = this._OPCBranch;
 
-                Niveles.Add(BranchName);
+                    List<string> Niveles = new List<string>();
 
-                BranchName = "";
-
-                foreach (string s in Niveles)
-                {
-                    BranchName = BranchName + s;
-
-                    if (b.Children.Exists(x => x.Name == BranchName))
+                    while (BranchName.Contains("."))
                     {
-                        b = b.Children.Where(x => x.Name == BranchName).First();
-                    }
-                    else
-                    {
-                        return null;
+                        Niveles.Add(BranchName.Substring(0, BranchName.IndexOf(".")));
+                        BranchName = BranchName.Substring(BranchName.IndexOf(".") + 1);
                     }
 
-                    BranchName = BranchName + ".";
-                }
+                    Niveles.Add(BranchName);
 
-                return b;
+                    BranchName = "";
+
+                    foreach (string s in Niveles)
+                    {
+                        BranchName = BranchName + s;
+
+
+                        if (b.Children.Exists(x => x.Name == BranchName))
+                        {
+                            b = b.Children.Where(x => x.Name == BranchName).First();
+                        }
+                        else
+                        {
+                            return null;
+                        }
+
+                        BranchName = BranchName + ".";
+                    }
+
+                    return b;
+                }
+                catch (Exception ex)
+                {
+                    Conectar();
+                    Browse();
+                }
             }
 
             return null;
@@ -199,7 +215,7 @@ namespace OPC
 
         #region "Metodos privados"
 
-        private void browseBranch (Branch Parent)               
+        private void browseBranch (Branch Parent)                       
         {
             _OPCBrowser.ShowBranches();
 
@@ -207,36 +223,49 @@ namespace OPC
             {
                 for (int i = 1; i <= _OPCBrowser.Count; i++)
                 {
-                    _OPCBrowser.MoveDown(_OPCBrowser.Item(i));
+                    try
+                    {
+                        _OPCBrowser.MoveDown(_OPCBrowser.Item(i));
 
-                    //string BranchName = _OPCBrowser.CurrentPosition;
+                        //string BranchName = _OPCBrowser.CurrentPosition;
 
-                    //while(BranchName.Contains("."))
-                    //{
-                    //    BranchName = BranchName.Substring(_OPCBrowser.CurrentPosition.IndexOf(".") + 1);
-                    //}
+                        //while(BranchName.Contains("."))
+                        //{
+                        //    BranchName = BranchName.Substring(_OPCBrowser.CurrentPosition.IndexOf(".") + 1);
+                        //}
 
-                    Branch b = new Branch(Name: _OPCBrowser.CurrentPosition, Server: this._OPCServer, Parent: Parent);
+                        Branch b = new Branch(Name: _OPCBrowser.CurrentPosition, Server: this._OPCServer, Parent: Parent);
 
-                    browseBranch(b);
-                    browseLeaf(b);
+                        browseBranch(b);
+                        browseLeaf(b);
 
-                    _OPCBrowser.MoveUp();
-                    _OPCBrowser.ShowBranches();
+                        _OPCBrowser.MoveUp();
+                        _OPCBrowser.ShowBranches();
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                 }
             }
         }
-        private void browseLeaf   (Branch Parent)               
+        private void browseLeaf   (Branch Parent)                       
         {
-            _OPCBrowser.ShowLeafs();
-
-
-            if (_OPCBrowser.Count > 0)
+            try
             {
-                for (int i = 1; i <= _OPCBrowser.Count; i++)
+                _OPCBrowser.ShowLeafs();
+
+                if (_OPCBrowser.Count > 0)
                 {
-                    Leaf l = new Leaf(Parent: Parent, Name: _OPCBrowser.Item(i), ClientHandle: this.ClientHandle, Browser: this._OPCBrowser);
+                    for (int i = 1; i <= _OPCBrowser.Count; i++)
+                    {
+                        Leaf l = new Leaf(Parent: Parent, Name: _OPCBrowser.Item(i), ClientHandle: this.ClientHandle, Browser: this._OPCBrowser);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 

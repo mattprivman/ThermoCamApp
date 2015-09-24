@@ -21,18 +21,16 @@ namespace ThermoVision.CustomControls
             InitializeComponent();
         }
 
-        public void Initialize(Form f)  
+        public void Initialize(Form f, ThermoCam t)  
         {
-
+            this.camara = t;
+            this.camara.ConfiguracionMode = false;
             //////////////////////  INICIALIZACIÓN CAMARAS //////////////////////////
-            camara = new ThermoCam(f,
-                CameraType.FLIR_A3X0,
-                DeviceType.Ethernet16bits,
-                InterfaceType.TCP);
-
-            this.camara.Address = "172.16.100.1";
+            this.camara.InitializeForm(f);
 
             this.camara.ThermoCamImgReceived         += camara_ThermoCamImgEvent;
+
+            this.Conectar();
         }
 
         public void Conectar()          
@@ -40,29 +38,17 @@ namespace ThermoVision.CustomControls
             this.camara.Conectar();
         }
 
+        public void Desconectar()
+        {
+            this.camara.Desconectar();
+        }
+
         //CAMARA
 
         void camara_ThermoCamImgEvent(object sender, ThermoCamImgArgs e) 
         {
-            //using (Graphics graphics = Graphics.FromImage(e.Imagen))
-            //{
-            //    using (Font arialFont = new Font("Calibri Light", 7))
-            //    {
-            //        for (int i = 0; i < e.tempMatrix.GetLength(0); i++)
-            //        {
-            //            for (int j = 0; j < e.tempMatrix.GetLength(1); j++)
-            //            {
-            //                graphics.DrawString(e.tempMatrix[i, j].maxTemp.ToString("0.00"), arialFont, Brushes.White, new Point(0, 0));
-            //            }
-            //        }
-            //    }
-            //}
             updatePictureBox(this.pictureBox1, ref e.Imagen);
-
-            updateText(labelCam1MaxTemp,            "Max. Temp: "       + e.MaxTemp.ToString()                + " ºC");
-            updateText(labelCam1MinTemp,            "Min. Temp: "       + e.MinTemp.ToString()                + " ºC");
         }
-
 
         #region ACTUALIZAR CONTROLES
         private delegate void updateTextCallback(object o, string text);

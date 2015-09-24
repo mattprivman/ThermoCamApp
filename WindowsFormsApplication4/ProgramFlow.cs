@@ -15,8 +15,8 @@ namespace WindowsFormsApplication4
         {
             appMode                 = 0,
             appCameraConfiguration  = 1,
-            appCreateOPCVarsCSV     = 2,
-            appSelectOPServer       = 3
+            appSelectOPCServer      = 2,
+            appMain                 = 3
         }
 
         public static void Start()
@@ -30,14 +30,14 @@ namespace WindowsFormsApplication4
 
             //Borrar archivo de datos
             //System.IO.File.Delete("Data.ocl");
-            //_system = Helpers.deserializeSistema("data.ocl");
+            _system = Helpers.deserializeSistema("data.ocl");
 
             if (_system != null)
             {
                 if (_system.ThermoCams.Count > 0)
                 {
                     numeroCamaras = _system.ThermoCams.Count;
-                    step          = (int)windowIds.appCameraConfiguration;
+                    step          = (int)windowIds.appMain;
                 }
             }
 
@@ -57,6 +57,10 @@ namespace WindowsFormsApplication4
                             if (_system != null)
                             {
                                 numeroCamaras = _system.ThermoCams.Count;
+                            }
+                            else
+                            {
+                                _system = new Sistema();
                             }
 
                             using (Asistente.selectAppType AppType = new Asistente.selectAppType(numeroCamaras))
@@ -82,10 +86,10 @@ namespace WindowsFormsApplication4
 
                         #region "Configurar cámaras"
 
-                        if (numeroCamaras > 0)
+                        if (numeroCamaras > 0 && _system != null)
                         {
                             //_system = Helpers.deserializeSistema("data.ocl");
-
+                            _system.selectedZona = null;
                             using (Asistente.Camaras.CamerasConfiguration cc = new Asistente.Camaras.CamerasConfiguration(numeroCamaras, _system))
                             {
                                 cc.ShowDialog();
@@ -104,7 +108,7 @@ namespace WindowsFormsApplication4
                                 }
                                 else
                                 {
-                                    step = (int)windowIds.appCreateOPCVarsCSV;         //step = (int) windowIds.appCameraNumber;
+                                    step = (int)windowIds.appSelectOPCServer;         //step = (int) windowIds.appCameraNumber;
                                     //Guardar sistema
                                     //Helpers.serializeSistema(cc.Sistema, "data.ocl");
                                 }
@@ -121,72 +125,36 @@ namespace WindowsFormsApplication4
                         #endregion
 
                         break;
-                    case (int) windowIds.appCreateOPCVarsCSV:           //CREAR CSV PARA VARIABLES OPC
-
-                        #region "Crear variables OPC"
-
-                        if (_system != null)
-                        {
-                            using (Asistente.OPC.appCreateOPCVars cov = new Asistente.OPC.appCreateOPCVars(_system))
-                            {
-                                cov.ShowDialog();
-
-                                if (cov.Salir == true)
-                                {
-                                    cov.Dispose();
-                                    return;
-                                }
-
-                                if (cov.Atras)
-                                {
-                                    step = (int)windowIds.appCameraConfiguration;
-                                    //Helpers.serializeSistema(cc.Sistema, "data.ocl");
-                                }
-                                else
-                                {
-                                    step = (int)windowIds.appSelectOPServer;         //step = (int) windowIds.appCameraNumber;
-                                    //Guardar sistema
-                                    //Helpers.serializeSistema(cc.Sistema, "data.ocl");
-                                }
-
-                                cov.Dispose();
-                            }
-                        }
-                        else
-                        {
-                            Helpers.changeAppStringSetting("Mode", "");
-                            step = (int) windowIds.appMode;
-                        }
-
-                        #endregion
-
-                        break;
-                    case (int) windowIds.appSelectOPServer:
+                    case (int) windowIds.appSelectOPCServer:
 
                         #region "Seleccionar servidor OPC"
 
                         if (_system != null)
                         {
+                            _system.selectedZona = null;
                             using (Asistente.OPC.appSelectOPCServer sos = new Asistente.OPC.appSelectOPCServer(_system))
                             {
                                 sos.ShowDialog();
 
                                 if (sos.Salir == true)
                                 {
+                                    //SALIR
                                     sos.Dispose();
                                     return;
                                 }
 
                                 if (sos.Atras)
                                 {
+                                    //ATRAS
                                     step = (int)windowIds.appCameraConfiguration;
                                     //Helpers.serializeSistema(cc.Sistema, "data.ocl");
                                 }
                                 else
                                 {
-                                    step = (int)windowIds.appSelectOPServer;         //step = (int) windowIds.appCameraNumber;
+                                    //SIGUIENTE
+                                    step = (int)windowIds.appMain;         //step = (int) windowIds.appCameraNumber;
                                     //Guardar sistema
-                                    //Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                                    Helpers.serializeSistema(sos.Sistema, "data.ocl");
                                 }
 
                                 sos.Dispose();
@@ -201,9 +169,56 @@ namespace WindowsFormsApplication4
                         #endregion
 
                         break;
+                    case (int)windowIds.appMain:
+
+                        #region "Cargar aplicación"
+
+                        if (_system != null)
+                        {
+                            _system.selectedZona = null;
+                            using (main m = new main(_system))
+                            {
+                                m.ShowDialog();
+
+                                if (m.Salir == true)
+                                {
+                                    //SALIR
+                                    m.Dispose();
+                                    return;
+                                }
+
+                                if (m.Atras)
+                                {
+                                    //ATRAS
+                                    step = (int)windowIds.appCameraConfiguration;
+                                    //Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                                }
+                                else
+                                {
+                                    //SIGUIENTE
+                                    //step = (int)windowIds.appSelectOPCServer;         //step = (int) windowIds.appCameraNumber;
+                                    //Guardar sistema
+                                    return;
+                                }
+
+                                m.Dispose();
+                            }
+                        }
+                        else
+                        {
+                            Helpers.changeAppStringSetting("Mode", "");
+                            step = (int)windowIds.appMode;
+                        }
+
+                        #endregion
+
+                        break;
+
                 }
 
             }
+
+            _system.Dispose();
         }
     }
 }

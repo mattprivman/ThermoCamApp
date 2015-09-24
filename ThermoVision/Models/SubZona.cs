@@ -36,6 +36,11 @@ namespace ThermoVision.Models
         //Matriz de temperaturas
         public tempElement[,] tempMatrix;
 
+        //Temperaturas subzona
+        public float   _maxTemp;
+        public float   _minTemp;
+        public double  _meanTemp;
+
         #endregion
 
         #region "Eventos"
@@ -192,7 +197,7 @@ namespace ThermoVision.Models
             this._filas     = 1;
             this._columnas  = 1;
         }
-        public SubZona(SerializationInfo info, StreamingContext ctxt)           
+        protected SubZona(SerializationInfo info, StreamingContext ctxt)           
         {
             this._id            = (int)       info.GetValue("Id",           typeof(int));
             this._Nombre        = (string)    info.GetValue("Nombre",       typeof(string));
@@ -208,7 +213,7 @@ namespace ThermoVision.Models
 
         #region "Métodos públicos"
 
-        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
             info.AddValue("Id",             this.Id);
             info.AddValue("Nombre",         this.Nombre);

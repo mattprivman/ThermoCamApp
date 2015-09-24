@@ -14,9 +14,13 @@
         protected override void Dispose(bool disposing)
         {
             if (this.camara != null)
-            {
                 this.camara.Dispose();
-            }
+
+            if(this.bmp != null)
+                this.bmp.Dispose();
+
+            if(this.bmpModified != null)
+                this.bmpModified.Dispose();
 
             if (disposing && (components != null))
             {

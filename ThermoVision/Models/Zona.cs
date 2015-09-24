@@ -19,6 +19,10 @@ namespace ThermoVision.Models
 
         Sistema         _parent;
 
+        public float           _maxTemp;
+        public float           _minTemp;
+        public double          _meanTemp;
+
         #endregion
 
         #region "Propiedades"
@@ -54,7 +58,7 @@ namespace ThermoVision.Models
 
             this._parent = parent;
         }
-        public Zona(SerializationInfo info, StreamingContext ctxt)      
+        protected Zona(SerializationInfo info, StreamingContext ctxt)   
         {
             this._nombre        = (string)          info.GetValue("Nombre",         typeof(string));
             this._children      = (List<SubZona>)   info.GetValue("Children",       typeof(List<SubZona>));
@@ -84,7 +88,7 @@ namespace ThermoVision.Models
 
         #endregion
 
-        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)    
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext ctxt)    
         {
             info.AddValue("Nombre",      this._nombre);
             info.AddValue("Children",    this._children);
@@ -95,7 +99,7 @@ namespace ThermoVision.Models
 
         public void addChildren(SubZona child)      
         {
-            lock ("Zonas")
+            lock ("SubZonas")
             {
                 //COMPROBAR QUE NO EXISTA NINGÚNA SUBZONA CON EL MISMO NOMBRE
                 if (!this._children.Exists(x => x.Nombre == child.Nombre))
@@ -106,7 +110,7 @@ namespace ThermoVision.Models
         }
         public void removeChildren(SubZona child)   
         {
-            lock ("Zonas")
+            lock ("SubZonas")
             {
                 this._children.Remove(child);
             }
