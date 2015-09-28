@@ -110,7 +110,7 @@ namespace ThermoVision.Models
             }
         }
 
-        public bool  Rejilla                       // -w  
+        public bool   Rejilla                       // -w  
         {
             get
             {
@@ -121,14 +121,14 @@ namespace ThermoVision.Models
                this._rejilla = value;
             }
         }
-        public bool  ConfiguracionMode             // -w  
+        public bool   ConfiguracionMode             // -w  
         {
             set
             {
                 this._configuracionMode = value;
             }
         }
-        public bool  MatrixTemp                    // -w  
+        public bool   MatrixTemp                    // -w  
         {
             set
             {
@@ -137,14 +137,14 @@ namespace ThermoVision.Models
         }
 
         // Ancho y alto de la imagen
-        public int   Width                         // -r  
+        public int    Width                         // -r  
         {
             get
             {
                 return _width;
             }
         }
-        public int   Heigth                        // -r  
+        public int    Heigth                        // -r  
         {
             get
             {
@@ -152,7 +152,7 @@ namespace ThermoVision.Models
             }
         }
 
-        public bool ImagenRecibida                 // -rw 
+        public bool   ImagenRecibida                 // -rw 
         {
             get
             {
@@ -162,6 +162,12 @@ namespace ThermoVision.Models
             {
                 this.imgReceived = true;
             }
+        }
+
+        public Sistema Parent
+        {
+            get;
+            set;
         }
 
         #endregion
@@ -215,6 +221,7 @@ namespace ThermoVision.Models
             this._devType       = (DeviceType)      info.GetValue("DevType"  , typeof(DeviceType));
             this._interfaceType = (InterfaceType)   info.GetValue("InterType", typeof(InterfaceType));
             this.SubZonas       = (List<SubZona>)   info.GetValue("SubZonas" , typeof(List<SubZona>));
+            this.Parent         = (Sistema)         info.GetValue("Parent"   , typeof(Sistema));
 
         }
         public void InitializeForm(System.Windows.Forms.Form f)           
@@ -246,6 +253,7 @@ namespace ThermoVision.Models
             info.AddValue("DevType"  , this._devType);
             info.AddValue("InterType", this._interfaceType);
             info.AddValue("SubZonas" , this.SubZonas);
+            info.AddValue("Parent"   , this.Parent);
         }
 
         #endregion
@@ -315,14 +323,14 @@ namespace ThermoVision.Models
 
         public void addSubZona(SubZona s)       
         {
-            lock ("Zonas")
+            lock ("SubZonas")
             {
                 this.SubZonas.Add(s);
             }
         }
         public void removeSubZona(SubZona s)    
         {
-            lock ("Zonas")
+            lock ("Subonas")
             {
                 if (this.SubZonas.Contains(s))
                     this.SubZonas.Remove(s);
@@ -653,82 +661,85 @@ namespace ThermoVision.Models
 
             #region "Modo funcionamiento"
 
-            //Obtener temperaturas maximas, mínima y media de cada división de cada subzona
-            lock ("SubZonas")                    //Bloqueo para evitar cambios en la coleccion de subzonas
+            if (this.Parent != null && this.Parent.OPCWritten == true)
             {
-                foreach (SubZona s in this.SubZonas)
+                //Obtener temperaturas maximas, mínima y media de cada división de cada subzona
+                lock ("SubZonas")                    //Bloqueo para evitar cambios en la coleccion de subzonas
                 {
-                    lock ("lockRejilla")        //Bloqueo para evitar cambios en las rejillas
+                    foreach (SubZona s in this.SubZonas)
                     {
-                        //Reinicializar variables de temperatura para cada subZona
-                        s._maxTemp  = 0;
-                        s._minTemp  = this.lutTable[this.lutTable.Length - 1];
-                        s._meanTemp = 0D;
-
-                        //Redimensionar matriz de temperaturas
-                        if (s.tempMatrix == null || s.tempMatrix.GetLength(0) != s.Filas || s.tempMatrix.GetLength(1) != s.Columnas)
-                            s.tempMatrix = new tempElement[s.Filas, s.Columnas];
-
-                        //Reinicializar variables
-                        for (int i = 0; i < s.Filas; i++)
+                        lock ("lockRejilla")        //Bloqueo para evitar cambios en las rejillas
                         {
-                            for (int j = 0; j < s.Columnas; j++)
+                            //Reinicializar variables de temperatura para cada subZona
+                            s._maxTemp = 0;
+                            s._minTemp = this.lutTable[this.lutTable.Length - 1];
+                            s._meanTemp = 0D;
+
+                            //Redimensionar matriz de temperaturas
+                            if (s.tempMatrix == null || s.tempMatrix.GetLength(0) != s.Filas || s.tempMatrix.GetLength(1) != s.Columnas)
+                                s.tempMatrix = new tempElement[s.Filas, s.Columnas];
+
+                            //Reinicializar variables
+                            for (int i = 0; i < s.Filas; i++)
                             {
-                                s.tempMatrix[i, j].max  = this.lutTable[0]; ;
-                                s.tempMatrix[i, j].min  = this.lutTable[this.lutTable.Length - 1];
-                                s.tempMatrix[i, j].mean = 0D;
-                            }//for columnas
-                        }//for filas
+                                for (int j = 0; j < s.Columnas; j++)
+                                {
+                                    s.tempMatrix[i, j].max = this.lutTable[0]; ;
+                                    s.tempMatrix[i, j].min = this.lutTable[this.lutTable.Length - 1];
+                                    s.tempMatrix[i, j].mean = 0D;
+                                }//for columnas
+                            }//for filas
 
-                        int Heigth = (s.Fin.Y - s.Inicio.Y);    //Altura de la subzona
-                        int Width = (s.Fin.X - s.Inicio.X);    //Ancho de la subzona
+                            int Heigth = (s.Fin.Y - s.Inicio.Y);    //Altura de la subzona
+                            int Width = (s.Fin.X - s.Inicio.X);    //Ancho de la subzona
 
-                        int elements = Heigth / s.Filas * Width / s.Columnas;          //Numero de elementos
+                            int elements = Heigth / s.Filas * Width / s.Columnas;          //Numero de elementos
 
-                        for (int x = s.Inicio.X; x < s.Fin.X; x++)
-                        {
-                            for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
+                            for (int x = s.Inicio.X; x < s.Fin.X; x++)
                             {
-                                //Coordenadas de la matriz de temperaturas
-                                int fila = (y - s.Inicio.Y) * s.Filas / Heigth;
-                                int columna = (x - s.Inicio.X) * s.Columnas / Width;
+                                for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
+                                {
+                                    //Coordenadas de la matriz de temperaturas
+                                    int fila = (y - s.Inicio.Y) * s.Filas / Heigth;
+                                    int columna = (x - s.Inicio.X) * s.Columnas / Width;
 
-                                short actualValue = this.imgData[x, y];
-                                float actualTemp = this.lutTable[actualValue];
+                                    short actualValue = this.imgData[x, y];
+                                    float actualTemp = this.lutTable[actualValue];
 
-                                float maxTemp = s.tempMatrix[fila, columna].max + 273.15f;
-                                float minTemp = s.tempMatrix[fila, columna].min + 273.15f;
+                                    float maxTemp = s.tempMatrix[fila, columna].max + 273.15f;
+                                    float minTemp = s.tempMatrix[fila, columna].min + 273.15f;
 
-                                //DIVISION
+                                    //DIVISION
 
-                                if (this.lutTable[this.imgData[x, y]] > (s.tempMatrix[fila, columna].max + 273.15f))                    //Maximo division
-                                    s.tempMatrix[fila, columna].max = this.lutTable[this.imgData[x, y]]  - 273.15f;
+                                    if (this.lutTable[this.imgData[x, y]] > (s.tempMatrix[fila, columna].max + 273.15f))                    //Maximo division
+                                        s.tempMatrix[fila, columna].max = this.lutTable[this.imgData[x, y]] - 273.15f;
 
-                                if (this.lutTable[this.imgData[x, y]] < (s.tempMatrix[fila, columna].min + 273.15f))                    //Mínimo división
-                                    s.tempMatrix[fila, columna].min = this.lutTable[this.imgData[x, y]]  - 273.15f;
+                                    if (this.lutTable[this.imgData[x, y]] < (s.tempMatrix[fila, columna].min + 273.15f))                    //Mínimo división
+                                        s.tempMatrix[fila, columna].min = this.lutTable[this.imgData[x, y]] - 273.15f;
 
-                                s.tempMatrix[fila, columna].mean += (this.lutTable[this.imgData[x, y]] - 273.15f) / elements;           //Media división
+                                    s.tempMatrix[fila, columna].mean += (this.lutTable[this.imgData[x, y]] - 273.15f) / elements;           //Media división
 
-                                // SUBZONA
+                                    // SUBZONA
 
-                                if (this.lutTable[this.imgData[x, y]] > (s._maxTemp + 273.15f))                            //Maximo division
-                                    s._maxTemp = this.lutTable[this.imgData[x, y]] - 273.15f;
+                                    if (this.lutTable[this.imgData[x, y]] > (s._maxTemp + 273.15f))                            //Maximo division
+                                        s._maxTemp = this.lutTable[this.imgData[x, y]] - 273.15f;
 
-                                if (this.lutTable[this.imgData[x, y]] < (s._minTemp + 273.15f))                            //Mínimo división
-                                    s._minTemp = this.lutTable[this.imgData[x, y]] - 273.15f;
+                                    if (this.lutTable[this.imgData[x, y]] < (s._minTemp + 273.15f))                            //Mínimo división
+                                        s._minTemp = this.lutTable[this.imgData[x, y]] - 273.15f;
 
-                                s._meanTemp += (this.lutTable[this.imgData[x, y]] - 273.15f) / (Heigth * Width);           //Media división
-                            }//for y
-                        }//for x
+                                    s._meanTemp += (this.lutTable[this.imgData[x, y]] - 273.15f) / (Heigth * Width);           //Media división
+                                }//for y
+                            }//for x
 
-                        if (s._maxTemp == 0)
-                        {
-                            Console.WriteLine("aa");
-                        }
-                    }//lock lockRejilla
-                }//foreach subzona
-            }//lockSubzonas
-
+                            if (s._maxTemp == 0)
+                            {
+                                Console.WriteLine("aa");
+                            }
+                        }//lock lockRejilla
+                    }//foreach subzona
+                }//lockSubzonas
+                this.Parent.OPCWritten = false;
+            }//PARENT != null
             #endregion
         }
 
@@ -777,7 +788,7 @@ namespace ThermoVision.Models
                 tGetImages = new Thread(new ThreadStart(getImages));
                 tGetImages.Name = "Thread GetImages";
                 tGetImages.IsBackground = true;
-                tGetImages.Priority = ThreadPriority.Highest;
+                tGetImages.Priority = ThreadPriority.Normal;
                 tGetImages.Start();
 
                 if (this.ThermoCamConnected != null)

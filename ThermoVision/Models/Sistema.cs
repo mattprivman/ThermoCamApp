@@ -24,6 +24,9 @@ namespace ThermoVision.Models
 
         public Zona         selectedZona;
 
+        //Variables sincronización
+        bool                OPCWritting;
+
         #endregion
 
         #region "Eventos"
@@ -70,7 +73,7 @@ namespace ThermoVision.Models
                 this._OPCClient = value;
             }
         }
-        public string Path                                        // -rw 
+        public string           Path                              // -rw 
         {
             get
             {
@@ -81,6 +84,11 @@ namespace ThermoVision.Models
                 this._path = value;
             }
         }
+        public bool             OPCWritten                        // -rw 
+        {
+            get;
+            set;
+        }
 
         #endregion
 
@@ -90,6 +98,8 @@ namespace ThermoVision.Models
         {
             this._zonas      = new List<Zona>();
             this._thermoCams = new List<ThermoCam>();
+
+            this.OPCWritten = true;
         }
         protected Sistema(SerializationInfo info, StreamingContext ctxt)   
         {
@@ -99,7 +109,8 @@ namespace ThermoVision.Models
             this._OPCServerName = (string)          info.GetValue("OPCServerName", typeof(string));
             this._path          = (string)          info.GetValue("Path",          typeof(string));
             this.selectedZona   = null;
-      
+
+            this.OPCWritten = true;
         }
 
         #endregion
@@ -126,10 +137,10 @@ namespace ThermoVision.Models
                 this._OPCClient.Browse();
             }
 
-            System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(escribirOPC));
-            t.IsBackground = true;
-            t.Name = "Escribir OPC";
-            t.Start();
+            foreach (ThermoCam t in this.ThermoCams)
+            {
+                t.ThermoCamImgReceived += t_ThermoCamImgReceived;
+            }
         }
         public void Dispose()                                                            
         {
@@ -219,6 +230,7 @@ namespace ThermoVision.Models
             lock("ThermoCams")
             {
                 this._thermoCams.Add(t);
+                t.Parent                = this;
                 t.ThermoCamImgReceived += t_ThermoCamImgReceived;
             }
         }
@@ -237,95 +249,114 @@ namespace ThermoVision.Models
             {
                 ((ThermoCam)sender).ImagenRecibida = true;
             }
+
+            foreach (ThermoCam t in this._thermoCams)
+            {
+                if (t.ImagenRecibida == false)
+                    return; //No se han recibido todas las imagenes
+            }
+            //SE HAN RECIBIDO TODAS LAS IMAGENES DE LAS CAMARAS CONECTADAS
+            //Procesar zonas
+
+            foreach (Zona z in this._zonas)
+            {
+                //Reiniciar variables
+                z._maxTemp = 0F;
+                z._minTemp = 10000F;
+                z._meanTemp = 0D;
+
+                foreach (SubZona s in z.Children)
+                {
+                    //Máximo
+                    if (s._maxTemp > z._maxTemp)
+                        z._maxTemp = s._maxTemp;
+                    //Mínimo
+                    if (s._minTemp < z._minTemp)
+                        z._minTemp = s._minTemp;
+                    //Media
+                    z._meanTemp += s._meanTemp / z.Children.Count;
+                }
+            }
+
+
+            if (this.OPCWritten == false && this.OPCWritting == false)
+            {
+                System.Threading.Thread _thread = new System.Threading.Thread(new System.Threading.ThreadStart(escribirOPC));
+                _thread.IsBackground = true;
+                _thread.Priority = System.Threading.ThreadPriority.Highest;
+                _thread.Name = "Escribir OPC";
+                _thread.Start();
+            }
         }
         void escribirOPC()
         {
-            while (true)
+            //TODOS LOS VALORES SE HAN RECIBIDO
+            //Escrbir variables en servidor OPC
+
+            if (this.OPCClient != null)
             {
-                foreach (ThermoCam t in this._thermoCams)
+                this.OPCWritting = true;
+
+                foreach (Zona z in this._zonas)
                 {
-                    if (t.Conectado)
+
+                    OPCGroupValues groupSystem = new OPCGroupValues(this._path + ".TEMPERATURES." + z.Nombre);
+
+                    groupSystem.Items.Add(new OPCItemValue("Max",  (int) z._maxTemp));
+                    groupSystem.Items.Add(new OPCItemValue("Min",  (int) z._minTemp));
+                    groupSystem.Items.Add(new OPCItemValue("Mean", (int)z._meanTemp));
+
+                    this._OPCClient.WriteAsync(groupSystem);
+
+                    //this._OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre, "Max", (int)z._maxTemp);
+                    //this._OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre, "Min", (int)z._minTemp);
+                    //this._OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre, "Mean", (int)z._meanTemp);
+
+                    foreach (SubZona s in z.Children)
                     {
-                        if (t.ImagenRecibida == false)
-                            return; //No se han recibido todas las imagenes
-                    }
-                }
+                        OPCGroupValues groupZone = new OPCGroupValues(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre);
 
-                //SE HAN RECIBIDO TODAS LAS IMAGENES DE LAS CAMARAS CONECTADAS
-                //Procesar zonas
-                lock ("SubZonas")
-                {
-                    foreach (Zona z in this._zonas)
-                    {
-                        //Reiniciar variables
-                        z._maxTemp = 0F;
-                        z._minTemp = 10000F;
-                        z._meanTemp = 0D;
+                        groupZone.Items.Add(new OPCItemValue("Max",  (int) s._maxTemp));
+                        groupZone.Items.Add(new OPCItemValue("Min",  (int) s._minTemp));
+                        groupZone.Items.Add(new OPCItemValue("Mean", (int) s._meanTemp));
 
-                        foreach (SubZona s in z.Children)
+
+                        //this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre, "Max", (int)s._maxTemp);
+                        //this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre, "Min", (int)s._minTemp);
+                        //this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre, "Mean", (int)s._meanTemp);
+
+                        if (s.tempMatrix != null)
                         {
-                            //Máximo
-                            if (s._maxTemp > z._maxTemp)
-                                z._maxTemp = s._maxTemp;
-                            //Mínimo
-                            if (s._minTemp < z._minTemp)
-                                z._minTemp = s._minTemp;
-                            //Media
-                            z._meanTemp += s._meanTemp / z.Children.Count;
-                        }
-
-                        if (z._maxTemp == 0)
-                        {
-                            Console.WriteLine("aa");
-                        }
-                    }
-                }
-
-                //TODOS LOS VALORES SE HAN RECIBIDO
-                //Escrbir variables en servidor OPC
-                if (this.OPCClient != null)
-                {
-                    lock ("Zonas")
-                    {
-                        lock ("SubZonas")
-                        {
-                            foreach (Zona z in Zonas)
+                            for (int x = 0; x < s.tempMatrix.GetLength(0); x++)
                             {
-                                this._OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre, "Max", (int)z._maxTemp);
-                                this._OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre, "Min", (int)z._minTemp);
-                                this._OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre, "Mean", (int)z._meanTemp);
-
-                                foreach (SubZona s in z.Children)
+                                for (int y = 0; y < s.tempMatrix.GetLength(1); y++)
                                 {
-                                    this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre, "Max", (int)s._maxTemp);
-                                    this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre, "Min", (int)s._minTemp);
-                                    this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre, "Mean", (int)s._meanTemp);
+                                    OPCGroupValues groupSubZone = new OPCGroupValues(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MAX");
 
-                                    if (s.tempMatrix != null)
-                                    {
-                                        for (int x = 0; x < s.tempMatrix.GetLength(0); x++)
-                                        {
-                                            for (int y = 0; y < s.tempMatrix.GetLength(1); y++)
-                                            {
-                                                this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MAX", "[" + y + "," + x + "]", (int)s.tempMatrix[x, y].max);
-                                                this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MIN", "[" + y + "," + x + "]", (int)s.tempMatrix[x, y].min);
-                                                this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MEAN", "[" + y + "," + x + "]", (int)s.tempMatrix[x, y].mean);
-                                            }
-                                        }
-                                    }
+                                    groupSubZone.Items.Add(new OPCItemValue("[" + y + "," + x + "]", (int)s.tempMatrix[x, y].max));
+                                    groupSubZone.Items.Add(new OPCItemValue("[" + y + "," + x + "]", (int)s.tempMatrix[x, y].min));
+                                    groupSubZone.Items.Add(new OPCItemValue("[" + y + "," + x + "]", (int)s.tempMatrix[x, y].mean));
+
+                                    this._OPCClient.WriteAsync(groupSystem);
+
+                                    //this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MAX", "[" + y + "," + x + "]", (int)s.tempMatrix[x, y].max);
+                                    //this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MIN", "[" + y + "," + x + "]", (int)s.tempMatrix[x, y].min);
+                                    //this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MEAN", "[" + y + "," + x + "]", (int)s.tempMatrix[x, y].mean);
                                 }
                             }
                         }
-                    }
-                }
+                    }//FOREACH SUBZONA
+                }//FOREACH ZONA
+                this.OPCWritting = false;
+            }//IF OPCClient != null
 
-                //REINICIAR LAS VARIABLES QUE INDICAN LA RECEPCIÓN DE LA IMAGEN DE CADA CAMARA
-                foreach (ThermoCam t in this._thermoCams)
-                {
-                    t.ImagenRecibida = false;
-                }
-                //System.Threading.Thread.Sleep(1000);
+            //REINICIAR LAS VARIABLES QUE INDICAN LA RECEPCIÓN DE LA IMAGEN DE CADA CAMARA
+            foreach (ThermoCam t in this._thermoCams)
+            {
+                t.ImagenRecibida = false;
             }
+            //System.Threading.Thread.Sleep(1000);
+            this.OPCWritten = true;
         }
         #endregion
 

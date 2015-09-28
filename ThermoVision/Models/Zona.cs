@@ -27,7 +27,7 @@ namespace ThermoVision.Models
 
         #region "Propiedades"
 
-        public string        Nombre                 
+        public string        Nombre           // -rw      
         {
             get
             {
@@ -38,11 +38,18 @@ namespace ThermoVision.Models
                 this._nombre = value;
             }
         }
-        public List<SubZona> Children               
+        public List<SubZona> Children         // -r       
         {
             get
             {
                 return this._children;
+            }
+        }
+        public Sistema Parent                 // -r       
+        {
+            get
+            {
+                return this._parent;
             }
         }
 

@@ -33,6 +33,8 @@
             this.buttonNext = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxNumberCameras = new System.Windows.Forms.ComboBox();
+            this.buttonLoadCfg = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // comboBoxAppType
@@ -66,7 +68,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(36, 82);
+            this.label2.Location = new System.Drawing.Point(28, 82);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 13);
             this.label2.TabIndex = 4;
@@ -82,12 +84,27 @@
             this.comboBoxNumberCameras.TabIndex = 3;
             this.comboBoxNumberCameras.SelectedIndexChanged += new System.EventHandler(this.comboBoxNumberCameras_SelectedIndexChanged);
             // 
+            // buttonLoadCfg
+            // 
+            this.buttonLoadCfg.Location = new System.Drawing.Point(31, 124);
+            this.buttonLoadCfg.Name = "buttonLoadCfg";
+            this.buttonLoadCfg.Size = new System.Drawing.Size(127, 23);
+            this.buttonLoadCfg.TabIndex = 5;
+            this.buttonLoadCfg.Text = "Cargar configuración";
+            this.buttonLoadCfg.UseVisualStyleBackColor = true;
+            this.buttonLoadCfg.Click += new System.EventHandler(this.buttonLoadCfg_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // selectAppType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(312, 159);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonLoadCfg);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxNumberCameras);
             this.Controls.Add(this.buttonNext);
@@ -109,5 +126,7 @@
         private System.Windows.Forms.Button buttonNext;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxNumberCameras;
+        private System.Windows.Forms.Button buttonLoadCfg;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

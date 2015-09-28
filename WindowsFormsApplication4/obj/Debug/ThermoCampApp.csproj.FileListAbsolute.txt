@@ -43,7 +43,6 @@ E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\WindowsFormsAppl
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.pdb
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\OPCClient.dll
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoVision.dll
-E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\Interop.OPCAutomation.dll
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\AxInterop.CAMCTRLLib.dll
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\Interop.CAMCTRLLib.dll
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\OPCClient.pdb

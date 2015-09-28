@@ -30,7 +30,7 @@ namespace WindowsFormsApplication4
 
             //Borrar archivo de datos
             //System.IO.File.Delete("Data.ocl");
-            _system = Helpers.deserializeSistema("data.ocl");
+            //_system = Helpers.deserializeSistema("data.ocl");
 
             if (_system != null)
             {
@@ -71,6 +71,13 @@ namespace WindowsFormsApplication4
                                 {
                                     AppType.Dispose();
                                     return;
+                                }
+                                if (AppType.cargarConfiguracion)
+                                {
+                                    _system = AppType.sistema;
+                                    Helpers.serializeSistema(_system, "data.ocl");
+                                    step = (int)windowIds.appMain;
+                                    break;
                                 }
 
                                 numeroCamaras = AppType.NumeroCamaras;

@@ -116,7 +116,7 @@ namespace OPC
         {
             if (_OPCServer != null)
             {
-                if (_OPCBrowser != null && _OPCServer.ServerState == (int) OPCServerState.OPCRunning)                   //COMPROBAR QUE EL SERVIDOR SOPORTA BROWSING
+                if (_OPCBrowser != null && this._OPCServer.ServerState == (int) OPCServerState.OPCRunning)                   //COMPROBAR QUE EL SERVIDOR SOPORTA BROWSING
                 {
                     browseBranch(_OPCBranch);
                     browseLeaf(_OPCBranch);
@@ -130,23 +130,85 @@ namespace OPC
         {
             Branch b = GetBranch(group);
 
+            
             try
             {
-                if (b.Leafs.Exists(x => x.Name == item))
+                if (this._OPCServer.ServerState == (int)OPCServerState.OPCRunning)
                 {
-                    OPCItem i = (b.Leafs.Where(x => x.Name == item).First()).OPCItem;
+                    if (b.Leafs.Exists(x => x.Name == item))
+                    {
+                        OPCItem i = (b.Leafs.Where(x => x.Name == item).First()).OPCItem;
 
-                    i.Write(value);
+                        i.Write(value);
 
-                    return true;
+                        return true;
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.ToString();
+                if (e.ToString().Contains("No se puede utilizar un objeto COM que se ha separado de su RCW subyacente."))
+                {
+                    this._Connected = false;
+                }
+                else
+                {
+                    this.Conectar();
+                }
             }
 
             return false;
+        }
+        public void WriteAsync(OPCGroupValues gv)
+        {
+            Branch g = GetBranch(gv.Path);
+
+            int count = 0; //Coincidencias
+            #region "Buscar cuantos elementos coincidentes hay"
+
+            for (int i = 0; i < gv.Items.Count; i++ )
+            {
+                if (g.Leafs.Exists(x => x.Name == gv.Items[i].Item))
+                {
+                    count++;
+                }
+            }
+            #endregion
+
+            Array serverHandles = Array.CreateInstance(typeof(int), 
+                new int[1] { count }, 
+                new int[1] { 1 });
+
+            Array values = Array.CreateInstance(typeof(object),
+                new int[1] { count },
+                new int[1] { 1 });
+            Array errors = Array.CreateInstance(typeof(int),
+                new int[1] { count },
+                new int[1] { 1 }); ;
+
+            int index = 1;
+            for (int i = 0; i < gv.Items.Count; i++)
+            {
+                if(g.Leafs.Exists(x => x.Name == gv.Items[i].Item))
+                {
+                    serverHandles.SetValue(
+                        (g.Leafs.Where(x => x.Name == gv.Items[i].Item).First()).ServerHandle,
+                        index);
+                    values.SetValue(gv.Items[i].Value, index);
+                    index++;
+                }
+            }
+            //OPCItem item = g.OPCGroup.OPCItems.GetOPCItem(g.Leafs[0].ServerHandle);
+            try
+            {
+                //VBHelpers.Helpers.WritteAsync(g.OPCGroup);
+                g.OPCGroup.SyncWrite(gv.Items.Count, ref serverHandles, ref values, out errors);
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+            }
         }
 
         public bool SuscribeGroup (string Group)                
@@ -291,9 +353,9 @@ namespace OPC
 
             OPCServer OPCServer = new OPCServer();
 
-            Array servers = (Array) OPCServer.GetOPCServers();
+            Object servers =  OPCServer.GetOPCServers();
 
-            foreach(string s in servers)
+            foreach(string s in (Array)servers)
                     serversList.Add(s);
 
             return serversList;
@@ -404,16 +466,15 @@ namespace OPC
 
         public Branch(String Name, OPCServer Server = null, Branch Parent = null) 
         {
-            this._Name = Name;
-            this._Children = new List<Branch>();
-            this._Leafs = new List<Leaf>();
+            this._Name      = Name;
+            this._Children  = new List<Branch>();
+            this._Leafs     = new List<Leaf>();
 
             if (Parent != null)
             {
                 this._HasParent     = true;
                 this._Parent = Parent;
                 Parent.addChildren(this);
-                this.DataChanged += Parent.Branch_DataChanged;
             }
             else
             {
@@ -424,9 +485,10 @@ namespace OPC
             if (Server != null)
             {
                 this._OPCGroup = Server.OPCGroups.Add(this._Name);
-                this._OPCGroup.UpdateRate   = 200;              //ms
+                this._OPCGroup.UpdateRate   = 500;              //ms
                 this._OPCGroup.IsActive     = true;             //Grupo activo
-                this._OPCGroup.IsSubscribed = false;
+                this._OPCGroup.DataChange += _OPCGroup_DataChange;
+                this._OPCGroup.IsSubscribed = true;
                 this._HasOPCGroup           = true;
             }
             else
@@ -436,7 +498,7 @@ namespace OPC
             }
 
             this._HasChildren               = false;
-            this._HasLeafs                   = false;
+            this._HasLeafs                  = false;
         }
 
         public void Branch_DataChanged(object sender, EventArgs e)
@@ -526,6 +588,7 @@ namespace OPC
         private string           _Name;
         private OPCItem          _OPCItem;
         private int              _ClientHandle;
+        private int              _serverHandle;
 
         private Branch          _Parent;
 
@@ -554,6 +617,13 @@ namespace OPC
                 return this._ClientHandle;
             }
         }
+        public int ServerHandle
+        {
+            get
+            {
+                return this._serverHandle;
+            }
+        }
 
         #endregion
 
@@ -568,6 +638,7 @@ namespace OPC
             this._Parent.addLeaf(this);
 
             this._OPCItem           = this._Parent.OPCGroup.OPCItems.AddItem(Browser.GetItemID(this._Name), this._ClientHandle);
+            this._serverHandle      = this.OPCItem.ServerHandle;
             this._OPCItem.IsActive  = true;
         }
 
