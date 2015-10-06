@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,13 @@ namespace OPC
 {
     public class OPCClient
     {
+        struct AsyncWriteStruct
+        {
+            public Branch   branch;
+            public int      transactionID;
+            public int      cancelID;
+        }
+
         #region "Variables"
 
         //Servidor
@@ -21,6 +29,10 @@ namespace OPC
         Branch     _OPCBranch;
 
         int        _ClientHandle = 1;
+
+        //Variable para los asyncWrites
+        Hashtable  AsyncWrites;
+        int        _transactionID = 0;
 
         #endregion
 
@@ -55,18 +67,21 @@ namespace OPC
         public event EventHandler Disconnected;
 
         public event EventHandler DataChanged;
+        public event EventHandler AsyncWriteError;
 
         #endregion
 
         #region "Metodos Públicos"
 
-        public OPCClient(string serverName)                     
+        public OPCClient(string serverName)                         
         {
+            AsyncWrites = new Hashtable();
+
             this._serverName = serverName;
             this._OPCServer  = new OPCServer();
         }
 
-        public void Conectar()                                  
+        public void Conectar()                                      
         {
             try
             {
@@ -88,7 +103,7 @@ namespace OPC
             }
         }
 
-        public void Desconectar()                               
+        public void Desconectar()                                   
         {
             if (_OPCBranch != null)
             {
@@ -106,13 +121,14 @@ namespace OPC
             if (Disconnected != null)
                 Disconnected(this, null);
         }
-        public void Dispose()                                   
+        public void Dispose()                                       
         {
             Desconectar();
+            this.AsyncWrites.Clear();
             GC.SuppressFinalize(this._OPCServer);
         }
 
-        public Branch Browse()                                  
+        public Branch Browse()                                      
         {
             if (_OPCServer != null)
             {
@@ -164,6 +180,9 @@ namespace OPC
         {
             Branch g = GetBranch(gv.Path);
 
+            if (g == null)
+                return;
+
             int count = 0; //Coincidencias
             #region "Buscar cuantos elementos coincidentes hay"
 
@@ -176,6 +195,7 @@ namespace OPC
             }
             #endregion
 
+            #region "Crear arrays"
             Array serverHandles = Array.CreateInstance(typeof(int), 
                 new int[1] { count }, 
                 new int[1] { 1 });
@@ -186,7 +206,9 @@ namespace OPC
             Array errors = Array.CreateInstance(typeof(int),
                 new int[1] { count },
                 new int[1] { 1 }); ;
+            #endregion
 
+            #region "Rellenar Arays"
             int index = 1;
             for (int i = 0; i < gv.Items.Count; i++)
             {
@@ -199,15 +221,37 @@ namespace OPC
                     index++;
                 }
             }
-            //OPCItem item = g.OPCGroup.OPCItems.GetOPCItem(g.Leafs[0].ServerHandle);
+            #endregion
+
+            #region "Estructura para controlar la operación asincrona"
+            AsyncWriteStruct a = new AsyncWriteStruct()
+                {
+                    branch = g,
+                    transactionID = this._transactionID,
+                };
+
+            g.OPCGroup.AsyncWriteComplete += OPCGroup_AsyncWriteComplete;
+            #endregion
+
             try
             {
                 //VBHelpers.Helpers.WritteAsync(g.OPCGroup);
-                g.OPCGroup.SyncWrite(gv.Items.Count, ref serverHandles, ref values, out errors);
+                this.AsyncWrites.Add(a.transactionID, a);
+                this._transactionID ++;
+                g.OPCGroup.AsyncWrite(count, ref serverHandles, ref values, out errors, a.transactionID, out a.cancelID);
             }
             catch (Exception e)
             {
                 e.ToString();
+
+                try
+                {
+                    if (this.AsyncWrites.Contains(a.transactionID))
+                        this.AsyncWrites.Remove(a.transactionID);
+                }
+                catch (Exception ex)
+                {
+                }
             }
         }
 
@@ -269,7 +313,7 @@ namespace OPC
                     Browse();
                 }
             }
-
+            Browse();
             return null;
         }
 
@@ -331,6 +375,38 @@ namespace OPC
             }
         }
 
+        private void OPCGroup_AsyncWriteComplete(int TransactionID, int NumItems, ref Array ClientHandles, ref Array Errors)
+        {
+            try
+            {
+                if (this.AsyncWrites.Contains(TransactionID))
+                {
+                    AsyncWriteStruct a = (AsyncWriteStruct)this.AsyncWrites[TransactionID];
+
+                    for (int i = Errors.GetLowerBound(0); i <= Errors.GetUpperBound(0); i++)
+                    {
+                        if (Errors.GetValue(i) is int)
+                        {
+                            if ((int)Errors.GetValue(i) != 0)
+                            {
+                                Console.WriteLine(Errors.GetValue(i).ToString());
+                                if (this.AsyncWriteError != null)
+                                {
+                                    this.AsyncWriteError(this, null);
+                                }
+                            }
+                        }
+                    }
+
+                    this.AsyncWrites.Remove(TransactionID);
+                    a.branch.OPCGroup.AsyncWriteComplete -= OPCGroup_AsyncWriteComplete;
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+        }
         private void _OPCBranch_DataChanged(object sender, EventArgs e) 
         {
             //this._OPCBranch.Dispose();

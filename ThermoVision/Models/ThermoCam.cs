@@ -9,6 +9,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using ThermoVision.Helpers;
 using ThermoVision.Enumeraciones;
+using ThermoVision.Tipos;
 
 namespace ThermoVision.Models
 {
@@ -184,7 +185,7 @@ namespace ThermoVision.Models
 
         public event ThermoCamImgEventCallback      ThermoCamImgReceived;
         public event ThermoCamEventCallback         ThermoCamNameChanged;
-
+        
         //CONEXIÓN
         public event ThermoCamEventCallback         ThermoCamConnected;
         public event ThermoCamEventCallback         ThermoCamDisConnected;
@@ -330,7 +331,7 @@ namespace ThermoVision.Models
         }
         public void removeSubZona(SubZona s)    
         {
-            lock ("Subonas")
+            lock ("SubZonas")
             {
                 if (this.SubZonas.Contains(s))
                     this.SubZonas.Remove(s);
@@ -402,6 +403,7 @@ namespace ThermoVision.Models
                     {
                         this._width = this.imgData.GetLength(0);
                         this._height = this.imgData.GetLength(1);
+
                         this.bmp = new Bitmap(this._width, this._height);
 
                         //Calcular la longitud de cada celda y de cada columna si la rejilla esta definida
@@ -420,8 +422,7 @@ namespace ThermoVision.Models
 
                         procesarImagen();
 
-                        (new Thread(new ThreadStart(triggerImgReceivedEvent))).Start();
-
+                        triggerImgReceivedEvent();
                     }
                 //}
                 //catch (Exception ex)
@@ -558,6 +559,8 @@ namespace ThermoVision.Models
                     }
                     catch (Exception ex)
                     {
+                        if (ex.Message.Contains("No se puede evaluar la expresión porque el código está optimizado o existe un marco nativo en la parte superior de la pila de llamadas."))
+                            return;
                         ex.ToString();
                     }
                 }
@@ -566,6 +569,7 @@ namespace ThermoVision.Models
             #endregion
 
             #region "MODO CONFIGURACIÓN"
+
             if (this._configuracionMode)
             {
                 //BLOQUEO PARA EVITAR MODIFICACIONES EN LA LISTA DE DIVISIONES MIENTRAS SE EJECUTA ESTE CÓDIGO
@@ -590,9 +594,9 @@ namespace ThermoVision.Models
                                         maxValue = this.imgData[x, y];
                                     if (this.imgData[x, y] < minValue)
                                         minValue = imgData[x, y];
-                                }
-                            }
-                        }
+                                }//for y
+                            }//for x
+                        }//if selected
                     }
                     range = maxValue - minValue;
 
@@ -612,9 +616,9 @@ namespace ThermoVision.Models
                                     {
                                         Color c = this.colorPalette[(int)(((this.Val - minValue) * 255) / range)];
                                         this.bmp.SetPixel(x, y, c);
-                                    }
-                                }
-                            }
+                                    }//if range
+                                }//for y
+                            }//for x
 
                             //Columnas
                             for (int i = 1; i < s.Columnas; i++)
@@ -624,8 +628,8 @@ namespace ThermoVision.Models
                                 for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
                                 {
                                     this.bmp.SetPixel(x, y, Color.Black);
-                                }
-                            }
+                                }//For  y
+                            }//for columnas
 
                             //Filas
                             for (int i = 1; i < s.Filas; i++)
@@ -635,8 +639,8 @@ namespace ThermoVision.Models
                                 for (int x = s.Inicio.X; x < s.Fin.X; x++)
                                 {
                                     this.bmp.SetPixel(x, y, Color.Black);
-                                }
-                            }
+                                }//For x
+                            }//For filas
 
                             //Escribir el nombre de la división
                             using (Graphics graphics = Graphics.FromImage(this.bmp))
@@ -651,18 +655,20 @@ namespace ThermoVision.Models
                                         new Point(
                                             s.Inicio.X + 2,
                                             s.Inicio.Y + 2));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+                                }//Using font
+                            }//Using raphics
+                        }//if selected
+                    }//foreach subzona
+                }//lock subzona
+            }//if configuracionmode
             #endregion
+
 
             #region "Modo funcionamiento"
 
-            if (this.Parent != null && this.Parent.OPCWritten == true)
+            if (this.Parent != null && this.Parent.accessingTempElements == false)
             {
+                this.Parent.accessingTempElements = true;
                 //Obtener temperaturas maximas, mínima y media de cada división de cada subzona
                 lock ("SubZonas")                    //Bloqueo para evitar cambios en la coleccion de subzonas
                 {
@@ -691,7 +697,7 @@ namespace ThermoVision.Models
                             }//for filas
 
                             int Heigth = (s.Fin.Y - s.Inicio.Y);    //Altura de la subzona
-                            int Width = (s.Fin.X - s.Inicio.X);    //Ancho de la subzona
+                            int Width = (s.Fin.X - s.Inicio.X);     //Ancho de la subzona
 
                             int elements = Heigth / s.Filas * Width / s.Columnas;          //Numero de elementos
 
@@ -721,13 +727,13 @@ namespace ThermoVision.Models
 
                                     // SUBZONA
 
-                                    if (this.lutTable[this.imgData[x, y]] > (s._maxTemp + 273.15f))                            //Maximo division
+                                    if (this.lutTable[this.imgData[x, y]] > (s._maxTemp + 273.15f))                                         //Maximo division
                                         s._maxTemp = this.lutTable[this.imgData[x, y]] - 273.15f;
 
-                                    if (this.lutTable[this.imgData[x, y]] < (s._minTemp + 273.15f))                            //Mínimo división
+                                    if (this.lutTable[this.imgData[x, y]] < (s._minTemp + 273.15f))                                         //Mínimo división
                                         s._minTemp = this.lutTable[this.imgData[x, y]] - 273.15f;
 
-                                    s._meanTemp += (this.lutTable[this.imgData[x, y]] - 273.15f) / (Heigth * Width);           //Media división
+                                    s._meanTemp += (this.lutTable[this.imgData[x, y]] - 273.15f) / (Heigth * Width);                        //Media división
                                 }//for y
                             }//for x
 
@@ -738,7 +744,7 @@ namespace ThermoVision.Models
                         }//lock lockRejilla
                     }//foreach subzona
                 }//lockSubzonas
-                this.Parent.OPCWritten = false;
+                this.Parent.accessingTempElements = false;
             }//PARENT != null
             #endregion
         }

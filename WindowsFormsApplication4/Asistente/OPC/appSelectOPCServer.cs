@@ -16,7 +16,7 @@ namespace WindowsFormsApplication4.Asistente.OPC
     {
         Sistema _system;
 
-        public Sistema Sistema
+        public Sistema Sistema                                              
         {
             get
             {
@@ -29,7 +29,7 @@ namespace WindowsFormsApplication4.Asistente.OPC
         }
 
         public appSelectOPCServer(Sistema _system)                          
-        {
+        {           
             this._system = _system;
 
             this.Salir = true;
@@ -39,6 +39,12 @@ namespace WindowsFormsApplication4.Asistente.OPC
             this.comboBoxOPCServers.SelectedIndexChanged += comboBoxOPCServers_SelectedIndexChanged;
 
             this.treeViewBranch.AfterSelect              += treeViewBranch_AfterSelect;
+
+            this.pictureBoxLogo.Image = System.Drawing.Bitmap.FromFile("Resources\\logo.jpg");
+
+            this.textBoxInstrucciones.Text = "Seleccione el servidor OPC en el que va a realizar la configuración de la comunicación. \r\n\r\n" +
+               "Indique también la zona de memoria a partir de la cual se van a insertar los registros que contendran las temperaturas de cada zona y de cada subzona. \r\n\r\n" +
+               "A continuación seleccione las variables que desea comunicar con el PLC y genere los archivos que deberá importar en el servidor OPC y en el software de programación del PLC";
         }
 
         #region "ITEMS"
@@ -76,7 +82,7 @@ namespace WindowsFormsApplication4.Asistente.OPC
             this.listBoxItems.Update();
         }
 
-        void unBoldNodes(TreeNode node)
+        void unBoldNodes(TreeNode node)                                     
         {
             foreach (TreeNode t in node.Nodes)
             {
@@ -96,7 +102,7 @@ namespace WindowsFormsApplication4.Asistente.OPC
                 updateTreeViewBranches();
             }
         }
-        private void updateTreeViewBranches()                               
+        private void updateTreeViewBranches()                                       
         {
             this.treeViewBranch.BeginUpdate();
             this.treeViewBranch.Nodes.Clear();
@@ -121,7 +127,7 @@ namespace WindowsFormsApplication4.Asistente.OPC
             this.treeViewBranch.Update();
             this.treeViewBranch.EndUpdate();
         }
-        private void addNodes(TreeNode t, Branch branch)                    
+        private void addNodes(TreeNode t, Branch branch)                            
         {
             foreach (Branch b in branch.Children)
             {
@@ -200,6 +206,55 @@ namespace WindowsFormsApplication4.Asistente.OPC
             }
 
             #region "Servidor OPC"
+
+            switch (this._system.Mode)
+            {
+                case "Standart":
+                                                                                //Generar variables para aplicación Standart para servidor OPC
+                    generateStandartOPCVars(ruta);
+                    break;
+
+                case "Rampas":
+                                                                                //Generar variables para aplicación de Rampas para servidor OPC
+
+                    break;
+
+                case "Tuberias":
+                                                                                //Generar variables para aplicación de tuberias para servidor OPC
+                    break;
+            }
+
+            #endregion
+
+            this.saveFileDialog1.FileName = "TIAPortal Vars";
+            this.saveFileDialog1.Title = "Guardar archivo '*.scl' para TIA PORTAL";
+            this.saveFileDialog1.Filter = "Text Estructurado (*.scl)|*.scl";
+            this.saveFileDialog1.ShowDialog();
+            this.saveFileDialog1.AddExtension = true;
+            ruta = this.saveFileDialog1.FileName;
+
+
+            if (!(ruta != null && ruta != ""))
+            {
+                MessageBox.Show("Debe seleccionar una ruta valida",
+                       "Error",
+                       MessageBoxButtons.OK,
+                       MessageBoxIcon.Error);
+                return;
+
+            }
+
+            #region "Siemens"
+
+            generateStandartSIEMENSscl(ruta);                           //Generar standart scl data blocks for TIA Portal
+
+            #endregion
+
+        }
+
+        #region "Aplicación Standart"
+        private void generateStandartOPCVars(string ruta)                   
+        {
             using (System.IO.StreamWriter w = new System.IO.StreamWriter(ruta, false))
             {
                 w.WriteLine("Tag Name,Address,Data Type,Respect Data Type,Client Access,Scan Rate,Scaling,Raw Low,Raw High,Scaled Low,Scaled High,Scaled Data Type,Clamp Low,Clamp High,Eng Units,Description,Negate Value");
@@ -271,28 +326,9 @@ namespace WindowsFormsApplication4.Asistente.OPC
                 w.Dispose();
 
             }
-            #endregion
-
-            this.saveFileDialog1.FileName = "TIAPortal Vars";
-            this.saveFileDialog1.Title = "Guardar archivo '*.scl' para TIA PORTAL";
-            this.saveFileDialog1.Filter = "Text Estructurado (*.scl)|*.scl";
-            this.saveFileDialog1.ShowDialog();
-            this.saveFileDialog1.AddExtension = true;
-            ruta = this.saveFileDialog1.FileName;
-
-
-            if (!(ruta != null && ruta != ""))
-            {
-                MessageBox.Show("Debe seleccionar una ruta valida",
-                       "Error",
-                       MessageBoxButtons.OK,
-                       MessageBoxIcon.Error);
-                return;
-
-            }
-
-            #region "Siemens"
-
+        }
+        private void generateStandartSIEMENSscl(string ruta)                
+        {
             using (System.IO.StreamWriter w = new System.IO.StreamWriter(ruta, false))
             {
                 //TIPO DE DATO
@@ -301,13 +337,13 @@ namespace WindowsFormsApplication4.Asistente.OPC
                 w.WriteLine("VERSION : 0.1");
                 w.WriteLine("   STRUCT");
 
-                if(this.checkBoxMax.Checked)
+                if (this.checkBoxMax.Checked)
                     w.WriteLine("       maxTemp : Int;");
 
-                if(this.checkBoxMin.Checked)
+                if (this.checkBoxMin.Checked)
                     w.WriteLine("       minTemp : Int;");
 
-                if(this.checkBoxMean.Checked)
+                if (this.checkBoxMean.Checked)
                     w.WriteLine("       meanTemp : Int;");
 
                 w.WriteLine("   END_STRUCT;");
@@ -340,9 +376,29 @@ namespace WindowsFormsApplication4.Asistente.OPC
                 w.Close();
                 w.Dispose();
             }
+        }
+        #endregion
 
-            #endregion
+        #region "Aplicación de rampas"
+        private void generateRampasOPCVars(string ruta)                     
+        {
+            using(System.IO.StreamWriter w = new System.IO.StreamWriter(ruta, false))
+            {
+                w.WriteLine("Tag Name,Address,Data Type,Respect Data Type,Client Access,Scan Rate,Scaling,Raw Low,Raw High,Scaled Low,Scaled High,Scaled Data Type,Clamp Low,Clamp High,Eng Units,Description,Negate Value");
+
+                foreach (SubZona s in this._system.getZona(this._system.zonaApagado).Children)
+                {
+                    //w.WriteLine("\"TEMPERATURES." + z.Nombre + "." + "Max" + "\",\"" + this.textBoxInitialMem.Text + index + "\",Word,1,R/W,100,,,,,,,,,,\"\",");
+                    //index = index + 2;
+                }
+
+                w.Close();
+            }
+        }
+        private void generateRampasIEMENSscl(string ruta)                   
+        {
 
         }
+        #endregion
     }
 }

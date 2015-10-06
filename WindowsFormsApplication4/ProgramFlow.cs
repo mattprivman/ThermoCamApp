@@ -50,39 +50,40 @@ namespace WindowsFormsApplication4
                     case (int) windowIds.appMode:                       //ELEGIR MODO DE APLICACIÓN Y NÚMERO DE CÁMARAS
 
                         #region "Modo de aplicación"
-                        if (Helpers.getAppStringSetting("Mode") == "")
+
+                        //_system = Helpers.deserializeSistema("data.ocl");
+
+                        if (_system != null)
                         {
-                            //_system = Helpers.deserializeSistema("data.ocl");
+                            numeroCamaras = _system.ThermoCams.Count;
+                        }
+                        else
+                        {
+                            _system = new Sistema();
+                        }
 
-                            if (_system != null)
+                        using (Asistente.selectAppType AppType = new Asistente.selectAppType(numeroCamaras, _system))
+                        {
+                            AppType.ShowDialog();
+
+                            if (AppType.Salir)
                             {
-                                numeroCamaras = _system.ThermoCams.Count;
-                            }
-                            else
-                            {
-                                _system = new Sistema();
-                            }
-
-                            using (Asistente.selectAppType AppType = new Asistente.selectAppType(numeroCamaras))
-                            {
-                                AppType.ShowDialog();
-
-                                if (AppType.Salir)
-                                {
-                                    AppType.Dispose();
-                                    return;
-                                }
-                                if (AppType.cargarConfiguracion)
-                                {
-                                    _system = AppType.sistema;
-                                    Helpers.serializeSistema(_system, "data.ocl");
-                                    step = (int)windowIds.appMain;
-                                    break;
-                                }
-
-                                numeroCamaras = AppType.NumeroCamaras;
                                 AppType.Dispose();
+                                return;
                             }
+                            if (AppType.cargarConfiguracion)
+                            {
+                                _system = AppType._system;
+                                Helpers.serializeSistema(_system, "data.ocl");
+                                step = (int)windowIds.appMain;
+                                break;
+                            }
+
+                           //Continuar
+                           _system = AppType._system;
+
+                            numeroCamaras = AppType.NumeroCamaras;
+                            AppType.Dispose();
                         }
 
                         step = (int) windowIds.appCameraConfiguration;
@@ -110,7 +111,6 @@ namespace WindowsFormsApplication4
                                 if (cc.Atras)
                                 {
                                     step = (int)windowIds.appMode;
-                                    Helpers.changeAppStringSetting("Mode", "");
                                     //Helpers.serializeSistema(cc.Sistema, "data.ocl");
                                 }
                                 else
@@ -169,7 +169,6 @@ namespace WindowsFormsApplication4
                         }
                         else
                         {
-                            Helpers.changeAppStringSetting("Mode", "");
                             step = (int)windowIds.appMode;
                         }
 

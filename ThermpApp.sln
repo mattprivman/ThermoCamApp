@@ -9,7 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OPC", "OPCClient\OPC.csproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DE6C8310-D694-4B95-A05E-FA1534487A3C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OPCLibraries", "OPCLibraries", "{5A9E6D46-3F8B-40D8-AF29-ED325198476D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{5A9E6D46-3F8B-40D8-AF29-ED325198476D}"
+EndProject
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "RampaModel", "RampaModel\RampaModel.modelproj", "{002CA594-C20E-41E3-A795-1680E26E1DAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{FF4C8542-537E-4E8A-A225-A4CBDA1078AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,11 +71,25 @@ Global
 		{4B31B6A4-497B-4EE3-A852-6327B21A5210}.Release|x64.ActiveCfg = Release|Any CPU
 		{4B31B6A4-497B-4EE3-A852-6327B21A5210}.Release|x86.ActiveCfg = Release|x86
 		{4B31B6A4-497B-4EE3-A852-6327B21A5210}.Release|x86.Build.0 = Release|x86
+		{002CA594-C20E-41E3-A795-1680E26E1DAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{002CA594-C20E-41E3-A795-1680E26E1DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{002CA594-C20E-41E3-A795-1680E26E1DAE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{002CA594-C20E-41E3-A795-1680E26E1DAE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{002CA594-C20E-41E3-A795-1680E26E1DAE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{002CA594-C20E-41E3-A795-1680E26E1DAE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{002CA594-C20E-41E3-A795-1680E26E1DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{002CA594-C20E-41E3-A795-1680E26E1DAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{002CA594-C20E-41E3-A795-1680E26E1DAE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{002CA594-C20E-41E3-A795-1680E26E1DAE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{002CA594-C20E-41E3-A795-1680E26E1DAE}.Release|x64.ActiveCfg = Release|Any CPU
+		{002CA594-C20E-41E3-A795-1680E26E1DAE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4B31B6A4-497B-4EE3-A852-6327B21A5210} = {5A9E6D46-3F8B-40D8-AF29-ED325198476D}
+		{A9A78B2F-0FF4-46F1-A9F8-76EB25FBADC4} = {5A9E6D46-3F8B-40D8-AF29-ED325198476D}
+		{002CA594-C20E-41E3-A795-1680E26E1DAE} = {FF4C8542-537E-4E8A-A225-A4CBDA1078AB}
 	EndGlobalSection
 EndGlobal

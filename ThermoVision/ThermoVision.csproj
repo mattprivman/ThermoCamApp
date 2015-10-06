@@ -47,6 +47,13 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AxInterop.CAMCTRLLib">
       <HintPath>..\..\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\AxInterop.CAMCTRLLib.dll</HintPath>
@@ -67,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorimos\Estados.cs" />
     <Compile Include="CustomControls\CamConfigControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -86,6 +94,7 @@
     <Compile Include="CustomControls\NumericTextBox.Designer.cs">
       <DependentUpon>NumericTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cannon.cs" />
     <Compile Include="Models\Sistema.cs" />
     <Compile Include="Models\Zona.cs" />
     <Compile Include="Enumeraciones\Enumerations.cs" />

@@ -55,9 +55,7 @@ E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsAppl
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.Camaras.CustomControls.customTextBox.resources
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.Camaras.CustomControls.AddZona.resources
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.Camaras.CustomControls.AddSubZona.resources
-E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\Resources\FLIR_A320.jpg
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.OPC.appSelectOPCServer.resources
-E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\Resources\FLIR_IMAGE.jpg
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\Interop.IRViewLib.dll
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\AxInterop.IRViewLib.dll
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\Interop.CAMCTRLLib.dll
@@ -66,3 +64,5 @@ E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\AxInterop.CAMCTR
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\AxInterop.IRViewLib.dll
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCampApp.csproj.ResolveComReference.cache
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.main.resources
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\Resources\logo.jpg
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.Cannons.CannonSelector.resources

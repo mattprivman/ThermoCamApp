@@ -19,8 +19,8 @@ namespace WindowsFormsApplication4
         }
         public static void changeAppStringSetting(string property, string value) 
         {
-            Properties.Settings.Default[property] = value;
-            Properties.Settings.Default.Save();
+            //Properties.Settings.Default[property] = value;
+            //Properties.Settings.Default.Save();
         }
 
         public static int getAppIntSetting(string property)                      

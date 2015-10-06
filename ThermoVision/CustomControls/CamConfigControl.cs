@@ -9,6 +9,7 @@ using System.Threading;
 using System.Windows.Forms;
 using ThermoVision.Enumeraciones;
 using ThermoVision.Models;
+using ThermoVision.Tipos;
 
 namespace ThermoVision.CustomControls
 {
@@ -230,12 +231,16 @@ namespace ThermoVision.CustomControls
                                     });
                 }
 
+                this.bmpModified.Dispose();
             }
         }   //MOUSE LEFT UP
 
         void camara_ThermoCamImgReceived(object sender, ThermoCamImgArgs e)         
         {
-            bmp = e.Imagen;
+            if (this.bmp != null)
+                this.bmp.Dispose();
+
+            bmp = (Bitmap) e.Imagen.Clone();
 
             updatePictureBox(this.pictureBox1, ref bmp);
         }   //IMAGE RECEIVED

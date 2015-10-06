@@ -22,29 +22,5 @@ namespace WindowsFormsApplication4.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string OPCServerName {
-            get {
-                return ((string)(this["OPCServerName"]));
-            }
-            set {
-                this["OPCServerName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Mode {
-            get {
-                return ((string)(this["Mode"]));
-            }
-            set {
-                this["Mode"] = value;
-            }
-        }
     }
 }

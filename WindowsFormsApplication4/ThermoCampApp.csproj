@@ -73,6 +73,13 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -110,6 +117,12 @@
     </Compile>
     <Compile Include="Asistente\Camaras\CustomControls\customTextBox.Designer.cs">
       <DependentUpon>customTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Asistente\Cannons\CannonSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Asistente\Cannons\CannonSelector.Designer.cs">
+      <DependentUpon>CannonSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Asistente\flowControl.cs">
       <SubType>Form</SubType>
@@ -150,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Asistente\Camaras\selectAppType.resx">
       <DependentUpon>selectAppType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Asistente\Cannons\CannonSelector.resx">
+      <DependentUpon>CannonSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Asistente\OPC\appSelectOPCServer.resx">
       <DependentUpon>appSelectOPCServer.cs</DependentUpon>
@@ -193,14 +209,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\FLIR_A320.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\FLIR_IMAGE.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <COMReference Include="AxCAMCTRLLib">
       <Guid>{07A923F2-CC74-43A8-ABD3-223236519706}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -235,6 +243,12 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\logo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

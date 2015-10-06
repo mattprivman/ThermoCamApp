@@ -1,0 +1,2483 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm12="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="d9d09dab-f2b9-4ac9-92da-5916bbb784e6"
+  name="RampaModel" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <ownedCommentsInternal>
+    <comment
+      Id="711f3931-4b85-4d0f-a1a5-d257aa9df712">
+      <body>Esperar tiempo variable (Parámetro configurable)
+</body>
+    </comment>
+    <comment
+      Id="26196a7b-cca0-4709-978a-1beeb98aa952">
+      <body>Leer variable de estado del cañon
+</body>
+    </comment>
+    <comment
+      Id="1ee688eb-d719-4bf9-b276-692272b844b5">
+      <body>Enviar vía OPC asincronamente
+</body>
+    </comment>
+    <comment
+      Id="98ab0d3c-77cc-4c66-8ba4-939882693ad4">
+      <body>En la aplicación de rampas habrá dos zonas predefinidas que no se podran modificar:
+- ZonaApagado
+-ZonaVaciado
+</body>
+      <annotatedElements>
+        <useCaseMoniker
+          Id="f1cfa592-86fc-44e7-9cb6-20c572796b1c"
+          LastKnownName="Agregar zona"
+          LastKnownLocation="RampaModel.uml" />
+        <useCaseMoniker
+          Id="ca7cfc6c-d66b-402f-abfe-dba0aa5a0588"
+          LastKnownName="Borrar zona"
+          LastKnownLocation="RampaModel.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="ae9742b0-e56f-4c74-a798-ab75b684d419">
+      <body>Solo en modo de aplicación de Rampas</body>
+      <annotatedElements>
+        <useCaseMoniker
+          Id="af4d9050-8a5f-4610-963e-d933c28735f4"
+          LastKnownName="Agregar subZona a Cañon"
+          LastKnownLocation="RampaModel.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="2b2d3619-200d-4ca1-a057-fef2bf725d57">
+      <body>Coordenadas que abarca la subZona</body>
+      <annotatedElements>
+        <useCaseMoniker
+          Id="f0246769-196c-4fbb-a8ed-cf4aecdd1e5c"
+          LastKnownName="Definir area"
+          LastKnownLocation="RampaModel.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="9ca37d8f-99d5-41ea-9bb7-b9d1194b9f1e">
+      <body>Filas y columnas que dividiran la subzona</body>
+      <annotatedElements>
+        <useCaseMoniker
+          Id="d68cc4e1-0ee8-47c8-aba5-cdc11d8201c1"
+          LastKnownName="Definir rejilla"
+          LastKnownLocation="RampaModel.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="a834de29-c3b9-430c-b5f2-49441ea88c64">
+      <body>Temperatura máxima
+Temperatura media
+Temperatura minima</body>
+      <annotatedElements>
+        <useCaseMoniker
+          Id="2fd747d6-bf60-4dde-b79c-3770dece6d2f"
+          LastKnownName="Elegir variables a exportar"
+          LastKnownLocation="RampaModel.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="55089365-0170-4869-af77-28442d40887c">
+      <body>e.g: DB1.DW0</body>
+      <annotatedElements>
+        <useCaseMoniker
+          Id="a6e3d139-00d9-4683-a51a-c84c53842077"
+          LastKnownName="Definir offset de las variables"
+          LastKnownLocation="RampaModel.uml" />
+      </annotatedElements>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
+      <profileInstance
+        Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791"
+        name="StandardProfileL2" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="29349502-908c-4fda-9054-c48619c59ed0">
+      <profileInstance
+        Id="532ea607-fb19-44b8-8502-3351b05452be"
+        name="StandardProfileL3" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <activity
+        Id="b7483e01-bef6-4927-9a48-1448451c3620"
+        name="rampCooling"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <initialNode
+            Id="03b51e21-52f0-486b-9f07-049ba7c6d418"
+            name="Initial1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="0028219a-6bf3-4bc6-8ca4-e367bdbbbc3f"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="0803265e-8459-4635-9ff0-56a5dbed51ca"
+                  LastKnownName="Rampa vacia"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction
+            Id="0803265e-8459-4635-9ff0-56a5dbed51ca"
+            name="Rampa vacia"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="878b6c15-0916-4a29-9418-e35dfd1b484a"
+                guard="hayMaterial"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="bb90e79e-e715-433b-96b9-dbd03fbc23f9"
+                  LastKnownName="Llenando"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="bb90e79e-e715-433b-96b9-dbd03fbc23f9"
+            name="Llenando"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="27ca8514-9752-4674-8b1e-676428f44e38"
+                guard="t#s"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="50b9ad98-70c5-4ab9-ab2f-7565da7e2e2b"
+                  LastKnownName="Decision2"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="50b9ad98-70c5-4ab9-ab2f-7565da7e2e2b"
+            name="Decision2"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="f5807b1f-80b7-4026-a3a6-d79c758a4279"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="88cb9bbc-837b-4c91-923a-f3bcfe95c7ec"
+                  LastKnownName="Leer temperaturas"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="88cb9bbc-837b-4c91-923a-f3bcfe95c7ec"
+            name="Leer temperaturas"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="0c5dc910-6b7e-4f09-a6e3-32b0e718977d"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="a4eb3bd6-099a-4694-b7a3-a5f15bbb3b65"
+                  LastKnownName="Decision1"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="a4eb3bd6-099a-4694-b7a3-a5f15bbb3b65"
+            name="Decision1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="65bf9c3b-437b-4050-88c3-43a07064beb4"
+                guard="NOT puntosCalientes"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="1307ffb0-1ff4-44ef-afef-07b9665e9efb"
+                  LastKnownName="Vaciar"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="285b5f1e-5b6d-45ae-9b06-1eac060369a7"
+                guard="puntosCalientes"
+                isLeaf="false">
+                <callBehaviorActionMoniker
+                  Id="a054f607-17ac-4c6c-a7a5-46501b835581"
+                  LastKnownName="sendOPCData"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="cfa48c1e-c53b-4281-a951-9bb5122d2145"
+            name="Enfriar"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="2b953096-c009-408e-ae37-5095b9954bd7"
+                guard="finEnfriar"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="88cb9bbc-837b-4c91-923a-f3bcfe95c7ec"
+                  LastKnownName="Leer temperaturas"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="1307ffb0-1ff4-44ef-afef-07b9665e9efb"
+            name="Vaciar"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="2d99d978-f065-4f18-bb1b-1a5a69c09e84"
+                guard="rampaVacia"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="0803265e-8459-4635-9ff0-56a5dbed51ca"
+                  LastKnownName="Rampa vacia"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <callBehaviorAction
+            Id="a054f607-17ac-4c6c-a7a5-46501b835581"
+            name="sendOPCData"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="cf51aa56-31e5-4ccd-bb9b-0334ac48ba70"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="cfa48c1e-c53b-4281-a951-9bb5122d2145"
+                  LastKnownName="Enfriar"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+            <behavior>
+              <activityMoniker
+                Id="2e3375fe-ca83-4227-89ae-3451829a2e1d"
+                LastKnownName="sendOPCData"
+                LastKnownLocation="RampaModel.uml" />
+            </behavior>
+          </callBehaviorAction>
+        </nodes>
+      </activity>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="982a5ee1-4ea0-4466-8414-e3c416f9c842"
+        name="Activity1"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <initialNode
+            Id="c924bdd2-d1f1-4c20-9daa-31e5ce2f898e"
+            name="Initial1"
+            isLeaf="false" />
+        </nodes>
+      </activity>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="2e3375fe-ca83-4227-89ae-3451829a2e1d"
+        name="sendOPCData"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <initialNode
+            Id="b65d3406-471b-494b-bc22-e1525a5b428c"
+            name="Initial1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="5deb0d95-f4ff-47a5-8a06-1d1f22e5a4a4"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="fd4b06e1-974b-44a6-96ee-38e3faa54d9b"
+                  LastKnownName="ComprobarEstadoCañon"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction
+            Id="fd4b06e1-974b-44a6-96ee-38e3faa54d9b"
+            name="ComprobarEstadoCañon"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="ddafa6e7-8e94-4ed0-9508-b081657b33db"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="807431d7-22f9-43c5-a73d-ee2c2aedc78e"
+                  LastKnownName="Decision1"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="807431d7-22f9-43c5-a73d-ee2c2aedc78e"
+            name="Decision1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="5570aabd-2740-4433-aaf8-b99bc252b4e7"
+                guard="ocupado"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="24e4a7b2-b2aa-49bd-81bc-9fa969dbe7b2"
+                  LastKnownName="ActivityFinal1"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="330f2f80-92f9-4d27-a6c0-d54e7b22e324"
+                isLeaf="false">
+                <sendSignalActionMoniker
+                  Id="ec1b0e54-cc59-4805-96cd-af5bf6246477"
+                  LastKnownName="sendDataToCannon"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <activityFinalNode
+            Id="24e4a7b2-b2aa-49bd-81bc-9fa969dbe7b2"
+            name="ActivityFinal1"
+            isLeaf="false" />
+          <sendSignalAction
+            Id="ec1b0e54-cc59-4805-96cd-af5bf6246477"
+            name="sendDataToCannon"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="81a35bfe-962c-4f60-8f50-217fad02204e"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="730a9a94-176d-4f64-b220-475a1e003b69"
+                  LastKnownName="ActivityFinal2"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </sendSignalAction>
+          <activityFinalNode
+            Id="730a9a94-176d-4f64-b220-475a1e003b69"
+            name="ActivityFinal2"
+            isLeaf="false" />
+        </nodes>
+      </activity>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="39f4746c-7fca-44c5-94de-67e33aebe4a7"
+        name="User"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="0aef9a16-6c8d-4467-a3f0-30846f8a8eb7"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Seleccionar tipo de aplicación"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="d91c7cba-7a3a-4f17-b220-f9ba00f9f9af"
+              LastKnownName="elegir tipo de aplicación"
+              LastKnownLocation="RampaModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c2268f11-2236-43bf-82e7-203349616d20"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="4a509fcd-96f6-44e9-b6f4-e99a22f42be1"
+                  name="Seleccionar tipo de aplicación"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="d91c7cba-7a3a-4f17-b220-f9ba00f9f9af"
+        name="elegir tipo de aplicación"
+        isAbstract="false"
+        isLeaf="false">
+        <extendedCases>
+          <extend
+            Id="d6b0d018-b96a-42ab-b72d-639597e5d21d">
+            <useCaseMoniker
+              Id="76824167-1e2a-43d7-8c92-f8acf652453c"
+              LastKnownName="Definir numero de cañones"
+              LastKnownLocation="RampaModel.uml" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker
+            Id="bdba2949-f959-4cec-9ac7-1af3c4d6e258"
+            LastKnownName="Elegir tipo de aplicación"
+            LastKnownLocation="RampaModel.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="8c5b5c16-8363-45fa-9110-d879afb8e0e5"
+        name="Aplicación estandar"
+        isAbstract="false"
+        isLeaf="false">
+        <generalsInternal>
+          <generalization
+            Id="f03c56df-d7e2-46f8-bf38-3c805dad5954"
+            isSubstitutable="false">
+            <useCaseMoniker
+              Id="d91c7cba-7a3a-4f17-b220-f9ba00f9f9af"
+              LastKnownName="elegir tipo de aplicación"
+              LastKnownLocation="RampaModel.uml" />
+          </generalization>
+        </generalsInternal>
+        <subjects>
+          <subsystemMoniker
+            Id="bdba2949-f959-4cec-9ac7-1af3c4d6e258"
+            LastKnownName="Elegir tipo de aplicación"
+            LastKnownLocation="RampaModel.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="76824167-1e2a-43d7-8c92-f8acf652453c"
+        name="Definir numero de cañones"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="540b4265-8264-47e6-bbe1-669840b05244"
+        name="Aplicación de rampas"
+        isAbstract="false"
+        isLeaf="false">
+        <generalsInternal>
+          <generalization
+            Id="2ed34a66-a58d-4ea1-aa10-e0ee4b9006be"
+            isSubstitutable="false">
+            <useCaseMoniker
+              Id="d91c7cba-7a3a-4f17-b220-f9ba00f9f9af"
+              LastKnownName="elegir tipo de aplicación"
+              LastKnownLocation="RampaModel.uml" />
+          </generalization>
+        </generalsInternal>
+        <subjects>
+          <subsystemMoniker
+            Id="bdba2949-f959-4cec-9ac7-1af3c4d6e258"
+            LastKnownName="Elegir tipo de aplicación"
+            LastKnownLocation="RampaModel.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="5dc3b355-ef43-4740-8369-d161fa5ffa53"
+        name="Definir nº de cañones"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="58e39d7a-9d24-4a17-bae8-44306d79bbee">
+            <useCaseMoniker
+              Id="540b4265-8264-47e6-bbe1-669840b05244"
+              LastKnownName="Aplicación de rampas"
+              LastKnownLocation="RampaModel.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="bdba2949-f959-4cec-9ac7-1af3c4d6e258"
+            LastKnownName="Elegir tipo de aplicación"
+            LastKnownLocation="RampaModel.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="53808011-bcfb-4640-a601-d5e84bc7c21e"
+        name="Definir nº de camaras"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="558a1a0e-be15-4fe1-8c91-028cdcd40ecb">
+            <useCaseMoniker
+              Id="d91c7cba-7a3a-4f17-b220-f9ba00f9f9af"
+              LastKnownName="elegir tipo de aplicación"
+              LastKnownLocation="RampaModel.uml" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker
+            Id="bdba2949-f959-4cec-9ac7-1af3c4d6e258"
+            LastKnownName="Elegir tipo de aplicación"
+            LastKnownLocation="RampaModel.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <subsystem
+        Id="bdba2949-f959-4cec-9ac7-1af3c4d6e258"
+        name="Elegir tipo de aplicación"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="b8a1e6c8-9da7-440e-8125-dc2d765a4899"
+        name="User"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="f9cb00b4-f9cb-4a58-aa73-38319dc195e0"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Agregar zona"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="f1cfa592-86fc-44e7-9cb6-20c572796b1c"
+              LastKnownName="Agregar zona"
+              LastKnownLocation="RampaModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a946e867-2108-4ee5-bd3e-cd222283f7d4"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="62825ea8-f842-42b2-8d81-bc98347c3cce"
+                  name="Agregar zona"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="ee280928-9805-4e57-ba55-658f3434de31"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Borrar zona"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="ca7cfc6c-d66b-402f-abfe-dba0aa5a0588"
+              LastKnownName="Borrar zona"
+              LastKnownLocation="RampaModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a498ed42-cdae-4eb8-80a8-0024ab8a3506"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e91aa846-ebb2-4ef8-bcd8-6040f99ae041"
+                  name="Borrar zona"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="67baf0f8-6937-4ee9-b538-44a570adab54"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Agregar subZona"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="9086df08-16cf-4167-a4b4-1a8761d624c8"
+              LastKnownName="Agregar subZona"
+              LastKnownLocation="RampaModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="8ff61d05-a3e1-4387-964d-a44d79a068bb"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="06006bb3-bca8-4431-a149-9ab50878e2d2"
+                  name="Agregar subZona"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="922622ef-df9c-4469-b471-13775c1b83be"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Borrar SubZona"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="da7bebc9-f132-4470-98a1-633463239b20"
+              LastKnownName="Borrar SubZona"
+              LastKnownLocation="RampaModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c23e07f6-b3f1-4c99-8792-0f282f41183a"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5171436f-8a32-44f7-9af1-3209ffadc59e"
+                  name="Borrar SubZona"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="8c20817e-d961-4104-a28f-00f688734811"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Definir area"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="f0246769-196c-4fbb-a8ed-cf4aecdd1e5c"
+              LastKnownName="Definir area"
+              LastKnownLocation="RampaModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="192ab17b-800c-484b-ae0d-4e73fe3f3bad"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="89dad44a-4660-464b-8ce5-1494ddb4c66b"
+                  name="Definir area"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="b4af7a79-f68b-4e08-a1ee-4a6cc40d2202"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Definir rejilla"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="d68cc4e1-0ee8-47c8-aba5-cdc11d8201c1"
+              LastKnownName="Definir rejilla"
+              LastKnownLocation="RampaModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="552122b8-53d0-4cb9-856e-825d824241cf"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="21ddf35d-8082-45d2-a7d2-7562d372907e"
+                  name="Definir rejilla"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="f1cfa592-86fc-44e7-9cb6-20c572796b1c"
+        name="Agregar zona"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="133839b4-8ec1-491a-b4c1-1cf49e9f9dae"
+            LastKnownName="Zonas"
+            LastKnownLocation="RampaModel.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="ca7cfc6c-d66b-402f-abfe-dba0aa5a0588"
+        name="Borrar zona"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="133839b4-8ec1-491a-b4c1-1cf49e9f9dae"
+            LastKnownName="Zonas"
+            LastKnownLocation="RampaModel.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <artifact
+        Id="2a2fbf6e-2b3a-4100-ab19-2ef641e06758"
+        name="Artifact1"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <subsystem
+        Id="133839b4-8ec1-491a-b4c1-1cf49e9f9dae"
+        name="Zonas"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="9086df08-16cf-4167-a4b4-1a8761d624c8"
+        name="Agregar subZona"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="fe37dc62-da36-4118-9c4f-2dff16ea775f"
+            LastKnownName="SubZonas"
+            LastKnownLocation="RampaModel.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <subsystem
+        Id="fe37dc62-da36-4118-9c4f-2dff16ea775f"
+        name="SubZonas"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="da7bebc9-f132-4470-98a1-633463239b20"
+        name="Borrar SubZona"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="fe37dc62-da36-4118-9c4f-2dff16ea775f"
+            LastKnownName="SubZonas"
+            LastKnownLocation="RampaModel.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="af4d9050-8a5f-4610-963e-d933c28735f4"
+        name="Agregar subZona a Cañon"
+        isAbstract="false"
+        isLeaf="false">
+        <extendedCases>
+          <extend
+            Id="5814f962-f811-48b3-9580-7731f178f33e">
+            <useCaseMoniker
+              Id="9086df08-16cf-4167-a4b4-1a8761d624c8"
+              LastKnownName="Agregar subZona"
+              LastKnownLocation="RampaModel.uml" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker
+            Id="fe37dc62-da36-4118-9c4f-2dff16ea775f"
+            LastKnownName="SubZonas"
+            LastKnownLocation="RampaModel.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="f0246769-196c-4fbb-a8ed-cf4aecdd1e5c"
+        name="Definir area"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="fe37dc62-da36-4118-9c4f-2dff16ea775f"
+            LastKnownName="SubZonas"
+            LastKnownLocation="RampaModel.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="d68cc4e1-0ee8-47c8-aba5-cdc11d8201c1"
+        name="Definir rejilla"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="fe37dc62-da36-4118-9c4f-2dff16ea775f"
+            LastKnownName="SubZonas"
+            LastKnownLocation="RampaModel.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="f9cd7d7e-4471-480f-a53c-90f066f5efe4"
+        name="User"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="2c1ba013-346a-47cc-b03d-81823b9681bb"
+            isDerived="false"
+            sourceEndRoleName="User"
+            targetEndRoleName="Elegir servidor OPC"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="f450fedc-4bae-47de-a80f-8a692b8593c5"
+              LastKnownName="Elegir servidor OPC"
+              LastKnownLocation="RampaModel.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="f42d8853-afc4-4347-94b4-615cdfdf2997"
+                  name="User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ea38d873-95b1-489f-9206-ad2a142a18d2"
+                  name="Elegir servidor OPC"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="f450fedc-4bae-47de-a80f-8a692b8593c5"
+        name="Elegir servidor OPC"
+        isAbstract="false"
+        isLeaf="false">
+        <suppliersInternal>
+          <dependency
+            Id="d20697cc-dc0b-43ff-b108-336cf5f0b699">
+            <artifactMoniker
+              Id="34029d12-7fcf-4634-a6d8-8e047914fdbe"
+              LastKnownName="createOPCVars.activitydiagram"
+              LastKnownLocation="RampaModel.uml" />
+          </dependency>
+        </suppliersInternal>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="3d180c2e-e738-449e-b48a-b49333b93f1b"
+        name="Elegir ruta variables en servidor"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="dd1c94e6-395e-4cd5-b81d-f31e45db08ad">
+            <useCaseMoniker
+              Id="f450fedc-4bae-47de-a80f-8a692b8593c5"
+              LastKnownName="Elegir servidor OPC"
+              LastKnownLocation="RampaModel.uml" />
+          </include>
+        </additions>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="2fd747d6-bf60-4dde-b79c-3770dece6d2f"
+        name="Elegir variables a exportar"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="0b3d6147-d66b-4532-b879-b2707334cafe">
+            <useCaseMoniker
+              Id="f450fedc-4bae-47de-a80f-8a692b8593c5"
+              LastKnownName="Elegir servidor OPC"
+              LastKnownLocation="RampaModel.uml" />
+          </include>
+        </additions>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="a6e3d139-00d9-4683-a51a-c84c53842077"
+        name="Definir offset de las variables"
+        isAbstract="false"
+        isLeaf="false">
+        <additions>
+          <include
+            Id="7905fc55-d2c4-4765-8f65-7c89c7a3a0bf">
+            <useCaseMoniker
+              Id="f450fedc-4bae-47de-a80f-8a692b8593c5"
+              LastKnownName="Elegir servidor OPC"
+              LastKnownLocation="RampaModel.uml" />
+          </include>
+        </additions>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <artifact
+        Id="eca81cbd-b4e2-476e-9578-792bbc7cfae3"
+        name="Artifact2"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="dc73a7c9-f218-41e7-97f8-645b6de25e57"
+        name="createOPCVars"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <initialNode
+            Id="60c9400c-f09b-4aa7-a326-9f4ba45d0519"
+            name="Initial1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="063e75e6-408d-4baa-b1e3-3f753d5f6424"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="d8efeaee-9f34-4f33-af61-ea2f52685ecb"
+                  LastKnownName="Elegir ruta fichero"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction
+            Id="d8efeaee-9f34-4f33-af61-ea2f52685ecb"
+            name="Elegir ruta fichero"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="be8d900e-718a-4c23-991d-f056f56a869f"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="955dfe62-ff72-47ff-851d-11f40fa805a5"
+                  LastKnownName="Decision1"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="4a8e5fb4-ea42-4948-95c4-679af51801b7"
+            name="Generar variables OPC"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="f6a63ccd-4800-4d5e-aac5-1d698edb33f5"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="706ef593-85ee-45b4-90cc-d5fe0b9eba09"
+                  LastKnownName="Decision2"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="955dfe62-ff72-47ff-851d-11f40fa805a5"
+            name="Decision1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="0ee5b1b3-eb11-4931-8049-02485ab815ca"
+                guard="ruta no valida"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="4348e270-3d2d-4360-ad55-019835f54f95"
+                  LastKnownName="ActivityFinal1"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="95b82dc9-360b-4539-aefc-22823de26afe"
+                guard="ruta valida"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="4a8e5fb4-ea42-4948-95c4-679af51801b7"
+                  LastKnownName="Generar variables OPC"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <activityFinalNode
+            Id="4348e270-3d2d-4360-ad55-019835f54f95"
+            name="ActivityFinal1"
+            isLeaf="false" />
+          <decisionNode
+            Id="706ef593-85ee-45b4-90cc-d5fe0b9eba09"
+            name="Decision2"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="7b43d44b-5e80-4802-bf8c-c535205a9317"
+                guard="Aplicación standar"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="a0c9a6b8-9be0-4f7e-9533-bd448b8f570d"
+                  LastKnownName="Generar DBestandar"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="75c832f6-10b1-43ce-aeea-a7dca0e023ee"
+                guard="Aplicación rampas"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="ce89b44d-ea2f-4398-8a4e-597962bab7ce"
+                  LastKnownName="GenerarDBRampas"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="a0c9a6b8-9be0-4f7e-9533-bd448b8f570d"
+            name="Generar DBestandar"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="3af032c8-d6f5-41dc-832f-cc920bae65c6"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="07d53869-b8a4-4129-8808-d57b87f593bf"
+                  LastKnownName="Elegir ruta fichero"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="ce89b44d-ea2f-4398-8a4e-597962bab7ce"
+            name="GenerarDBRampas"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="83a27692-474e-4660-910c-f313378d99e1"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="07d53869-b8a4-4129-8808-d57b87f593bf"
+                  LastKnownName="Elegir ruta fichero"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="07d53869-b8a4-4129-8808-d57b87f593bf"
+            name="Elegir ruta fichero"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="3ab30d52-a2b6-4ab4-aea2-c1d4fa96960c"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="d435ea41-dbc7-4c73-8559-064098571e4d"
+                  LastKnownName="Decision3"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="d435ea41-dbc7-4c73-8559-064098571e4d"
+            name="Decision3"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="db50e0f1-7725-48f5-b1dc-084e6b3807ca"
+                guard="ruta no valida"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="dd5c1ff6-e924-445a-8254-274b31b1dae4"
+                  LastKnownName="ActivityFinal2"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="24ca1c40-db7a-4500-8ffb-55182f532b60"
+                guard="ruta valida"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="6c92ef9a-38db-4fc7-b0b7-4dd52ccecf20"
+                  LastKnownName="Generar BF  PLC"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <activityFinalNode
+            Id="dd5c1ff6-e924-445a-8254-274b31b1dae4"
+            name="ActivityFinal2"
+            isLeaf="false" />
+          <opaqueAction
+            Id="6c92ef9a-38db-4fc7-b0b7-4dd52ccecf20"
+            name="Generar BF  PLC"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="8ae49f6f-f808-4444-9403-da25d22a7bf7"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="6bbac0c5-0ef5-4f5a-9b0e-32a76f70f482"
+                  LastKnownName="Decision4"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="c9e6c010-1c16-4cbc-818e-fa7a5cc8d0ef"
+            name="GenerarBFEstandar"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="e8630952-613f-4409-af12-d9415fe0f6dc"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="114b738e-85f3-4667-9b0a-6c4a0bed009f"
+                  LastKnownName="ActivityFinal4"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="84083183-3858-4b04-9c11-1ddd89a1a107"
+            name="GenerarBFRampas"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="a58f51ed-5f84-435f-99df-61be5c5d6722"
+                isLeaf="false">
+                <activityFinalNodeMoniker
+                  Id="4a0b3f4a-7547-4576-a8f9-ff52c76e0ff0"
+                  LastKnownName="ActivityFinal3"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="6bbac0c5-0ef5-4f5a-9b0e-32a76f70f482"
+            name="Decision4"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="814bf096-ee5f-4ff1-a5a5-eb61e987ee10"
+                guard="Aplicación estandar"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="c9e6c010-1c16-4cbc-818e-fa7a5cc8d0ef"
+                  LastKnownName="GenerarBFEstandar"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="8d8eb5e7-5b1b-4b8f-a13a-97573792c5ec"
+                guard="Aplicacion rampas"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="84083183-3858-4b04-9c11-1ddd89a1a107"
+                  LastKnownName="GenerarBFRampas"
+                  LastKnownLocation="RampaModel.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <activityFinalNode
+            Id="4a0b3f4a-7547-4576-a8f9-ff52c76e0ff0"
+            name="ActivityFinal3"
+            isLeaf="false" />
+          <activityFinalNode
+            Id="114b738e-85f3-4667-9b0a-6c4a0bed009f"
+            name="ActivityFinal4"
+            isLeaf="false" />
+        </nodes>
+      </activity>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <artifact
+        Id="34029d12-7fcf-4634-a6d8-8e047914fdbe"
+        name="createOPCVars.activitydiagram"
+        isAbstract="false"
+        isLeaf="false"
+        fileName="RampaModel\Activity Diagrams\createOPCVars.activitydiagram" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <interaction
+        Id="b13ec70d-5f95-46bd-94e8-084684e910bf"
+        name="sendOPCData"
+        collapseFragmentsFlag="false"
+        isActiveClass="false"
+        isAbstract="false"
+        isLeaf="false"
+        isReentrant="false">
+        <fragments>
+          <behaviorExecutionSpecification
+            Id="26f11b0e-3912-4536-9481-c927b04f5394"
+            name="BehaviorExecutionSpecification2">
+            <coveredLifelines>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker
+                Id="e6a30393-f0ea-4411-aa23-0a820cd208a6"
+                LastKnownName="ExecutionOccurrenceSpecification4"
+                LastKnownLocation="RampaModel.uml" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker
+                Id="2846c99b-03ea-44f1-9656-64834c2d492f"
+                LastKnownName="ExecutionOccurrenceSpecification3"
+                LastKnownLocation="RampaModel.uml" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker
+                Id="b2ca896e-da6c-48d8-b06e-0084a9377ced"
+                LastKnownName="MessageOccurrenceSpecification4"
+                LastKnownLocation="RampaModel.uml" />
+              <messageOccurrenceSpecificationMoniker
+                Id="fe6dd93d-aeaa-406b-bb4c-733f5c376e1d"
+                LastKnownName="MessageOccurrenceSpecification5"
+                LastKnownLocation="RampaModel.uml" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification
+            Id="2846c99b-03ea-44f1-9656-64834c2d492f"
+            name="ExecutionOccurrenceSpecification3">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker
+                  Id="4ad34dfd-fa8e-417e-881e-760e122e577e"
+                  LastKnownName="ExecutionEvent"
+                  LastKnownLocation="RampaModel.uml" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="3cbb065e-541c-4e6f-8ec5-1c79ff3273a2"
+            name="MessageOccurrenceSpecification3">
+            <covered>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="b2ca896e-da6c-48d8-b06e-0084a9377ced"
+            name="MessageOccurrenceSpecification4">
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="fe6dd93d-aeaa-406b-bb4c-733f5c376e1d"
+            name="MessageOccurrenceSpecification5">
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="85b0a8ca-2241-4e8a-a64b-e24d75cda9d0"
+            name="MessageOccurrenceSpecification6">
+            <covered>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification
+            Id="e6a30393-f0ea-4411-aa23-0a820cd208a6"
+            name="ExecutionOccurrenceSpecification4">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker
+                  Id="ba985cc0-438f-408c-b471-00c020e5403c"
+                  LastKnownName="ExecutionEvent"
+                  LastKnownLocation="RampaModel.uml" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <combinedFragment
+            Id="a3bb8d5b-d6a6-40ac-8ae7-00af49dafada"
+            name="CombinedFragment1"
+            interactionOperator="Loop">
+            <coveredLifelines>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </coveredLifelines>
+            <operands>
+              <interactionOperand
+                Id="9ee4de68-37f3-401f-9762-0c66f88d7021"
+                name="InteractionOperand1">
+                <coveredLifelines>
+                  <lifelineMoniker
+                    Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                    LastKnownName="MainProces"
+                    LastKnownLocation="RampaModel.uml" />
+                  <lifelineMoniker
+                    Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                    LastKnownName="PLC"
+                    LastKnownLocation="RampaModel.uml" />
+                </coveredLifelines>
+                <fragments>
+                  <combinedFragment
+                    Id="cb7bdf3b-472e-4629-9a03-f60978788c16"
+                    name="CombinedFragment1"
+                    interactionOperator="Loop">
+                    <coveredLifelines>
+                      <lifelineMoniker
+                        Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                        LastKnownName="MainProces"
+                        LastKnownLocation="RampaModel.uml" />
+                      <lifelineMoniker
+                        Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                        LastKnownName="PLC"
+                        LastKnownLocation="RampaModel.uml" />
+                    </coveredLifelines>
+                    <operands>
+                      <interactionOperand
+                        Id="5d5dd196-e7f6-42b7-998a-4add93bee92b"
+                        name="InteractionOperand1">
+                        <coveredLifelines>
+                          <lifelineMoniker
+                            Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                            LastKnownName="MainProces"
+                            LastKnownLocation="RampaModel.uml" />
+                          <lifelineMoniker
+                            Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                            LastKnownName="PLC"
+                            LastKnownLocation="RampaModel.uml" />
+                        </coveredLifelines>
+                        <fragments>
+                          <combinedFragment
+                            Id="65266904-0995-4781-ae30-f5ea6545f413"
+                            name="CombinedFragment1"
+                            interactionOperator="Loop">
+                            <coveredLifelines>
+                              <lifelineMoniker
+                                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                                LastKnownName="MainProces"
+                                LastKnownLocation="RampaModel.uml" />
+                              <lifelineMoniker
+                                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                                LastKnownName="PLC"
+                                LastKnownLocation="RampaModel.uml" />
+                            </coveredLifelines>
+                            <operands>
+                              <interactionOperand
+                                Id="e1db328a-e837-474d-a0f0-e1427420e729"
+                                name="InteractionOperand1">
+                                <coveredLifelines>
+                                  <lifelineMoniker
+                                    Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                                    LastKnownName="MainProces"
+                                    LastKnownLocation="RampaModel.uml" />
+                                  <lifelineMoniker
+                                    Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                                    LastKnownName="PLC"
+                                    LastKnownLocation="RampaModel.uml" />
+                                </coveredLifelines>
+                                <guard>
+                                  <interactionConstraint
+                                    Id="9877e86d-38d2-47aa-b21e-21006b67e0ff"
+                                    guardText="por cada división: filas y columnas">
+                                    <maxInt>
+                                      <literalString
+                                        Id="9cd1caec-fd01-47ee-9b1a-6c54ccb25669"
+                                        name="LiteralString1" />
+                                    </maxInt>
+                                    <minInt>
+                                      <literalString
+                                        Id="bc5dfe0f-12c7-4ec8-83d4-2613e1e9f794"
+                                        name="LiteralString2" />
+                                    </minInt>
+                                  </interactionConstraint>
+                                </guard>
+                                <operandOccurrenceSpecifications>
+                                  <operandOccurrenceSpecificationMoniker
+                                    Id="122f2088-9641-4633-a881-0076faea8b95"
+                                    LastKnownName="OperandOccurrenceSpecification13"
+                                    LastKnownLocation="RampaModel.uml" />
+                                  <operandOccurrenceSpecificationMoniker
+                                    Id="11231967-2dd8-42a0-b0f7-d7dc2da9458d"
+                                    LastKnownName="OperandOccurrenceSpecification14"
+                                    LastKnownLocation="RampaModel.uml" />
+                                  <operandOccurrenceSpecificationMoniker
+                                    Id="c58403a8-18b8-4797-ab6c-145165540489"
+                                    LastKnownName="OperandOccurrenceSpecification15"
+                                    LastKnownLocation="RampaModel.uml" />
+                                  <operandOccurrenceSpecificationMoniker
+                                    Id="10d90f3e-c4a5-4de3-9189-ba31b52336e2"
+                                    LastKnownName="OperandOccurrenceSpecification16"
+                                    LastKnownLocation="RampaModel.uml" />
+                                </operandOccurrenceSpecifications>
+                              </interactionOperand>
+                            </operands>
+                          </combinedFragment>
+                        </fragments>
+                        <guard>
+                          <interactionConstraint
+                            Id="ce5ed0ab-3aaa-4ca9-b374-1d7cace78bd4"
+                            guardText="por cada subZona">
+                            <maxInt>
+                              <literalString
+                                Id="eaaec02e-037d-4ea6-a4c4-620fd575e210"
+                                name="LiteralString1" />
+                            </maxInt>
+                            <minInt>
+                              <literalString
+                                Id="6668064b-05e3-4364-920f-86b84ca4057e"
+                                name="LiteralString2" />
+                            </minInt>
+                          </interactionConstraint>
+                        </guard>
+                        <operandOccurrenceSpecifications>
+                          <operandOccurrenceSpecificationMoniker
+                            Id="8ef27b46-98ea-4834-86ae-663d09203e99"
+                            LastKnownName="OperandOccurrenceSpecification9"
+                            LastKnownLocation="RampaModel.uml" />
+                          <operandOccurrenceSpecificationMoniker
+                            Id="2d739d3c-440f-4967-9e02-951bc0b0105e"
+                            LastKnownName="OperandOccurrenceSpecification10"
+                            LastKnownLocation="RampaModel.uml" />
+                          <operandOccurrenceSpecificationMoniker
+                            Id="de4acd1a-093f-4007-bd24-8a264bafe02e"
+                            LastKnownName="OperandOccurrenceSpecification11"
+                            LastKnownLocation="RampaModel.uml" />
+                          <operandOccurrenceSpecificationMoniker
+                            Id="3449fc14-9e4a-447b-9970-db7e027ef8ad"
+                            LastKnownName="OperandOccurrenceSpecification12"
+                            LastKnownLocation="RampaModel.uml" />
+                        </operandOccurrenceSpecifications>
+                      </interactionOperand>
+                    </operands>
+                  </combinedFragment>
+                </fragments>
+                <guard>
+                  <interactionConstraint
+                    Id="36d34f1c-aa81-4bdd-b042-ec1f8d4c6c0d"
+                    guardText="por cada Zona a enviar">
+                    <maxInt>
+                      <literalString
+                        Id="b9f930c3-d300-43a9-8042-952c52d3e6a5"
+                        name="LiteralString1" />
+                    </maxInt>
+                    <minInt>
+                      <literalString
+                        Id="69cc24fa-3702-42df-81e4-1f51cc8d4394"
+                        name="LiteralString2" />
+                    </minInt>
+                  </interactionConstraint>
+                </guard>
+                <operandOccurrenceSpecifications>
+                  <operandOccurrenceSpecificationMoniker
+                    Id="3a1e1505-c4e9-4908-9997-69b310b77bb5"
+                    LastKnownName="OperandOccurrenceSpecification5"
+                    LastKnownLocation="RampaModel.uml" />
+                  <operandOccurrenceSpecificationMoniker
+                    Id="c96ec7c8-c729-48ed-8658-d51f10f60d41"
+                    LastKnownName="OperandOccurrenceSpecification6"
+                    LastKnownLocation="RampaModel.uml" />
+                  <operandOccurrenceSpecificationMoniker
+                    Id="a0131f7d-b8be-4fa1-aa2f-2fea188e19ce"
+                    LastKnownName="OperandOccurrenceSpecification7"
+                    LastKnownLocation="RampaModel.uml" />
+                  <operandOccurrenceSpecificationMoniker
+                    Id="8363e593-3711-4ef9-a73d-ba51cc534260"
+                    LastKnownName="OperandOccurrenceSpecification8"
+                    LastKnownLocation="RampaModel.uml" />
+                </operandOccurrenceSpecifications>
+              </interactionOperand>
+            </operands>
+          </combinedFragment>
+          <operandOccurrenceSpecification
+            Id="a0131f7d-b8be-4fa1-aa2f-2fea188e19ce"
+            name="OperandOccurrenceSpecification7">
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification
+            Id="3a1e1505-c4e9-4908-9997-69b310b77bb5"
+            name="OperandOccurrenceSpecification5">
+            <covered>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <behaviorExecutionSpecification
+            Id="154bf60a-8d64-4108-9810-3e14c7a22074"
+            name="BehaviorExecutionSpecification3">
+            <coveredLifelines>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker
+                Id="4e4ad494-a01e-4037-bdc0-74be4c9b2037"
+                LastKnownName="ExecutionOccurrenceSpecification6"
+                LastKnownLocation="RampaModel.uml" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker
+                Id="70a98d3a-ce96-4928-8e4d-56369b08a1a6"
+                LastKnownName="ExecutionOccurrenceSpecification5"
+                LastKnownLocation="RampaModel.uml" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker
+                Id="525dcf43-4e6c-461d-88a9-d5fde9db2454"
+                LastKnownName="MessageOccurrenceSpecification8"
+                LastKnownLocation="RampaModel.uml" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification
+            Id="70a98d3a-ce96-4928-8e4d-56369b08a1a6"
+            name="ExecutionOccurrenceSpecification5">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker
+                  Id="f8859080-022a-4816-addf-b2b3250e7b62"
+                  LastKnownName="ExecutionEvent"
+                  LastKnownLocation="RampaModel.uml" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="525dcf43-4e6c-461d-88a9-d5fde9db2454"
+            name="MessageOccurrenceSpecification8">
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="6973dce3-c3d7-45a0-a940-9f02d22fb72a"
+            name="MessageOccurrenceSpecification7">
+            <covered>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification
+            Id="4e4ad494-a01e-4037-bdc0-74be4c9b2037"
+            name="ExecutionOccurrenceSpecification6">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker
+                  Id="32d4fb6a-2ac5-4a09-9d59-8a0b8b986db0"
+                  LastKnownName="ExecutionEvent"
+                  LastKnownLocation="RampaModel.uml" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <operandOccurrenceSpecification
+            Id="de4acd1a-093f-4007-bd24-8a264bafe02e"
+            name="OperandOccurrenceSpecification11">
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification
+            Id="8ef27b46-98ea-4834-86ae-663d09203e99"
+            name="OperandOccurrenceSpecification9">
+            <covered>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <behaviorExecutionSpecification
+            Id="76b65240-9a6e-4615-bf1d-3ca133c93ce4"
+            name="BehaviorExecutionSpecification4">
+            <coveredLifelines>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker
+                Id="09995836-6ce0-491d-adb1-950a9f106d84"
+                LastKnownName="ExecutionOccurrenceSpecification8"
+                LastKnownLocation="RampaModel.uml" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker
+                Id="5325456e-3068-45e9-8719-e8088584785b"
+                LastKnownName="ExecutionOccurrenceSpecification7"
+                LastKnownLocation="RampaModel.uml" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker
+                Id="513e91d0-1e04-4dde-8ced-ba523b767c00"
+                LastKnownName="MessageOccurrenceSpecification10"
+                LastKnownLocation="RampaModel.uml" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification
+            Id="5325456e-3068-45e9-8719-e8088584785b"
+            name="ExecutionOccurrenceSpecification7">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker
+                  Id="6986a9ce-0a43-4b67-b8e8-9b6586a0850f"
+                  LastKnownName="ExecutionEvent"
+                  LastKnownLocation="RampaModel.uml" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="24b76942-46e3-48d8-8217-fd0fbc84eb32"
+            name="MessageOccurrenceSpecification9">
+            <covered>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="513e91d0-1e04-4dde-8ced-ba523b767c00"
+            name="MessageOccurrenceSpecification10">
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification
+            Id="09995836-6ce0-491d-adb1-950a9f106d84"
+            name="ExecutionOccurrenceSpecification8">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker
+                  Id="d4c5d3ed-64fe-4063-93f5-b5caeef40b22"
+                  LastKnownName="ExecutionEvent"
+                  LastKnownLocation="RampaModel.uml" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <operandOccurrenceSpecification
+            Id="c58403a8-18b8-4797-ab6c-145165540489"
+            name="OperandOccurrenceSpecification15">
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification
+            Id="122f2088-9641-4633-a881-0076faea8b95"
+            name="OperandOccurrenceSpecification13">
+            <covered>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <behaviorExecutionSpecification
+            Id="ee4a9a3a-4c0e-4f4c-8b75-423322d493f7"
+            name="BehaviorExecutionSpecification5">
+            <coveredLifelines>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker
+                Id="07680e14-e6be-4849-90f3-a32285555f08"
+                LastKnownName="ExecutionOccurrenceSpecification10"
+                LastKnownLocation="RampaModel.uml" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker
+                Id="1f6cf1cc-18d8-4e86-9360-6007b2a7409e"
+                LastKnownName="ExecutionOccurrenceSpecification9"
+                LastKnownLocation="RampaModel.uml" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker
+                Id="36c31982-0842-416c-be6e-c668e298c543"
+                LastKnownName="MessageOccurrenceSpecification12"
+                LastKnownLocation="RampaModel.uml" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification
+            Id="1f6cf1cc-18d8-4e86-9360-6007b2a7409e"
+            name="ExecutionOccurrenceSpecification9">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker
+                  Id="a98afb97-5bbd-4047-9dcd-cb2250c87511"
+                  LastKnownName="ExecutionEvent"
+                  LastKnownLocation="RampaModel.uml" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="36c31982-0842-416c-be6e-c668e298c543"
+            name="MessageOccurrenceSpecification12">
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="fbf20983-c3b6-4352-af68-625e93c70cef"
+            name="MessageOccurrenceSpecification11">
+            <covered>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification
+            Id="07680e14-e6be-4849-90f3-a32285555f08"
+            name="ExecutionOccurrenceSpecification10">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker
+                  Id="5830c0fb-706d-4fc0-a5a7-ca3b81891be1"
+                  LastKnownName="ExecutionEvent"
+                  LastKnownLocation="RampaModel.uml" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <operandOccurrenceSpecification
+            Id="10d90f3e-c4a5-4de3-9189-ba31b52336e2"
+            name="OperandOccurrenceSpecification16">
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification
+            Id="11231967-2dd8-42a0-b0f7-d7dc2da9458d"
+            name="OperandOccurrenceSpecification14">
+            <covered>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification
+            Id="2d739d3c-440f-4967-9e02-951bc0b0105e"
+            name="OperandOccurrenceSpecification10">
+            <covered>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification
+            Id="3449fc14-9e4a-447b-9970-db7e027ef8ad"
+            name="OperandOccurrenceSpecification12">
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification
+            Id="c96ec7c8-c729-48ed-8658-d51f10f60d41"
+            name="OperandOccurrenceSpecification6">
+            <covered>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification
+            Id="8363e593-3711-4ef9-a73d-ba51cc534260"
+            name="OperandOccurrenceSpecification8">
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <interactionUse
+            Id="c1410bd9-c83f-4cf6-955a-d9d3dab48b88"
+            name="Comprobar resultado de operación asincrona">
+            <coveredLifelines>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </coveredLifelines>
+            <interactionUseOccurrenceSpecifications>
+              <interactionUseOccurrenceSpecificationMoniker
+                Id="61eb82c6-d582-4a4d-8ada-fa2a671f735a"
+                LastKnownName="InteractionUseOccurrenceSpecification13"
+                LastKnownLocation="RampaModel.uml" />
+              <interactionUseOccurrenceSpecificationMoniker
+                Id="4f5bcdab-44e2-4e0c-be43-357eb879b7fd"
+                LastKnownName="InteractionUseOccurrenceSpecification14"
+                LastKnownLocation="RampaModel.uml" />
+            </interactionUseOccurrenceSpecifications>
+          </interactionUse>
+          <interactionUseOccurrenceSpecification
+            Id="61eb82c6-d582-4a4d-8ada-fa2a671f735a"
+            name="InteractionUseOccurrenceSpecification13">
+            <covered>
+              <lifelineMoniker
+                Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+                LastKnownName="MainProces"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+          <interactionUseOccurrenceSpecification
+            Id="4f5bcdab-44e2-4e0c-be43-357eb879b7fd"
+            name="InteractionUseOccurrenceSpecification14">
+            <covered>
+              <lifelineMoniker
+                Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+                LastKnownName="PLC"
+                LastKnownLocation="RampaModel.uml" />
+            </covered>
+          </interactionUseOccurrenceSpecification>
+        </fragments>
+        <lifelines>
+          <lifeline
+            Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3"
+            name="MainProces"
+            isActor="false"
+            lifelineDisplayName="MainProces">
+            <topLevelOccurrences>
+              <messageOccurrenceSpecificationMoniker
+                Id="3cbb065e-541c-4e6f-8ec5-1c79ff3273a2"
+                LastKnownName="MessageOccurrenceSpecification3"
+                LastKnownLocation="RampaModel.uml" />
+              <messageOccurrenceSpecificationMoniker
+                Id="85b0a8ca-2241-4e8a-a64b-e24d75cda9d0"
+                LastKnownName="MessageOccurrenceSpecification6"
+                LastKnownLocation="RampaModel.uml" />
+              <operandOccurrenceSpecificationMoniker
+                Id="3a1e1505-c4e9-4908-9997-69b310b77bb5"
+                LastKnownName="OperandOccurrenceSpecification5"
+                LastKnownLocation="RampaModel.uml" />
+              <messageOccurrenceSpecificationMoniker
+                Id="6973dce3-c3d7-45a0-a940-9f02d22fb72a"
+                LastKnownName="MessageOccurrenceSpecification7"
+                LastKnownLocation="RampaModel.uml" />
+              <operandOccurrenceSpecificationMoniker
+                Id="8ef27b46-98ea-4834-86ae-663d09203e99"
+                LastKnownName="OperandOccurrenceSpecification9"
+                LastKnownLocation="RampaModel.uml" />
+              <messageOccurrenceSpecificationMoniker
+                Id="24b76942-46e3-48d8-8217-fd0fbc84eb32"
+                LastKnownName="MessageOccurrenceSpecification9"
+                LastKnownLocation="RampaModel.uml" />
+              <operandOccurrenceSpecificationMoniker
+                Id="122f2088-9641-4633-a881-0076faea8b95"
+                LastKnownName="OperandOccurrenceSpecification13"
+                LastKnownLocation="RampaModel.uml" />
+              <messageOccurrenceSpecificationMoniker
+                Id="fbf20983-c3b6-4352-af68-625e93c70cef"
+                LastKnownName="MessageOccurrenceSpecification11"
+                LastKnownLocation="RampaModel.uml" />
+              <operandOccurrenceSpecificationMoniker
+                Id="11231967-2dd8-42a0-b0f7-d7dc2da9458d"
+                LastKnownName="OperandOccurrenceSpecification14"
+                LastKnownLocation="RampaModel.uml" />
+              <operandOccurrenceSpecificationMoniker
+                Id="2d739d3c-440f-4967-9e02-951bc0b0105e"
+                LastKnownName="OperandOccurrenceSpecification10"
+                LastKnownLocation="RampaModel.uml" />
+              <operandOccurrenceSpecificationMoniker
+                Id="c96ec7c8-c729-48ed-8658-d51f10f60d41"
+                LastKnownName="OperandOccurrenceSpecification6"
+                LastKnownLocation="RampaModel.uml" />
+              <interactionUseOccurrenceSpecificationMoniker
+                Id="61eb82c6-d582-4a4d-8ada-fa2a671f735a"
+                LastKnownName="InteractionUseOccurrenceSpecification13"
+                LastKnownLocation="RampaModel.uml" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline
+            Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7"
+            name="PLC"
+            isActor="false"
+            lifelineDisplayName="PLC">
+            <topLevelOccurrences>
+              <executionOccurrenceSpecificationMoniker
+                Id="2846c99b-03ea-44f1-9656-64834c2d492f"
+                LastKnownName="ExecutionOccurrenceSpecification3"
+                LastKnownLocation="RampaModel.uml" />
+              <executionOccurrenceSpecificationMoniker
+                Id="e6a30393-f0ea-4411-aa23-0a820cd208a6"
+                LastKnownName="ExecutionOccurrenceSpecification4"
+                LastKnownLocation="RampaModel.uml" />
+              <operandOccurrenceSpecificationMoniker
+                Id="a0131f7d-b8be-4fa1-aa2f-2fea188e19ce"
+                LastKnownName="OperandOccurrenceSpecification7"
+                LastKnownLocation="RampaModel.uml" />
+              <executionOccurrenceSpecificationMoniker
+                Id="70a98d3a-ce96-4928-8e4d-56369b08a1a6"
+                LastKnownName="ExecutionOccurrenceSpecification5"
+                LastKnownLocation="RampaModel.uml" />
+              <executionOccurrenceSpecificationMoniker
+                Id="4e4ad494-a01e-4037-bdc0-74be4c9b2037"
+                LastKnownName="ExecutionOccurrenceSpecification6"
+                LastKnownLocation="RampaModel.uml" />
+              <operandOccurrenceSpecificationMoniker
+                Id="de4acd1a-093f-4007-bd24-8a264bafe02e"
+                LastKnownName="OperandOccurrenceSpecification11"
+                LastKnownLocation="RampaModel.uml" />
+              <executionOccurrenceSpecificationMoniker
+                Id="5325456e-3068-45e9-8719-e8088584785b"
+                LastKnownName="ExecutionOccurrenceSpecification7"
+                LastKnownLocation="RampaModel.uml" />
+              <executionOccurrenceSpecificationMoniker
+                Id="09995836-6ce0-491d-adb1-950a9f106d84"
+                LastKnownName="ExecutionOccurrenceSpecification8"
+                LastKnownLocation="RampaModel.uml" />
+              <operandOccurrenceSpecificationMoniker
+                Id="c58403a8-18b8-4797-ab6c-145165540489"
+                LastKnownName="OperandOccurrenceSpecification15"
+                LastKnownLocation="RampaModel.uml" />
+              <executionOccurrenceSpecificationMoniker
+                Id="1f6cf1cc-18d8-4e86-9360-6007b2a7409e"
+                LastKnownName="ExecutionOccurrenceSpecification9"
+                LastKnownLocation="RampaModel.uml" />
+              <executionOccurrenceSpecificationMoniker
+                Id="07680e14-e6be-4849-90f3-a32285555f08"
+                LastKnownName="ExecutionOccurrenceSpecification10"
+                LastKnownLocation="RampaModel.uml" />
+              <operandOccurrenceSpecificationMoniker
+                Id="10d90f3e-c4a5-4de3-9189-ba31b52336e2"
+                LastKnownName="OperandOccurrenceSpecification16"
+                LastKnownLocation="RampaModel.uml" />
+              <operandOccurrenceSpecificationMoniker
+                Id="3449fc14-9e4a-447b-9970-db7e027ef8ad"
+                LastKnownName="OperandOccurrenceSpecification12"
+                LastKnownLocation="RampaModel.uml" />
+              <operandOccurrenceSpecificationMoniker
+                Id="8363e593-3711-4ef9-a73d-ba51cc534260"
+                LastKnownName="OperandOccurrenceSpecification8"
+                LastKnownLocation="RampaModel.uml" />
+              <interactionUseOccurrenceSpecificationMoniker
+                Id="4f5bcdab-44e2-4e0c-be43-357eb879b7fd"
+                LastKnownName="InteractionUseOccurrenceSpecification14"
+                LastKnownLocation="RampaModel.uml" />
+            </topLevelOccurrences>
+          </lifeline>
+        </lifelines>
+        <messages>
+          <message
+            Id="8ca94253-a7d1-4d7e-955a-3664906b896e"
+            name="readCannonStatus"
+            messageKind="Complete"
+            messageSort="SynchCall"
+            createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker
+                Id="3cbb065e-541c-4e6f-8ec5-1c79ff3273a2"
+                LastKnownName="MessageOccurrenceSpecification3"
+                LastKnownLocation="RampaModel.uml" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker
+                Id="b2ca896e-da6c-48d8-b06e-0084a9377ced"
+                LastKnownName="MessageOccurrenceSpecification4"
+                LastKnownLocation="RampaModel.uml" />
+            </receiveEvent>
+          </message>
+          <message
+            Id="aad152b9-3a7b-4707-a0a2-0fcf25eb14bd"
+            name="&lt;&lt;cannonStatus&gt;&gt;"
+            messageKind="Complete"
+            messageSort="Reply"
+            createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker
+                Id="fe6dd93d-aeaa-406b-bb4c-733f5c376e1d"
+                LastKnownName="MessageOccurrenceSpecification5"
+                LastKnownLocation="RampaModel.uml" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker
+                Id="85b0a8ca-2241-4e8a-a64b-e24d75cda9d0"
+                LastKnownName="MessageOccurrenceSpecification6"
+                LastKnownLocation="RampaModel.uml" />
+            </receiveEvent>
+          </message>
+          <message
+            Id="25309e8d-5649-4d42-b452-9050ff3c5112"
+            name="tempElementZona"
+            messageKind="Complete"
+            messageSort="AsynchCall"
+            createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker
+                Id="6973dce3-c3d7-45a0-a940-9f02d22fb72a"
+                LastKnownName="MessageOccurrenceSpecification7"
+                LastKnownLocation="RampaModel.uml" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker
+                Id="525dcf43-4e6c-461d-88a9-d5fde9db2454"
+                LastKnownName="MessageOccurrenceSpecification8"
+                LastKnownLocation="RampaModel.uml" />
+            </receiveEvent>
+          </message>
+          <message
+            Id="8d6c8781-48d2-4242-8c64-c8a3370d64c1"
+            name="temElementSubZona"
+            messageKind="Complete"
+            messageSort="AsynchCall"
+            createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker
+                Id="24b76942-46e3-48d8-8217-fd0fbc84eb32"
+                LastKnownName="MessageOccurrenceSpecification9"
+                LastKnownLocation="RampaModel.uml" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker
+                Id="513e91d0-1e04-4dde-8ced-ba523b767c00"
+                LastKnownName="MessageOccurrenceSpecification10"
+                LastKnownLocation="RampaModel.uml" />
+            </receiveEvent>
+          </message>
+          <message
+            Id="dc69e4ac-b02f-4738-96aa-d2d36f318f27"
+            name="tempElementDivisión"
+            messageKind="Complete"
+            messageSort="AsynchCall"
+            createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker
+                Id="fbf20983-c3b6-4352-af68-625e93c70cef"
+                LastKnownName="MessageOccurrenceSpecification11"
+                LastKnownLocation="RampaModel.uml" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker
+                Id="36c31982-0842-416c-be6e-c668e298c543"
+                LastKnownName="MessageOccurrenceSpecification12"
+                LastKnownLocation="RampaModel.uml" />
+            </receiveEvent>
+          </message>
+        </messages>
+      </interaction>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent
+        Id="4ad34dfd-fa8e-417e-881e-760e122e577e"
+        name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent
+        Id="ba985cc0-438f-408c-b471-00c020e5403c"
+        name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <interaction
+        Id="589ceaad-91be-4ad7-bc85-0f8273f0acb6"
+        name="Enviar matriz de temperaturas"
+        collapseFragmentsFlag="false"
+        isActiveClass="false"
+        isAbstract="false"
+        isLeaf="false"
+        isReentrant="false">
+        <lifelines>
+          <lifeline
+            Id="f0d33b27-a665-46d4-af7c-5af554c70989"
+            name="MainProces"
+            isActor="false"
+            lifelineDisplayName="MainProces" />
+          <lifeline
+            Id="7fed2e4a-0eb5-4469-b78d-94297fb49025"
+            name="PLC"
+            isActor="false"
+            lifelineDisplayName="PLC" />
+        </lifelines>
+      </interaction>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent
+        Id="f8859080-022a-4816-addf-b2b3250e7b62"
+        name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent
+        Id="32d4fb6a-2ac5-4a09-9d59-8a0b8b986db0"
+        name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent
+        Id="6986a9ce-0a43-4b67-b8e8-9b6586a0850f"
+        name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent
+        Id="d4c5d3ed-64fe-4063-93f5-b5caeef40b22"
+        name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent
+        Id="a98afb97-5bbd-4047-9dcd-cb2250c87511"
+        name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent
+        Id="5830c0fb-706d-4fc0-a5a7-ca3b81891be1"
+        name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <artifact
+        Id="bbaaca9d-d547-4b30-b38f-3a2a1a0bc900"
+        name="sendOPCData.sequencediagram"
+        isAbstract="false"
+        isLeaf="false"
+        fileName="RampaModel\Secuence Diagrams\sendOPCData.sequencediagram" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="019f7378-e30e-48fe-8a44-73e29dd8b2af"
+        name="Rampa"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <ownedAttributesInternal>
+          <property
+            Id="dfa15310-f324-48c6-9d7a-a8236bc9a8d6"
+            name="Zonas"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="d04c7362-ecfa-4ccb-a0b1-9c2c1a7dced6"
+                LastKnownName="List&lt;Zonas&gt;"
+                LastKnownLocation="RampaModel.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="37c5744b-543f-429c-952d-642bcf51b2c6"
+            name="ClienteOPC"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="78409d7d-24e2-494d-8cb1-14a4b88b96c3"
+                LastKnownName="OPCClient"
+                LastKnownLocation="RampaModel.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="fffe2edf-9413-4c75-8d8a-322bc0e217aa"
+            name="Estados"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="ed735924-0a5c-4b30-8ad3-74a63607d637"
+                LastKnownName="Estado"
+                LastKnownLocation="RampaModel.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="c822b12c-bab9-404a-adbc-baca4685d728"
+            name="Attribute2"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false" />
+        </ownedAttributesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="baff30dc-b1d7-4303-9d88-de0b7dec11e3"
+        name="RampaModel::List&lt;Zonas&gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="d04c7362-ecfa-4ccb-a0b1-9c2c1a7dced6"
+        name="List&lt;Zonas&gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="78409d7d-24e2-494d-8cb1-14a4b88b96c3"
+        name="OPCClient" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="ed735924-0a5c-4b30-8ad3-74a63607d637"
+        name="Estado" />
+    </packageHasNamedElement>
+  </packagedElements>
+  <primitiveType
+    Id="220a3521-e091-4221-bae9-3ef9018e845c"
+    name="Integer"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+    name="Boolean"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+    name="String"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="3ab42e7d-4969-445a-b209-471f5cb8209c"
+    name="UnlimitedNatural"
+    isAbstract="false"
+    isLeaf="false" />
+</modelStoreModel>

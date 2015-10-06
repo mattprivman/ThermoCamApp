@@ -2,7 +2,7 @@
 using System.Drawing;
 
 
-namespace ThermoVision.Enumeraciones
+namespace ThermoVision.Tipos
 {
     public struct ThermoCamImgArgs
     {
@@ -13,10 +13,18 @@ namespace ThermoVision.Enumeraciones
         public tempElement[,] tempMatrix; 
     }
 
+    public struct ThemoCamImgCuadradosArgs
+    {
+        public Bitmap Imagen;
+    }
+
     public struct tempElement
     {
         public float max;
         public float min;
         public double mean;
+
+        public bool hayMaterial;
+        public bool estaCaliente;
     }
 }

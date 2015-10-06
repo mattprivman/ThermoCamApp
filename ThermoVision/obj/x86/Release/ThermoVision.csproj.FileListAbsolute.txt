@@ -1,0 +1,4 @@
+E:\Repositories\ThermoCamApp\ThermoVision\obj\x86\Release\ThermoVision.CustomControls.CamConfigControl.resources
+E:\Repositories\ThermoCamApp\ThermoVision\obj\x86\Release\ThermoVision.CustomControls.CamControl.resources
+E:\Repositories\ThermoCamApp\ThermoVision\obj\x86\Release\ThermoVision.CustomControls.NumericTextBox.resources
+E:\Repositories\ThermoCamApp\ThermoVision\obj\x86\Release\ThermoVision.csproj.GenerateResource.Cache

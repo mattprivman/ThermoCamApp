@@ -45,7 +45,7 @@ namespace ThermoVision.Models
                 return this._children;
             }
         }
-        public Sistema Parent                 // -r       
+        public Sistema       Parent           // -r       
         {
             get
             {
@@ -110,7 +110,10 @@ namespace ThermoVision.Models
             {
                 //COMPROBAR QUE NO EXISTA NINGÚNA SUBZONA CON EL MISMO NOMBRE
                 if (!this._children.Exists(x => x.Nombre == child.Nombre))
+                {
                     this._children.Add(child);
+                    child.Parent = this;
+                }
                 else
                     throw new Exception("Ya existe una subzona con ese nombre");
             }

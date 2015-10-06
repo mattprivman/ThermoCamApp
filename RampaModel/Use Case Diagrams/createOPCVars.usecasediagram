@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" dslVersion="1.0.0.0" Id="a43320bb-7e2a-4dc0-8d2d-f6504ab4d165" name="createOPCVars" linkedPackageId="70b540e1-57a0-4f2e-9650-2113cd7bee44" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+  <ownedCommentsInternal>
+    <comment Id="8c92cf24-4889-47a0-9ce2-f80348843da8">
+      <elementDefinition Id="a834de29-c3b9-430c-b5f2-49441ea88c64" />
+      <body>Temperatura máxima
+Temperatura media
+Temperatura minima</body>
+      <annotatedElements>
+        <useCaseMoniker Id="e8b5e40e-68c3-4912-b478-aec75067c815" LastKnownName="Elegir variables a exportar" />
+      </annotatedElements>
+    </comment>
+    <comment Id="d43f510d-aba7-40b1-a506-4a68255458bd">
+      <elementDefinition Id="55089365-0170-4869-af77-28442d40887c" />
+      <body>e.g: DB1.DW0</body>
+      <annotatedElements>
+        <useCaseMoniker Id="d0f3bb13-f776-4eb1-b803-41431c7a42c8" LastKnownName="Definir offset de las variables" />
+      </annotatedElements>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances Id="d54f6993-21d3-4805-93e1-a1f5b199a31e">
+      <profileInstance Id="e72baa15-eb61-4bd4-86df-bb66ece0d661" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="8eb156a6-1da5-4a19-be2e-50d837f427f7">
+      <profileInstance Id="9409922c-8d26-44f1-878c-c5db3706f50e" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <useCaseModelRootHasTypes>
+      <actor Id="cfa3a401-ec42-44c7-937e-e567ebd08b17" name="User" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="f9cd7d7e-4471-480f-a53c-90f066f5efe4" />
+        <targetEnds>
+          <association Id="4ef5de28-1b87-4235-89db-502ad9450e78" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Elegir servidor OPC" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="5b082700-0449-407d-af28-8ad4de488d2e" LastKnownName="Elegir servidor OPC" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="79c97bad-9194-48de-adee-a04490399fd7" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="f42d8853-afc4-4347-94b4-615cdfdf2997" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="eef44b81-081f-4c4a-8a7a-a37daf978768" name="Elegir servidor OPC" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="ea38d873-95b1-489f-9206-ad2a142a18d2" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="2c1ba013-346a-47cc-b03d-81823b9681bb" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="5b082700-0449-407d-af28-8ad4de488d2e" name="Elegir servidor OPC" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="f450fedc-4bae-47de-a80f-8a692b8593c5" />
+        <suppliersInternal>
+          <dependency Id="6dba36e9-485d-42d0-9a9c-2abf55eed745">
+            <artifactMoniker Id="d1a69d23-6a70-471c-907c-7a6bafe81dbd" LastKnownName="createOPCVars.activitydiagram" />
+            <elementDefinition Id="d20697cc-dc0b-43ff-b108-336cf5f0b699" />
+          </dependency>
+        </suppliersInternal>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="201e8e69-67e0-4ee8-b098-5d45f69e0407" name="Elegir ruta variables en servidor" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="3d180c2e-e738-449e-b48a-b49333b93f1b" />
+        <additions>
+          <include Id="0a8b6b37-3e43-45f0-b0a8-2233381b7daa">
+            <useCaseMoniker Id="5b082700-0449-407d-af28-8ad4de488d2e" LastKnownName="Elegir servidor OPC" />
+            <elementDefinition Id="dd1c94e6-395e-4cd5-b81d-f31e45db08ad" />
+          </include>
+        </additions>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="e8b5e40e-68c3-4912-b478-aec75067c815" name="Elegir variables a exportar" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="2fd747d6-bf60-4dde-b79c-3770dece6d2f" />
+        <additions>
+          <include Id="3220a0b1-8b07-42db-9c34-c8db5acdd74f">
+            <useCaseMoniker Id="5b082700-0449-407d-af28-8ad4de488d2e" LastKnownName="Elegir servidor OPC" />
+            <elementDefinition Id="0b3d6147-d66b-4532-b879-b2707334cafe" />
+          </include>
+        </additions>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="d0f3bb13-f776-4eb1-b803-41431c7a42c8" name="Definir offset de las variables" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="a6e3d139-00d9-4683-a51a-c84c53842077" />
+        <additions>
+          <include Id="8578f529-cea6-4dd8-8219-a33a591b5573">
+            <useCaseMoniker Id="5b082700-0449-407d-af28-8ad4de488d2e" LastKnownName="Elegir servidor OPC" />
+            <elementDefinition Id="7905fc55-d2c4-4765-8f65-7c89c7a3a0bf" />
+          </include>
+        </additions>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <artifact Id="d1a69d23-6a70-471c-907c-7a6bafe81dbd" name="createOPCVars.activitydiagram" isAbstract="false" isLeaf="false" fileName="RampaModel\Activity Diagrams\createOPCVars.activitydiagram">
+        <elementDefinition Id="34029d12-7fcf-4634-a6d8-8e047914fdbe" />
+      </artifact>
+    </useCaseModelRootHasTypes>
+  </packagedElements>
+  <package Id="70b540e1-57a0-4f2e-9650-2113cd7bee44" name="RampaModel">
+    <elementDefinition Id="d9d09dab-f2b9-4ac9-92da-5916bbb784e6" />
+  </package>
+</useCaseModelRoot>

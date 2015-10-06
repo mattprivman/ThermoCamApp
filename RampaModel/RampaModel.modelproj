@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{002ca594-c20e-41e3-a795-1680e26e1dae}</ProjectGuid>
+    <ArchitectureToolsVersion>2.0.0.0</ArchitectureToolsVersion>
+    <Name>RampaModel</Name>
+    <RootNamespace>RampaModel</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
+  <ItemGroup>
+    <Content Include="Activity Diagrams\createOPCVars.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Activity Diagrams\createOPCVars.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Activity Diagrams\createOPCVars.activitydiagram</DependentUpon>
+    </Content>
+    <Content Include="Activity Diagrams\rampCooling.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Activity Diagrams\rampCooling.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Activity Diagrams\rampCooling.activitydiagram</DependentUpon>
+    </Content>
+    <Content Include="Activity Diagrams\sendOPCData.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Activity Diagrams\sendOPCData.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Activity Diagrams\sendOPCData.activitydiagram</DependentUpon>
+    </Content>
+    <Content Include="Enviar matriz de temperaturas.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Enviar matriz de temperaturas.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Enviar matriz de temperaturas.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Secuence Diagrams\sendOPCData.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Secuence Diagrams\sendOPCData.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Secuence Diagrams\sendOPCData.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Use Case Diagrams\AppConfig.usecasediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Use Case Diagrams\AppConfig.usecasediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Use Case Diagrams\AppConfig.usecasediagram</DependentUpon>
+    </Content>
+    <Content Include="Use Case Diagrams\CamConfig.usecasediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Use Case Diagrams\CamConfig.usecasediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Use Case Diagrams\CamConfig.usecasediagram</DependentUpon>
+    </Content>
+    <Content Include="Use Case Diagrams\createOPCVars.usecasediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Use Case Diagrams\createOPCVars.usecasediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Use Case Diagrams\createOPCVars.usecasediagram</DependentUpon>
+    </Content>
+    <Folder Include="ModelDefinition\" />
+    <Content Include="ModelDefinition\RampaModel.uml">
+      <SubType>Content</SubType>
+    </Content>
+    <Folder Include="Activity Diagrams" />
+    <Folder Include="Class Diagrams" />
+    <Folder Include="Secuence Diagrams" />
+    <Folder Include="Use Case Diagrams" />
+  </ItemGroup>
+</Project>

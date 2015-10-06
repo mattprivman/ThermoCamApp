@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using ThermoVision.Enumeraciones;
+using ThermoVision.Tipos;
 
 namespace ThermoVision.Models
 {
@@ -11,15 +12,17 @@ namespace ThermoVision.Models
     {
         #region "Variables"
         
-        int     _id;
-        string  _Nombre;
+        int         _id;
+        string      _Nombre;
 
-        bool    _selected;
+        bool        _selected;
 
         //ZONA A LA QUE PERTENECE ESTA DIVISIÓN
-        Zona    _parent;
+        Zona        _parent;
 
-        ThermoCam _thermoParent;
+        ThermoCam   _thermoParent;
+
+        Cannon      _cannon;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// COORDENADAS ZONA ÚTIL
         //////////////////////////////// Delimitar la zona útil que se quiere medir 
@@ -52,7 +55,7 @@ namespace ThermoVision.Models
 
         #region "Propiedades"
 
-        public int Id                               // -rw 
+        public int  Id                               // -rw 
         {
             get
             {
@@ -66,7 +69,7 @@ namespace ThermoVision.Models
                     ParametersChanged(this, null);
             }
         }
-        public string Nombre                        // -rw 
+        public string   Nombre                       // -rw 
         {
             get
             {
@@ -81,7 +84,7 @@ namespace ThermoVision.Models
             }
         }
 
-        public bool Selected                        // -rw 
+        public bool     Selected                     // -rw 
         {
             get
             {
@@ -94,7 +97,7 @@ namespace ThermoVision.Models
         }
 
         //ZONA DE PERTENENCIA
-        public Zona Parent                          // -rw 
+        public Zona         Parent                   // -rw 
         {
             set 
             {
@@ -105,8 +108,7 @@ namespace ThermoVision.Models
                 return this._parent;
             }
         }
-
-        public ThermoCam ThermoParent               // -rw 
+        public ThermoCam    ThermoParent             // -rw 
         {
             get
             {
@@ -118,18 +120,32 @@ namespace ThermoVision.Models
                 {
                     lock ("Zonas")
                     {
-                        if(ThermoParent != null)
-                            this.ThermoParent.removeSubZona(this);
-                        this._thermoParent = value;
-                        this.ThermoParent.addSubZona(this);
+                        lock ("SubZonas")
+                        {
+                            if (ThermoParent != null)
+                                this.ThermoParent.removeSubZona(this);
+                            this._thermoParent = value;
+                            this.ThermoParent.addSubZona(this);
+                        }
                     }
                 }
+            }
+        }
+        public Cannon       Cannon                   // -rw 
+        {
+            get
+            {
+                return this._cannon;
+            }
+            set
+            {
+                this._cannon = value;
             }
         }
 
         // REJILLA
         // Numero de filas y columnas de la rejilla
-        public int Filas                            // -rw 
+        public int Filas                             // -rw 
         {
             get
             {
@@ -149,7 +165,7 @@ namespace ThermoVision.Models
                 }
             }
         }
-        public int Columnas                         // -rw 
+        public int Columnas                          // -rw 
         {
             get
             {
@@ -171,21 +187,21 @@ namespace ThermoVision.Models
         }
 
         //Coordenadas
-        public Point Inicio     
+        public Point Inicio                          // -r  
         {
             get
             {
                 return _inicio;
             }
         }
-        public Point Fin        
+        public Point Fin                             // -r  
         {
             get
             {
                 return _fin;
             }
         }
-
+         
         #endregion
 
         #region "Constructores"
@@ -197,7 +213,7 @@ namespace ThermoVision.Models
             this._filas     = 1;
             this._columnas  = 1;
         }
-        protected SubZona(SerializationInfo info, StreamingContext ctxt)           
+        protected SubZona(SerializationInfo info, StreamingContext ctxt)        
         {
             this._id            = (int)       info.GetValue("Id",           typeof(int));
             this._Nombre        = (string)    info.GetValue("Nombre",       typeof(string));
@@ -207,6 +223,7 @@ namespace ThermoVision.Models
             this._inicio        = (Point)     info.GetValue("Inicio",       typeof(Point));
             this._fin           = (Point)     info.GetValue("Fin",          typeof(Point));
             this._thermoParent  = (ThermoCam) info.GetValue("ThermoParent", typeof(ThermoCam));
+            this._cannon        = (Cannon)    info.GetValue("Cannon",       typeof(Cannon));
         }
 
         #endregion
@@ -223,6 +240,7 @@ namespace ThermoVision.Models
             info.AddValue("Inicio",         this.Inicio);
             info.AddValue("Fin",            this.Fin);
             info.AddValue("ThermoParent",   this._thermoParent);
+            info.AddValue("Cannon",         this._cannon);
         }
 
         public void addCoordinates(Point p1, Point p2)                          

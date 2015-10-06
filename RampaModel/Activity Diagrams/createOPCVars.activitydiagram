@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" dslVersion="1.0.0.0" Id="60ca6c37-78aa-4500-823f-8d4729d928cb" name="createOPCVars" linkedPackageId="d57b2408-dcaf-4de6-9851-87ab69409cc0" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="688ce17d-ee7a-4c06-a264-7186a4b863c2">
+      <profileInstance Id="b3992f38-f4a8-4372-888d-81903eaeca88" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="0678580a-7e43-420b-a478-5cca5fa67256">
+      <profileInstance Id="8950ed87-89bc-406e-992e-0662f7fb2e8a" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <activityRootModelHasActivity>
+      <activity Id="527d0490-97eb-411e-8e04-767978b28305" name="createOPCVars" isAbstract="false" isLeaf="false" isActiveClass="false" isReentrant="false" isReadOnly="false" isSingleExecution="false">
+        <elementDefinition Id="dc73a7c9-f218-41e7-97f8-645b6de25e57" />
+        <nodes>
+          <initialNode Id="f8ef0fce-cfd7-4b1d-ae12-c7e3ecc0cbe3" name="Initial1" isLeaf="false">
+            <elementDefinition Id="60c9400c-f09b-4aa7-a326-9f4ba45d0519" />
+            <flowNodeTargets>
+              <controlFlow Id="e91d8f14-9383-4001-8907-5cdb4b3abc2f" isLeaf="false">
+                <opaqueActionMoniker Id="e782891f-cabd-44ea-8bce-1ee17e7bb0eb" LastKnownName="Elegir ruta fichero" />
+                <elementDefinition Id="063e75e6-408d-4baa-b1e3-3f753d5f6424" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction Id="e782891f-cabd-44ea-8bce-1ee17e7bb0eb" name="Elegir ruta fichero" isLeaf="false">
+            <elementDefinition Id="d8efeaee-9f34-4f33-af61-ea2f52685ecb" />
+            <flowNodeTargets>
+              <controlFlow Id="edd70a49-330b-484d-a0d4-0a5f7664f926" isLeaf="false">
+                <decisionNodeMoniker Id="7a48d9b6-a4be-4c23-9be0-e58294131f68" LastKnownName="Decision1" />
+                <elementDefinition Id="be8d900e-718a-4c23-991d-f056f56a869f" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="5e04079e-d6e8-401e-9938-094eebf0cddc" name="Generar variables OPC" isLeaf="false">
+            <elementDefinition Id="4a8e5fb4-ea42-4948-95c4-679af51801b7" />
+            <flowNodeTargets>
+              <controlFlow Id="978684c9-9ca0-4457-8705-aa2109ec8e23" isLeaf="false">
+                <decisionNodeMoniker Id="76c01571-991b-49e8-9c25-514ca5b7cf04" LastKnownName="Decision2" />
+                <elementDefinition Id="f6a63ccd-4800-4d5e-aac5-1d698edb33f5" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode Id="7a48d9b6-a4be-4c23-9be0-e58294131f68" name="Decision1" isLeaf="false">
+            <elementDefinition Id="955dfe62-ff72-47ff-851d-11f40fa805a5" />
+            <flowNodeTargets>
+              <controlFlow Id="29562413-7a90-4f97-b28d-1b99b2e12564" guard="ruta no valida" isLeaf="false">
+                <activityFinalNodeMoniker Id="f60d1c18-fd3d-466c-af88-44dc04b69a5b" LastKnownName="ActivityFinal1" />
+                <elementDefinition Id="0ee5b1b3-eb11-4931-8049-02485ab815ca" />
+              </controlFlow>
+              <controlFlow Id="6de8e18d-ff3e-4ea0-a6cf-7c7b8c5b07df" guard="ruta valida" isLeaf="false">
+                <opaqueActionMoniker Id="5e04079e-d6e8-401e-9938-094eebf0cddc" LastKnownName="Generar variables OPC" />
+                <elementDefinition Id="95b82dc9-360b-4539-aefc-22823de26afe" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <activityFinalNode Id="f60d1c18-fd3d-466c-af88-44dc04b69a5b" name="ActivityFinal1" isLeaf="false">
+            <elementDefinition Id="4348e270-3d2d-4360-ad55-019835f54f95" />
+          </activityFinalNode>
+          <decisionNode Id="76c01571-991b-49e8-9c25-514ca5b7cf04" name="Decision2" isLeaf="false">
+            <elementDefinition Id="706ef593-85ee-45b4-90cc-d5fe0b9eba09" />
+            <flowNodeTargets>
+              <controlFlow Id="f908baab-1331-413c-b713-61c5409d4fc2" guard="Aplicación standar" isLeaf="false">
+                <opaqueActionMoniker Id="f3d47935-4b07-4a4c-ad49-4bef692311ee" LastKnownName="Generar DBestandar" />
+                <elementDefinition Id="7b43d44b-5e80-4802-bf8c-c535205a9317" />
+              </controlFlow>
+              <controlFlow Id="ddf17255-c9b8-4ef7-bdcc-8e6a20c2a61c" guard="Aplicación rampas" isLeaf="false">
+                <opaqueActionMoniker Id="fb019324-6543-4f7a-a487-0f2c1aa898bf" LastKnownName="GenerarDBRampas" />
+                <elementDefinition Id="75c832f6-10b1-43ce-aeea-a7dca0e023ee" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction Id="f3d47935-4b07-4a4c-ad49-4bef692311ee" name="Generar DBestandar" isLeaf="false">
+            <elementDefinition Id="a0c9a6b8-9be0-4f7e-9533-bd448b8f570d" />
+            <flowNodeTargets>
+              <controlFlow Id="bde8470b-75be-4554-bf4f-5baf07f45a4f" isLeaf="false">
+                <opaqueActionMoniker Id="b296471c-59e6-41f6-af2a-dd5bffc46591" LastKnownName="Elegir ruta fichero" />
+                <elementDefinition Id="3af032c8-d6f5-41dc-832f-cc920bae65c6" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="fb019324-6543-4f7a-a487-0f2c1aa898bf" name="GenerarDBRampas" isLeaf="false">
+            <elementDefinition Id="ce89b44d-ea2f-4398-8a4e-597962bab7ce" />
+            <flowNodeTargets>
+              <controlFlow Id="70b2476f-d1cc-4afc-ac04-484523f61000" isLeaf="false">
+                <opaqueActionMoniker Id="b296471c-59e6-41f6-af2a-dd5bffc46591" LastKnownName="Elegir ruta fichero" />
+                <elementDefinition Id="83a27692-474e-4660-910c-f313378d99e1" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="b296471c-59e6-41f6-af2a-dd5bffc46591" name="Elegir ruta fichero" isLeaf="false">
+            <elementDefinition Id="07d53869-b8a4-4129-8808-d57b87f593bf" />
+            <flowNodeTargets>
+              <controlFlow Id="36262e35-589e-4312-88da-c75862c2c454" isLeaf="false">
+                <decisionNodeMoniker Id="035cc9ec-f57b-434f-a83c-737e181be00c" LastKnownName="Decision3" />
+                <elementDefinition Id="3ab30d52-a2b6-4ab4-aea2-c1d4fa96960c" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode Id="035cc9ec-f57b-434f-a83c-737e181be00c" name="Decision3" isLeaf="false">
+            <elementDefinition Id="d435ea41-dbc7-4c73-8559-064098571e4d" />
+            <flowNodeTargets>
+              <controlFlow Id="177a7621-e18d-4d64-9515-518f0f3dbdef" guard="ruta no valida" isLeaf="false">
+                <activityFinalNodeMoniker Id="5c5112e2-331b-4af5-88e5-921abc7e045c" LastKnownName="ActivityFinal2" />
+                <elementDefinition Id="db50e0f1-7725-48f5-b1dc-084e6b3807ca" />
+              </controlFlow>
+              <controlFlow Id="6f5abc23-94c3-45a4-a018-ec0fb75297a8" guard="ruta valida" isLeaf="false">
+                <opaqueActionMoniker Id="6b43a460-4d91-44e4-9249-5e0a221a419d" LastKnownName="Generar BF  PLC" />
+                <elementDefinition Id="24ca1c40-db7a-4500-8ffb-55182f532b60" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <activityFinalNode Id="5c5112e2-331b-4af5-88e5-921abc7e045c" name="ActivityFinal2" isLeaf="false">
+            <elementDefinition Id="dd5c1ff6-e924-445a-8254-274b31b1dae4" />
+          </activityFinalNode>
+          <opaqueAction Id="6b43a460-4d91-44e4-9249-5e0a221a419d" name="Generar BF  PLC" isLeaf="false">
+            <elementDefinition Id="6c92ef9a-38db-4fc7-b0b7-4dd52ccecf20" />
+            <flowNodeTargets>
+              <controlFlow Id="100de39a-11a0-4e4b-8426-ce9067ae4cce" isLeaf="false">
+                <decisionNodeMoniker Id="e966cbc6-3748-41b4-bb5b-f160d6c4e3be" LastKnownName="Decision4" />
+                <elementDefinition Id="8ae49f6f-f808-4444-9403-da25d22a7bf7" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="f181a7d4-3dbd-42de-ba3c-ad897278431a" name="GenerarBFEstandar" isLeaf="false">
+            <elementDefinition Id="c9e6c010-1c16-4cbc-818e-fa7a5cc8d0ef" />
+            <flowNodeTargets>
+              <controlFlow Id="6449d303-9862-4a95-9e85-1604a0016937" isLeaf="false">
+                <activityFinalNodeMoniker Id="d79488f4-1e8e-4ad8-9067-31ccda2db9b3" LastKnownName="ActivityFinal4" />
+                <elementDefinition Id="e8630952-613f-4409-af12-d9415fe0f6dc" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="4a3f3e39-e8e2-4a91-967e-67fc96908313" name="GenerarBFRampas" isLeaf="false">
+            <elementDefinition Id="84083183-3858-4b04-9c11-1ddd89a1a107" />
+            <flowNodeTargets>
+              <controlFlow Id="57c99820-b400-4d1c-804e-fc80d4aaf91c" isLeaf="false">
+                <activityFinalNodeMoniker Id="a2a112c4-3372-4932-b497-bee79cbb005b" LastKnownName="ActivityFinal3" />
+                <elementDefinition Id="a58f51ed-5f84-435f-99df-61be5c5d6722" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode Id="e966cbc6-3748-41b4-bb5b-f160d6c4e3be" name="Decision4" isLeaf="false">
+            <elementDefinition Id="6bbac0c5-0ef5-4f5a-9b0e-32a76f70f482" />
+            <flowNodeTargets>
+              <controlFlow Id="a8b39191-13db-44c4-9c8c-eef78b720bae" guard="Aplicación estandar" isLeaf="false">
+                <opaqueActionMoniker Id="f181a7d4-3dbd-42de-ba3c-ad897278431a" LastKnownName="GenerarBFEstandar" />
+                <elementDefinition Id="814bf096-ee5f-4ff1-a5a5-eb61e987ee10" />
+              </controlFlow>
+              <controlFlow Id="06f6f71c-4e93-48b2-ba8e-cb8df5d370e4" guard="Aplicacion rampas" isLeaf="false">
+                <opaqueActionMoniker Id="4a3f3e39-e8e2-4a91-967e-67fc96908313" LastKnownName="GenerarBFRampas" />
+                <elementDefinition Id="8d8eb5e7-5b1b-4b8f-a13a-97573792c5ec" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <activityFinalNode Id="a2a112c4-3372-4932-b497-bee79cbb005b" name="ActivityFinal3" isLeaf="false">
+            <elementDefinition Id="4a0b3f4a-7547-4576-a8f9-ff52c76e0ff0" />
+          </activityFinalNode>
+          <activityFinalNode Id="d79488f4-1e8e-4ad8-9067-31ccda2db9b3" name="ActivityFinal4" isLeaf="false">
+            <elementDefinition Id="114b738e-85f3-4667-9b0a-6c4a0bed009f" />
+          </activityFinalNode>
+        </nodes>
+      </activity>
+    </activityRootModelHasActivity>
+  </packagedElements>
+  <package Id="d57b2408-dcaf-4de6-9851-87ab69409cc0" name="RampaModel">
+    <elementDefinition Id="d9d09dab-f2b9-4ac9-92da-5916bbb784e6" />
+  </package>
+</activityRootModel>

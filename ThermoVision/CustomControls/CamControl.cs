@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ThermoVision.Enumeraciones;
 using ThermoVision.Models;
+using ThermoVision.Tipos;
 
 namespace ThermoVision.CustomControls
 {
@@ -33,6 +34,7 @@ namespace ThermoVision.CustomControls
             this.Conectar();
         }
 
+
         public void Conectar()          
         {
             this.camara.Conectar();
@@ -47,7 +49,7 @@ namespace ThermoVision.CustomControls
 
         void camara_ThermoCamImgEvent(object sender, ThermoCamImgArgs e) 
         {
-            updatePictureBox(this.pictureBox1, ref e.Imagen);
+            updatePictureBox(this.pictureBoxCam, ref e.Imagen);
         }
 
         #region ACTUALIZAR CONTROLES

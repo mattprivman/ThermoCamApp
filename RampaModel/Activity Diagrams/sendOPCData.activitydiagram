@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/UseCaseModel" dslVersion="1.0.0.0" Id="66eed239-66ef-49a7-a65b-6f9c06622130" name="sendOPCData" linkedPackageId="80a86f20-dc89-4dee-b6d8-480bf46c91c0" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
+  <ownedCommentsInternal>
+    <comment Id="b5ca2ea8-35b8-4eb6-9e63-3e599c361475">
+      <elementDefinition Id="26196a7b-cca0-4709-978a-1beeb98aa952" />
+      <body>Leer variable de estado del cañon
+</body>
+    </comment>
+    <comment Id="33f5368a-94a9-4f34-99e8-ba5357328e61">
+      <elementDefinition Id="1ee688eb-d719-4bf9-b276-692272b844b5" />
+      <body>Enviar vía OPC asincronamente
+</body>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances Id="610620d4-2698-47be-92b3-b8abf93bb6ce">
+      <profileInstance Id="235b247d-e348-40c0-aede-dd8a7e244b18" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="9bb65607-9dc6-46e7-9429-f593def4bee9">
+      <profileInstance Id="f5392d41-066c-4a92-aa6c-8e8334f4b522" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <activityRootModelHasActivity>
+      <activity Id="dde64263-0cd3-4aeb-983f-22b981333145" name="sendOPCData" isAbstract="false" isLeaf="false" isActiveClass="false" isReentrant="false" isReadOnly="false" isSingleExecution="false">
+        <elementDefinition Id="2e3375fe-ca83-4227-89ae-3451829a2e1d" />
+        <nodes>
+          <initialNode Id="0598990c-2768-4982-a9b5-02bf8fc4afb5" name="Initial1" isLeaf="false">
+            <elementDefinition Id="b65d3406-471b-494b-bc22-e1525a5b428c" />
+            <flowNodeTargets>
+              <controlFlow Id="5eb049dd-f378-48ab-bb88-99b9c4f6d20c" isLeaf="false">
+                <opaqueActionMoniker Id="74523b36-c3b4-4bfb-b610-f69a3ff52e40" LastKnownName="ComprobarEstadoCañon" />
+                <elementDefinition Id="5deb0d95-f4ff-47a5-8a06-1d1f22e5a4a4" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction Id="74523b36-c3b4-4bfb-b610-f69a3ff52e40" name="ComprobarEstadoCañon" isLeaf="false">
+            <elementDefinition Id="fd4b06e1-974b-44a6-96ee-38e3faa54d9b" />
+            <flowNodeTargets>
+              <controlFlow Id="7ce53606-405f-4b2a-b9f7-f39f99c96202" isLeaf="false">
+                <decisionNodeMoniker Id="af59ac55-6eab-433f-a407-a03dfc595a10" LastKnownName="Decision1" />
+                <elementDefinition Id="ddafa6e7-8e94-4ed0-9508-b081657b33db" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode Id="af59ac55-6eab-433f-a407-a03dfc595a10" name="Decision1" isLeaf="false">
+            <elementDefinition Id="807431d7-22f9-43c5-a73d-ee2c2aedc78e" />
+            <flowNodeTargets>
+              <controlFlow Id="d67a7f0e-11a5-4a90-81b6-05ebefb306a0" guard="ocupado" isLeaf="false">
+                <activityFinalNodeMoniker Id="a5addca3-4213-4da7-b35e-82525934e75b" LastKnownName="ActivityFinal1" />
+                <elementDefinition Id="5570aabd-2740-4433-aaf8-b99bc252b4e7" />
+              </controlFlow>
+              <controlFlow Id="dda3ad9c-220b-4c8d-8c3c-86546b9b4161" isLeaf="false">
+                <sendSignalActionMoniker Id="33e3acb0-8917-427f-9590-d4af54827901" LastKnownName="sendDataToCannon" />
+                <elementDefinition Id="330f2f80-92f9-4d27-a6c0-d54e7b22e324" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <activityFinalNode Id="a5addca3-4213-4da7-b35e-82525934e75b" name="ActivityFinal1" isLeaf="false">
+            <elementDefinition Id="24e4a7b2-b2aa-49bd-81bc-9fa969dbe7b2" />
+          </activityFinalNode>
+          <sendSignalAction Id="33e3acb0-8917-427f-9590-d4af54827901" name="sendDataToCannon" isLeaf="false">
+            <elementDefinition Id="ec1b0e54-cc59-4805-96cd-af5bf6246477" />
+            <flowNodeTargets>
+              <controlFlow Id="5e81600e-1979-458c-b55d-21f144f1278a" isLeaf="false">
+                <activityFinalNodeMoniker Id="194fd1f0-0e4f-4e5c-a463-c95b72b23a48" LastKnownName="ActivityFinal2" />
+                <elementDefinition Id="81a35bfe-962c-4f60-8f50-217fad02204e" />
+              </controlFlow>
+            </flowNodeTargets>
+          </sendSignalAction>
+          <activityFinalNode Id="194fd1f0-0e4f-4e5c-a463-c95b72b23a48" name="ActivityFinal2" isLeaf="false">
+            <elementDefinition Id="730a9a94-176d-4f64-b220-475a1e003b69" />
+          </activityFinalNode>
+        </nodes>
+      </activity>
+    </activityRootModelHasActivity>
+  </packagedElements>
+  <package Id="80a86f20-dc89-4dee-b6d8-480bf46c91c0" name="RampaModel">
+    <elementDefinition Id="d9d09dab-f2b9-4ac9-92da-5916bbb784e6" />
+  </package>
+</activityRootModel>

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using OPC;
+using ThermoVision.Algoritmos;
+using ThermoVision.Tipos;
 
 namespace ThermoVision.Models
 {
@@ -14,8 +17,18 @@ namespace ThermoVision.Models
     {
         #region "Variables"
 
+        string              _mode               = "";
+        //Zonas predefinidas
+        public string       zonaApagado         = "ZonaApagado";
+        public string       zonaVaciado         = "ZonaVaciado";
+
+        const int           limitTemp           =  20;
+
+        public Estados      estados;
+
         List<Zona>          _zonas;
         List<ThermoCam>     _thermoCams;
+        List<Cannon>        _cannons;
 
         string              _OPCServerName;
         OPCClient           _OPCClient;
@@ -25,7 +38,11 @@ namespace ThermoVision.Models
         public Zona         selectedZona;
 
         //Variables sincronización
-        bool                OPCWritting;
+        public bool         checkingStates;
+        public bool         accessingTempElements;
+
+        //Variable configuración
+        public bool         modoConfiguracion;  // En el modo de configuración no se aplican los algoritmos ni se envian las tramas OPC al PLC
 
         #endregion
 
@@ -49,6 +66,17 @@ namespace ThermoVision.Models
             get
             {
                 return this._thermoCams;
+            }
+        }
+        public List<Cannon>     Cannons                           // -rw 
+        {
+            get
+            {
+                return this._cannons;
+            }
+            set
+            {
+                this._cannons = value;
             }
         }
         public string           OPCServerName                     // -rw 
@@ -84,10 +112,16 @@ namespace ThermoVision.Models
                 this._path = value;
             }
         }
-        public bool             OPCWritten                        // -rw 
+        public string           Mode                              // -rw 
         {
-            get;
-            set;
+            get
+            {
+                return this._mode;
+            }
+            set
+            {
+                this._mode = value;
+            }
         }
 
         #endregion
@@ -96,21 +130,32 @@ namespace ThermoVision.Models
 
         public Sistema()                                                   
         {
+            this.estados = new Estados(limitTemp, this);
+
             this._zonas      = new List<Zona>();
             this._thermoCams = new List<ThermoCam>();
-
-            this.OPCWritten = true;
+            this._cannons    = new List<Cannon>();
         }
         protected Sistema(SerializationInfo info, StreamingContext ctxt)   
         {
-            this._zonas         = (List<Zona>)      info.GetValue("Zonas",         typeof(List<Zona>));
-            this._thermoCams    = (List<ThermoCam>) info.GetValue("ThermoCams",    typeof(List<ThermoCam>));
-            this.selectedZona   = (Zona)            info.GetValue("SelectedZona",  typeof(Zona));
-            this._OPCServerName = (string)          info.GetValue("OPCServerName", typeof(string));
-            this._path          = (string)          info.GetValue("Path",          typeof(string));
-            this.selectedZona   = null;
+            try
+            {
+                this._zonas         = (List<Zona>)      info.GetValue("Zonas",          typeof(List<Zona>));
+                this._thermoCams    = (List<ThermoCam>) info.GetValue("ThermoCams",     typeof(List<ThermoCam>));
+                this.selectedZona   = (Zona)            info.GetValue("SelectedZona",   typeof(Zona));
+                this._OPCServerName = (string)          info.GetValue("OPCServerName",  typeof(string));
+                this._path          = (string)          info.GetValue("Path",           typeof(string));
+                this._mode          = (string)          info.GetValue("Mode",           typeof(string));
+                this._cannons       = (List<Cannon>)    info.GetValue("Cannons",        typeof(List<Cannon>));
+                this.selectedZona   = null;
 
-            this.OPCWritten = true;
+                this.estados = new Estados(limitTemp, this);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         #endregion
@@ -124,6 +169,8 @@ namespace ThermoVision.Models
             info.AddValue("SelectedZona",  this.selectedZona);
             info.AddValue("OPCServerName", this._OPCServerName);
             info.AddValue("Path",          this._path);
+            info.AddValue("Mode",          this._mode);
+            info.AddValue("Cannons",       this._cannons);
         }
         public void conectarClienteOPC()                                                 
         {
@@ -181,10 +228,13 @@ namespace ThermoVision.Models
         {
             lock ("Zonas")
             {
-                foreach (SubZona t in z.Children)
+                foreach (SubZona s in z.Children)
                 {
-                    if(t.ThermoParent != null)
-                        t.ThermoParent.SubZonas.Remove(t);
+                    if(s.ThermoParent != null)
+                        s.ThermoParent.SubZonas.Remove(s);
+
+                    if (s.Cannon != null)
+                        s.Cannon.removeSubZona(s);
                 }
 
                 z.Children.Clear();
@@ -243,63 +293,83 @@ namespace ThermoVision.Models
             }
         }
 
-        void t_ThermoCamImgReceived(object sender, Enumeraciones.ThermoCamImgArgs e)
+        void t_ThermoCamImgReceived(object sender, ThermoCamImgArgs e)
         {
-            if (sender is ThermoCam)
+            if (this.modoConfiguracion == false)
             {
-                ((ThermoCam)sender).ImagenRecibida = true;
-            }
-
-            foreach (ThermoCam t in this._thermoCams)
-            {
-                if (t.ImagenRecibida == false)
-                    return; //No se han recibido todas las imagenes
-            }
-            //SE HAN RECIBIDO TODAS LAS IMAGENES DE LAS CAMARAS CONECTADAS
-            //Procesar zonas
-
-            foreach (Zona z in this._zonas)
-            {
-                //Reiniciar variables
-                z._maxTemp = 0F;
-                z._minTemp = 10000F;
-                z._meanTemp = 0D;
-
-                foreach (SubZona s in z.Children)
+                if (sender is ThermoCam)
                 {
-                    //Máximo
-                    if (s._maxTemp > z._maxTemp)
-                        z._maxTemp = s._maxTemp;
-                    //Mínimo
-                    if (s._minTemp < z._minTemp)
-                        z._minTemp = s._minTemp;
-                    //Media
-                    z._meanTemp += s._meanTemp / z.Children.Count;
+                    ((ThermoCam)sender).ImagenRecibida = true;
+                }
+
+                foreach (ThermoCam t in this._thermoCams)
+                {
+                    if (t.ImagenRecibida == false)
+                        return; //No se han recibido todas las imagenes
+                }
+                //SE HAN RECIBIDO TODAS LAS IMAGENES DE LAS CAMARAS CONECTADAS
+                //Procesar zonas
+
+                foreach (Zona z in this._zonas)
+                {
+                    //Reiniciar variables
+                    z._maxTemp = 0F;
+                    z._minTemp = 10000F;
+                    z._meanTemp = 0D;
+
+                    foreach (SubZona s in z.Children)
+                    {
+                        //Máximo
+                        if (s._maxTemp > z._maxTemp)
+                            z._maxTemp = s._maxTemp;
+                        //Mínimo
+                        if (s._minTemp < z._minTemp)
+                            z._minTemp = s._minTemp;
+                        //Media
+                        z._meanTemp += s._meanTemp / z.Children.Count;
+                    }
+                }
+
+
+                if (this.accessingTempElements == false && this.checkingStates == false)
+                {
+                    this.checkingStates = true;
+
+                    Task t = new Task(() => checkStates());
+                    t.Start();
                 }
             }
-
-
-            if (this.OPCWritten == false && this.OPCWritting == false)
-            {
-                System.Threading.Thread _thread = new System.Threading.Thread(new System.Threading.ThreadStart(escribirOPC));
-                _thread.IsBackground = true;
-                _thread.Priority = System.Threading.ThreadPriority.Highest;
-                _thread.Name = "Escribir OPC";
-                _thread.Start();
-            }
         }
-        void escribirOPC()
+
+        void checkStates()                  
+        {
+            if(this._mode == "Rampas")
+            {
+                // Ejecutar el checkeo de los algoritmos y ejecutar las acciones pertinentes tambien
+                this.estados.ejecutarAlgoritmos();
+            }
+            if(this._mode == "Standart")
+            {
+                // 
+                sendTempMatrixViaOPCStandarMode();
+            }
+
+            
+            //escribirOPC();
+            //if(estados.
+            this.checkingStates = false;
+        }
+        public void sendTempMatrixViaOPCStandarMode()  
         {
             //TODOS LOS VALORES SE HAN RECIBIDO
             //Escrbir variables en servidor OPC
 
-            if (this.OPCClient != null)
+            if (this.OPCClient != null && this.accessingTempElements == false)
             {
-                this.OPCWritting = true;
+                this.accessingTempElements = true;  //BLOQUEO
 
                 foreach (Zona z in this._zonas)
                 {
-
                     OPCGroupValues groupSystem = new OPCGroupValues(this._path + ".TEMPERATURES." + z.Nombre);
 
                     groupSystem.Items.Add(new OPCItemValue("Max",  (int) z._maxTemp));
@@ -320,6 +390,8 @@ namespace ThermoVision.Models
                         groupZone.Items.Add(new OPCItemValue("Min",  (int) s._minTemp));
                         groupZone.Items.Add(new OPCItemValue("Mean", (int) s._meanTemp));
 
+                        this.OPCClient.WriteAsync(groupZone);
+
 
                         //this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre, "Max", (int)s._maxTemp);
                         //this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre, "Min", (int)s._minTemp);
@@ -327,27 +399,32 @@ namespace ThermoVision.Models
 
                         if (s.tempMatrix != null)
                         {
+                            OPCGroupValues groupSubZoneMax  = new OPCGroupValues(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MAX");
+                            OPCGroupValues groupSubZoneMin  = new OPCGroupValues(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MIN");
+                            OPCGroupValues groupSubZoneMean = new OPCGroupValues(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MEAN");
+
                             for (int x = 0; x < s.tempMatrix.GetLength(0); x++)
                             {
                                 for (int y = 0; y < s.tempMatrix.GetLength(1); y++)
                                 {
-                                    OPCGroupValues groupSubZone = new OPCGroupValues(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MAX");
-
-                                    groupSubZone.Items.Add(new OPCItemValue("[" + y + "," + x + "]", (int)s.tempMatrix[x, y].max));
-                                    groupSubZone.Items.Add(new OPCItemValue("[" + y + "," + x + "]", (int)s.tempMatrix[x, y].min));
-                                    groupSubZone.Items.Add(new OPCItemValue("[" + y + "," + x + "]", (int)s.tempMatrix[x, y].mean));
-
-                                    this._OPCClient.WriteAsync(groupSystem);
+                                    groupSubZoneMax.Items.Add(new OPCItemValue("[" + y + "," + x + "]", (int)s.tempMatrix[x, y].max));
+                                    groupSubZoneMin.Items.Add(new OPCItemValue("[" + y + "," + x + "]", (int)s.tempMatrix[x, y].min));
+                                    groupSubZoneMean.Items.Add(new OPCItemValue("[" + y + "," + x + "]", (int)s.tempMatrix[x, y].mean));
 
                                     //this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MAX", "[" + y + "," + x + "]", (int)s.tempMatrix[x, y].max);
                                     //this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MIN", "[" + y + "," + x + "]", (int)s.tempMatrix[x, y].min);
                                     //this.OPCClient.Writte(this._path + ".TEMPERATURES." + z.Nombre + "." + s.Nombre + ".MEAN", "[" + y + "," + x + "]", (int)s.tempMatrix[x, y].mean);
                                 }
                             }
-                        }
+
+                            this._OPCClient.WriteAsync(groupSubZoneMax);
+                            this._OPCClient.WriteAsync(groupSubZoneMin);
+                            this._OPCClient.WriteAsync(groupSubZoneMean);
+
+                        }//IF s.tempMatrix != null
                     }//FOREACH SUBZONA
                 }//FOREACH ZONA
-                this.OPCWritting = false;
+                this.accessingTempElements = false;  //DESBLOQUEO
             }//IF OPCClient != null
 
             //REINICIAR LAS VARIABLES QUE INDICAN LA RECEPCIÓN DE LA IMAGEN DE CADA CAMARA
@@ -356,8 +433,33 @@ namespace ThermoVision.Models
                 t.ImagenRecibida = false;
             }
             //System.Threading.Thread.Sleep(1000);
-            this.OPCWritten = true;
         }
+
+        public void dibujarEstados()
+        {
+            estados.crearImagenCuadrados(this.getZona(this.zonaApagado),
+                this.getZona(this.zonaVaciado));
+        }
+        #endregion
+
+        #region "Cañones"
+
+        public void addCannon(string name)
+        {
+            lock ("SubZonas")
+            {
+                this._cannons.Add(new Cannon(name));
+            }
+        }
+        public void deleteCannon(string name)
+        {
+            lock ("SubZonas")
+            {
+                if (this._cannons.Exists(x => x.Name == name))
+                    this._cannons.Remove(this._cannons.Where(x => x.Name == name).First());
+            }
+        }
+
         #endregion
 
         #endregion

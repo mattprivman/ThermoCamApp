@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="a45e7a20-b1fc-4422-9994-ea61e639767b" name="CamConfig" linkedPackageId="d454465c-a785-458e-adb3-053a32c53724" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+  <profileInstances>
+    <packageHasProfileInstances Id="fc2881ad-b5f6-4232-ae95-f7e54bf826cb">
+      <profileInstance Id="954fea0b-badf-4544-b3ab-b1fbe09101e4" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="bd25b210-a74f-49eb-9d1c-02ea961ce2b3">
+      <profileInstance Id="e7b9b631-9db0-4857-a4ec-49842a6686d7" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <useCaseModelRootHasTypes>
+      <actor Id="4a9f6a9d-7968-46f7-94e9-7307f10b5972" name="User" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="b8a1e6c8-9da7-440e-8125-dc2d765a4899" />
+        <targetEnds>
+          <association Id="af8e1cde-36d0-4ce9-8863-f6afda2e8ed8" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Agregar zona" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="de8eccb4-f8ad-4d2c-9cb9-905f7cc5997c" LastKnownName="Agregar zona" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="de663cdb-c2d0-46b2-b680-8620e267166c" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="a946e867-2108-4ee5-bd3e-cd222283f7d4" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="106fccae-618b-4b49-8861-6459e1deb876" name="Agregar zona" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="62825ea8-f842-42b2-8d81-bc98347c3cce" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="f9cb00b4-f9cb-4a58-aa73-38319dc195e0" />
+          </association>
+          <association Id="4afae175-46a6-4b67-b716-531af99b0386" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Borrar zona" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="ff34f7f7-dac7-4283-b922-3ff4fd91aa5e" LastKnownName="Borrar zona" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2236e152-81d3-4dc9-a399-3ca63193f619" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="a498ed42-cdae-4eb8-80a8-0024ab8a3506" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f38684ac-57b4-4e01-97d4-d05d13f712ce" name="Borrar zona" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="e91aa846-ebb2-4ef8-bcd8-6040f99ae041" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="ee280928-9805-4e57-ba55-658f3434de31" />
+          </association>
+          <association Id="ea423d45-ff9f-4571-aa3a-001b0e918d97" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Agregar subZona" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="14f90aee-3801-4cc7-9d99-2e441da505eb" LastKnownName="Agregar subZona" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="58c9dcb2-7c4e-4012-b7f8-46fc2c5aea4f" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="8ff61d05-a3e1-4387-964d-a44d79a068bb" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="38b8dc71-236a-44f1-b2d7-298e53119f84" name="Agregar subZona" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="06006bb3-bca8-4431-a149-9ab50878e2d2" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="67baf0f8-6937-4ee9-b538-44a570adab54" />
+          </association>
+          <association Id="36389d11-9eed-4ac8-839d-1af7263d40ef" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Borrar SubZona" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="0f08fb4f-1e5c-47fd-a402-9d58cef9598b" LastKnownName="Borrar SubZona" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="5a187eba-17cf-42a2-841d-d27427c67e30" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="c23e07f6-b3f1-4c99-8792-0f282f41183a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="29a060a8-33d5-47ad-85be-05123e994702" name="Borrar SubZona" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="5171436f-8a32-44f7-9af1-3209ffadc59e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="922622ef-df9c-4469-b471-13775c1b83be" />
+          </association>
+          <association Id="6ffcb2c1-03a2-4c2a-936d-8a0be897f61d" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Definir area" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="0c4ae373-27f0-4310-ac04-6bc8c4cae3ed" LastKnownName="Definir area" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="26ca0a0b-10ec-4a43-a611-a769580c1cc1" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="192ab17b-800c-484b-ae0d-4e73fe3f3bad" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="67f66bbd-6790-4efa-b88b-cfc99afc9353" name="Definir area" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="89dad44a-4660-464b-8ce5-1494ddb4c66b" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="8c20817e-d961-4104-a28f-00f688734811" />
+          </association>
+          <association Id="dd6eb118-e343-4027-b076-65448215efaa" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Definir rejilla" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="bfe67599-fb5d-4e30-9e59-c1cb7031fc5f" LastKnownName="Definir rejilla" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="31641e4f-ae85-408f-b136-8e13e184d030" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="552122b8-53d0-4cb9-856e-825d824241cf" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b4d6333d-fb26-42b2-8865-1f13401c97d7" name="Definir rejilla" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="21ddf35d-8082-45d2-a7d2-7562d372907e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="b4af7a79-f68b-4e08-a1ee-4a6cc40d2202" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="de8eccb4-f8ad-4d2c-9cb9-905f7cc5997c" name="Agregar zona" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="f1cfa592-86fc-44e7-9cb6-20c572796b1c" />
+        <subjects>
+          <subsystemMoniker Id="dee35ec9-fcae-418f-ba75-aa7702e59bdb" LastKnownName="Zonas" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="ff34f7f7-dac7-4283-b922-3ff4fd91aa5e" name="Borrar zona" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="ca7cfc6c-d66b-402f-abfe-dba0aa5a0588" />
+        <subjects>
+          <subsystemMoniker Id="dee35ec9-fcae-418f-ba75-aa7702e59bdb" LastKnownName="Zonas" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="dee35ec9-fcae-418f-ba75-aa7702e59bdb" name="Zonas" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <ownedCommentsInternal>
+          <comment Id="e1e59250-d767-4cbf-9edc-7e3add31e4e4">
+            <elementDefinition Id="98ab0d3c-77cc-4c66-8ba4-939882693ad4" />
+            <body>En la aplicación de rampas habrá dos zonas predefinidas que no se podran modificar:
+- ZonaApagado
+-ZonaVaciado
+</body>
+            <annotatedElements>
+              <useCaseMoniker Id="de8eccb4-f8ad-4d2c-9cb9-905f7cc5997c" LastKnownName="Agregar zona" />
+              <useCaseMoniker Id="ff34f7f7-dac7-4283-b922-3ff4fd91aa5e" LastKnownName="Borrar zona" />
+            </annotatedElements>
+          </comment>
+        </ownedCommentsInternal>
+        <elementDefinition Id="133839b4-8ec1-491a-b4c1-1cf49e9f9dae" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="14f90aee-3801-4cc7-9d99-2e441da505eb" name="Agregar subZona" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="9086df08-16cf-4167-a4b4-1a8761d624c8" />
+        <subjects>
+          <subsystemMoniker Id="9ae578ec-8cf0-4c49-a1d3-8e6f30c9e6ff" LastKnownName="SubZonas" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="9ae578ec-8cf0-4c49-a1d3-8e6f30c9e6ff" name="SubZonas" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <ownedCommentsInternal>
+          <comment Id="e9938185-de44-4ede-aaee-6867ba5a6332">
+            <elementDefinition Id="ae9742b0-e56f-4c74-a798-ab75b684d419" />
+            <body>Solo en modo de aplicación de Rampas</body>
+            <annotatedElements>
+              <useCaseMoniker Id="41973ee1-a10a-45fc-8a5f-bb874b11acc6" LastKnownName="Agregar subZona a Cañon" />
+            </annotatedElements>
+          </comment>
+          <comment Id="a2aff0c7-3e8b-4fed-9e39-85d21f13fe91">
+            <elementDefinition Id="2b2d3619-200d-4ca1-a057-fef2bf725d57" />
+            <body>Coordenadas que abarca la subZona</body>
+            <annotatedElements>
+              <useCaseMoniker Id="0c4ae373-27f0-4310-ac04-6bc8c4cae3ed" LastKnownName="Definir area" />
+            </annotatedElements>
+          </comment>
+          <comment Id="d4932d27-9d4b-4ead-8ff7-228b494e83ac">
+            <elementDefinition Id="9ca37d8f-99d5-41ea-9bb7-b9d1194b9f1e" />
+            <body>Filas y columnas que dividiran la subzona</body>
+            <annotatedElements>
+              <useCaseMoniker Id="bfe67599-fb5d-4e30-9e59-c1cb7031fc5f" LastKnownName="Definir rejilla" />
+            </annotatedElements>
+          </comment>
+        </ownedCommentsInternal>
+        <elementDefinition Id="fe37dc62-da36-4118-9c4f-2dff16ea775f" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="0f08fb4f-1e5c-47fd-a402-9d58cef9598b" name="Borrar SubZona" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="da7bebc9-f132-4470-98a1-633463239b20" />
+        <subjects>
+          <subsystemMoniker Id="9ae578ec-8cf0-4c49-a1d3-8e6f30c9e6ff" LastKnownName="SubZonas" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <useCaseModelRootHasTypes>
+      <useCase Id="41973ee1-a10a-45fc-8a5f-bb874b11acc6" name="Agregar subZona a Cañon" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="af4d9050-8a5f-4610-963e-d933c28735f4" />
+        <extendedCases>
+          <extend Id="5cd55376-bf52-4dea-8ecc-e0a8d2cba8d2">
+            <useCaseMoniker Id="14f90aee-3801-4cc7-9d99-2e441da505eb" LastKnownName="Agregar subZona" />
+            <elementDefinition Id="5814f962-f811-48b3-9580-7731f178f33e" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker Id="9ae578ec-8cf0-4c49-a1d3-8e6f30c9e6ff" LastKnownName="SubZonas" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="0c4ae373-27f0-4310-ac04-6bc8c4cae3ed" name="Definir area" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="f0246769-196c-4fbb-a8ed-cf4aecdd1e5c" />
+        <subjects>
+          <subsystemMoniker Id="9ae578ec-8cf0-4c49-a1d3-8e6f30c9e6ff" LastKnownName="SubZonas" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="bfe67599-fb5d-4e30-9e59-c1cb7031fc5f" name="Definir rejilla" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="d68cc4e1-0ee8-47c8-aba5-cdc11d8201c1" />
+        <subjects>
+          <subsystemMoniker Id="9ae578ec-8cf0-4c49-a1d3-8e6f30c9e6ff" LastKnownName="SubZonas" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="d454465c-a785-458e-adb3-053a32c53724" name="RampaModel">
+    <elementDefinition Id="d9d09dab-f2b9-4ac9-92da-5916bbb784e6" />
+  </package>
+</useCaseModelRoot>
