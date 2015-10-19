@@ -12,27 +12,6 @@ namespace WindowsFormsApplication4
 {
     class Helpers
     {
-        //CAMBIAR CONFIGURACIONES
-        public static string getAppStringSetting(string property)                
-        {
-            return (string) Properties.Settings.Default[property];
-        }
-        public static void changeAppStringSetting(string property, string value) 
-        {
-            //Properties.Settings.Default[property] = value;
-            //Properties.Settings.Default.Save();
-        }
-
-        public static int getAppIntSetting(string property)                      
-        {
-            return (int) Properties.Settings.Default[property];
-        }
-        public static void changeAppIntSetting(string property, int value)       
-        {
-            Properties.Settings.Default[property] = value;
-            Properties.Settings.Default.Save();
-        }
-
         //DESERIALIZAR
         public static void serializeSistema(Sistema sistema, string _file)       
         {

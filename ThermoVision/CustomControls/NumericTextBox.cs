@@ -17,7 +17,7 @@ namespace ThermoVision.CustomControls
 
         public event System.EventHandler textoCambiado;
 
-        public string Texto
+        public string Texto                                     
         {
             get
             {
@@ -33,7 +33,7 @@ namespace ThermoVision.CustomControls
             }
         }
 
-        public NumericTextBox()
+        public NumericTextBox()                                 
         {
             InitializeComponent();
             this.textBox1.KeyDown       += textBox1_KeyDown;
@@ -84,6 +84,7 @@ namespace ThermoVision.CustomControls
                     try
                     {
                         c.Text = text;
+                        c.Refresh();
                     }
                     catch (Exception e) { e.ToString(); }
                 }

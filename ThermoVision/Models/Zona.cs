@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -11,17 +12,27 @@ namespace ThermoVision.Models
     [Serializable]
     public class Zona : ISerializable
     {
+        public enum States
+        {
+            Vacio,
+            Lleno,
+            Enfriando,
+            Vaciando
+        }
+
         #region "Variables"
 
-        string          _nombre;
+        string                  _nombre;
 
-        List<SubZona>   _children;
+        List<SubZona>           _children;
 
-        Sistema         _parent;
+        Sistema                 _parent;
 
-        public float           _maxTemp;
-        public float           _minTemp;
-        public double          _meanTemp;
+        public float            _maxTemp;
+        public float            _minTemp;
+        public double           _meanTemp;
+
+        public List<Zona>       zonasContenidas     = new List<Zona>();          //Para zonas de vaciado
 
         #endregion
 
@@ -52,6 +63,34 @@ namespace ThermoVision.Models
                 return this._parent;
             }
         }
+        public int           Posicion         // -rw      
+        {
+            get;
+            set;
+        }
+        public States        State            // -rw      
+        {
+            get;
+            set;
+        }
+
+        public Point CoolingPoint             // -rw      
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
+        #region "Delegados"
+
+        public delegate void stateChangedDelegate(object sender, States state);
+
+        #endregion
+
+        #region "Eventos"
+
+        public event stateChangedDelegate stateChanged;
 
         #endregion
 
@@ -102,6 +141,14 @@ namespace ThermoVision.Models
             info.AddValue("Parent",      this._parent);
         }
 
+        public void triggerStateChangedEvent(States state)              
+        {
+            this.State = state;
+
+            if (this.stateChanged != null)
+                this.stateChanged(this, state);
+        }
+
         #region "Añadir  borrar hijos"
 
         public void addChildren(SubZona child)      
@@ -122,6 +169,9 @@ namespace ThermoVision.Models
         {
             lock ("SubZonas")
             {
+                if (child.ThermoParent != null)
+                    child.ThermoParent = null;
+
                 this._children.Remove(child);
             }
         }

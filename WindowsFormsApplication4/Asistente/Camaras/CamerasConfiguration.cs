@@ -21,6 +21,7 @@ namespace WindowsFormsApplication4.Asistente.Camaras
 
         Sistema _system;
         int     selectedIndexZona;
+        int     selectedIndexZonaVaciado;
         int     selectedIndexSubZona;
 
         #endregion
@@ -53,11 +54,9 @@ namespace WindowsFormsApplication4.Asistente.Camaras
                 if (this._system.ThermoCams.Count != numerocamaras)
                 {
                     string modo          = this._system.Mode;
-                    List<Cannon> cañones = this._system.Cannons;
 
                     this._system         = new Sistema();
                     this._system.Mode    = modo;
-                    this._system.Cannons = cañones;
                     InitializeComponent(numerocamaras);
                 }
                 else
@@ -109,6 +108,15 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             this.buttonSubstractCol.Click   += new System.EventHandler(this.buttonSubstractCol_Click);
             this.buttonAddCol.Click         += new System.EventHandler(this.buttonAddCol_Click);
 
+            this._system.SelectedZona = null;
+
+            this.selectedIndexZona          = -1;
+            this.selectedIndexZonaVaciado   = -1;
+            this.selectedIndexSubZona       = -1;
+
+            actualizarListBoxZonas();
+            actualizarListBoxSubZonas();
+
             //COnfiguración de las zonas
             systemModeConfiguration();
         }
@@ -128,19 +136,11 @@ namespace WindowsFormsApplication4.Asistente.Camaras
         }
         private void buttonNext_Click(object sender, System.EventArgs e)        
         {
-            //Comprobar que las zonas predefinidas tengan al menos una subzona
+            //Comprobación de modos
             switch (this._system.Mode)
             {
                 case "Rampas":
-                    if (this._system.getZona("ZonaApagado").Children.Count == 0 || this._system.getZona("ZonaVaciado").Children.Count == 0)
-                    {
-                        MessageBox.Show("Las zonas predefinidas ZonaAagado y ZonaVaciado deben tener al menos una subzona",
-                            "Error",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-
-                        return;
-                    }
+                    
                     break;
                 case "Tuberias":
 
@@ -162,38 +162,19 @@ namespace WindowsFormsApplication4.Asistente.Camaras
         
         #region "ZONAS"
 
-        void actualizarListBoxZonas()                                           
-        {
-            this.listBoxZonas.BeginUpdate();
-            this.listBoxZonas.Items.Clear();
-
-            if (this._system.Zonas.Count > 0)
-            {                
-                foreach (Zona z in this._system.Zonas)
-                {
-                    this.listBoxZonas.Items.Add(z.Nombre);
-                }
-            }
-
-            if (this.selectedIndexZona >= 0 && this.listBoxZonas.Items.Count > 0)
-            {
-                this.listBoxZonas.SelectedIndex = this.selectedIndexZona;
-            }
-            
-            this.listBoxZonas.EndUpdate();
-            this.listBoxZonas.Update();
-        }
-        
         void listBoxZonas_SelectedIndexChanged(object sender, EventArgs e)      
         {
-            this.selectedIndexZona      = this.listBoxZonas.SelectedIndex;
-            this.selectedIndexSubZona   = -1;
+            this.selectedIndexZona = this.listBoxZonas.SelectedIndex;
+            this.selectedIndexSubZona = -1;
+            this.selectedIndexZonaVaciado = -1;
 
-            this._system.selectZona(this.listBoxZonas.SelectedItem.ToString());
+            if (this.listBoxZonas.SelectedIndex != -1)
+            {
+                this._system.selectZona(this.listBoxZonas.SelectedItem.ToString());
 
-            //Actualizar listBox SubZonas
-            actualizarListBoxSubZonas();
-            
+                //Actualizar listBoxes Zonas
+                actualizarListBoxZonas();
+            }
         }
         void _system_zonasListChanged(object sender, EventArgs e)               
         {
@@ -203,6 +184,60 @@ namespace WindowsFormsApplication4.Asistente.Camaras
         private void buttonAddZona_Click(object sender, EventArgs e)            
         {
             //Añadir zona
+            //try
+            //{
+                CustomControls.AddZona f = new CustomControls.AddZona();
+                f.ShowDialog();
+
+                if (f.zonaName != null && f.zonaName != "")
+                {
+                    this.selectedIndexZona = this.listBoxZonas.Items.Count;
+                    this.selectedIndexZonaVaciado = -1;
+                    this._system.addZona(new Zona(f.zonaName, this._system));
+                    f.Dispose();
+                    actualizarListBoxZonas();
+
+                    return;
+                }
+            //}
+            //catch (Exception ex)
+            //{
+                MessageBox.Show("Ya existe una zona con el mismo nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+        }
+        private void buttonBorrarZona_Click(object sender, EventArgs e)         
+        {
+            //Borrar zona
+            if (this.listBoxZonas.SelectedIndex != -1)
+            {
+                this.selectedIndexZona--;
+                this.selectedIndexZonaVaciado = -1;
+                this._system.removeZona(this._system.getZona(this.listBoxZonas.SelectedItem.ToString()));
+            }
+        }
+
+        #endregion        
+
+        #region "ZONAS VACIADO"
+
+        void listBoxZonasApagado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+                this.selectedIndexZona = -1;
+                this.selectedIndexSubZona = -1;
+                this.selectedIndexZonaVaciado = this.listBoxZonasVaciado.SelectedIndex;
+
+                if (this.listBoxZonasVaciado.SelectedIndex != -1)
+                {
+                    this._system.selectZonaVaciado(this.listBoxZonasVaciado.SelectedItem.ToString());
+
+                    //Actualizar listBoxes Zonas
+                    actualizarListBoxZonas();
+                }
+        }
+
+        private void buttonAddZonaVaciado_Click(object sender, EventArgs e)     
+        {
+            //Añadir zona
             try
             {
                 CustomControls.AddZona f = new CustomControls.AddZona();
@@ -210,9 +245,11 @@ namespace WindowsFormsApplication4.Asistente.Camaras
 
                 if (f.zonaName != null && f.zonaName != "")
                 {
-                    this.selectedIndexZona = this.listBoxZonas.Items.Count;
-                    this._system.addZona(new Zona(f.zonaName, this._system));
+                    this.selectedIndexZona = -1;
+                    this.selectedIndexZonaVaciado = this.listBoxZonasVaciado.Items.Count;
+                    this._system.addZonaVaciado(new Zona(f.zonaName, this._system));
                     f.Dispose();
+                    actualizarListBoxZonas();
 
                     return;
                 }
@@ -222,35 +259,68 @@ namespace WindowsFormsApplication4.Asistente.Camaras
                 MessageBox.Show("Ya existe una zona con el mismo nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void buttonBorrarZona_Click(object sender, EventArgs e)         
+        private void buttonBorrarZonaVaciado_Click(object sender, EventArgs e)  
         {
-            //Borrar zona
-
-            switch (this._system.Mode)
+            if (this.listBoxZonasVaciado.SelectedIndex != -1)
             {
-                case "Rampas":
-                    if (this.listBoxZonas.SelectedItem.ToString() == this._system.zonaApagado || this.listBoxZonas.SelectedItem.ToString() == this._system.zonaVaciado)
-                    {
-                        MessageBox.Show("No puede eliminar una zona predefinida para el modo de Rampas",
-                            "Error",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-
-                        return;
-                    }
-
-                    break;
-                case "Tuberias":
-
-                    break;
+                //Borrar zona
+                this.selectedIndexZona = -1;
+                this.selectedIndexZonaVaciado--;
+                this._system.removeZonaVaciado(this._system.getZonaVaciado(this.listBoxZonasVaciado.SelectedItem.ToString()));
             }
-
-            this.selectedIndexZona--;
-            this._system.removeZona(this._system.getZona(this.listBoxZonas.SelectedItem.ToString()));
-
         }
 
-        #endregion        
+        #endregion
+
+        void actualizarListBoxZonas()                                           
+        {
+            this.listBoxZonas.SelectedIndexChanged -= listBoxZonas_SelectedIndexChanged;
+            this.listBoxZonasVaciado.SelectedIndexChanged -= listBoxZonasApagado_SelectedIndexChanged;
+
+            this.listBoxZonas.BeginUpdate();
+            this.listBoxZonasVaciado.BeginUpdate();
+
+            this.listBoxZonas.Items.Clear();
+            this.listBoxZonasVaciado.Items.Clear();
+
+            //Actualizar listBox de zonas de apagado
+            if (this._system.Zonas.Count > 0)
+            {
+                foreach (Zona z in this._system.Zonas)
+                {
+                    this.listBoxZonas.Items.Add(z.Nombre);
+                }
+            }
+            //Actualizar listBox de zonas de Vaciado
+            if (this._system.ZonasVaciado.Count > 0)
+            {
+                foreach (Zona z in this._system.ZonasVaciado)
+                {
+                    this.listBoxZonasVaciado.Items.Add(z.Nombre);
+                }
+            }
+
+            if (this.selectedIndexZona >= 0 && this.listBoxZonas.Items.Count > 0)
+            {
+                this.listBoxZonas.SelectedIndex = this.selectedIndexZona;
+                this._system.selectZona(this.listBoxZonas.SelectedItem.ToString());
+            }
+            if (this.selectedIndexZonaVaciado >= 0 && this.listBoxZonasVaciado.Items.Count > 0)
+            {
+                this.listBoxZonasVaciado.SelectedIndex = this.selectedIndexZonaVaciado;
+                this._system.selectZonaVaciado(this.listBoxZonasVaciado.SelectedItem.ToString());
+            }
+
+            actualizarListBoxSubZonas();
+
+            this.listBoxZonas.EndUpdate();
+            this.listBoxZonas.Update();
+            this.listBoxZonasVaciado.EndUpdate();
+            this.listBoxZonasVaciado.Update();
+
+            this.listBoxZonas.SelectedIndexChanged        += listBoxZonas_SelectedIndexChanged;
+            this.listBoxZonasVaciado.SelectedIndexChanged += listBoxZonasApagado_SelectedIndexChanged;
+        }
 
         #region "Eventos numericTextBoxes"
 
@@ -459,7 +529,6 @@ namespace WindowsFormsApplication4.Asistente.Camaras
                                     new Point(s.Fin.X, int.Parse(this.numericTextBoxYFin.Texto)));
             }
         }
-
         void numericTextBoxYinit_textoCambiado(object sender, EventArgs e)      
         {
             SubZona s = getSelectedSubZona();
@@ -479,9 +548,9 @@ namespace WindowsFormsApplication4.Asistente.Camaras
         {
             if (this.listBoxSubZonas.SelectedIndex != -1)
             {
-                if (this._system.selectedZona != null)
+                if (this._system.SelectedZona != null)
                 {
-                    return this._system.selectedZona.getChildren(this.listBoxSubZonas.SelectedItem.ToString());
+                    return this._system.SelectedZona.getChildren(this.listBoxSubZonas.SelectedItem.ToString());
                 }
             }
             return null;
@@ -489,7 +558,7 @@ namespace WindowsFormsApplication4.Asistente.Camaras
 
         private void buttonAddSubZona_Click(object sender, EventArgs e)         
         {
-            if (this._system.selectedZona != null)
+            if (this._system.SelectedZona != null)
             {
                 CustomControls.AddSubZona f = new CustomControls.AddSubZona();
                 f.ShowDialog();
@@ -498,24 +567,9 @@ namespace WindowsFormsApplication4.Asistente.Camaras
                 {
                     try
                     {
-                        this._system.selectedZona.addChildren(new SubZona(f.nameSubZona));
+                        this._system.SelectedZona.addChildren(new SubZona(f.nameSubZona));
                         this.selectedIndexSubZona = this.listBoxSubZonas.Items.Count;
-
-                        // SI EL MODO SELECCIONADO ES EL DE RAMPAS Y CORRESPONDE A LA ZONA DE APAGADO; ELEGIR A QUE CAÑóN PERTENECE ESTA SUBZONA
-                        if (this._system.Mode == "Rampas" && this._system.selectedZona.Nombre == this._system.zonaApagado)
-                        {
-                            //Mostrar ventana con los cañones selecccionados
-                            Asistente.Cannons.CannonSelector cs = new Cannons.CannonSelector(this._system.Cannons);
-
-                            cs.ShowDialog();
-
-                            if (cs.selectedCannon != null)
-                            {
-                                cs.selectedCannon.AddSubZona(this._system.selectedZona.getChildren(f.nameSubZona));
-                            }
-
-                            cs.Dispose();
-                        }
+                        
                     }
                     catch (Exception ex)
                     {
@@ -537,12 +591,9 @@ namespace WindowsFormsApplication4.Asistente.Camaras
         {
             this.selectedIndexSubZona--;
 
-            if (this._system.selectedZona != null)
+            if (this._system.SelectedZona != null)
             {
-                if (this._system.selectedZona.getChildren(this.listBoxSubZonas.SelectedItem.ToString()).Cannon != null)
-                    this._system.selectedZona.getChildren(this.listBoxSubZonas.SelectedItem.ToString()).Cannon.removeSubZona(this._system.selectedZona.getChildren(this.listBoxSubZonas.SelectedItem.ToString()));
-
-                this._system.selectedZona.removeChildren(this._system.selectedZona.getChildren(this.listBoxSubZonas.SelectedItem.ToString()));
+                this._system.SelectedZona.removeChildren(this._system.SelectedZona.getChildren(this.listBoxSubZonas.SelectedItem.ToString()));
                 actualizarListBoxSubZonas();
             }
         }
@@ -552,9 +603,9 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             this.listBoxSubZonas.BeginUpdate();
             this.listBoxSubZonas.Items.Clear();
 
-            if (this._system.selectedZona != null)
+            if (this._system.SelectedZona != null)
             {
-                foreach (SubZona s in this._system.selectedZona.Children)
+                foreach (SubZona s in this._system.SelectedZona.Children)
                 {
                     this.listBoxSubZonas.Items.Add(s.Nombre);
                 }
@@ -575,7 +626,7 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             if (this.listBoxSubZonas.SelectedIndex != -1)
             {
                 //this._system.selectedZona.Sub
-                foreach (SubZona s in this._system.selectedZona.Children)
+                foreach (SubZona s in this._system.SelectedZona.Children)
                 {
                         s.ParametersChanged -= sub_ParametersChanged;
                 }
@@ -610,13 +661,17 @@ namespace WindowsFormsApplication4.Asistente.Camaras
         {
             SubZona s       = getSelectedSubZona();
 
+            
+
             if (s != null)
             {
                 s.ThermoParent = sender;
                 s.Selected = true;
 
                 s.addCoordinates(e.Inicio, e.Fin);
-            }
+
+                
+            }//if
         }
 
         #endregion
@@ -628,34 +683,14 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             switch (this._system.Mode)
             {
                 case "Rampas":
-                    //Comprobar que tenga creadas las zonas obligatorias que va a tener la aplicación de rampas
-
-                    bool hasZonaAPagado = false;
-                    bool hasZonaVaciado = false;
-
-                    foreach (Zona z in this._system.Zonas)
-                    {
-                        if (z.Nombre == this._system.zonaApagado)
-                            hasZonaAPagado = true;
-                        if (z.Nombre == this._system.zonaVaciado)
-                            hasZonaVaciado = true;
-                    }
-
-                    //Crear zonas si no existen
-                    if (hasZonaAPagado == false)
-                    {
-                        this._system.addZona(new Zona(this._system.zonaApagado, this._system));
-                    }
-                    if(hasZonaVaciado == false)
-                    {
-                        this._system.addZona(new Zona(this._system.zonaVaciado, this._system));
-                    }
+                    foreach (ThermoCam t in this._system.ThermoCams)
+                        t.RampMode = true;
 
                     break;
                 case "Tuberias":
 
                     break;
-            }
+            }//switch
         }
 
         #endregion

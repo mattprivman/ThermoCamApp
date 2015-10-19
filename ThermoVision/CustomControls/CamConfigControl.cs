@@ -230,8 +230,6 @@ namespace ThermoVision.CustomControls
                                         Fin    = this.Fin
                                     });
                 }
-
-                this.bmpModified.Dispose();
             }
         }   //MOUSE LEFT UP
 

@@ -36,6 +36,9 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             this.buttonBorrarZona   = new System.Windows.Forms.Button();
             this.groupBox1          = new System.Windows.Forms.GroupBox();
             this.listBoxZonas       = new System.Windows.Forms.ListBox();
+            this.buttonAddZonaVaciado = new System.Windows.Forms.Button();
+            this.buttonBorrarZonaVaciado = new System.Windows.Forms.Button();
+            this.listBoxZonasVaciado = new System.Windows.Forms.ListBox();
             this.groupBox2          = new System.Windows.Forms.GroupBox();
             this.listBoxSubZonas    = new System.Windows.Forms.ListBox();
             this.buttonBorrarSubZona = new System.Windows.Forms.Button();
@@ -91,6 +94,44 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             this.buttonBorrarZona.UseVisualStyleBackColor = true;
             this.buttonBorrarZona.Click += new System.EventHandler(this.buttonBorrarZona_Click);
             // 
+            // Controles para modo rampa
+            // 
+            if (this._system.Mode == "Rampas")
+            {
+                // 
+                // listBoxZonas
+                // 
+                this.listBoxZonasVaciado.FormattingEnabled = true;
+                this.listBoxZonasVaciado.Location       = new System.Drawing.Point(156, 19);
+                this.listBoxZonasVaciado.Name           = "listBoxZonasApagado";
+                this.listBoxZonasVaciado.Size           = new System.Drawing.Size(144, 95);
+                this.listBoxZonasVaciado.TabIndex       = 4;
+                this.listBoxZonasVaciado.SelectedIndexChanged += new System.EventHandler(listBoxZonasApagado_SelectedIndexChanged);
+                this.groupBox1.Controls.Add(this.listBoxZonasVaciado);
+                // 
+                // buttonAddZona
+                // 
+                this.buttonAddZonaVaciado.Location      = new System.Drawing.Point(156, 131);
+                this.buttonAddZonaVaciado.Name          = "buttonAddZonaApagado";
+                this.buttonAddZonaVaciado.Size          = new System.Drawing.Size(63, 23);
+                this.buttonAddZonaVaciado.TabIndex      = 1;
+                this.buttonAddZonaVaciado.Text          = "Agregar";
+                this.buttonAddZonaVaciado.UseVisualStyleBackColor = true;
+                this.buttonAddZonaVaciado.Click        += new System.EventHandler(this.buttonAddZonaVaciado_Click);
+                this.groupBox1.Controls.Add(this.buttonBorrarZonaVaciado);
+                // 
+                // buttonBorrarZona
+                // 
+                this.buttonBorrarZonaVaciado.Location   = new System.Drawing.Point(75 + 150, 131);
+                this.buttonBorrarZonaVaciado.Name       = "buttonBorrarZonaApagado";
+                this.buttonBorrarZonaVaciado.Size       = new System.Drawing.Size(61, 23);
+                this.buttonBorrarZonaVaciado.TabIndex   = 1;
+                this.buttonBorrarZonaVaciado.Text       = "Borrar";
+                this.buttonBorrarZonaVaciado.UseVisualStyleBackColor = true;
+                this.buttonBorrarZonaVaciado.Click     += new System.EventHandler(this.buttonBorrarZonaVaciado_Click);
+                this.groupBox1.Controls.Add(this.buttonAddZonaVaciado);
+            }
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.listBoxZonas);
@@ -98,7 +139,10 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             this.groupBox1.Controls.Add(this.buttonBorrarZona);
             this.groupBox1.Location = new System.Drawing.Point(12, 706);
             this.groupBox1.Name     = "groupBox1";
-            this.groupBox1.Size     = new System.Drawing.Size(156, 161);
+            if(this._system.Mode == "Rampas")
+                this.groupBox1.Size     = new System.Drawing.Size(306, 161);
+            else
+                this.groupBox1.Size     = new System.Drawing.Size(156, 161);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop  = false;
             this.groupBox1.Text     = "Zonas";
@@ -107,9 +151,9 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             // 
             this.listBoxZonas.FormattingEnabled = true;
             this.listBoxZonas.Location = new System.Drawing.Point(6, 19);
-            this.listBoxZonas.Name      = "listBoxZonas";
-            this.listBoxZonas.Size      = new System.Drawing.Size(144, 95);
-            this.listBoxZonas.TabIndex  = 3;
+            this.listBoxZonas.Name = "listBoxZonas";
+            this.listBoxZonas.Size = new System.Drawing.Size(144, 95);
+            this.listBoxZonas.TabIndex = 3;
             // 
             // groupBox2
             // 
@@ -140,7 +184,10 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             this.groupBox2.Controls.Add(this.buttonAddXIni);
             this.groupBox2.Controls.Add(this.numericTextBoxXIni);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(174, 706);
+            if (this._system.Mode == "Rampas")
+                this.groupBox2.Location = new System.Drawing.Point(174 + 150, 706);
+            else
+                this.groupBox2.Location = new System.Drawing.Point(174, 706);
             this.groupBox2.Name     = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(538, 161);
             this.groupBox2.TabIndex = 3;
@@ -406,9 +453,9 @@ namespace WindowsFormsApplication4.Asistente.Camaras
 
             int width = numCamaras * this.camaras[0].Width;
 
-            if (width < 730)
+            if (width < 886)
             {
-                width = 730;
+                width = 886;
             }
 
             // 
@@ -454,6 +501,9 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             this.buttonBorrarZona = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listBoxZonas = new System.Windows.Forms.ListBox();
+            this.buttonAddZonaVaciado = new System.Windows.Forms.Button();
+            this.buttonBorrarZonaVaciado = new System.Windows.Forms.Button();
+            this.listBoxZonasVaciado = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.listBoxSubZonas = new System.Windows.Forms.ListBox();
             this.buttonBorrarSubZona = new System.Windows.Forms.Button();
@@ -516,10 +566,51 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             this.groupBox1.Controls.Add(this.buttonBorrarZona);
             this.groupBox1.Location = new System.Drawing.Point(12, 706);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(156, 161);
+            if (this._system.Mode == "Rampas")
+                this.groupBox1.Size = new System.Drawing.Size(306, 161);
+            else
+                this.groupBox1.Size = new System.Drawing.Size(156, 161);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Zonas";
+            // 
+            // Controles para modo rampa
+            // 
+            if (this._system.Mode == "Rampas")
+            {
+                // 
+                // listBoxZonas
+                // 
+                this.listBoxZonasVaciado.FormattingEnabled = true;
+                this.listBoxZonasVaciado.Location = new System.Drawing.Point(156, 19);
+                this.listBoxZonasVaciado.Name = "listBoxZonasApagado";
+                this.listBoxZonasVaciado.Size = new System.Drawing.Size(144, 95);
+                this.listBoxZonasVaciado.TabIndex = 4;
+                this.listBoxZonasVaciado.SelectedIndexChanged += new System.EventHandler(listBoxZonasApagado_SelectedIndexChanged);
+                this.groupBox1.Controls.Add(listBoxZonasVaciado);
+                // 
+                // buttonAddZona
+                // 
+                this.buttonAddZonaVaciado.Location = new System.Drawing.Point(156, 131);
+                this.buttonAddZonaVaciado.Name = "buttonAddZonaApagado";
+                this.buttonAddZonaVaciado.Size = new System.Drawing.Size(63, 23);
+                this.buttonAddZonaVaciado.TabIndex = 1;
+                this.buttonAddZonaVaciado.Text = "Agregar";
+                this.buttonAddZonaVaciado.UseVisualStyleBackColor = true;
+                this.buttonAddZonaVaciado.Click += new System.EventHandler(this.buttonAddZonaVaciado_Click);
+                this.groupBox1.Controls.Add(this.buttonAddZonaVaciado);
+                // 
+                // buttonBorrarZona
+                // 
+                this.buttonBorrarZonaVaciado.Location = new System.Drawing.Point(75 + 150, 131);
+                this.buttonBorrarZonaVaciado.Name = "buttonBorrarZonaApagado";
+                this.buttonBorrarZonaVaciado.Size = new System.Drawing.Size(61, 23);
+                this.buttonBorrarZonaVaciado.TabIndex = 1;
+                this.buttonBorrarZonaVaciado.Text = "Borrar";
+                this.buttonBorrarZonaVaciado.UseVisualStyleBackColor = true;
+                this.buttonBorrarZonaVaciado.Click += new System.EventHandler(this.buttonBorrarZonaVaciado_Click);
+                this.groupBox1.Controls.Add(this.buttonBorrarZonaVaciado);
+            }
             // 
             // listBoxZonas
             // 
@@ -558,7 +649,10 @@ namespace WindowsFormsApplication4.Asistente.Camaras
             this.groupBox2.Controls.Add(this.buttonAddXIni);
             this.groupBox2.Controls.Add(this.numericTextBoxXIni);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(174, 706);
+            if (this._system.Mode == "Rampas")
+                this.groupBox2.Location = new System.Drawing.Point(174 + 150, 706);
+            else
+                this.groupBox2.Location = new System.Drawing.Point(174, 706);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(538, 161);
             this.groupBox2.TabIndex = 3;
@@ -824,9 +918,9 @@ namespace WindowsFormsApplication4.Asistente.Camaras
 
             int width = this._system.ThermoCams.Count * this.camaras[0].Width;
 
-            if (width < 730)
+            if (width < 886)
             {
-                width = 730;
+                width = 886;
             }
 
             // 
@@ -870,8 +964,11 @@ namespace WindowsFormsApplication4.Asistente.Camaras
 
         private System.Windows.Forms.Button     buttonAddZona;
         private System.Windows.Forms.Button     buttonBorrarZona;
+        private System.Windows.Forms.Button     buttonAddZonaVaciado;
+        private System.Windows.Forms.Button     buttonBorrarZonaVaciado;
         private System.Windows.Forms.GroupBox   groupBox1;
         private System.Windows.Forms.ListBox    listBoxZonas;
+        private System.Windows.Forms.ListBox    listBoxZonasVaciado;
         private System.Windows.Forms.GroupBox   groupBox2;
         private System.Windows.Forms.Button     buttonSubstractCol;
         private System.Windows.Forms.Button     buttonAddCol;

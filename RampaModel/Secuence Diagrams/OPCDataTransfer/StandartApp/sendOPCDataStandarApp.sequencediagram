@@ -1,86 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" dslVersion="1.0.0.0" Id="efb0a47e-a05d-43ed-9081-4c599d96e437" name="sendOPCData" linkedPackageId="264de052-302d-406b-87bf-c4922cdc6fb3" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
-  <profileInstances>
-    <packageHasProfileInstances Id="7a0823e1-55f6-42ae-bf73-035d727c48c3">
-      <profileInstance Id="63c8fc59-4cce-4c00-bd15-abb242534a4e" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="dbf95f98-5d40-43b8-be70-5455cb75ec22">
-      <profileInstance Id="1ef9f3cc-6204-46e3-bbff-491a9e701475" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-  </profileInstances>
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" dslVersion="1.0.0.0" Id="efb0a47e-a05d-43ed-9081-4c599d96e437" name="sendOPCDataStandarApp" linkedPackageId="264de052-302d-406b-87bf-c4922cdc6fb3" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
   <packagedElements>
     <packageHasNamedElement>
-      <interaction Id="a1c08b86-1fa9-4295-8818-b749f2cc2b33" name="sendOPCData" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
+      <interaction Id="a1c08b86-1fa9-4295-8818-b749f2cc2b33" name="sendOPCDataStandarApp" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
         <elementDefinition Id="b13ec70d-5f95-46bd-94e8-084684e910bf" />
         <fragments>
-          <behaviorExecutionSpecification Id="6da408bc-5cbf-4784-bb88-9b7c6bf687dd" name="BehaviorExecutionSpecification2">
-            <elementDefinition Id="26f11b0e-3912-4536-9481-c927b04f5394" />
-            <coveredLifelines>
-              <lifelineMoniker Id="916a0800-f6b8-4ffe-86ab-a2fda8375413" LastKnownName="PLC" />
-            </coveredLifelines>
-            <finish>
-              <executionOccurrenceSpecificationMoniker Id="61595ed4-b2b2-41d8-96fe-2e3a709a09e6" LastKnownName="ExecutionOccurrenceSpecification4" />
-            </finish>
-            <start>
-              <executionOccurrenceSpecificationMoniker Id="fbc684b1-3c01-4774-965f-1a2556811148" LastKnownName="ExecutionOccurrenceSpecification3" />
-            </start>
-            <nestedOccurrences>
-              <messageOccurrenceSpecificationMoniker Id="d7f0ee60-b84a-4e0f-9c47-e9d59ee140fb" LastKnownName="MessageOccurrenceSpecification4" />
-              <messageOccurrenceSpecificationMoniker Id="e5765027-b2e9-430d-9cae-274a82d416f0" LastKnownName="MessageOccurrenceSpecification5" />
-            </nestedOccurrences>
-          </behaviorExecutionSpecification>
-          <executionOccurrenceSpecification Id="fbc684b1-3c01-4774-965f-1a2556811148" name="ExecutionOccurrenceSpecification3">
-            <elementDefinition Id="2846c99b-03ea-44f1-9656-64834c2d492f" />
-            <event>
-              <executionOccurrenceSpecificationReferencesEvent>
-                <executionEventMoniker Id="44b66b65-9a61-4a5e-a7cb-c4307e361afe" LastKnownName="ExecutionEvent" />
-              </executionOccurrenceSpecificationReferencesEvent>
-            </event>
-            <covered>
-              <lifelineMoniker Id="916a0800-f6b8-4ffe-86ab-a2fda8375413" LastKnownName="PLC" />
-            </covered>
-          </executionOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="b8860bc0-c842-464c-bb19-8c08d50cf6ad" name="MessageOccurrenceSpecification3">
-            <elementDefinition Id="3cbb065e-541c-4e6f-8ec5-1c79ff3273a2" />
-            <covered>
-              <lifelineMoniker Id="78d2630f-9409-480e-a9f0-9673e2e970f3" LastKnownName="MainProces" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="d7f0ee60-b84a-4e0f-9c47-e9d59ee140fb" name="MessageOccurrenceSpecification4">
-            <elementDefinition Id="b2ca896e-da6c-48d8-b06e-0084a9377ced" />
-            <covered>
-              <lifelineMoniker Id="916a0800-f6b8-4ffe-86ab-a2fda8375413" LastKnownName="PLC" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="e5765027-b2e9-430d-9cae-274a82d416f0" name="MessageOccurrenceSpecification5">
-            <elementDefinition Id="fe6dd93d-aeaa-406b-bb4c-733f5c376e1d" />
-            <covered>
-              <lifelineMoniker Id="916a0800-f6b8-4ffe-86ab-a2fda8375413" LastKnownName="PLC" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification Id="ed2eed2a-c3e0-4074-b221-bf2262a8e84f" name="MessageOccurrenceSpecification6">
-            <elementDefinition Id="85b0a8ca-2241-4e8a-a64b-e24d75cda9d0" />
-            <covered>
-              <lifelineMoniker Id="78d2630f-9409-480e-a9f0-9673e2e970f3" LastKnownName="MainProces" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <executionOccurrenceSpecification Id="61595ed4-b2b2-41d8-96fe-2e3a709a09e6" name="ExecutionOccurrenceSpecification4">
-            <elementDefinition Id="e6a30393-f0ea-4411-aa23-0a820cd208a6" />
-            <event>
-              <executionOccurrenceSpecificationReferencesEvent>
-                <executionEventMoniker Id="c297c5a2-4c3c-44c7-a8a3-31903a5c8098" LastKnownName="ExecutionEvent" />
-              </executionOccurrenceSpecificationReferencesEvent>
-            </event>
-            <covered>
-              <lifelineMoniker Id="916a0800-f6b8-4ffe-86ab-a2fda8375413" LastKnownName="PLC" />
-            </covered>
-          </executionOccurrenceSpecification>
           <combinedFragment Id="d6edefa2-ebd5-46fd-832f-43e2060c1cda" name="CombinedFragment1" interactionOperator="Loop">
             <elementDefinition Id="a3bb8d5b-d6a6-40ac-8ae7-00af49dafada" />
             <coveredLifelines>
@@ -415,7 +339,7 @@
               <lifelineMoniker Id="916a0800-f6b8-4ffe-86ab-a2fda8375413" LastKnownName="PLC" />
             </covered>
           </operandOccurrenceSpecification>
-          <interactionUse Id="fc9fc56c-20e1-44db-a89d-a5e408c70152" name="Comprobar resultado de operación asincrona">
+          <interactionUse Id="fc9fc56c-20e1-44db-a89d-a5e408c70152" name="Comprobar resultado de la operación de escritura asíncrona">
             <elementDefinition Id="c1410bd9-c83f-4cf6-955a-d9d3dab48b88" />
             <coveredLifelines>
               <lifelineMoniker Id="78d2630f-9409-480e-a9f0-9673e2e970f3" LastKnownName="MainProces" />
@@ -443,8 +367,6 @@
           <lifeline Id="78d2630f-9409-480e-a9f0-9673e2e970f3" name="MainProces" isActor="false" lifelineDisplayName="MainProces">
             <elementDefinition Id="46e15cca-e0aa-497a-97b0-a46cd4e1a4e3" />
             <topLevelOccurrences>
-              <messageOccurrenceSpecificationMoniker Id="b8860bc0-c842-464c-bb19-8c08d50cf6ad" LastKnownName="MessageOccurrenceSpecification3" />
-              <messageOccurrenceSpecificationMoniker Id="ed2eed2a-c3e0-4074-b221-bf2262a8e84f" LastKnownName="MessageOccurrenceSpecification6" />
               <operandOccurrenceSpecificationMoniker Id="e48187ea-12b4-4c11-925e-0091bd9518d1" LastKnownName="OperandOccurrenceSpecification5" />
               <messageOccurrenceSpecificationMoniker Id="9a1766c4-cd5d-4fb3-bd24-f2770b6544a4" LastKnownName="MessageOccurrenceSpecification7" />
               <operandOccurrenceSpecificationMoniker Id="635891b1-23fb-40d5-9eac-efc479726454" LastKnownName="OperandOccurrenceSpecification9" />
@@ -460,8 +382,6 @@
           <lifeline Id="916a0800-f6b8-4ffe-86ab-a2fda8375413" name="PLC" isActor="false" lifelineDisplayName="PLC">
             <elementDefinition Id="60f7ca02-4c36-4063-895f-aa9f196ff6d7" />
             <topLevelOccurrences>
-              <executionOccurrenceSpecificationMoniker Id="fbc684b1-3c01-4774-965f-1a2556811148" LastKnownName="ExecutionOccurrenceSpecification3" />
-              <executionOccurrenceSpecificationMoniker Id="61595ed4-b2b2-41d8-96fe-2e3a709a09e6" LastKnownName="ExecutionOccurrenceSpecification4" />
               <operandOccurrenceSpecificationMoniker Id="644df0ba-0413-4043-8e41-c90c35652d20" LastKnownName="OperandOccurrenceSpecification7" />
               <executionOccurrenceSpecificationMoniker Id="427919fe-e14d-442f-9b13-15bd8af93642" LastKnownName="ExecutionOccurrenceSpecification5" />
               <executionOccurrenceSpecificationMoniker Id="5b3bb342-d0b3-4b41-9851-f2953817b2ce" LastKnownName="ExecutionOccurrenceSpecification6" />
@@ -479,24 +399,6 @@
           </lifeline>
         </lifelines>
         <messages>
-          <message Id="a4395e97-341d-4ab2-8335-92b020719b04" name="readCannonStatus" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false">
-            <elementDefinition Id="8ca94253-a7d1-4d7e-955a-3664906b896e" />
-            <sendEvent>
-              <messageOccurrenceSpecificationMoniker Id="b8860bc0-c842-464c-bb19-8c08d50cf6ad" LastKnownName="MessageOccurrenceSpecification3" />
-            </sendEvent>
-            <receiveEvent>
-              <messageOccurrenceSpecificationMoniker Id="d7f0ee60-b84a-4e0f-9c47-e9d59ee140fb" LastKnownName="MessageOccurrenceSpecification4" />
-            </receiveEvent>
-          </message>
-          <message Id="b686aec4-ec0f-4c56-bcba-5c5953015bb8" name="&lt;&lt;cannonStatus&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
-            <elementDefinition Id="aad152b9-3a7b-4707-a0a2-0fcf25eb14bd" />
-            <sendEvent>
-              <messageOccurrenceSpecificationMoniker Id="e5765027-b2e9-430d-9cae-274a82d416f0" LastKnownName="MessageOccurrenceSpecification5" />
-            </sendEvent>
-            <receiveEvent>
-              <messageOccurrenceSpecificationMoniker Id="ed2eed2a-c3e0-4074-b221-bf2262a8e84f" LastKnownName="MessageOccurrenceSpecification6" />
-            </receiveEvent>
-          </message>
           <message Id="e1c78e46-a884-4966-a028-06976006daee" name="tempElementZona" messageKind="Complete" messageSort="AsynchCall" createSelfMessage="false">
             <elementDefinition Id="25309e8d-5649-4d42-b452-9050ff3c5112" />
             <sendEvent>
@@ -526,16 +428,6 @@
           </message>
         </messages>
       </interaction>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <executionEvent Id="44b66b65-9a61-4a5e-a7cb-c4307e361afe" name="ExecutionEvent">
-        <elementDefinition Id="4ad34dfd-fa8e-417e-881e-760e122e577e" />
-      </executionEvent>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <executionEvent Id="c297c5a2-4c3c-44c7-a8a3-31903a5c8098" name="ExecutionEvent">
-        <elementDefinition Id="ba985cc0-438f-408c-b471-00c020e5403c" />
-      </executionEvent>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <executionEvent Id="4aa8fa3e-58ce-4102-81b7-c58402527029" name="ExecutionEvent">
@@ -570,5 +462,19 @@
   </packagedElements>
   <package Id="264de052-302d-406b-87bf-c4922cdc6fb3" name="RampaModel">
     <elementDefinition Id="d9d09dab-f2b9-4ac9-92da-5916bbb784e6" />
+    <profileInstances>
+      <packageHasProfileInstances Id="7a0823e1-55f6-42ae-bf73-035d727c48c3">
+        <profileInstance Id="63c8fc59-4cce-4c00-bd15-abb242534a4e" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="dbf95f98-5d40-43b8-be70-5455cb75ec22">
+        <profileInstance Id="1ef9f3cc-6204-46e3-bbff-491a9e701475" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </SequenceDesignerModel>

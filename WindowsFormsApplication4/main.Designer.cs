@@ -28,22 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {            
+            this.buttonAsistente = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1378, 1000);
+            this.ClientSize = new System.Drawing.Size(1600, 1000);
+            this.Controls.Add(this.buttonAsistente);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "main";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        
 
     }
 }

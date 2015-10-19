@@ -47,18 +47,7 @@ namespace WindowsFormsApplication4.Asistente
                 1,
                 2,
                 3
-            };
-
-            this.labelNumeroCañones.Visible     = false;
-            this.comboBoxNumeroCañones.Visible  = false;
-            this.comboBoxNumeroCañones.DataSource = new List<int>()
-            {
-                1,
-                2,
-                3
-            };
-
-            this.comboBoxNumeroCañones.SelectedIndexChanged += new System.EventHandler(this.comboBoxNumeroCañones_SelectedIndexChanged);
+            };          
         }
         public selectAppType(int nCamaras, ThermoVision.Models.Sistema sistem)
         {
@@ -80,27 +69,13 @@ namespace WindowsFormsApplication4.Asistente
 
             if (this._system.Mode != "")
             {
-                this.comboBoxAppType.SelectedItem = this._system.Mode;
-
-                if (this._system.Mode == "Rampas")
-                {
-                    this.labelNumeroCañones.Visible = true;
-                    this.comboBoxNumeroCañones.Visible = true;
-                }
-                else
-                {
-                    this.labelNumeroCañones.Visible = false;
-                    this.comboBoxNumeroCañones.Visible = false;
-                }
+                this.comboBoxAppType.SelectedItem = this._system.Mode;                                
             }
             else
             {
                 this.comboBoxAppType.SelectedIndex = 0;
                 if(this.comboBoxAppType.Items[0] != null)
                     this._system.Mode = this.comboBoxAppType.Items[0].ToString();
-
-                this.labelNumeroCañones.Visible = false;
-                this.comboBoxNumeroCañones.Visible = false;
             }
 
 
@@ -111,62 +86,27 @@ namespace WindowsFormsApplication4.Asistente
                 3
             };
 
-            this.comboBoxNumeroCañones.DataSource = new List<int>()
-            {
-                1,
-                2,
-                3
-            };
-
-            this.comboBoxNumberCameras.SelectedIndex = nCamaras - 1;
-
-            if (this._system.Cannons.Count > 0)
-                this.comboBoxNumeroCañones.SelectedIndex = this._system.Cannons.Count - 1;
-
-            this.comboBoxNumeroCañones.SelectedIndexChanged += new System.EventHandler(this.comboBoxNumeroCañones_SelectedIndexChanged);
+            this.comboBoxNumberCameras.SelectedIndex = nCamaras - 1;            
         }
 
         void comboBoxAppType_TextChanged(object sender, EventArgs e)                
         {
             //Cambiar modo de funcionamiento de la aplicación
             this._system.Mode = this.comboBoxAppType.Text;
-
-            if (this._system.Mode == "Rampas")
-            {
-                this.labelNumeroCañones.Visible = true;
-                this.comboBoxNumeroCañones.Visible = true;
-            }
-            else
-            {
-                this.labelNumeroCañones.Visible = false;
-                this.comboBoxNumeroCañones.Visible = false;
-            }
+            
         }
         void comboBoxNumberCameras_SelectedIndexChanged(object sender, EventArgs e) 
         {
             this.NumeroCamaras = int.Parse(this.comboBoxNumberCameras.Text.ToString());
         }
-        void comboBoxNumeroCañones_SelectedIndexChanged(object sender, EventArgs e) 
-        {
-            if (this._system.Mode == "Rampas")
-            {
-                if (this._system.Cannons != null)
-                    this._system.Cannons.Clear();
-
-                for (int i = 0; i < int.Parse(this.comboBoxNumeroCañones.Text); i++)
-                {
-                    this._system.addCannon("Cannon" + i.ToString());
-                }
-            }
-        }
-
+       
         private void buttonNext_Click(object sender, EventArgs e)
         {
             this.Salir = false;
             this.Close();
         }
 
-        private void buttonLoadCfg_Click(object sender, EventArgs e)
+        private async void buttonLoadCfg_Click(object sender, EventArgs e)
         {
             this.Salir = false;
 
@@ -178,7 +118,7 @@ namespace WindowsFormsApplication4.Asistente
 
             if (this.openFileDialog1.FileName != null && this.openFileDialog1.FileName != "")
             {
-                ThermoVision.Models.Sistema s =  Helpers.deserializeSistema(this.openFileDialog1.FileName);
+                ThermoVision.Models.Sistema s = Helpers.deserializeSistema(this.openFileDialog1.FileName);
 
                 if (s != null && s.ThermoCams.Count > 0)
                 {

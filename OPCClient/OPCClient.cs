@@ -142,10 +142,12 @@ namespace OPC
             return this._OPCBranch;
         }
 
-        public bool Writte(string group, string item, object value) 
+        public bool WritteSync(string group, string item, object value) 
         {
             Branch b = GetBranch(group);
 
+            if(b == null)
+                throw new Exception("No se ha podido encontrar la rama especificada");
             
             try
             {
@@ -154,7 +156,6 @@ namespace OPC
                     if (b.Leafs.Exists(x => x.Name == item))
                     {
                         OPCItem i = (b.Leafs.Where(x => x.Name == item).First()).OPCItem;
-
                         i.Write(value);
 
                         return true;
@@ -163,25 +164,65 @@ namespace OPC
             }
             catch (Exception e)
             {
-                e.ToString();
-                if (e.ToString().Contains("No se puede utilizar un objeto COM que se ha separado de su RCW subyacente."))
-                {
-                    this._Connected = false;
-                }
-                else
-                {
-                    this.Conectar();
-                }
+                throw new Exception("Fallo en la operación de escritura síncrona de la variable " + item + " en la ruta " + group + ".");
             }
 
             return false;
         }
-        public void WriteAsync(OPCGroupValues gv)
+        public void WriteAsync(String group, string item, object value) 
+        {
+            Branch b = GetBranch(group);
+
+            if (b == null)
+                throw new Exception("No se ha podido encontrar la rama especificada");
+
+            if(b.Leafs.Exists((x) => x.Name == item))
+            {
+                Leaf l = b.Leafs.Where((x) => x.Name == item).First();
+
+                Array serverHandles = Array.CreateInstance(typeof(int),
+                    new int[1] { 1 },
+                    new int[1] { 1 });
+
+                serverHandles.SetValue(l.ServerHandle, 1);
+
+                Array values = Array.CreateInstance(typeof(object),
+                    new int[1] { 1 },
+                    new int[1] { 1 });
+
+                values.SetValue(value, 1);
+
+                Array errors = Array.CreateInstance(typeof(int),
+                    new int[1] { 1 },
+                    new int[1] { 1 });
+
+                AsyncWriteStruct a = new AsyncWriteStruct(){
+                    branch = b,
+                    transactionID = this._transactionID,
+                };
+                
+                try
+                {
+                    this.AsyncWrites.Add(a.transactionID, a);
+                    b.OPCGroup.AsyncWrite(1, ref serverHandles, ref values, out errors, a.transactionID, out a.cancelID);
+                    this._transactionID++;
+                }
+                catch (Exception e)
+                {
+                    if (this.AsyncWrites.Contains(a.transactionID))
+                        this.AsyncWrites.Remove(a.transactionID);
+
+                    throw new Exception("Fallo en la operación de escritura asíncrona de la variable " + item + " en la ruta " + group + ".");
+                }
+
+            }
+        }
+        public void WriteAsync(OPCGroupValues gv)                       
         {
             Branch g = GetBranch(gv.Path);
 
             if (g == null)
-                return;
+                throw new Exception("No se ha podido encontrar la rama especificada");
 
             int count = 0; //Coincidencias
             #region "Buscar cuantos elementos coincidentes hay"
@@ -237,25 +278,44 @@ namespace OPC
             {
                 //VBHelpers.Helpers.WritteAsync(g.OPCGroup);
                 this.AsyncWrites.Add(a.transactionID, a);
-                this._transactionID ++;
                 g.OPCGroup.AsyncWrite(count, ref serverHandles, ref values, out errors, a.transactionID, out a.cancelID);
+                this._transactionID++;
             }
             catch (Exception e)
             {
-                e.ToString();
+                if (this.AsyncWrites.Contains(a.transactionID))
+                    this.AsyncWrites.Remove(a.transactionID);
 
-                try
-                {
-                    if (this.AsyncWrites.Contains(a.transactionID))
-                        this.AsyncWrites.Remove(a.transactionID);
-                }
-                catch (Exception ex)
-                {
-                }
+                throw new Exception("Fallo en la operación de escritura asíncrona con el grupo de variables " + gv.Path + ".");
+
             }
         }
 
-        public bool SuscribeGroup (string Group)                
+        public object readSync(string path, string Item)            
+        {
+            object response;
+            object Quality;
+            object TimeStamp;
+
+            Branch b = GetBranch(path);
+
+            if (b == null)
+                throw new Exception("No se ha podido encontrar la rama especificada");
+
+            if (b.Leafs.Exists(x => x.Name == Item))
+            {
+                OPCItem i = b.Leafs.Where(x => x.Name == Item).First().OPCItem;
+
+                i.Read((short)OPCDataSource.OPCDevice, out response, out Quality, out TimeStamp);
+
+                if (response  != null)
+                    return response;
+            }
+
+            throw new Exception("Fallo en la operación de lectura sincrona de la variable "+ Item + " con ruta " + path + ".");
+        }
+
+        public bool SuscribeGroup (string Group)                    
         {
             Branch b = GetBranch(Group);
 
@@ -267,7 +327,7 @@ namespace OPC
 
             return false;
         }
-        public Branch GetBranch   (string Group)                
+        public Branch GetBranch   (string Group)                    
         {
             if (this._OPCBrowser != null)
             {
@@ -291,7 +351,6 @@ namespace OPC
                     foreach (string s in Niveles)
                     {
                         BranchName = BranchName + s;
-
 
                         if (b.Children.Exists(x => x.Name == BranchName))
                         {
@@ -350,7 +409,7 @@ namespace OPC
                     }
                     catch (Exception ex)
                     {
-
+                        ex.ToString();
                     }
                 }
             }

@@ -22,6 +22,13 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
+    <Content Include="Activity Diagrams\algoritmo.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Activity Diagrams\algoritmo.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Activity Diagrams\algoritmo.activitydiagram</DependentUpon>
+    </Content>
     <Content Include="Activity Diagrams\createOPCVars.activitydiagram">
       <SubType>Content</SubType>
     </Content>
@@ -43,19 +50,19 @@
       <SubType>Content</SubType>
       <DependentUpon>Activity Diagrams\sendOPCData.activitydiagram</DependentUpon>
     </Content>
-    <Content Include="Enviar matriz de temperaturas.sequencediagram">
+    <Content Include="Secuence Diagrams\OPCDataTransfer\RampasApp\sendOPCDataRampasAppCannon.sequencediagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Enviar matriz de temperaturas.sequencediagram.layout">
+    <Content Include="Secuence Diagrams\OPCDataTransfer\RampasApp\sendOPCDataRampasAppCannon.sequencediagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Enviar matriz de temperaturas.sequencediagram</DependentUpon>
+      <DependentUpon>Secuence Diagrams\OPCDataTransfer\RampasApp\sendOPCDataRampasAppCannon.sequencediagram</DependentUpon>
     </Content>
-    <Content Include="Secuence Diagrams\sendOPCData.sequencediagram">
+    <Content Include="Secuence Diagrams\OPCDataTransfer\StandartApp\sendOPCDataStandarApp.sequencediagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Secuence Diagrams\sendOPCData.sequencediagram.layout">
+    <Content Include="Secuence Diagrams\OPCDataTransfer\StandartApp\sendOPCDataStandarApp.sequencediagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Secuence Diagrams\sendOPCData.sequencediagram</DependentUpon>
+      <DependentUpon>Secuence Diagrams\OPCDataTransfer\StandartApp\sendOPCDataStandarApp.sequencediagram</DependentUpon>
     </Content>
     <Content Include="Use Case Diagrams\AppConfig.usecasediagram">
       <SubType>Content</SubType>
@@ -85,6 +92,9 @@
     <Folder Include="Activity Diagrams" />
     <Folder Include="Class Diagrams" />
     <Folder Include="Secuence Diagrams" />
+    <Folder Include="Secuence Diagrams\OPCDataTransfer" />
+    <Folder Include="Secuence Diagrams\OPCDataTransfer\StandartApp" />
+    <Folder Include="Secuence Diagrams\OPCDataTransfer\RampasApp" />
     <Folder Include="Use Case Diagrams" />
   </ItemGroup>
 </Project>

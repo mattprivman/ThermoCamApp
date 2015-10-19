@@ -35,8 +35,6 @@
             this.comboBoxNumberCameras = new System.Windows.Forms.ComboBox();
             this.buttonLoadCfg = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.labelNumeroCañones = new System.Windows.Forms.Label();
-            this.comboBoxNumeroCañones = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // comboBoxAppType
@@ -59,7 +57,7 @@
             // 
             // buttonNext
             // 
-            this.buttonNext.Location = new System.Drawing.Point(214, 165);
+            this.buttonNext.Location = new System.Drawing.Point(214, 127);
             this.buttonNext.Name = "buttonNext";
             this.buttonNext.Size = new System.Drawing.Size(75, 23);
             this.buttonNext.TabIndex = 2;
@@ -88,7 +86,7 @@
             // 
             // buttonLoadCfg
             // 
-            this.buttonLoadCfg.Location = new System.Drawing.Point(31, 165);
+            this.buttonLoadCfg.Location = new System.Drawing.Point(31, 127);
             this.buttonLoadCfg.Name = "buttonLoadCfg";
             this.buttonLoadCfg.Size = new System.Drawing.Size(127, 23);
             this.buttonLoadCfg.TabIndex = 5;
@@ -100,32 +98,12 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // labelNumeroCañones
-            // 
-            this.labelNumeroCañones.AutoSize = true;
-            this.labelNumeroCañones.Location = new System.Drawing.Point(28, 126);
-            this.labelNumeroCañones.Name = "labelNumeroCañones";
-            this.labelNumeroCañones.Size = new System.Drawing.Size(78, 13);
-            this.labelNumeroCañones.TabIndex = 7;
-            this.labelNumeroCañones.Text = "Nº de cañones";
-            // 
-            // comboBoxNumeroCañones
-            // 
-            this.comboBoxNumeroCañones.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxNumeroCañones.FormattingEnabled = true;
-            this.comboBoxNumeroCañones.Location = new System.Drawing.Point(154, 123);
-            this.comboBoxNumeroCañones.Name = "comboBoxNumeroCañones";
-            this.comboBoxNumeroCañones.Size = new System.Drawing.Size(135, 21);
-            this.comboBoxNumeroCañones.TabIndex = 6;            
-            // 
             // selectAppType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(312, 200);
+            this.ClientSize = new System.Drawing.Size(312, 166);
             this.ControlBox = false;
-            this.Controls.Add(this.labelNumeroCañones);
-            this.Controls.Add(this.comboBoxNumeroCañones);
             this.Controls.Add(this.buttonLoadCfg);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxNumberCameras);
@@ -150,7 +128,5 @@
         private System.Windows.Forms.ComboBox comboBoxNumberCameras;
         private System.Windows.Forms.Button buttonLoadCfg;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Label labelNumeroCañones;
-        private System.Windows.Forms.ComboBox comboBoxNumeroCañones;
     }
 }

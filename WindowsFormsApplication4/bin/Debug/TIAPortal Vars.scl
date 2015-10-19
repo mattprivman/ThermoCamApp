@@ -1,0 +1,294 @@
+////////////////////////////////////////////////////////// TON1_DB
+
+DATA_BLOCK "c1_TON_1"
+{OriginalPartName := 'IEC_TIMER';
+
+VersionGUID := 'b68d17d6-3fcc-4468-818a-b36d847990bb';
+S7_Optimized_Access := 'TRUE' }
+AUTHOR : Simatic
+FAMILY : IEC
+NAME : IEC_TMR
+VERSION : 1.0
+NON_RETAIN
+IEC_TIMER
+
+BEGIN
+
+END_DATA_BLOCK
+
+///////////////////////////////////////////////////////// TON2_DB
+
+DATA_BLOCK "c1_TON_2"
+{OriginalPartName := 'IEC_TIMER';
+VersionGUID := 'b68d17d6-3fcc-4468-818a-b36d847990bb';
+S7_Optimized_Access := 'TRUE' }
+AUTHOR : Simatic
+FAMILY : IEC
+NAME : IEC_TMR
+VERSION : 1.0
+NON_RETAIN
+IEC_TIMER
+
+BEGIN
+
+END_DATA_BLOCK
+
+//////////////////////////////////////////////////////////// Function Block
+
+FUNCTION_BLOCK "c1_FB"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+   VAR_INPUT 
+       maxTemp : Int;
+   END_VAR
+
+   VAR 
+       Cooling : Bool := false;
+       Activar : Bool := false;
+       X : Int;
+       Y : Int;
+       Filas : Int := 1;
+       Columnas : Int := 2;
+       tempMatrix : Array[0..1, 0..2] of Int;
+       ascender : Bool;
+       coutner : Int;
+   END_VAR
+
+BEGIN
+
+"c1_TON_1".TON(IN := #Activar,
+                 PT := t#10s);
+
+IF "c1_TON_1".Q = TRUE THEN
+   #Cooling := TRUE;
+   #Activar := FALSE;
+   #ascender := TRUE;
+   #counter := 0;
+   #X := 0;
+   #Y := 0;
+END_IF;
+
+IF #Cooling = TRUE THEN
+   IF #tempMatrix[#X, #Y] > #maxTemp THEN
+
+       "c1_TON_2".TON(IN := TRUE,
+                   PT := t#10s);
+
+       IF "c1_TON_2".Q = TRUE THEN
+
+           //SIGUIENTE COORDENADA
+           IF #ascender = TRUE THEN
+               IF #Y = #Columnas THEN
+                   #X := #X + 1;
+                   #ascender := FALSE;
+               ELSE
+                   #Y := #Y + 1;
+               END_IF;
+           ELSE
+               IF #Y = 0 THEN
+                   #X := #X + 1;
+                   #ascender := TRUE;
+               ELSE
+                   #Y := #Y - 1;
+           END_IF;
+           #counter := #counter + 1;
+           IF (#counter = #Filas * #Columnas) THEN
+               #Cooling := FALSE;
+           END_IF;
+       END_IF;
+
+       "c1_TON_2".TON(IN := FALSE,
+                         PT := t#2s);
+       END_IF;
+   ELSE
+       //SIGUIENTE COORDENADA
+       IF #ascender = TRUE THEN
+           IF #Y = #Columnas THEN
+               #X := #X + 1;
+               #ascender := FALSE;
+           ELSE
+               #Y := #Y + 1;
+           END_IF;
+       ELSE
+           IF #Y = 0 THEN
+               #X := #X + 1;
+               #ascender := TRUE;
+           ELSE
+               #Y := #Y - 1;
+           END_IF;
+       END_IF;
+       #counter := #counter + 1;
+       IF (#counter = #Filas * #Columnas) THEN
+           #Cooling := FALSE;
+       END_IF;
+   END_IF;
+END_IF;
+
+
+END_FUNCTION_BLOCK
+
+////////////////////////////////////////////////////////// Function Block DB
+
+DATA_BLOCK "c1_DB"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+NON_RETAIN
+"c1_FB"
+
+BEGIN
+
+END_DATA_BLOCK
+
+////////////////////////////////////////////////////////// TON1_DB
+
+DATA_BLOCK "c2_TON_1"
+{OriginalPartName := 'IEC_TIMER';
+
+VersionGUID := 'b68d17d6-3fcc-4468-818a-b36d847990bb';
+S7_Optimized_Access := 'TRUE' }
+AUTHOR : Simatic
+FAMILY : IEC
+NAME : IEC_TMR
+VERSION : 1.0
+NON_RETAIN
+IEC_TIMER
+
+BEGIN
+
+END_DATA_BLOCK
+
+///////////////////////////////////////////////////////// TON2_DB
+
+DATA_BLOCK "c2_TON_2"
+{OriginalPartName := 'IEC_TIMER';
+VersionGUID := 'b68d17d6-3fcc-4468-818a-b36d847990bb';
+S7_Optimized_Access := 'TRUE' }
+AUTHOR : Simatic
+FAMILY : IEC
+NAME : IEC_TMR
+VERSION : 1.0
+NON_RETAIN
+IEC_TIMER
+
+BEGIN
+
+END_DATA_BLOCK
+
+//////////////////////////////////////////////////////////// Function Block
+
+FUNCTION_BLOCK "c2_FB"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+   VAR_INPUT 
+       maxTemp : Int;
+   END_VAR
+
+   VAR 
+       Cooling : Bool := false;
+       Activar : Bool := false;
+       X : Int;
+       Y : Int;
+       Filas : Int := 4;
+       Columnas : Int := 1;
+       tempMatrix : Array[0..4, 0..1] of Int;
+       ascender : Bool;
+       coutner : Int;
+   END_VAR
+
+BEGIN
+
+"c2_TON_1".TON(IN := #Activar,
+                 PT := t#10s);
+
+IF "c2_TON_1".Q = TRUE THEN
+   #Cooling := TRUE;
+   #Activar := FALSE;
+   #ascender := TRUE;
+   #counter := 0;
+   #X := 0;
+   #Y := 0;
+END_IF;
+
+IF #Cooling = TRUE THEN
+   IF #tempMatrix[#X, #Y] > #maxTemp THEN
+
+       "c2_TON_2".TON(IN := TRUE,
+                   PT := t#10s);
+
+       IF "c2_TON_2".Q = TRUE THEN
+
+           //SIGUIENTE COORDENADA
+           IF #ascender = TRUE THEN
+               IF #Y = #Columnas THEN
+                   #X := #X + 1;
+                   #ascender := FALSE;
+               ELSE
+                   #Y := #Y + 1;
+               END_IF;
+           ELSE
+               IF #Y = 0 THEN
+                   #X := #X + 1;
+                   #ascender := TRUE;
+               ELSE
+                   #Y := #Y - 1;
+           END_IF;
+           #counter := #counter + 1;
+           IF (#counter = #Filas * #Columnas) THEN
+               #Cooling := FALSE;
+           END_IF;
+       END_IF;
+
+       "c2_TON_2".TON(IN := FALSE,
+                         PT := t#2s);
+       END_IF;
+   ELSE
+       //SIGUIENTE COORDENADA
+       IF #ascender = TRUE THEN
+           IF #Y = #Columnas THEN
+               #X := #X + 1;
+               #ascender := FALSE;
+           ELSE
+               #Y := #Y + 1;
+           END_IF;
+       ELSE
+           IF #Y = 0 THEN
+               #X := #X + 1;
+               #ascender := TRUE;
+           ELSE
+               #Y := #Y - 1;
+           END_IF;
+       END_IF;
+       #counter := #counter + 1;
+       IF (#counter = #Filas * #Columnas) THEN
+           #Cooling := FALSE;
+       END_IF;
+   END_IF;
+END_IF;
+
+
+END_FUNCTION_BLOCK
+
+////////////////////////////////////////////////////////// Function Block DB
+
+DATA_BLOCK "c2_DB"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+NON_RETAIN
+"c2_FB"
+
+BEGIN
+
+END_DATA_BLOCK
+
+/////////////////////////////////////////////////////Main
+ORGANIZATION_BLOCK "Main"
+TITLE = "Main Program Sweep (Cycle)"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+
+BEGIN
+   "c1_DB"(30);
+   "c2_DB"(30);
+
+END_ORGANIZATION_BLOCK
+

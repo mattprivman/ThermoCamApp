@@ -1,0 +1,865 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio 11.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="11.0">
+ <Namespaces>
+  <Namespace Name="WindowsFormsApplication4.Asistente.OPC">
+   <Messages>
+    <Message Id="OPC" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+     <Issue Name="Namespace" Certainty="85" Level="Error">Corrija el uso de mayúsculas y minúsculas en 'OPC' en el nombre del espacio de nombres 'WindowsFormsApplication4.Asistente.OPC' cambiándolo a 'Opc'.</Issue>
+    </Message>
+   </Messages>
+  </Namespace>
+ </Namespaces>
+ <Targets>
+  <Target Name="E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoCamApp.exe">
+   <Modules>
+    <Module Name="thermocamapp.exe">
+     <Messages>
+      <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+       <Issue Name="NoStrongName" Certainty="95" Level="CriticalError">Firme 'ThermoCamApp.exe' con una clave de nombre seguro.</Issue>
+      </Message>
+      <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+       <Issue Certainty="95" Level="Error">Marque 'ThermoCamApp.exe' con CLSCompliant(true) porque expone tipos visibles externamente.</Issue>
+      </Message>
+     </Messages>
+     <Namespaces>
+      <Namespace Name="WindowsFormsApplication4">
+       <Types>
+        <Type Name="Helpers" Kind="Class" Accessibility="Assembly" ExternallyVisible="False">
+         <Messages>
+          <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+           <Issue Certainty="75" Level="Warning">'Helpers' es una clase interna de la que aparentemente nunca se crea una instancia. Si es así, quite el código del ensamblado. Si esta clase está destinada a contener sólo métodos estáticos, considere la posibilidad de agregar un constructor privado para evitar que el compilador genere un constructor de forma predeterminada.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#deserializeSistema(System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="Helpers.cs" Line="47">Modifique 'Helpers.deserializeSistema(string)' para capturar una excepción más específica que 'Exception' o vuelva a producir la excepción.</Issue>
+            </Message>
+            <Message TypeName="No usar Dispose varias veces en objetos" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="Helpers.cs" Line="44">El objeto 'stream' admite Dispose más de una vez en el método 'Helpers.deserializeSistema(string)'. Para evitar generar una excepción System.ObjectDisposedException, no debe llamar a Dispose más de una vez en un objeto.: Lines: 44</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#serializeSistema(ThermoVision.Models.Sistema,System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="No usar Dispose varias veces en objetos" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="Helpers.cs" Line="25">El objeto 'stream' admite Dispose más de una vez en el método 'Helpers.serializeSistema(Sistema, string)'. Para evitar generar una excepción System.ObjectDisposedException, no debe llamar a Dispose más de una vez en un objeto.: Lines: 25</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="main" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="main" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Corrija el uso de mayúsculas y minúsculas en 'main' en el nombre del tipo 'main' cambiándolo a 'Main'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#.ctor(ThermoVision.Models.Sistema)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="AvoidExcessiveComplexity" Category="Microsoft.Maintainability" CheckId="CA1502" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="90" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="22">'main.main(Sistema)' tiene una complejidad ciclomática de 36. Vuelva a escribir o refactorice el método para reducir la complejidad a 25.</Issue>
+            </Message>
+            <Message TypeName="Eliminar (Dispose) objetos antes de perder el ámbito" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="49">En el método 'main.main(Sistema)', no se elimina (Dispose) el objeto 'c' en todas las rutas de acceso de excepciones. Llame a System.IDisposable.Dispose en el objeto 'c' antes de que todas las referencias a él estén fuera de ámbito.</Issue>
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="125">En el método 'main.main(Sistema)', llame a System.IDisposable.Dispose en el objeto 'new FontFamily("Microsoft Sans Serif")' antes de que todas las referencias a él estén fuera de ámbito.</Issue>
+            </Message>
+            <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="22">En el miembro 'main.main(Sistema)', quite los caracteres de subrayado del nombre del parámetro '_system'.</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="71">El método 'main.main(Sistema)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Asistente".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="124">El método 'main.main(Sistema)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Estado".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="153">El método 'main.main(Sistema)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Temperatura limite apagado".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="162">El método 'main.main(Sistema)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Temperatura limite vaciado".</Issue>
+            </Message>
+            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="88">Puesto que el comportamiento de 'int.ToString()' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'main.main(Sistema)' por una llamada a 'int.ToString(IFormatProvider)'. Si el resultado de 'int.ToString(IFormatProvider)' se mostrará al usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado se almacenará y será el software quien tenga acceso a él, como cuando se almacena en un disco o en una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="89">Puesto que el comportamiento de 'int.ToString()' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'main.main(Sistema)' por una llamada a 'int.ToString(IFormatProvider)'. Si el resultado de 'int.ToString(IFormatProvider)' se mostrará al usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado se almacenará y será el software quien tenga acceso a él, como cuando se almacena en un disco o en una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="121">Puesto que el comportamiento de 'int.ToString()' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'main.main(Sistema)' por una llamada a 'int.ToString(IFormatProvider)'. Si el resultado de 'int.ToString(IFormatProvider)' se mostrará al usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado se almacenará y será el software quien tenga acceso a él, como cuando se almacena en un disco o en una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#_system" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="system" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Corrija el uso de mayúsculas y minúsculas en 'system' en el nombre del miembro 'main._system' cambiándolo a 'System'.</Issue>
+            </Message>
+            <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="95" Level="Error">Quite los caracteres de subrayado del nombre del miembro 'main._system'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#InitializeComponent()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.Designer.cs" Line="43">El método 'main.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "main".</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#main_stateChanged(System.Object,ThermoVision.Models.Zona+States)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="Parameter" Certainty="95" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="276">'sender', un parámetro, se convierte en el tipo 'Zona' varias veces en el método 'main.main_stateChanged(object, Zona.States)'. Almacene en caché el resultado del operador 'as' o dirija la conversión con el fin de eliminar la instrucción castclass redundante.</Issue>
+             <Issue Name="Parameter" Certainty="95" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="279">'sender', un parámetro, se convierte en el tipo 'Zona' varias veces en el método 'main.main_stateChanged(object, Zona.States)'. Almacene en caché el resultado del operador 'as' o dirija la conversión con el fin de eliminar la instrucción castclass redundante.</Issue>
+             <Issue Name="Parameter" Certainty="95" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="282">'sender', un parámetro, se convierte en el tipo 'Zona' varias veces en el método 'main.main_stateChanged(object, Zona.States)'. Almacene en caché el resultado del operador 'as' o dirija la conversión con el fin de eliminar la instrucción castclass redundante.</Issue>
+             <Issue Name="Parameter" Certainty="95" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="285">'sender', un parámetro, se convierte en el tipo 'Zona' varias veces en el método 'main.main_stateChanged(object, Zona.States)'. Almacene en caché el resultado del operador 'as' o dirija la conversión con el fin de eliminar la instrucción castclass redundante.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#numericTextBoxTempApagadoLimite_textoCambiado(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="292">Puesto que el comportamiento de 'int.Parse(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'main.numericTextBoxTempApagadoLimite_textoCambiado(object, EventArgs)' por una llamada a 'int.Parse(string, IFormatProvider)'. Si el resultado de 'int.Parse(string, IFormatProvider)' estará basado en los datos proporcionados por el usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado estará basado en datos almacenados a los que tiene acceso el software, como cuando se cargan desde un disco o una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#numericTextBoxTempLimiteVaciado_textoCambiado(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="296">Puesto que el comportamiento de 'int.Parse(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'main.numericTextBoxTempLimiteVaciado_textoCambiado(object, EventArgs)' por una llamada a 'int.Parse(string, IFormatProvider)'. Si el resultado de 'int.Parse(string, IFormatProvider)' estará basado en los datos proporcionados por el usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado estará basado en datos almacenados a los que tiene acceso el software, como cuando se cargan desde un disco o una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#updatePictureBox(System.Windows.Forms.PictureBox,System.Drawing.Bitmap&amp;)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="main.cs" Line="324">Modifique 'main.updatePictureBox(PictureBox, ref Bitmap)' para capturar una excepción más específica que 'Exception' o vuelva a producir la excepción.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ProgramFlow" Kind="Class" Accessibility="Assembly" ExternallyVisible="False">
+         <Messages>
+          <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+           <Issue Certainty="75" Level="Warning">'ProgramFlow' es una clase interna de la que aparentemente nunca se crea una instancia. Si es así, quite el código del ensamblado. Si esta clase está destinada a contener sólo métodos estáticos, considere la posibilidad de agregar un constructor privado para evitar que el compilador genere un constructor de forma predeterminada.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Start()" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="No usar Dispose varias veces en objetos" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="ProgramFlow.cs" Line="84">El objeto 'AppType' admite Dispose más de una vez en el método 'ProgramFlow.Start()'. Para evitar generar una excepción System.ObjectDisposedException, no debe llamar a Dispose más de una vez en un objeto.: Lines: 84</Issue>
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="ProgramFlow.cs" Line="122">El objeto 'cc' admite Dispose más de una vez en el método 'ProgramFlow.Start()'. Para evitar generar una excepción System.ObjectDisposedException, no debe llamar a Dispose más de una vez en un objeto.: Lines: 122</Issue>
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="ProgramFlow.cs" Line="209">El objeto 'm' admite Dispose más de una vez en el método 'ProgramFlow.Start()'. Para evitar generar una excepción System.ObjectDisposedException, no debe llamar a Dispose más de una vez en un objeto.: Lines: 209</Issue>
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4" File="ProgramFlow.cs" Line="166">El objeto 'sos' admite Dispose más de una vez en el método 'ProgramFlow.Start()'. Para evitar generar una excepción System.ObjectDisposedException, no debe llamar a Dispose más de una vez en un objeto.: Lines: 166</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="WindowsFormsApplication4.Asistente">
+       <Types>
+        <Type Name="flowControl" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="flow" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Corrija el uso de mayúsculas y minúsculas en 'flow' en el nombre del tipo 'flowControl' cambiándolo a 'Flow'.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+        <Type Name="selectAppType" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="select" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Corrija el uso de mayúsculas y minúsculas en 'select' en el nombre del tipo 'selectAppType' cambiándolo a 'Select'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#.ctor(System.Int32,ThermoVision.Models.Sistema)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="nCamaras-1" TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="CriticalWarning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="selectAppType.cs" Line="89">Corrija el desbordamiento potencial en la operación 'nCamaras-1' en 'selectAppType.selectAppType(int, Sistema)'.</Issue>
+            </Message>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="selectAppType.cs" Line="70">Reemplace la llamada a 'string.operator !=(string, string)' en 'selectAppType.selectAppType(int, Sistema)' con una llamada a 'String.IsNullOrEmpty'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#_system" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="system" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Corrija el uso de mayúsculas y minúsculas en 'system' en el nombre del miembro 'selectAppType._system' cambiándolo a 'System'.</Issue>
+            </Message>
+            <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="95" Level="Error">Quite los caracteres de subrayado del nombre del miembro 'selectAppType._system'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#cargarConfiguracion" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="cargar" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Corrija el uso de mayúsculas y minúsculas en 'cargar' en el nombre del miembro 'selectAppType.cargarConfiguracion' cambiándolo a 'Cargar'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#comboBoxNumberCameras_SelectedIndexChanged(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="selectAppType.cs" Line="100">Puesto que el comportamiento de 'int.Parse(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'selectAppType.comboBoxNumberCameras_SelectedIndexChanged(object, EventArgs)' por una llamada a 'int.Parse(string, IFormatProvider)'. Si el resultado de 'int.Parse(string, IFormatProvider)' estará basado en los datos proporcionados por el usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado estará basado en datos almacenados a los que tiene acceso el software, como cuando se cargan desde un disco o una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#InitializeComponent()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="selectAppType.Designer.cs" Line="93">El método 'selectAppType.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Cargar configuración".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="selectAppType.Designer.cs" Line="75">El método 'selectAppType.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Nº de camaras".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="selectAppType.Designer.cs" Line="116">El método 'selectAppType.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Seleccione el tipo de aplicación".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="selectAppType.Designer.cs" Line="64">El método 'selectAppType.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Siguiente &gt;&gt;".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="selectAppType.Designer.cs" Line="56">El método 'selectAppType.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Tipo de applicación".</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="WindowsFormsApplication4.Asistente.Camaras">
+       <Types>
+        <Type Name="CamerasConfiguration" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(System.Int32,ThermoVision.Models.Sistema)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="41">En el miembro 'CamerasConfiguration.CamerasConfiguration(int, Sistema)', quite los caracteres de subrayado del nombre del parámetro '_system'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#buttonAddSubZona_Click(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="574">Modifique 'CamerasConfiguration.buttonAddSubZona_Click(object, EventArgs)' para capturar una excepción más específica que 'Exception' o vuelva a producir la excepción.</Issue>
+            </Message>
+            <Message TypeName="Eliminar (Dispose) objetos antes de perder el ámbito" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="563">En el método 'CamerasConfiguration.buttonAddSubZona_Click(object, EventArgs)', no se elimina (Dispose) el objeto 'f' en todas las rutas de acceso de excepciones. Llame a System.IDisposable.Dispose en el objeto 'f' antes de que todas las referencias a él estén fuera de ámbito.</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="586">El método 'CamerasConfiguration.buttonAddSubZona_Click(object, EventArgs)' pasa una cadena literal como parámetro 'text' de una llamada a 'MessageBox.Show(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Debe seleccionar una zona.".</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String,System.String,System.Windows.Forms.MessageBoxButtons,System.Windows.Forms.MessageBoxIcon)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="576">El método 'CamerasConfiguration.buttonAddSubZona_Click(object, EventArgs)' pasa una cadena literal como parámetro 'caption' de una llamada a 'MessageBox.Show(string, string, MessageBoxButtons, MessageBoxIcon)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Error".</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="576">Cambie 'CamerasConfiguration.buttonAddSubZona_Click(object, EventArgs)' para que llame a la sobrecarga MessageBox.Show que especifica MessageBoxOptions y asegúrese de establecer MessageBoxOptions.RightAlign y MessageBoxOptions.RtlReading si RightToLeft está establecido en RightToLeft.Yes en el control primario.</Issue>
+             <Issue Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="586">Cambie 'CamerasConfiguration.buttonAddSubZona_Click(object, EventArgs)' para que llame a la sobrecarga MessageBox.Show que especifica MessageBoxOptions y asegúrese de establecer MessageBoxOptions.RightAlign y MessageBoxOptions.RtlReading si RightToLeft está establecido en RightToLeft.Yes en el control primario.</Issue>
+            </Message>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="566">Reemplace la llamada a 'string.operator !=(string, string)' en 'CamerasConfiguration.buttonAddSubZona_Click(object, EventArgs)' con una llamada a 'String.IsNullOrEmpty'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#buttonAddZona_Click(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Eliminar (Dispose) objetos antes de perder el ámbito" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="189">En el método 'CamerasConfiguration.buttonAddZona_Click(object, EventArgs)', llame a System.IDisposable.Dispose en el objeto 'f' antes de que todas las referencias a él estén fuera de ámbito.</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String,System.String,System.Windows.Forms.MessageBoxButtons,System.Windows.Forms.MessageBoxIcon)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="205">El método 'CamerasConfiguration.buttonAddZona_Click(object, EventArgs)' pasa una cadena literal como parámetro 'caption' de una llamada a 'MessageBox.Show(string, string, MessageBoxButtons, MessageBoxIcon)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="205">El método 'CamerasConfiguration.buttonAddZona_Click(object, EventArgs)' pasa una cadena literal como parámetro 'text' de una llamada a 'MessageBox.Show(string, string, MessageBoxButtons, MessageBoxIcon)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Ya existe una zona con el mismo nombre".</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="205">Cambie 'CamerasConfiguration.buttonAddZona_Click(object, EventArgs)' para que llame a la sobrecarga MessageBox.Show que especifica MessageBoxOptions y asegúrese de establecer MessageBoxOptions.RightAlign y MessageBoxOptions.RtlReading si RightToLeft está establecido en RightToLeft.Yes en el control primario.</Issue>
+            </Message>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="192">Reemplace la llamada a 'string.operator !=(string, string)' en 'CamerasConfiguration.buttonAddZona_Click(object, EventArgs)' con una llamada a 'String.IsNullOrEmpty'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#buttonAddZonaVaciado_Click(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalError" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="257">Modifique 'CamerasConfiguration.buttonAddZonaVaciado_Click(object, EventArgs)' para capturar una excepción más específica que 'Exception' o vuelva a producir la excepción.</Issue>
+            </Message>
+            <Message TypeName="Eliminar (Dispose) objetos antes de perder el ámbito" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="243">En el método 'CamerasConfiguration.buttonAddZonaVaciado_Click(object, EventArgs)', llame a System.IDisposable.Dispose en el objeto 'f' antes de que todas las referencias a él estén fuera de ámbito.</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String,System.String,System.Windows.Forms.MessageBoxButtons,System.Windows.Forms.MessageBoxIcon)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="259">El método 'CamerasConfiguration.buttonAddZonaVaciado_Click(object, EventArgs)' pasa una cadena literal como parámetro 'caption' de una llamada a 'MessageBox.Show(string, string, MessageBoxButtons, MessageBoxIcon)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="259">El método 'CamerasConfiguration.buttonAddZonaVaciado_Click(object, EventArgs)' pasa una cadena literal como parámetro 'text' de una llamada a 'MessageBox.Show(string, string, MessageBoxButtons, MessageBoxIcon)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Ya existe una zona con el mismo nombre".</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="259">Cambie 'CamerasConfiguration.buttonAddZonaVaciado_Click(object, EventArgs)' para que llame a la sobrecarga MessageBox.Show que especifica MessageBoxOptions y asegúrese de establecer MessageBoxOptions.RightAlign y MessageBoxOptions.RtlReading si RightToLeft está establecido en RightToLeft.Yes en el control primario.</Issue>
+            </Message>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="246">Reemplace la llamada a 'string.operator !=(string, string)' en 'CamerasConfiguration.buttonAddZonaVaciado_Click(object, EventArgs)' con una llamada a 'String.IsNullOrEmpty'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#InitializeComponent(System.Int32)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Eliminar (Dispose) objetos antes de perder el ámbito" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="439">En el método 'CamerasConfiguration.InitializeComponent(int)', no se elimina (Dispose) el objeto 'c' en todas las rutas de acceso de excepciones. Llame a System.IDisposable.Dispose en el objeto 'c' antes de que todas las referencias a él estén fuera de ámbito.</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="240">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "+".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="275">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "+".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="310">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "+".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="345">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "+".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="380">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "+".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="415">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "+".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="231">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "-".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="266">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "-".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="301">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "-".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="336">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "-".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="371">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "-".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="406">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "-".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="478">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "&lt;&lt; Atrás".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="83">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Agregar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="118">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Agregar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="221">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Agregar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="93">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Borrar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="129">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Borrar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="211">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Borrar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="258">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Columnas".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="293">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Filas".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="468">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Siguiente &gt;&gt;".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="195">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Subzonas".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="363">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "X fin".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="433">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "X ini".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="328">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Y fin".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="398">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Y ini".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="148">El método 'CamerasConfiguration.InitializeComponent(int)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Zonas".</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#InitializeWithComponent()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUnmaintainableCode" Category="Microsoft.Maintainability" CheckId="CA1505" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="Method" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="500">'CamerasConfiguration.InitializeWithComponent()' tiene un índice de mantenimiento de 16. Escriba de nuevo o refactorice el método para aumentar su índice de mantenimiento (MI). Un MI por debajo de 10 indica un mantenimiento pobre, un MI entre 10 y 20 indica un mantenimiento moderado y un MI por encima de 20 indica un buen mantenimiento.</Issue>
+            </Message>
+            <Message TypeName="Eliminar (Dispose) objetos antes de perder el ámbito" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="904">En el método 'CamerasConfiguration.InitializeWithComponent()', no se elimina (Dispose) el objeto 'c' en todas las rutas de acceso de excepciones. Llame a System.IDisposable.Dispose en el objeto 'c' antes de que todas las referencias a él estén fuera de ámbito.</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="705">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "+".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="740">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "+".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="775">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "+".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="810">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "+".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="845">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "+".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="880">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "+".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="696">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "-".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="731">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "-".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="766">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "-".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="801">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "-".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="836">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "-".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="871">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "-".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="943">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "&lt;&lt; Atrás".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="548">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Agregar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="598">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Agregar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="686">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Agregar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="558">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Borrar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="609">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Borrar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="676">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Borrar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="723">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Columnas".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="758">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Filas".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="933">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Siguiente &gt;&gt;".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="660">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Subzonas".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="828">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "X fin".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="898">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "X ini".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="793">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Y fin".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="863">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Y ini".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.Designer.cs" Line="575">El método 'CamerasConfiguration.InitializeWithComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Zonas".</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#numericTextBoxCol_textoCambiado(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="486">'CamerasConfiguration.numericTextBoxCol_textoCambiado(object, EventArgs)' parece no tener ningún llamador protegido o público de nivel superior.</Issue>
+            </Message>
+            <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="490">Puesto que el comportamiento de 'int.Parse(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'CamerasConfiguration.numericTextBoxCol_textoCambiado(object, EventArgs)' por una llamada a 'int.Parse(string, IFormatProvider)'. Si el resultado de 'int.Parse(string, IFormatProvider)' estará basado en los datos proporcionados por el usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado estará basado en datos almacenados a los que tiene acceso el software, como cuando se cargan desde un disco o una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#numericTextBoxFil_textoCambiado(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="505">'CamerasConfiguration.numericTextBoxFil_textoCambiado(object, EventArgs)' parece no tener ningún llamador protegido o público de nivel superior.</Issue>
+            </Message>
+            <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="509">Puesto que el comportamiento de 'int.Parse(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'CamerasConfiguration.numericTextBoxFil_textoCambiado(object, EventArgs)' por una llamada a 'int.Parse(string, IFormatProvider)'. Si el resultado de 'int.Parse(string, IFormatProvider)' estará basado en los datos proporcionados por el usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado estará basado en datos almacenados a los que tiene acceso el software, como cuando se cargan desde un disco o una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#numericTextBoxXfin_textoCambiado(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="495">'CamerasConfiguration.numericTextBoxXfin_textoCambiado(object, EventArgs)' parece no tener ningún llamador protegido o público de nivel superior.</Issue>
+            </Message>
+            <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="499">Puesto que el comportamiento de 'int.Parse(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'CamerasConfiguration.numericTextBoxXfin_textoCambiado(object, EventArgs)' por una llamada a 'int.Parse(string, IFormatProvider)'. Si el resultado de 'int.Parse(string, IFormatProvider)' estará basado en los datos proporcionados por el usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado estará basado en datos almacenados a los que tiene acceso el software, como cuando se cargan desde un disco o una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#numericTextBoxXIni_textoCambiado(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="514">'CamerasConfiguration.numericTextBoxXIni_textoCambiado(object, EventArgs)' parece no tener ningún llamador protegido o público de nivel superior.</Issue>
+            </Message>
+            <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="518">Puesto que el comportamiento de 'int.Parse(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'CamerasConfiguration.numericTextBoxXIni_textoCambiado(object, EventArgs)' por una llamada a 'int.Parse(string, IFormatProvider)'. Si el resultado de 'int.Parse(string, IFormatProvider)' estará basado en los datos proporcionados por el usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado estará basado en datos almacenados a los que tiene acceso el software, como cuando se cargan desde un disco o una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#numericTextBoxYFin_textoCambiado(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="524">'CamerasConfiguration.numericTextBoxYFin_textoCambiado(object, EventArgs)' parece no tener ningún llamador protegido o público de nivel superior.</Issue>
+            </Message>
+            <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="528">Puesto que el comportamiento de 'int.Parse(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'CamerasConfiguration.numericTextBoxYFin_textoCambiado(object, EventArgs)' por una llamada a 'int.Parse(string, IFormatProvider)'. Si el resultado de 'int.Parse(string, IFormatProvider)' estará basado en los datos proporcionados por el usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado estará basado en datos almacenados a los que tiene acceso el software, como cuando se cargan desde un disco o una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#numericTextBoxYinit_textoCambiado(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="534">'CamerasConfiguration.numericTextBoxYinit_textoCambiado(object, EventArgs)' parece no tener ningún llamador protegido o público de nivel superior.</Issue>
+            </Message>
+            <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="538">Puesto que el comportamiento de 'int.Parse(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'CamerasConfiguration.numericTextBoxYinit_textoCambiado(object, EventArgs)' por una llamada a 'int.Parse(string, IFormatProvider)'. Si el resultado de 'int.Parse(string, IFormatProvider)' estará basado en los datos proporcionados por el usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado estará basado en datos almacenados a los que tiene acceso el software, como cuando se cargan desde un disco o una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#sub_ParametersChanged(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="649">Puesto que el comportamiento de 'int.ToString()' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'CamerasConfiguration.sub_ParametersChanged(object, EventArgs)' por una llamada a 'int.ToString(IFormatProvider)'. Si el resultado de 'int.ToString(IFormatProvider)' se mostrará al usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado se almacenará y será el software quien tenga acceso a él, como cuando se almacena en un disco o en una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="650">Puesto que el comportamiento de 'int.ToString()' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'CamerasConfiguration.sub_ParametersChanged(object, EventArgs)' por una llamada a 'int.ToString(IFormatProvider)'. Si el resultado de 'int.ToString(IFormatProvider)' se mostrará al usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado se almacenará y será el software quien tenga acceso a él, como cuando se almacena en un disco o en una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="651">Puesto que el comportamiento de 'int.ToString()' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'CamerasConfiguration.sub_ParametersChanged(object, EventArgs)' por una llamada a 'int.ToString(IFormatProvider)'. Si el resultado de 'int.ToString(IFormatProvider)' se mostrará al usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado se almacenará y será el software quien tenga acceso a él, como cuando se almacena en un disco o en una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="652">Puesto que el comportamiento de 'int.ToString()' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'CamerasConfiguration.sub_ParametersChanged(object, EventArgs)' por una llamada a 'int.ToString(IFormatProvider)'. Si el resultado de 'int.ToString(IFormatProvider)' se mostrará al usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado se almacenará y será el software quien tenga acceso a él, como cuando se almacena en un disco o en una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="653">Puesto que el comportamiento de 'int.ToString()' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'CamerasConfiguration.sub_ParametersChanged(object, EventArgs)' por una llamada a 'int.ToString(IFormatProvider)'. Si el resultado de 'int.ToString(IFormatProvider)' se mostrará al usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado se almacenará y será el software quien tenga acceso a él, como cuando se almacena en un disco o en una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+             <Issue Name="IFormatProviderAlternateString" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras" File="CamerasConfiguration.cs" Line="654">Puesto que el comportamiento de 'int.ToString()' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'CamerasConfiguration.sub_ParametersChanged(object, EventArgs)' por una llamada a 'int.ToString(IFormatProvider)'. Si el resultado de 'int.ToString(IFormatProvider)' se mostrará al usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado se almacenará y será el software quien tenga acceso a él, como cuando se almacena en un disco o en una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="WindowsFormsApplication4.Asistente.Camaras.CustomControls">
+       <Types>
+        <Type Name="AddSubZona" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#InitializeComponent()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras\CustomControls" File="AddSubZona.Designer.cs" Line="53">El método 'AddSubZona.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Aceptar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras\CustomControls" File="AddSubZona.Designer.cs" Line="87">El método 'AddSubZona.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Añadir subzona".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras\CustomControls" File="AddSubZona.Designer.cs" Line="43">El método 'AddSubZona.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Cancelar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras\CustomControls" File="AddSubZona.Designer.cs" Line="72">El método 'AddSubZona.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Nombre de la subzona".</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#nameSubZona" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="name" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Corrija el uso de mayúsculas y minúsculas en 'name' en el nombre del miembro 'AddSubZona.nameSubZona' cambiándolo a 'Name'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="AddZona" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#InitializeComponent()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras\CustomControls" File="AddZona.Designer.cs" Line="60">El método 'AddZona.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Aceptar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras\CustomControls" File="AddZona.Designer.cs" Line="87">El método 'AddZona.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Añadir zona".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras\CustomControls" File="AddZona.Designer.cs" Line="70">El método 'AddZona.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Cancelar".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\Camaras\CustomControls" File="AddZona.Designer.cs" Line="44">El método 'AddZona.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Nombre de la zona".</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#zonaName" Kind="Property" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="zona" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Corrija el uso de mayúsculas y minúsculas en 'zona' en el nombre del miembro 'AddZona.zonaName' cambiándolo a 'Zona'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="customTextBox" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="custom" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Corrija el uso de mayúsculas y minúsculas en 'custom' en el nombre del tipo 'customTextBox' cambiándolo a 'Custom'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#textBox" Kind="Field" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+             <Issue Certainty="90" Level="Error">Puesto que el campo 'customTextBox.textBox' es visible fuera del tipo que lo declara, cambie su accesibilidad a privada y agregue una propiedad, con la misma accesibilidad que tiene el campo actualmente, para proporcionar acceso a él.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#textChanged" Kind="Event" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="text" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+             <Issue Name="Member" Certainty="85" Level="Error">Corrija el uso de mayúsculas y minúsculas en 'text' en el nombre del miembro 'customTextBox.textChanged' cambiándolo a 'Text'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="WindowsFormsApplication4.Asistente.OPC">
+       <Types>
+        <Type Name="appSelectOPCServer" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message Id="OPC" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Corrija el uso de mayúsculas y minúsculas en 'OPC' en el nombre del tipo 'appSelectOPCServer' cambiándolo a 'Opc'.</Issue>
+          </Message>
+          <Message Id="app" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+           <Issue Name="Type" Certainty="85" Level="Error">Corrija el uso de mayúsculas y minúsculas en 'app' en el nombre del tipo 'appSelectOPCServer' cambiándolo a 'App'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#.ctor(ThermoVision.Models.Sistema)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="Breaking">
+             <Issue Name="MemberParameter" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="32">En el miembro 'appSelectOPCServer.appSelectOPCServer(Sistema)', quite los caracteres de subrayado del nombre del parámetro '_system'.</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="46">El método 'appSelectOPCServer.appSelectOPCServer(Sistema)' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Seleccione el servidor OPC en el que va a realizar la configuración de la comuni...".</Issue>
+            </Message>
+            <Message Id="System.String.IndexOf(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="63">Puesto que el comportamiento de 'string.IndexOf(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'appSelectOPCServer.appSelectOPCServer(Sistema)' por una llamada a 'string.IndexOf(string, StringComparison)'. Si el resultado de 'string.IndexOf(string, StringComparison)' se mostrará al usuario, como cuando se ordena una lista de elementos para mostrarlos en un cuadro de lista, especifique 'StringComparison.CurrentCulture' o 'StringComparison.CurrentCultureIgnoreCase' como parámetro 'StringComparison'. Si se comparan identificadores que no distinguen mayúsculas y minúsculas, como rutas de acceso de archivo, variables de entorno o claves y valores del Registro, especifique 'StringComparison.OrdinalIgnoreCase'. De lo contrario, si se están comparando identificadores que sí distinguen mayúsculas y minúsculas, especifique 'StringComparison.Ordinal'.</Issue>
+             <Issue Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="64">Puesto que el comportamiento de 'string.IndexOf(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'appSelectOPCServer.appSelectOPCServer(Sistema)' por una llamada a 'string.IndexOf(string, StringComparison)'. Si el resultado de 'string.IndexOf(string, StringComparison)' se mostrará al usuario, como cuando se ordena una lista de elementos para mostrarlos en un cuadro de lista, especifique 'StringComparison.CurrentCulture' o 'StringComparison.CurrentCultureIgnoreCase' como parámetro 'StringComparison'. Si se comparan identificadores que no distinguen mayúsculas y minúsculas, como rutas de acceso de archivo, variables de entorno o claves y valores del Registro, especifique 'StringComparison.OrdinalIgnoreCase'. De lo contrario, si se están comparando identificadores que sí distinguen mayúsculas y minúsculas, especifique 'StringComparison.Ordinal'.</Issue>
+            </Message>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="50">Reemplace la llamada a 'string.operator !=(string, string)' en 'appSelectOPCServer.appSelectOPCServer(Sistema)' con una llamada a 'String.IsNullOrEmpty'.</Issue>
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="55">Reemplace la llamada a 'string.operator !=(string, string)' en 'appSelectOPCServer.appSelectOPCServer(Sistema)' con una llamada a 'String.IsNullOrEmpty'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#addNodes(System.Windows.Forms.TreeNode,OPC.Branch)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.String.LastIndexOf(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="163">Puesto que el comportamiento de 'string.LastIndexOf(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'appSelectOPCServer.addNodes(TreeNode, Branch)' por una llamada a 'string.LastIndexOf(string, StringComparison)'. Si el resultado de 'string.LastIndexOf(string, StringComparison)' se mostrará al usuario, como cuando se ordena una lista de elementos para mostrarlos en un cuadro de lista, especifique 'StringComparison.CurrentCulture' o 'StringComparison.CurrentCultureIgnoreCase' como parámetro 'StringComparison'. Si se comparan identificadores que no distinguen mayúsculas y minúsculas, como rutas de acceso de archivo, variables de entorno o claves y valores del Registro, especifique 'StringComparison.OrdinalIgnoreCase'. De lo contrario, si se están comparando identificadores que sí distinguen mayúsculas y minúsculas, especifique 'StringComparison.Ordinal'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#buttonGenerateOPCVars_Click(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.FileDialog.set_Filter(System.String)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="224">El método 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' pasa una cadena literal como parámetro 'value' de una llamada a 'FileDialog.Filter.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Archivo de valores separados por comas (*.csv)|*.csv".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="263">El método 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' pasa una cadena literal como parámetro 'value' de una llamada a 'FileDialog.Filter.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Texto Estructurado (*.scl)|*.scl".</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.FileDialog.set_Title(System.String)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="223">El método 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' pasa una cadena literal como parámetro 'value' de una llamada a 'FileDialog.Title.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Guardar archivo \'*.csv\' para servidor OPC".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="262">El método 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' pasa una cadena literal como parámetro 'value' de una llamada a 'FileDialog.Title.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Guardar archivo \'*.scl\' para TIA PORTAL".</Issue>
+            </Message>
+            <Message Id="System.Windows.Forms.MessageBox.Show(System.String,System.String,System.Windows.Forms.MessageBoxButtons,System.Windows.Forms.MessageBoxIcon)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="203">El método 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' pasa una cadena literal como parámetro 'caption' de una llamada a 'MessageBox.Show(string, string, MessageBoxButtons, MessageBoxIcon)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="213">El método 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' pasa una cadena literal como parámetro 'caption' de una llamada a 'MessageBox.Show(string, string, MessageBoxButtons, MessageBoxIcon)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="232">El método 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' pasa una cadena literal como parámetro 'caption' de una llamada a 'MessageBox.Show(string, string, MessageBoxButtons, MessageBoxIcon)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="271">El método 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' pasa una cadena literal como parámetro 'caption' de una llamada a 'MessageBox.Show(string, string, MessageBoxButtons, MessageBoxIcon)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Error".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="213">El método 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' pasa una cadena literal como parámetro 'text' de una llamada a 'MessageBox.Show(string, string, MessageBoxButtons, MessageBoxIcon)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Debe seleccionar un nodo de nivel 3".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="232">El método 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' pasa una cadena literal como parámetro 'text' de una llamada a 'MessageBox.Show(string, string, MessageBoxButtons, MessageBoxIcon)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Debe seleccionar una ruta valida".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="271">El método 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' pasa una cadena literal como parámetro 'text' de una llamada a 'MessageBox.Show(string, string, MessageBoxButtons, MessageBoxIcon)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Debe seleccionar una ruta valida".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="203">El método 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' pasa una cadena literal como parámetro 'text' de una llamada a 'MessageBox.Show(string, string, MessageBoxButtons, MessageBoxIcon)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Seleccione al menos una variable que desee importar Max Temp, Mean Temp o Min. T...".</Issue>
+            </Message>
+            <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="203">Cambie 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' para que llame a la sobrecarga MessageBox.Show que especifica MessageBoxOptions y asegúrese de establecer MessageBoxOptions.RightAlign y MessageBoxOptions.RtlReading si RightToLeft está establecido en RightToLeft.Yes en el control primario.</Issue>
+             <Issue Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="213">Cambie 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' para que llame a la sobrecarga MessageBox.Show que especifica MessageBoxOptions y asegúrese de establecer MessageBoxOptions.RightAlign y MessageBoxOptions.RtlReading si RightToLeft está establecido en RightToLeft.Yes en el control primario.</Issue>
+             <Issue Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="232">Cambie 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' para que llame a la sobrecarga MessageBox.Show que especifica MessageBoxOptions y asegúrese de establecer MessageBoxOptions.RightAlign y MessageBoxOptions.RtlReading si RightToLeft está establecido en RightToLeft.Yes en el control primario.</Issue>
+             <Issue Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="271">Cambie 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' para que llame a la sobrecarga MessageBox.Show que especifica MessageBoxOptions y asegúrese de establecer MessageBoxOptions.RightAlign y MessageBoxOptions.RtlReading si RightToLeft está establecido en RightToLeft.Yes en el control primario.</Issue>
+            </Message>
+            <Message Id="System.String.StartsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="211">Puesto que el comportamiento de 'string.StartsWith(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' por una llamada a 'string.StartsWith(string, StringComparison)'. Si el resultado de 'string.StartsWith(string, StringComparison)' se mostrará al usuario, como cuando se ordena una lista de elementos para mostrarlos en un cuadro de lista, especifique 'StringComparison.CurrentCulture' o 'StringComparison.CurrentCultureIgnoreCase' como parámetro 'StringComparison'. Si se comparan identificadores que no distinguen mayúsculas y minúsculas, como rutas de acceso de archivo, variables de entorno o claves y valores del Registro, especifique 'StringComparison.OrdinalIgnoreCase'. De lo contrario, si se están comparando identificadores que sí distinguen mayúsculas y minúsculas, especifique 'StringComparison.Ordinal'.</Issue>
+            </Message>
+            <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="230">Reemplace la llamada a 'string.operator !=(string, string)' en 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' con una llamada a 'String.IsNullOrEmpty'.</Issue>
+             <Issue Name="IsNullOrEmpty" Certainty="95" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="269">Reemplace la llamada a 'string.operator !=(string, string)' en 'appSelectOPCServer.buttonGenerateOPCVars_Click(object, EventArgs)' con una llamada a 'String.IsNullOrEmpty'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#generateRampasOPCVars(System.String)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="No usar Dispose varias veces en objetos" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="508">El objeto 'w' admite Dispose más de una vez en el método 'appSelectOPCServer.generateRampasOPCVars(string)'. Para evitar generar una excepción System.ObjectDisposedException, no debe llamar a Dispose más de una vez en un objeto.: Lines: 508</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#generateStandartOPCVars(System.String)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="No usar Dispose varias veces en objetos" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="373">El objeto 'w' admite Dispose más de una vez en el método 'appSelectOPCServer.generateStandartOPCVars(string)'. Para evitar generar una excepción System.ObjectDisposedException, no debe llamar a Dispose más de una vez en un objeto.: Lines: 373</Issue>
+            </Message>
+            <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Name="IFormatProviderAlternate" Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="309">Puesto que el comportamiento de 'int.Parse(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'appSelectOPCServer.generateStandartOPCVars(string)' por una llamada a 'int.Parse(string, IFormatProvider)'. Si el resultado de 'int.Parse(string, IFormatProvider)' estará basado en los datos proporcionados por el usuario, especifique 'CultureInfo.CurrentCulture' como parámetro 'IFormatProvider'. De lo contrario, si el resultado estará basado en datos almacenados a los que tiene acceso el software, como cuando se cargan desde un disco o una base de datos, especifique 'CultureInfo.InvariantCulture'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#generateStandartSIEMENSscl(System.String)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="No usar Dispose varias veces en objetos" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="424">El objeto 'w' admite Dispose más de una vez en el método 'appSelectOPCServer.generateStandartSIEMENSscl(string)'. Para evitar generar una excepción System.ObjectDisposedException, no debe llamar a Dispose más de una vez en un objeto.: Lines: 424</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#InitializeComponent()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.Windows.Forms.Control.set_Text(System.String)" TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.Designer.cs" Line="184">El método 'appSelectOPCServer.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "&lt;&lt; Atrás".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.Designer.cs" Line="114">El método 'appSelectOPCServer.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Dir. Mem.".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.Designer.cs" Line="131">El método 'appSelectOPCServer.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Generar *.csv".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.Designer.cs" Line="122">El método 'appSelectOPCServer.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "MW".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.Designer.cs" Line="87">El método 'appSelectOPCServer.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Max. Temp".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.Designer.cs" Line="77">El método 'appSelectOPCServer.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Mean Temp".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.Designer.cs" Line="67">El método 'appSelectOPCServer.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Min. Temp".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.Designer.cs" Line="105">El método 'appSelectOPCServer.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Offset".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.Designer.cs" Line="224">El método 'appSelectOPCServer.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Seleccionar servidor OPC".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.Designer.cs" Line="168">El método 'appSelectOPCServer.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Servidor OPC".</Issue>
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.Designer.cs" Line="194">El método 'appSelectOPCServer.InitializeComponent()' pasa una cadena literal como parámetro 'value' de una llamada a 'Control.Text.set(string)'. En su lugar, recupere las siguientes cadenas de una tabla de recursos: "Siguiente &gt;&gt;".</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#treeViewBranch_AfterSelect(System.Object,System.Windows.Forms.TreeViewEventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message Id="System.String.StartsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Status="Active" Created="2015-10-19 10:45:11Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error" Path="e:\Repositories\ThermoCamApp\WindowsFormsApplication4\Asistente\OPC" File="appSelectOPCServer.cs" Line="89">Puesto que el comportamiento de 'string.StartsWith(string)' podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en 'appSelectOPCServer.treeViewBranch_AfterSelect(object, TreeViewEventArgs)' por una llamada a 'string.StartsWith(string, StringComparison)'. Si el resultado de 'string.StartsWith(string, StringComparison)' se mostrará al usuario, como cuando se ordena una lista de elementos para mostrarlos en un cuadro de lista, especifique 'StringComparison.CurrentCulture' o 'StringComparison.CurrentCultureIgnoreCase' como parámetro 'StringComparison'. Si se comparan identificadores que no distinguen mayúsculas y minúsculas, como rutas de acceso de archivo, variables de entorno o claves y valores del Registro, especifique 'StringComparison.OrdinalIgnoreCase'. De lo contrario, si se están comparando identificadores que sí distinguen mayúsculas y minúsculas, especifique 'StringComparison.Ordinal'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
+   <Name>Los ensamblados deben tener nombres seguros válidos</Name>
+   <Description>Puede que el ensamblado no tenga un nombre seguro, que no sea válido o que éste sea válido únicamente por la configuración del equipo. No se puede implementar el ensamblado en este estado. Las causas más probables son: 1) El contenido del ensamblado se modificó después de firmarlo. 2) Error en el proceso de firma. 3) El ensamblado tenía firma retardada. 4) Existía una clave del Registro que permitió que se realizara la comprobación (de lo contrario no se hubiera realizado).</Description>
+   <Resolution Name="NoStrongName">Firme {0} con una clave de nombre seguro.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182127(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="designrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidExcessiveComplexity" Category="Microsoft.Maintainability" CheckId="CA1502">
+   <Name>Evite la excesiva complejidad</Name>
+   <Description>Las implementaciones de método que son excesivamente complejas aumentan el reto de comprender y mantener el código.</Description>
+   <Resolution Name="Default">{0} tiene una complejidad ciclomática de {1}. Vuelva a escribir o refactorice el método para reducir la complejidad a {2}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182212(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Warning</MessageLevel>
+   <File Name="maintainabilityrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+   <Name>Evitar código privado al que no se llama</Name>
+   <Description>Hay código al que no se llama que no es visible externamente y no es un punto de entrada en tiempo de ejecución conocido. Si esta infracción da lugar a un error, envíe un informe sobre el problema al equipo de análisis de código de Visual Studio.</Description>
+   <Resolution Name="Default">{0} parece no tener ningún llamador protegido o público de nivel superior.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182264(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812">
+   <Name>Evitar las clases internas sin instancia</Name>
+   <Description>Se detectó una clase interna de la que aparentemente nunca se crea una instancia. Esta regla no intenta detectar la creación enlazada en tiempo de ejecución y generará falsos positivos si las instancias de un tipo se crean sólo de esta forma (por ejemplo, mediante Activator.CreateInstance o pasando el tipo como argumento a un constructor TypeConverter).</Description>
+   <Resolution Name="Default">{0} es una clase interna de la que aparentemente nunca se crea una instancia. Si es así, quite el código del ensamblado. Si esta clase está destinada a contener sólo métodos estáticos, considere la posibilidad de agregar un constructor privado para evitar que el compilador genere un constructor de forma predeterminada.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182265(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="AvoidUnmaintainableCode" Category="Microsoft.Maintainability" CheckId="CA1505">
+   <Name>Evite código que no se puede mantener</Name>
+   <Description>Los tipos y métodos con un alto grado de acoplamiento de clases, complejidad ciclomática y longitud de programa pueden ser difíciles de mantener.</Description>
+   <Resolution Name="Method">{0} tiene un índice de mantenimiento de {1}. Escriba de nuevo o refactorice el método para aumentar su índice de mantenimiento (MI). Un MI por debajo de {2} indica un mantenimiento pobre, un MI entre {2} y {3} indica un mantenimiento moderado y un MI por encima de {3} indica un buen mantenimiento.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb386043(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Warning</MessageLevel>
+   <File Name="maintainabilityrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800">
+   <Name>No convertir innecesariamente</Name>
+   <Description>Evite duplicar conversiones cuando sea posible, ya que conllevan un coste asociado.</Description>
+   <Resolution Name="Parameter">{0}, un parámetro, se convierte en el tipo {1} varias veces en el método {2}. Almacene en caché el resultado del operador 'as' o dirija la conversión con el fin de eliminar la instrucción {3} redundante.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182271(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+   <Name>No capturar los tipos de excepción general</Name>
+   <Description>No debe capturar las excepciones o SystemException. Si captura los tipos de excepción general se pueden ocultar problemas en tiempo de ejecución del usuario de la biblioteca y dificultar la depuración. Únicamente debería capturar aquellas excepciones que pueda administrar correctamente.</Description>
+   <Resolution Name="Default">Modifique {0} para capturar una excepción más específica que {1} o vuelva a producir la excepción.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182137(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="designrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
+   <Name>No declarar campos de instancia visibles</Name>
+   <Description>Los campos de instancia que son visibles fuera del tipo que los declara, limitan la capacidad de cambiar los detalles de la implementación de esos elementos de datos. Use propiedades en su lugar. No comprometen el uso o el rendimiento, y proporcionan flexibilidad porque ocultan los detalles de la implementación de los datos subyacentes.</Description>
+   <Resolution Name="Default">Puesto que el campo {0} es visible fuera del tipo que lo declara, cambie su accesibilidad a privada y agregue una propiedad, con la misma accesibilidad que tiene el campo actualmente, para proporcionar acceso a él.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182141(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="designrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="Eliminar (Dispose) objetos antes de perder el ámbito" Category="Microsoft.Reliability" CheckId="CA2000">
+   <Name>Eliminar (Dispose) objetos antes de perder el ámbito</Name>
+   <Description>Si un objeto que se puede eliminar (método Dispose) no se elimina de forma explícita antes de que todas las referencias a él estén fuera de ámbito, el objeto se eliminará en algún momento indeterminado cuando el recolector de elementos no utilizados ejecute el finalizador del objeto. Puesto que podría producirse un evento excepcional que impida que se ejecute el finalizador del objeto, el objeto debe eliminarse de forma explícita.</Description>
+   <Resolution Name="ExceptionEdge">En el método {0}, no se elimina (Dispose) el objeto {1} en todas las rutas de acceso de excepciones. Llame a System.IDisposable.Dispose en el objeto {1} antes de que todas las referencias a él estén fuera de ámbito.</Resolution>
+   <Resolution Name="NonExceptionEdge">En el método {0}, llame a System.IDisposable.Dispose en el objeto {1} antes de que todas las referencias a él estén fuera de ámbito.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182289(VS.100).aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+   <Name>Los identificadores deberían utilizar las mayúsculas y minúsculas correctamente</Name>
+   <Description>Los identificadores de tipo, espacio de nombres y miembro usan las mayúsculas y minúsculas como en Pascal. Los identificadores de parámetro usan las mayúsculas y minúsculas como en Camel. Los acrónimos de dos letras en estos identificadores deben ir en mayúsculas; por ejemplo, use System.IO en lugar de System.Io. Los acrónimos de tres o más letras deben usar las mayúsculas y minúsculas como en Pascal; por ejemplo, use System.Xml en lugar de System.XML. La convención de mayúsculas y minúsculas Pascal pone en mayúscula la primera letra de cada palabra, como en BackColor. La convención de mayúsculas y minúsculas Camel pone en minúscula la primera letra de la primera palabra y, en mayúscula, la primera letra de las palabras siguientes, como en backgroundColor. Si bien puede ser una práctica común para algunos acrónimos de dos letras no ponerlos totalmente en mayúsculas, no se deben excluir las infracciones de esta regla por esta razón. Por ejemplo, 'DbConnection', es común pero incorrecto; use DBConnection. Una infracción de esta regla puede ser necesaria por compatibilidad con esquemas de símbolos no administrados existentes. En general, sin embargo, estos símbolos no deberían estar visibles fuera del ensamblado que los usa.</Description>
+   <Resolution Name="Member">Corrija el uso de mayúsculas y minúsculas en '{0}' en el nombre del miembro {1} cambiándolo a '{2}'.</Resolution>
+   <Resolution Name="Namespace">Corrija el uso de mayúsculas y minúsculas en '{0}' en el nombre del espacio de nombres '{1}' cambiándolo a '{2}'.</Resolution>
+   <Resolution Name="Type">Corrija el uso de mayúsculas y minúsculas en '{0}' en el nombre del tipo {1} cambiándolo a '{2}'.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182240(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="85">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
+   <Name>Los identificadores no deberían contener subrayado</Name>
+   <Description>No utilice subrayado al especificar identificadores. Algunos identificadores de Visual Studio generados para aplicaciones contienen caracteres de subrayado. En general, se deberían evitar los caracteres de subrayado en identificadores públicos.</Description>
+   <Resolution Name="Member">Quite los caracteres de subrayado del nombre del miembro {0}.</Resolution>
+   <Resolution Name="MemberParameter">En el miembro {0}, quite los caracteres de subrayado del nombre del parámetro {1}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182245(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="namingrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
+   <Name>Marque los ensamblados con CLSCompliantAttribute</Name>
+   <Description>Los ensamblados deben establecer explícitamente ser conformes a CLS usando el atributo CLSCompliant. Un ensamblado sin este atributo no es conforme a CLS. Los ensamblados, módulos y tipos pueden ser conformes a CLS incluso si alguna parte del ensamblado, módulo o tipo no son conformes a CLS. Se aplican las siguientes reglas: 1) Si el elemento está marcado como CLSCompliant, cualquier miembro no compatible debe tener el atributo CLSCompliant presente con el argumento establecido como false. 2) Se debe proporcionar un miembro alternativo conforme a CLS comparable con cada miembro que no sea conforme a CLS.</Description>
+   <Resolution Name="Default">Marque {0} con CLSCompliant(true) porque expone tipos visibles externamente.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182156(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="designrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="No pasar cadenas literal como parámetros localizados" Category="Microsoft.Globalization" CheckId="CA1303">
+   <Name>No pasar cadenas literal como parámetros localizados</Name>
+   <Description>Las cadenas de tipo literal incrustadas en el código fuente son difíciles de localizar. Evite pasar cadenas literal como argumentos en circunstancias donde, por lo general, se espera una cadena localizada.</Description>
+   <Resolution Name="KnownValue">El método {0} pasa una cadena literal como parámetro '{1}' de una llamada a {2}. En su lugar, recupere las siguientes cadenas de una tabla de recursos: {3}.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182187(VS.100).aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="No usar Dispose varias veces en objetos" Category="Microsoft.Usage" CheckId="CA2202">
+   <Name>No usar Dispose varias veces en objetos</Name>
+   <Description>Un método Dispose correctamente implementado se puede llamar varias veces sin producir ninguna excepción. Sin embargo, esto no está garantizado y, para evitar generar una excepción System.ObjectDisposedException, no debe llamar al método Dispose más de una vez en un objeto.</Description>
+   <Resolution Name="Default">El objeto {0} admite Dispose más de una vez en el método {1}. Para evitar generar una excepción System.ObjectDisposedException, no debe llamar a Dispose más de una vez en un objeto.: Lines: 209</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182334(VS.100).aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="OperationsShouldNotOverflow" Category="Microsoft.Usage" CheckId="CA2233">
+   <Name>Las operaciones no deben desbordarse</Name>
+   <Description>No se deben realizar las operaciones aritméticas sin validar primero los operandos para evitar el desbordamiento.</Description>
+   <Resolution Name="Default">Corrija el desbordamiento potencial en la operación '{0}' en {1}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182354(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">CriticalWarning</MessageLevel>
+   <File Name="usagerules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+   <Name>Especificar IFormatProvider</Name>
+   <Description>Si existe una sobrecarga que toma un argumento IFormatProvider, se debe llamar siempre en favor de una sobrecarga que no lo haga. Algunos métodos de tiempo de ejecución convierten un valor a o desde una representación de cadena y toman un parámetro de cadena que contiene uno o varios caracteres, denominados especificadores de formato, que indican cómo se debe convertir el valor. Si el significado del especificador de formato varía por referencia cultural, un objeto de formato proporciona los caracteres usados en la representación de cadena. En escenarios donde el comportamiento de ordenación y comparación no debería cambiar nunca entre referecias culturales, especifique CultureInfo.InvariantCulture; de lo contrario, especifique CultureInfo.CurrentCulture.</Description>
+   <Resolution Name="IFormatProviderAlternate">Puesto que el comportamiento de {0} podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en {1} por una llamada a {2}. Si el resultado de {2} estará basado en los datos proporcionados por el usuario, especifique {3} como parámetro 'IFormatProvider'. De lo contrario, si el resultado estará basado en datos almacenados a los que tiene acceso el software, como cuando se cargan desde un disco o una base de datos, especifique {4}.</Resolution>
+   <Resolution Name="IFormatProviderAlternateString">Puesto que el comportamiento de {0} podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en {1} por una llamada a {2}. Si el resultado de {2} se mostrará al usuario, especifique {3} como parámetro 'IFormatProvider'. De lo contrario, si el resultado se almacenará y será el software quien tenga acceso a él, como cuando se almacena en un disco o en una base de datos, especifique {4}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182190(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="globalizationrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
+   <Name>Especifique MessageBoxOptions</Name>
+   <Description>Para poder ejecutar correctamente los sistemas de derecha a izquierda, todas las llamadas realizadas a MessageBox.Show deben utilizar la sobrecarga que especifica MessageBoxOptions como un argumento. Los programas deben detectar si se están ejecutando en un sistema de derecha a izquierda en tiempo de ejecución y pasar el valor MessageBoxOptions apropiado para que se muestre correctamente.</Description>
+   <Resolution Name="Default">Cambie {0} para que llame a la sobrecarga MessageBox.Show que especifica MessageBoxOptions y asegúrese de establecer MessageBoxOptions.RightAlign y MessageBoxOptions.RtlReading si RightToLeft está establecido en RightToLeft.Yes en el control primario.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182191(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="globalizationrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307">
+   <Name>Especificar StringComparison</Name>
+   <Description>Si sale una sobrecarga que toma un argumento StringComparison, se debería llamar a ésta en favor de una sobrecarga que no lo haga.</Description>
+   <Resolution Name="Default">Puesto que el comportamiento de {0} podría variar en función de la configuración regional del usuario actual, reemplace esta llamada en {1} por una llamada a {2}. Si el resultado de {2} se mostrará al usuario, como cuando se ordena una lista de elementos para mostrarlos en un cuadro de lista, especifique 'StringComparison.CurrentCulture' o 'StringComparison.CurrentCultureIgnoreCase' como parámetro 'StringComparison'. Si se comparan identificadores que no distinguen mayúsculas y minúsculas, como rutas de acceso de archivo, variables de entorno o claves y valores del Registro, especifique 'StringComparison.OrdinalIgnoreCase'. De lo contrario, si se están comparando identificadores que sí distinguen mayúsculas y minúsculas, especifique 'StringComparison.Ordinal'.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/bb386080(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="globalizationrules.dll" Version="11.0.0.0" />
+  </Rule>
+  <Rule TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820">
+   <Name>Comprobar si las cadenas están vacías mediante la longitud de cadena</Name>
+   <Description>Para comprobar si las cadenas están vacías, observe si String.Length es igual a cero. Construcciones como "".Equals(someString) y String.Empty.Equals(someString) son menos eficientes que la comprobación de la longitud de la cadena. Reemplácelas con la comprobación someString.Length == 0.</Description>
+   <Resolution Name="IsNullOrEmpty">Reemplace la llamada a {0} en {1} con una llamada a 'String.IsNullOrEmpty'.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182279(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Warning</MessageLevel>
+   <File Name="performancerules.dll" Version="11.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Categoría</String>
+  <String Key="Certainty">Certeza</String>
+  <String Key="CollapseAll">Contraer todo</String>
+  <String Key="CheckId">Comprobar id.</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">errores</String>
+  <String Key="ExpandAll">Expandir todo</String>
+  <String Key="Help">Ayuda</String>
+  <String Key="Line">Línea</String>
+  <String Key="Messages">mensajes</String>
+  <String Key="LocationNotStoredInPdb">[Ubicación no almacenada en Pdb]</String>
+  <String Key="Project">Proyecto</String>
+  <String Key="Resolution">Resolución</String>
+  <String Key="Rule">Regla</String>
+  <String Key="RuleFile">Archivo de regla</String>
+  <String Key="RuleDescription">Descripción de la regla</String>
+  <String Key="Source">Origen</String>
+  <String Key="Status">Estado</String>
+  <String Key="Target">Círculos concéntricos</String>
+  <String Key="Warning">Advertencia</String>
+  <String Key="Warnings">advertencias</String>
+  <String Key="ReportTitle">Informe de análisis del código</String>
+ </Localized>
+</FxCopReport>

@@ -1,0 +1,23 @@
+//DATA TYPE
+TYPE "tempElement"
+VERSION : 0.1
+   STRUCT
+       maxTemp : Int;
+   END_STRUCT;
+END_TYPE
+
+
+//DATABLOCK
+DATA_BLOCK "DataTemp"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION: 0.1
+NON_RETAIN
+   VAR
+       apa : "tempElement";
+       apa2 : "tempElement";
+       apa2_Matrix : Array[0..10, 0..10] of "tempElement";
+       aaff : "tempElement";
+       afefafa : "tempElement";
+       afefafa_Matrix : Array[0..10, 0..10] of "tempElement";
+   END_VAR
+END_DATA_BLOCK

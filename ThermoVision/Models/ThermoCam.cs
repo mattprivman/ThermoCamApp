@@ -47,6 +47,7 @@ namespace ThermoVision.Models
 
         bool                    _rejilla;
         bool                    _configuracionMode;
+        bool                    _rampMode;
         bool                    _matrixTemp;
 
         public List<SubZona>    SubZonas;
@@ -73,7 +74,7 @@ namespace ThermoVision.Models
         #region PROPIEDADES
 
         //CAMARA
-        public string Nombre                       // -rw 
+        public string Nombre                        // -rw 
         {
             get
             {
@@ -89,14 +90,14 @@ namespace ThermoVision.Models
         }
 
         //CONEXIÓN
-        public bool   Conectado                    // -r  
+        public bool   Conectado                     // -r  
         {
             get
             {
                 return this.connected;
             }
         }
-        public string Address                      // -rw 
+        public string Address                       // -rw 
         {
             get
             {
@@ -129,6 +130,17 @@ namespace ThermoVision.Models
                 this._configuracionMode = value;
             }
         }
+        public bool   RampMode                      // -w  
+        {
+            get
+            {
+                return this._rampMode;
+            }
+            set
+            {
+                this._rampMode = value;
+            }
+        }
         public bool   MatrixTemp                    // -w  
         {
             set
@@ -153,7 +165,7 @@ namespace ThermoVision.Models
             }
         }
 
-        public bool   ImagenRecibida                 // -rw 
+        public bool   ImagenRecibida                // -rw 
         {
             get
             {
@@ -165,7 +177,7 @@ namespace ThermoVision.Models
             }
         }
 
-        public Sistema Parent
+        public Sistema Parent                       // -rw 
         {
             get;
             set;
@@ -393,9 +405,8 @@ namespace ThermoVision.Models
 
             while (this.connected == true && this.camara != null)
             {
-
-                //try
-                //{
+                try
+                {
                     //Request Image
                     getImage();
 
@@ -424,18 +435,18 @@ namespace ThermoVision.Models
 
                         triggerImgReceivedEvent();
                     }
-                //}
-                //catch (Exception ex)
-                //{
-                //    // Excepción producida por que el objecto camara ha sido Disposed
-                //    if (ex.ToString().Contains("No se puede utilizar un objeto COM que se ha separado de su RCW subyacente."))
-                //        return;
-                //    else if (ex.ToString().Contains("No se puede evaluar la expresión porque el código está optimizado o existe un marco nativo en la parte superior de la pila de llamadas."))
-                //        return;
+                }
+                catch (Exception ex)
+                {
+                    // Excepción producida por que el objecto camara ha sido Disposed
+                    if (ex.ToString().Contains("No se puede utilizar un objeto COM que se ha separado de su RCW subyacente."))
+                        return;
+                    else if (ex.ToString().Contains("No se puede evaluar la expresión porque el código está optimizado o existe un marco nativo en la parte superior de la pila de llamadas."))
+                        return;
 
 
-                //    procesarExcepcion(ex, "getImages");
-                //}
+                    procesarExcepcion(ex, "getImages");
+                }
             }
         }
         private void getImage()                     
@@ -584,7 +595,7 @@ namespace ThermoVision.Models
 
                     foreach (SubZona s in this.SubZonas)
                     {
-                        if (s.Selected)
+                        if (s.Selected || this._rampMode)
                         {
                             for (int x = s.Inicio.X; x < s.Fin.X; x++)
                             {
@@ -603,7 +614,7 @@ namespace ThermoVision.Models
                     // Se dibujan las zonas en escala Raibow
                     foreach (SubZona s in SubZonas)
                     {
-                        if (s.Selected)
+                        if (s.Selected || this._rampMode)
                         {
                             //Dibujar subzonas con escala rainbow
                             for (int x = s.Inicio.X; x < s.Fin.X; x++)
@@ -620,43 +631,46 @@ namespace ThermoVision.Models
                                 }//for y
                             }//for x
 
-                            //Columnas
-                            for (int i = 1; i < s.Columnas; i++)
+                            if (s.Selected)
                             {
-                                int x = (i * (s.Fin.X - s.Inicio.X) / s.Columnas) + s.Inicio.X;
-
-                                for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
+                                //Columnas
+                                for (int i = 1; i < s.Columnas; i++)
                                 {
-                                    this.bmp.SetPixel(x, y, Color.Black);
-                                }//For  y
-                            }//for columnas
+                                    int x = (i * (s.Fin.X - s.Inicio.X) / s.Columnas) + s.Inicio.X;
 
-                            //Filas
-                            for (int i = 1; i < s.Filas; i++)
-                            {
-                                int y = (i * (s.Fin.Y - s.Inicio.Y) / s.Filas) + s.Inicio.Y;
+                                    for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
+                                    {
+                                        this.bmp.SetPixel(x, y, Color.Black);
+                                    }//For  y
+                                }//for columnas
 
-                                for (int x = s.Inicio.X; x < s.Fin.X; x++)
+                                //Filas
+                                for (int i = 1; i < s.Filas; i++)
                                 {
-                                    this.bmp.SetPixel(x, y, Color.Black);
-                                }//For x
-                            }//For filas
+                                    int y = (i * (s.Fin.Y - s.Inicio.Y) / s.Filas) + s.Inicio.Y;
 
-                            //Escribir el nombre de la división
-                            using (Graphics graphics = Graphics.FromImage(this.bmp))
-                            {
-                                using (Font arialFont = new Font("Calibri Light", 6))
+                                    for (int x = s.Inicio.X; x < s.Fin.X; x++)
+                                    {
+                                        this.bmp.SetPixel(x, y, Color.Black);
+                                    }//For x
+                                }//For filas
+
+                                //Escribir el nombre de la división
+                                using (Graphics graphics = Graphics.FromImage(this.bmp))
                                 {
-                                    //test1 = (((j) * this._widthPerCol) + this._inicio.X);
-                                    //test2 = (((i + 1) * this._heigthPerRow) + this._inicio.Y) - 10;
-                                    graphics.DrawString(s.Nombre,
-                                        arialFont,
-                                        Brushes.Black,
-                                        new Point(
-                                            s.Inicio.X + 2,
-                                            s.Inicio.Y + 2));
-                                }//Using font
-                            }//Using raphics
+                                    using (Font arialFont = new Font("Calibri Light", 6))
+                                    {
+                                        //test1 = (((j) * this._widthPerCol) + this._inicio.X);
+                                        //test2 = (((i + 1) * this._heigthPerRow) + this._inicio.Y) - 10;
+                                        graphics.DrawString(s.Nombre,
+                                            arialFont,
+                                            Brushes.Black,
+                                            new Point(
+                                                s.Inicio.X + 2,
+                                                s.Inicio.Y + 2));
+                                    }//Using font
+                                }//Using raphics
+                            }//if selected
                         }//if selected
                     }//foreach subzona
                 }//lock subzona
@@ -668,83 +682,91 @@ namespace ThermoVision.Models
 
             if (this.Parent != null && this.Parent.accessingTempElements == false)
             {
-                this.Parent.accessingTempElements = true;
-                //Obtener temperaturas maximas, mínima y media de cada división de cada subzona
-                lock ("SubZonas")                    //Bloqueo para evitar cambios en la coleccion de subzonas
+                try
                 {
-                    foreach (SubZona s in this.SubZonas)
+                    this.Parent.accessingTempElements = true;
+
+                    //Obtener temperaturas maximas, mínima y media de cada división de cada subzona
+                    lock ("SubZonas")                    //Bloqueo para evitar cambios en la coleccion de subzonas
                     {
-                        lock ("lockRejilla")        //Bloqueo para evitar cambios en las rejillas
+                        foreach (SubZona s in this.SubZonas)
                         {
-                            //Reinicializar variables de temperatura para cada subZona
-                            s._maxTemp = 0;
-                            s._minTemp = this.lutTable[this.lutTable.Length - 1];
-                            s._meanTemp = 0D;
-
-                            //Redimensionar matriz de temperaturas
-                            if (s.tempMatrix == null || s.tempMatrix.GetLength(0) != s.Filas || s.tempMatrix.GetLength(1) != s.Columnas)
-                                s.tempMatrix = new tempElement[s.Filas, s.Columnas];
-
-                            //Reinicializar variables
-                            for (int i = 0; i < s.Filas; i++)
+                            lock ("lockRejilla")        //Bloqueo para evitar cambios en las rejillas
                             {
-                                for (int j = 0; j < s.Columnas; j++)
+                                //Reinicializar variables de temperatura para cada subZona
+                                s._maxTemp = 0;
+                                s._minTemp = this.lutTable[this.lutTable.Length - 1];
+                                s._meanTemp = 0D;
+
+                                //Redimensionar matriz de temperaturas
+                                if (s.tempMatrix == null || s.tempMatrix.GetLength(0) != s.Filas || s.tempMatrix.GetLength(1) != s.Columnas)
+                                    s.tempMatrix = new tempElement[s.Filas, s.Columnas];
+
+                                //Reinicializar variables
+                                for (int i = 0; i < s.Filas; i++)
                                 {
-                                    s.tempMatrix[i, j].max = this.lutTable[0]; ;
-                                    s.tempMatrix[i, j].min = this.lutTable[this.lutTable.Length - 1];
-                                    s.tempMatrix[i, j].mean = 0D;
-                                }//for columnas
-                            }//for filas
+                                    for (int j = 0; j < s.Columnas; j++)
+                                    {
+                                        s.tempMatrix[i, j].max = this.lutTable[0]; ;
+                                        s.tempMatrix[i, j].min = this.lutTable[this.lutTable.Length - 1];
+                                        s.tempMatrix[i, j].mean = 0D;
+                                    }//for columnas
+                                }//for filas
 
-                            int Heigth = (s.Fin.Y - s.Inicio.Y);    //Altura de la subzona
-                            int Width = (s.Fin.X - s.Inicio.X);     //Ancho de la subzona
+                                int Heigth = (s.Fin.Y - s.Inicio.Y);    //Altura de la subzona
+                                int Width = (s.Fin.X - s.Inicio.X);     //Ancho de la subzona
 
-                            int elements = Heigth / s.Filas * Width / s.Columnas;          //Numero de elementos
+                                int elements = Heigth / s.Filas * Width / s.Columnas;          //Numero de elementos
 
-                            for (int x = s.Inicio.X; x < s.Fin.X; x++)
-                            {
-                                for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
+                                for (int x = s.Inicio.X; x < s.Fin.X; x++)
                                 {
-                                    //Coordenadas de la matriz de temperaturas
-                                    int fila = (y - s.Inicio.Y) * s.Filas / Heigth;
-                                    int columna = (x - s.Inicio.X) * s.Columnas / Width;
+                                    for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
+                                    {
+                                        //Coordenadas de la matriz de temperaturas
+                                        int fila = (y - s.Inicio.Y) * s.Filas / Heigth;
+                                        int columna = (x - s.Inicio.X) * s.Columnas / Width;
 
-                                    short actualValue = this.imgData[x, y];
-                                    float actualTemp = this.lutTable[actualValue];
+                                        short actualValue = this.imgData[x, y];
+                                        float actualTemp = this.lutTable[actualValue];
 
-                                    float maxTemp = s.tempMatrix[fila, columna].max + 273.15f;
-                                    float minTemp = s.tempMatrix[fila, columna].min + 273.15f;
+                                        float maxTemp = s.tempMatrix[fila, columna].max + 273.15f;
+                                        float minTemp = s.tempMatrix[fila, columna].min + 273.15f;
 
-                                    //DIVISION
+                                        //DIVISION
 
-                                    if (this.lutTable[this.imgData[x, y]] > (s.tempMatrix[fila, columna].max + 273.15f))                    //Maximo division
-                                        s.tempMatrix[fila, columna].max = this.lutTable[this.imgData[x, y]] - 273.15f;
+                                        if (this.lutTable[this.imgData[x, y]] > (s.tempMatrix[fila, columna].max + 273.15f))                    //Maximo division
+                                            s.tempMatrix[fila, columna].max = this.lutTable[this.imgData[x, y]] - 273.15f;
 
-                                    if (this.lutTable[this.imgData[x, y]] < (s.tempMatrix[fila, columna].min + 273.15f))                    //Mínimo división
-                                        s.tempMatrix[fila, columna].min = this.lutTable[this.imgData[x, y]] - 273.15f;
+                                        if (this.lutTable[this.imgData[x, y]] < (s.tempMatrix[fila, columna].min + 273.15f))                    //Mínimo división
+                                            s.tempMatrix[fila, columna].min = this.lutTable[this.imgData[x, y]] - 273.15f;
 
-                                    s.tempMatrix[fila, columna].mean += (this.lutTable[this.imgData[x, y]] - 273.15f) / elements;           //Media división
+                                        s.tempMatrix[fila, columna].mean += (this.lutTable[this.imgData[x, y]] - 273.15f) / elements;           //Media división
 
-                                    // SUBZONA
+                                        // SUBZONA
 
-                                    if (this.lutTable[this.imgData[x, y]] > (s._maxTemp + 273.15f))                                         //Maximo division
-                                        s._maxTemp = this.lutTable[this.imgData[x, y]] - 273.15f;
+                                        if (this.lutTable[this.imgData[x, y]] > (s._maxTemp + 273.15f))                                         //Maximo division
+                                            s._maxTemp = this.lutTable[this.imgData[x, y]] - 273.15f;
 
-                                    if (this.lutTable[this.imgData[x, y]] < (s._minTemp + 273.15f))                                         //Mínimo división
-                                        s._minTemp = this.lutTable[this.imgData[x, y]] - 273.15f;
+                                        if (this.lutTable[this.imgData[x, y]] < (s._minTemp + 273.15f))                                         //Mínimo división
+                                            s._minTemp = this.lutTable[this.imgData[x, y]] - 273.15f;
 
-                                    s._meanTemp += (this.lutTable[this.imgData[x, y]] - 273.15f) / (Heigth * Width);                        //Media división
-                                }//for y
-                            }//for x
+                                        s._meanTemp += (this.lutTable[this.imgData[x, y]] - 273.15f) / (Heigth * Width);                        //Media división
+                                    }//for y
+                                }//for x
 
-                            if (s._maxTemp == 0)
-                            {
-                                Console.WriteLine("aa");
-                            }
-                        }//lock lockRejilla
-                    }//foreach subzona
-                }//lockSubzonas
-                this.Parent.accessingTempElements = false;
+                                if (s._maxTemp == 0)
+                                {
+                                    Console.WriteLine("aa");
+                                }
+                            }//lock lockRejilla
+                        }//foreach subzona
+                    }//lockSubzonas
+                    this.Parent.accessingTempElements = false;
+                }
+                catch (Exception ex)
+                {
+                    this.Parent.accessingTempElements = false;
+                }
             }//PARENT != null
             #endregion
         }

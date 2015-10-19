@@ -37,11 +37,9 @@ namespace WindowsFormsApplication4
                 if (_system.ThermoCams.Count > 0)
                 {
                     numeroCamaras = _system.ThermoCams.Count;
-                    step          = (int)windowIds.appMain;
+                    step          = (int) windowIds.appMain;
                 }
             }
-
-            Helpers.changeAppStringSetting("Mode", "");
 
             while (finAsistente == false)
             {
@@ -97,7 +95,7 @@ namespace WindowsFormsApplication4
                         if (numeroCamaras > 0 && _system != null)
                         {
                             //_system = Helpers.deserializeSistema("data.ocl");
-                            _system.selectedZona = null;
+                            _system.SelectedZona = null;
                             using (Asistente.Camaras.CamerasConfiguration cc = new Asistente.Camaras.CamerasConfiguration(numeroCamaras, _system))
                             {
                                 cc.ShowDialog();
@@ -138,7 +136,7 @@ namespace WindowsFormsApplication4
 
                         if (_system != null)
                         {
-                            _system.selectedZona = null;
+                            _system.SelectedZona = null;
                             using (Asistente.OPC.appSelectOPCServer sos = new Asistente.OPC.appSelectOPCServer(_system))
                             {
                                 sos.ShowDialog();
@@ -154,6 +152,7 @@ namespace WindowsFormsApplication4
                                 {
                                     //ATRAS
                                     step = (int)windowIds.appCameraConfiguration;
+                                    numeroCamaras = _system.ThermoCams.Count;
                                     //Helpers.serializeSistema(cc.Sistema, "data.ocl");
                                 }
                                 else
@@ -181,7 +180,7 @@ namespace WindowsFormsApplication4
 
                         if (_system != null)
                         {
-                            _system.selectedZona = null;
+                            _system.SelectedZona = null;
                             using (main m = new main(_system))
                             {
                                 m.ShowDialog();
@@ -196,8 +195,8 @@ namespace WindowsFormsApplication4
                                 if (m.Atras)
                                 {
                                     //ATRAS
-                                    step = (int)windowIds.appCameraConfiguration;
-                                    //Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                                    step = (int)windowIds.appSelectOPCServer;
+                                    _system = m._system;
                                 }
                                 else
                                 {
@@ -212,7 +211,6 @@ namespace WindowsFormsApplication4
                         }
                         else
                         {
-                            Helpers.changeAppStringSetting("Mode", "");
                             step = (int)windowIds.appMode;
                         }
 

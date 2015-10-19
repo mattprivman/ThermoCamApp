@@ -74,7 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorimos\Estados.cs" />
+    <Compile Include="Algoritmos\Estados.cs" />
     <Compile Include="CustomControls\CamConfigControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -94,7 +94,6 @@
     <Compile Include="CustomControls\NumericTextBox.Designer.cs">
       <DependentUpon>NumericTextBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Cannon.cs" />
     <Compile Include="Models\Sistema.cs" />
     <Compile Include="Models\Zona.cs" />
     <Compile Include="Enumeraciones\Enumerations.cs" />

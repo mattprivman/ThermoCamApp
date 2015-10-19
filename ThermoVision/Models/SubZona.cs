@@ -22,8 +22,6 @@ namespace ThermoVision.Models
 
         ThermoCam   _thermoParent;
 
-        Cannon      _cannon;
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// COORDENADAS ZONA ÚTIL
         //////////////////////////////// Delimitar la zona útil que se quiere medir 
 
@@ -116,7 +114,7 @@ namespace ThermoVision.Models
             }
             set
             {
-                if (this._parent == null || !this._parent.Equals(value))
+                if (_thermoParent != null || !this._parent.Equals(value))
                 {
                     lock ("Zonas")
                     {
@@ -125,21 +123,11 @@ namespace ThermoVision.Models
                             if (ThermoParent != null)
                                 this.ThermoParent.removeSubZona(this);
                             this._thermoParent = value;
-                            this.ThermoParent.addSubZona(this);
+                            if(_thermoParent != null)   
+                                this.ThermoParent.addSubZona(this);
                         }
                     }
                 }
-            }
-        }
-        public Cannon       Cannon                   // -rw 
-        {
-            get
-            {
-                return this._cannon;
-            }
-            set
-            {
-                this._cannon = value;
             }
         }
 
@@ -223,7 +211,6 @@ namespace ThermoVision.Models
             this._inicio        = (Point)     info.GetValue("Inicio",       typeof(Point));
             this._fin           = (Point)     info.GetValue("Fin",          typeof(Point));
             this._thermoParent  = (ThermoCam) info.GetValue("ThermoParent", typeof(ThermoCam));
-            this._cannon        = (Cannon)    info.GetValue("Cannon",       typeof(Cannon));
         }
 
         #endregion
@@ -240,7 +227,6 @@ namespace ThermoVision.Models
             info.AddValue("Inicio",         this.Inicio);
             info.AddValue("Fin",            this.Fin);
             info.AddValue("ThermoParent",   this._thermoParent);
-            info.AddValue("Cannon",         this._cannon);
         }
 
         public void addCoordinates(Point p1, Point p2)                          

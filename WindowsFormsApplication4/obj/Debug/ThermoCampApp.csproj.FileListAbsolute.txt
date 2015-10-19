@@ -36,11 +36,6 @@ C:\Users\Adrian\Documents\Visual Studio 2012\Projects\ThermoCamApp\WindowsFormsA
 C:\Users\Adrian\Documents\Visual Studio 2012\Projects\ThermoCamApp\WindowsFormsApplication4\bin\Debug\Interop.CAMCTRLLib.dll
 C:\Users\Adrian\Documents\Visual Studio 2012\Projects\ThermoCamApp\WindowsFormsApplication4\bin\Debug\OPCClient.pdb
 C:\Users\Adrian\Documents\Visual Studio 2012\Projects\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoVision.pdb
-E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.exe.config
-E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.exe
-E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.pdb
-E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.exe
-E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.pdb
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\OPCClient.dll
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoVision.dll
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\AxInterop.CAMCTRLLib.dll
@@ -49,7 +44,6 @@ E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\OPCClient.pdb
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoVision.pdb
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCampApp.csprojResolveAssemblyReference.cache
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.Camaras.CamerasConfiguration.resources
-E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Properties.Resources.resources
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCampApp.csproj.GenerateResource.Cache
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.selectAppType.resources
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.Camaras.CustomControls.customTextBox.resources
@@ -65,4 +59,11 @@ E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\AxInterop.IRView
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCampApp.csproj.ResolveComReference.cache
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.main.resources
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\Resources\logo.jpg
-E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Asistente.Cannons.CannonSelector.resources
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoCamApp.exe.config
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCamApp.Properties.Resources.resources
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoCamApp.exe
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoCamApp.pdb
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoCamApp.exe.CodeAnalysisLog.xml
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\ThermoCamApp.exe.lastcodeanalysissucceeded
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCamApp.exe
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCamApp.pdb
