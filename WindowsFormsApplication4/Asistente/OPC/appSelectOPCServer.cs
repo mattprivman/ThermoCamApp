@@ -451,15 +451,17 @@ namespace WindowsFormsApplication4.Asistente.OPC
                     index += 2;
                     w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Y" + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
                     index += 2;
-
-                    //LIMITES DE LA MATRIZ
-                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Filas" + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
-                    index += 2;
-                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Columnas" + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "n" + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
                     index += 2;
 
                     foreach (SubZona s in z.Children)
-                    {                        
+                    {
+                        //LIMITES DE LA MATRIZ
+                        w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Filas_" + s.Nombre + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                        index += 2;
+                        w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Columnas_" + s.Nombre + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                        index += 2;
+
                         for (int x = 0; x < s.Filas; x++)
                         {
                             for (int y = 0; y < s.Columnas; y++)
@@ -568,16 +570,20 @@ namespace WindowsFormsApplication4.Asistente.OPC
                     w.WriteLine("       Activar : Bool := false;");
                     w.WriteLine("       X : Int;");
                     w.WriteLine("       Y : Int;");
+                    w.WriteLine("       n : Int;");
 
                     int contador = 0;
 
                     foreach (SubZona s in z.Children)
                     {
-                        w.WriteLine("       Filas : Int := {0};", s.Filas - 1);
-                        w.WriteLine("       Columnas : Int := {0};", s.Columnas -1);
-                        w.WriteLine("       tempMatrix : Array[0..{0}, 0..{1}] of Int;", s.Filas - 1, s.Columnas - 1);
+                        w.WriteLine("       Filas_{0} : Int := {1};", contador, s.Filas - 1);
+                        w.WriteLine("       Columnas_{0} : Int := {1};", contador, s.Columnas - 1);
+                        w.WriteLine("       tempMatrix_{0} : Array[0..{1}, 0..{2}] of Int;", contador, s.Filas - 1, s.Columnas - 1);
+
+                        contador++;
                     }
                     w.WriteLine("       ascender : Bool;");
+                    w.WriteLine("       matrices : Int := {0};", z.Children.Count);
                     w.WriteLine("       contador : Int;");
                     w.WriteLine("   END_VAR");
                     w.WriteLine("");
@@ -593,60 +599,92 @@ namespace WindowsFormsApplication4.Asistente.OPC
                     w.WriteLine("   #contador := 0;");
                     w.WriteLine("   #X := 0;");
                     w.WriteLine("   #Y := 0;");
+                    w.WriteLine("   #n := 0;");
                     w.WriteLine("END_IF;");
                     w.WriteLine("");
                     w.WriteLine("IF #Cooling = TRUE THEN");
-                    w.WriteLine("   IF #tempMatrix[#X, #Y] >= #maxTemp THEN");
-                    w.WriteLine("");
-                    w.WriteLine("       \"{0}_TON_2\".TON(IN := TRUE,", z.Nombre);
-                    w.WriteLine("                   PT := t#10s);");
-                    w.WriteLine("");
-                    w.WriteLine("       IF \"{0}_TON_2\".Q = TRUE THEN", z.Nombre);
-                    w.WriteLine("");
-                    w.WriteLine("           //SIGUIENTE COORDENADA");
-                    w.WriteLine("           IF #ascender = TRUE THEN");
-                    w.WriteLine("               IF #Y = #Columnas THEN");
-                    w.WriteLine("                   #X := #X + 1;");
-                    w.WriteLine("                   #ascender := FALSE;");
-                    w.WriteLine("               ELSE");
-                    w.WriteLine("                   #Y := #Y + 1;");
-                    w.WriteLine("               END_IF;");
-                    w.WriteLine("           ELSE");
-                    w.WriteLine("               IF #Y = 0 THEN");
-                    w.WriteLine("                   #X := #X + 1;");
-                    w.WriteLine("                   #ascender := TRUE;");
-                    w.WriteLine("               ELSE");
-                    w.WriteLine("                   #Y := #Y - 1;");
-                    w.WriteLine("               END_IF;");
-                    w.WriteLine("           END_IF;");
-                    w.WriteLine("           #contador := #contador + 1;");
-                    w.WriteLine("");
-                    w.WriteLine("       \"{0}_TON_2\".TON(IN := FALSE,", z.Nombre);
-                    w.WriteLine("                         PT := t#2s);");
-                    w.WriteLine("       END_IF;");
-                    w.WriteLine("   ELSE");
-                    w.WriteLine("       //SIGUIENTE COORDENADA");
-                    w.WriteLine("       IF #ascender = TRUE THEN");
-                    w.WriteLine("           IF #Y = #Columnas THEN");
-                    w.WriteLine("               #X := #X + 1;");
-                    w.WriteLine("               #ascender := FALSE;");
-                    w.WriteLine("           ELSE");
-                    w.WriteLine("               #Y := #Y + 1;");
-                    w.WriteLine("           END_IF;");
-                    w.WriteLine("       ELSE");
-                    w.WriteLine("           IF #Y = 0 THEN");
-                    w.WriteLine("               #X := #X + 1;");
-                    w.WriteLine("               #ascender := TRUE;");
-                    w.WriteLine("           ELSE");
-                    w.WriteLine("               #Y := #Y - 1;");
-                    w.WriteLine("           END_IF;");
-                    w.WriteLine("       END_IF;");
-                    w.WriteLine("       #contador := #contador + 1;");
-                    w.WriteLine("");
-                    w.WriteLine("   END_IF;");
+
+                    contador = 0;
+
+                    foreach (SubZona s in z.Children)
+                    {
+                        w.WriteLine("IF #n = {0} THEN", contador);
+                        w.WriteLine("   IF #tempMatrix_{0}[#X, #Y] >= #maxTemp THEN", contador);
+                        w.WriteLine("");
+                        w.WriteLine("       \"{0}_TON_2\".TON(IN := TRUE,", z.Nombre);
+                        w.WriteLine("                   PT := t#10s);");
+                        w.WriteLine("");
+                        w.WriteLine("       IF \"{0}_TON_2\".Q = TRUE THEN", z.Nombre);
+                        w.WriteLine("");
+                        w.WriteLine("           //SIGUIENTE COORDENADA");
+                        w.WriteLine("           IF #ascender = TRUE THEN");
+                        w.WriteLine("               IF #Y = #Columnas_{0} THEN", contador);
+                        w.WriteLine("                   #X := #X + 1;");
+                        w.WriteLine("                   #ascender := FALSE;");
+                        w.WriteLine("               ELSE");
+                        w.WriteLine("                   #Y := #Y + 1;");
+                        w.WriteLine("               END_IF;");
+                        w.WriteLine("           ELSE");
+                        w.WriteLine("               IF #Y = 0 THEN");
+                        w.WriteLine("                   #X := #X + 1;");
+                        w.WriteLine("                   #ascender := TRUE;");
+                        w.WriteLine("               ELSE");
+                        w.WriteLine("                   #Y := #Y - 1;");
+                        w.WriteLine("               END_IF;");
+                        w.WriteLine("           END_IF;");
+                        w.WriteLine("");
+                        w.WriteLine("           #contador := #contador + 1;");
+                        w.WriteLine("           IF #contador = ((#Filas_{0} + 1) * (#Columnas_{0} + 1)) THEN", contador);
+                        w.WriteLine("               #contador := 0;");
+                        w.WriteLine("               #n := #n + 1;");
+                        w.WriteLine("               #X := 0;");
+                        w.WriteLine("               #Y := 0;");
+                        w.WriteLine("           END_IF;");
+                        w.WriteLine("");
+                        w.WriteLine("       \"{0}_TON_2\".TON(IN := FALSE,", z.Nombre);
+                        w.WriteLine("                         PT := t#2s);");
+                        w.WriteLine("       END_IF;");
+                        w.WriteLine("   ELSE");
+                        w.WriteLine("       //SIGUIENTE COORDENADA");
+                        w.WriteLine("       IF #ascender = TRUE THEN");
+                        w.WriteLine("           IF #Y = #Columnas_{0} THEN", contador);
+                        w.WriteLine("               #X := #X + 1;");
+                        w.WriteLine("               #ascender := FALSE;");
+                        w.WriteLine("           ELSE");
+                        w.WriteLine("               #Y := #Y + 1;");
+                        w.WriteLine("           END_IF;");
+                        w.WriteLine("       ELSE");
+                        w.WriteLine("           IF #Y = 0 THEN");
+                        w.WriteLine("               #X := #X + 1;");
+                        w.WriteLine("               #ascender := TRUE;");
+                        w.WriteLine("           ELSE");
+                        w.WriteLine("               #Y := #Y - 1;");
+                        w.WriteLine("           END_IF;");
+                        w.WriteLine("       END_IF;");
+                        w.WriteLine("");
+                        w.WriteLine("       #contador := #contador + 1;");
+                        w.WriteLine("       IF #contador = (#Filas_{0} + 1) * (#Columnas_{0} + 1) THEN", contador);
+                        w.WriteLine("           #contador := 0;");
+                        w.WriteLine("           #n := #n + 1;");
+                        w.WriteLine("           #X := 0;");
+                        w.WriteLine("           #Y := 0;");
+                        w.WriteLine("       END_IF;");
+                        w.WriteLine("");
+                        w.WriteLine("   END_IF;");
+                        w.WriteLine("END_IF;");
+
+                        contador++;
+                    }
+
                     w.WriteLine("END_IF;");
                     w.WriteLine("");
-                    w.WriteLine("       IF (#contador = (#Filas + 1) * (#Columnas + 1)) THEN");
+
+                    int acumulado = 0;
+
+                    foreach (SubZona s in z.Children)
+                        acumulado += s.Filas * s.Columnas;
+
+                    w.WriteLine("       IF (#n = #matrices) THEN");
                     w.WriteLine("           #Cooling := FALSE;");
                     w.WriteLine("       END_IF;");
                     w.WriteLine("");

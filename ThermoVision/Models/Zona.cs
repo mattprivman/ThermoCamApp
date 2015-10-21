@@ -32,6 +32,8 @@ namespace ThermoVision.Models
         public float            _minTemp;
         public double           _meanTemp;
 
+        States                  _state;
+
         public List<Zona>       zonasContenidas     = new List<Zona>();          //Para zonas de vaciado
 
         #endregion
@@ -70,11 +72,31 @@ namespace ThermoVision.Models
         }
         public States        State            // -rw      
         {
-            get;
-            set;
+            get { return this._state; }
+            set 
+            {
+                 if (this.State == States.Enfriando && value != States.Enfriando)
+                {
+                    if (this.zonaCoolingStop != null)
+                        this.zonaCoolingStop(this, null);
+                }
+
+                if (this.State == States.Vaciando && value != States.Vaciando)
+                {
+                    if (this.zonaEmptyingStop != null)
+                        this.zonaEmptyingStop(this, null);
+                }
+
+                this._state = value;
+            }
         }
 
         public Point CoolingPoint             // -rw      
+        {
+            get;
+            set;
+        }
+        public int CoolingSubZone             // -rw      
         {
             get;
             set;
@@ -90,7 +112,9 @@ namespace ThermoVision.Models
 
         #region "Eventos"
 
-        public event stateChangedDelegate stateChanged;
+        public event stateChangedDelegate zonaStateChanged;
+        public event EventHandler zonaCoolingStop;
+        public event EventHandler zonaEmptyingStop;
 
         #endregion
 
@@ -145,8 +169,8 @@ namespace ThermoVision.Models
         {
             this.State = state;
 
-            if (this.stateChanged != null)
-                this.stateChanged(this, state);
+            if (this.zonaStateChanged != null)
+                this.zonaStateChanged(this, state);
         }
 
         #region "Añadir  borrar hijos"

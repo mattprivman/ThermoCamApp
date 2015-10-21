@@ -47,6 +47,7 @@ namespace ThermoVision.Models
         #region "Eventos"
 
         public event EventHandler zonasListChanged;
+        public event EventHandler OPCClientOnConnecting;
 
         #endregion
 
@@ -183,6 +184,9 @@ namespace ThermoVision.Models
             }
             if(this.OPCServerName != null && this.OPCServerName != "")
             {
+                if (this.OPCClientOnConnecting != null)
+                    this.OPCClientOnConnecting(this, null);
+
                 this._OPCClient.Conectar();
                 this._OPCClient.Browse();
             }
@@ -192,7 +196,7 @@ namespace ThermoVision.Models
                 t.ThermoCamImgReceived += t_ThermoCamImgReceived;
             }
         }
-        public void Dispose()                                                            
+        public void Dispose()                           
         {
             if (this._OPCClient != null)
                 this._OPCClient.Dispose();

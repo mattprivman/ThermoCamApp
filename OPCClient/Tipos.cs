@@ -30,4 +30,20 @@ namespace OPC
         }
     }
 
+    public class NoConnectedException : Exception
+    {
+        public override string Message
+        {
+            get
+            {
+                return "El servidor OPC no esta conectado";
+            }
+        }
+
+        public override string ToString()
+        {
+            return this.Message;
+        }
+    }
+
 }
