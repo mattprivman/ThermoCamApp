@@ -16,7 +16,8 @@ namespace WindowsFormsApplication4
             appMode                 = 0,
             appCameraConfiguration  = 1,
             appSelectOPCServer      = 2,
-            appMain                 = 3
+            appMain                 = 3,
+            salir                   = 4
         }
 
         public static void Start()
@@ -195,15 +196,13 @@ namespace WindowsFormsApplication4
                                 if (m.Atras)
                                 {
                                     //ATRAS
-                                    step = (int)windowIds.appSelectOPCServer;
+                                    step = (int)windowIds.appMode;
                                     _system = m._system;
                                 }
                                 else
                                 {
                                     //SIGUIENTE
-                                    //step = (int)windowIds.appSelectOPCServer;         //step = (int) windowIds.appCameraNumber;
-                                    //Guardar sistema
-                                    return;
+                                    step = (int)windowIds.salir;
                                 }
 
                                 m.Dispose();
@@ -217,7 +216,9 @@ namespace WindowsFormsApplication4
                         #endregion
 
                         break;
-
+                    case (int) windowIds.salir:
+                        finAsistente = true;
+                        break;
                 }
 
             }
