@@ -13,7 +13,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace WindowsFormsApplication4.Asistente.Camaras
+namespace ThermoCamApp.Asistente.Camaras
 {
     public partial class CamerasConfiguration : flowControl
     {
@@ -193,7 +193,7 @@ namespace WindowsFormsApplication4.Asistente.Camaras
                 {
                     this.selectedIndexZona = this.listBoxZonas.Items.Count;
                     this.selectedIndexZonaVaciado = -1;
-                    this._system.addZona(new Zona(f.zonaName, this._system));
+                    this._system.addZona(new Zona(f.zonaName.Trim(), this._system));
                     f.Dispose();
                     actualizarListBoxZonas();
 
@@ -247,7 +247,7 @@ namespace WindowsFormsApplication4.Asistente.Camaras
                 {
                     this.selectedIndexZona = -1;
                     this.selectedIndexZonaVaciado = this.listBoxZonasVaciado.Items.Count;
-                    this._system.addZonaVaciado(new Zona(f.zonaName, this._system));
+                    this._system.addZonaVaciado(new Zona(f.zonaName.Trim(), this._system));
                     f.Dispose();
                     actualizarListBoxZonas();
 
@@ -567,7 +567,7 @@ namespace WindowsFormsApplication4.Asistente.Camaras
                 {
                     try
                     {
-                        this._system.SelectedZona.addChildren(new SubZona(f.nameSubZona));
+                        this._system.SelectedZona.addChildren(new SubZona(f.nameSubZona.Trim()));
                         this.selectedIndexSubZona = this.listBoxSubZonas.Items.Count;
                         
                     }
@@ -589,12 +589,15 @@ namespace WindowsFormsApplication4.Asistente.Camaras
         }
         private void buttonBorrarSubZona_Click(object sender, EventArgs e)      
         {
-            this.selectedIndexSubZona--;
-
-            if (this._system.SelectedZona != null)
+            if (this.listBoxSubZonas.SelectedIndex != -1)
             {
-                this._system.SelectedZona.removeChildren(this._system.SelectedZona.getChildren(this.listBoxSubZonas.SelectedItem.ToString()));
-                actualizarListBoxSubZonas();
+                this.selectedIndexSubZona--;
+
+                if (this._system.SelectedZona != null)
+                {
+                    this._system.SelectedZona.removeChildren(this._system.SelectedZona.getChildren(this.listBoxSubZonas.SelectedItem.ToString()));
+                    actualizarListBoxSubZonas();
+                }
             }
         }
 

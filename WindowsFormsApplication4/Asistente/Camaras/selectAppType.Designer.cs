@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication4.Asistente
+﻿namespace ThermoCamApp.Asistente
 {
     partial class selectAppType
     {

@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication4.Asistente.OPC
+﻿namespace ThermoCamApp.Asistente.OPC
 {
     partial class appSelectOPCServer
     {
@@ -34,7 +34,7 @@
             this.checkBoxMean = new System.Windows.Forms.CheckBox();
             this.checkBoxMax = new System.Windows.Forms.CheckBox();
             this.numericTextBOffset = new ThermoVision.CustomControls.NumericTextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelOffset = new System.Windows.Forms.Label();
             this.labelMemOffset = new System.Windows.Forms.Label();
             this.textBoxInitialMem = new System.Windows.Forms.TextBox();
             this.buttonGenerateOPCVars = new System.Windows.Forms.Button();
@@ -95,14 +95,14 @@
             this.numericTextBOffset.TabIndex = 12;
             this.numericTextBOffset.Texto = "0";
             // 
-            // label3
+            // labelOffset
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(891, 18);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Offset";
+            this.labelOffset.AutoSize = true;
+            this.labelOffset.Location = new System.Drawing.Point(891, 18);
+            this.labelOffset.Name = "labelOffset";
+            this.labelOffset.Size = new System.Drawing.Size(35, 13);
+            this.labelOffset.TabIndex = 11;
+            this.labelOffset.Text = "Offset";
             // 
             // labelMemOffset
             // 
@@ -207,7 +207,7 @@
             this.Controls.Add(this.checkBoxMean);
             this.Controls.Add(this.checkBoxMax);
             this.Controls.Add(this.numericTextBOffset);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.labelOffset);
             this.Controls.Add(this.labelMemOffset);
             this.Controls.Add(this.textBoxInitialMem);
             this.Controls.Add(this.buttonGenerateOPCVars);
@@ -241,7 +241,7 @@
         private System.Windows.Forms.TextBox textBoxInitialMem;
         private System.Windows.Forms.Label labelMemOffset;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelOffset;
         private ThermoVision.CustomControls.NumericTextBox numericTextBOffset;
         private System.Windows.Forms.CheckBox checkBoxMax;
         private System.Windows.Forms.CheckBox checkBoxMean;

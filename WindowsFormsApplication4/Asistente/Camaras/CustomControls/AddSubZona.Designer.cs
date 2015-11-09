@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication4.Asistente.Camaras.CustomControls
+﻿namespace ThermoCamApp.Asistente.Camaras.CustomControls
 {
     partial class AddSubZona
     {

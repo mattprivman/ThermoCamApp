@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication4.Asistente.Camaras.CustomControls
+namespace ThermoCamApp.Asistente.Camaras.CustomControls
 {
     public partial class customTextBox : UserControl
     {

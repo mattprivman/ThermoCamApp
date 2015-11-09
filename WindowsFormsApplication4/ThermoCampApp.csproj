@@ -137,6 +137,12 @@
     <Compile Include="Asistente\Camaras\CustomControls\customTextBox.Designer.cs">
       <DependentUpon>customTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Asistente\Cannon\CannonConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Asistente\Cannon\CannonConfig.Designer.cs">
+      <DependentUpon>CannonConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Asistente\flowControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +158,8 @@
     <Compile Include="Asistente\OPC\appSelectOPCServer.Designer.cs">
       <DependentUpon>appSelectOPCServer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\cannonControl.cs" />
+    <Compile Include="Controls\RejillasControl.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="main.cs">
       <SubType>Form</SubType>
@@ -176,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Asistente\Camaras\selectAppType.resx">
       <DependentUpon>selectAppType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Asistente\Cannon\CannonConfig.resx">
+      <DependentUpon>CannonConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Asistente\OPC\appSelectOPCServer.resx">
       <DependentUpon>appSelectOPCServer.cs</DependentUpon>

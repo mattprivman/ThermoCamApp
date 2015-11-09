@@ -17,7 +17,9 @@ namespace ThermoVision.Models
             Vacio,
             Lleno,
             Enfriando,
-            Vaciando
+            Esperando,
+            Vaciando,
+            Manual
         }
 
         #region "Variables"
@@ -87,7 +89,8 @@ namespace ThermoVision.Models
                         this.zonaEmptyingStop(this, null);
                 }
 
-                this._state = value;
+                lock("CambioEstado")
+                    this._state = value;
             }
         }
 
@@ -100,6 +103,29 @@ namespace ThermoVision.Models
         {
             get;
             set;
+        }
+        public bool Cooling                   // -rw      
+        {
+            get;
+            set;
+        }
+        public bool Emptying                  // -rw      
+        {
+            get;
+            set;
+        }
+
+        public int Width                      // -rw      
+        {
+            get
+            {
+                int ancho = 0;
+
+                foreach (SubZona s in this._children)
+                    ancho += s.Fin.X - s.Inicio.X;
+
+                return ancho;
+            }
         }
 
         #endregion
@@ -127,12 +153,16 @@ namespace ThermoVision.Models
             this._children = new List<SubZona>();
 
             this._parent = parent;
+
+            this.CoolingPoint = new Point(0, 0);
         }
         protected Zona(SerializationInfo info, StreamingContext ctxt)   
         {
             this._nombre        = (string)          info.GetValue("Nombre",         typeof(string));
             this._children      = (List<SubZona>)   info.GetValue("Children",       typeof(List<SubZona>));
             this._parent        = (Sistema)         info.GetValue("Parent",         typeof(Sistema));
+
+            this.CoolingPoint = new Point(0, 0);
         }
 
         #endregion
@@ -165,7 +195,7 @@ namespace ThermoVision.Models
             info.AddValue("Parent",      this._parent);
         }
 
-        public void triggerStateChangedEvent(States state)              
+        public void triggerStateChangedEvent(States state)                                  
         {
             this.State = state;
 
@@ -210,5 +240,88 @@ namespace ThermoVision.Models
         #endregion
 
         #endregion
+
+        public void coolingStateChanged(object state)
+        {
+            
+        }
+        public void coordinateXChanged(object x)        
+        {
+            if(x is int)
+                this.CoolingPoint = new Point((int) x, this.CoolingPoint.Y);
+        }
+        public void coordinateYChanged(object y)        
+        {
+            if (y is int)
+                this.CoolingPoint = new Point(this.CoolingPoint.X, (int) y);
+        }
+        public void subZonaNChanged(object n)           
+        {
+            if (n is int)
+                this.CoolingSubZone = (int) n;
+        }
+        public void ValvulaStateChanged(object state)   
+        {
+            if(state is bool)
+                this.Cooling = (bool) state;
+        }
+
+        public void coordinateXVaciadoChanged(object x) 
+        {
+            if (x is int)
+            {
+                if (this.CoolingSubZone < this.Children.Count &&
+                   (int) x < this.Children[this.CoolingSubZone].Filas &&
+                   this.CoolingPoint.Y < this.Children[this.CoolingSubZone].Columnas)
+                {
+                    this.CoolingPoint = new Point((int)x, this.CoolingPoint.Y);
+
+                    this.Children[this.CoolingSubZone].tempMatrix[this.CoolingPoint.X, this.CoolingPoint.Y].hayMaterial = false;
+                    this.Children[this.CoolingSubZone].tempMatrix[this.CoolingPoint.X, this.CoolingPoint.Y].estaCaliente = false;
+                }
+            }
+        }
+        public void coordinateYVaciadoChanged(object y) 
+        {
+            if (y is int)
+            {
+                if (this.CoolingSubZone < this.Children.Count &&
+                   this.CoolingPoint.X < this.Children[this.CoolingSubZone].Filas &&
+                   (int) y < this.Children[this.CoolingSubZone].Columnas)
+                {
+                    this.CoolingPoint = new Point(this.CoolingPoint.X, (int)y);
+
+                    this.Children[this.CoolingSubZone].tempMatrix[this.CoolingPoint.X, this.CoolingPoint.Y].hayMaterial = false;
+                    this.Children[this.CoolingSubZone].tempMatrix[this.CoolingPoint.X, this.CoolingPoint.Y].estaCaliente = false;
+                }
+            }
+        }
+        public void subZonaNVaciadoChanged(object n)    
+        {
+            if (n is int)
+            {
+                if ((int) n < this.Children.Count && 
+                    this.CoolingPoint.X < this.Children[this.CoolingSubZone].Filas &&
+                    this.CoolingPoint.Y < this.Children[this.CoolingSubZone].Columnas)
+                {
+                    this.CoolingSubZone = (int)n;
+
+                    this.Children[this.CoolingSubZone].tempMatrix[this.CoolingPoint.X, this.CoolingPoint.Y].hayMaterial = false;
+                    this.Children[this.CoolingSubZone].tempMatrix[this.CoolingPoint.X, this.CoolingPoint.Y].estaCaliente = false;
+                }
+            }
+        }
+        public void emptyingStateChanged(object state)  
+        {
+            if (state is bool)
+            {
+                this.Emptying = (bool)state;
+                if (this.Emptying)
+                {
+                    this.State = States.Vaciando;
+                }
+            }
+        }
+
     }
 }

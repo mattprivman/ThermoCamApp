@@ -15,7 +15,8 @@ namespace ThermoVision.Tipos
 
     public struct ThemoCamImgCuadradosArgs
     {
-        public Bitmap Imagen;
+        public Bitmap ImagenRampa;
+        public Bitmap ImagenRejillas;
     }
 
     public struct tempElement
@@ -26,5 +27,8 @@ namespace ThermoVision.Tipos
 
         public bool hayMaterial;
         public bool estaCaliente;
+
+        public Point CannonCoordinate;
+        public bool  selected;
     }
 }

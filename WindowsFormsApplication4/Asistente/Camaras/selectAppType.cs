@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication4.Asistente
+namespace ThermoCamApp.Asistente
 {
     public partial class selectAppType : flowControl
     {
@@ -106,7 +106,7 @@ namespace WindowsFormsApplication4.Asistente
             this.Close();
         }
 
-        private async void buttonLoadCfg_Click(object sender, EventArgs e)
+        private void buttonLoadCfg_Click(object sender, EventArgs e)
         {
             this.Salir = false;
 

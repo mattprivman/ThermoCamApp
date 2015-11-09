@@ -7,7 +7,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace WindowsFormsApplication4
+namespace ThermoCamApp
 {
     class ProgramFlow
     {
@@ -17,7 +17,8 @@ namespace WindowsFormsApplication4
             appCameraConfiguration  = 1,
             appSelectOPCServer      = 2,
             appMain                 = 3,
-            salir                   = 4
+            appCannonConfig         = 4,
+            salir                   = 5
         }
 
         public static void Start()
@@ -159,7 +160,10 @@ namespace WindowsFormsApplication4
                                 else
                                 {
                                     //SIGUIENTE
-                                    step = (int)windowIds.appMain;         //step = (int) windowIds.appCameraNumber;
+                                    if (_system.Mode == "Rampas")
+                                        step = (int)windowIds.appCannonConfig;
+                                    else
+                                        step = (int)windowIds.appMain;         //step = (int) windowIds.appCameraNumber;
                                     //Guardar sistema
                                     Helpers.serializeSistema(sos.Sistema, "data.ocl");
                                 }
@@ -172,6 +176,50 @@ namespace WindowsFormsApplication4
                             step = (int)windowIds.appMode;
                         }
 
+                        #endregion
+
+                        break;
+
+                    case (int) windowIds.appCannonConfig:
+
+                        #region "Configuración cañon"
+                        if (_system != null)
+                        {
+                            _system.SelectedZona = null;
+                            foreach (Zona z in _system.Zonas)
+                            {
+                                _system.selectZona(z.Nombre);
+                                using (Asistente.Cannon.CannonConfig cnc = new Asistente.Cannon.CannonConfig(z))
+                                {
+                                    cnc.ShowDialog();
+
+                                    if (cnc.Salir == true)
+                                    {
+                                        //SALIR
+                                        cnc.Dispose();
+                                        return;
+                                    }
+
+                                    if (cnc.Atras)
+                                    {
+                                        //ATRAS
+                                        step = (int)windowIds.appSelectOPCServer;
+                                        //Helpers.serializeSistema(cc.Sistema, "data.ocl");
+                                    }
+                                    else
+                                    {
+                                        //SIGUIENTE
+                                        step = (int)windowIds.appMain;         //step = (int) windowIds.appCameraNumber;
+                                    }
+
+                                    cnc.Dispose();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            step = (int)windowIds.appMode;
+                        }
                         #endregion
 
                         break;

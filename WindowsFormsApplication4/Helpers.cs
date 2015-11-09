@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
 
-namespace WindowsFormsApplication4
+namespace ThermoCamApp
 {
     class Helpers
     {

@@ -1,6 +1,6 @@
-﻿namespace ThermoCamApp
+﻿namespace ThermoCamApp.Asistente.Cannon
 {
-    partial class main
+    partial class CannonConfig
     {
         /// <summary>
         /// Required designer variable.
@@ -13,8 +13,10 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if(this._system.OPCClient != null)
-                this._system.OPCClient.Desconectar();
+            foreach (ThermoVision.CustomControls.CamCannonControl c in this.camCannonControls)
+            {
+                c.Desconectar();
+            }
 
             if (disposing && (components != null))
             {
@@ -30,26 +32,21 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
-        {              
+        {
             this.SuspendLayout();
             // 
-            // main
+            // CannonConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1600, 1000);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "main";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "main";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-         
+            this.ClientSize = new System.Drawing.Size(682, 640);
+            this.Name = "CannonConfig";
+            this.Text = "CannonConfig";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
-
         #endregion
-       
 
     }
 }

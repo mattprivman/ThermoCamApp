@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace WindowsFormsApplication4.Asistente
+namespace ThermoCamApp.Asistente
 {
     public class flowControl : System.Windows.Forms.Form
     {

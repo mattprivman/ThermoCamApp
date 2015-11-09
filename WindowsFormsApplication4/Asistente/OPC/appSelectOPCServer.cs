@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using ThermoVision.Models;
 using OPC;
 
-namespace WindowsFormsApplication4.Asistente.OPC
+namespace ThermoCamApp.Asistente.OPC
 {
     public partial class appSelectOPCServer : flowControl
     {
@@ -73,6 +73,18 @@ namespace WindowsFormsApplication4.Asistente.OPC
                 TreeNode n = this.treeViewBranch.Nodes[0];
                 IEnumerable<TreeNode> node = n.Nodes.Cast<TreeNode>();
                 
+            }
+
+            if (this._system.Mode == "Rampas")
+            {
+                this.labelMemOffset.Visible = false;
+                this.textBoxInitialMem.Visible = false;
+                this.labelOffset.Visible = false;
+                this.numericTextBOffset.Visible = false;
+
+                this.checkBoxMax.Visible = false;
+                this.checkBoxMin.Visible = false;
+                this.checkBoxMean.Visible = false;
             }
         }
 
@@ -443,6 +455,10 @@ namespace WindowsFormsApplication4.Asistente.OPC
                     index++;
                     w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Activar" + "\",\"DB" + blockIndex + ".DBX2." + index + "\",Bool,1,R/W,100,,,,,,,,,,\"\",");
                     index++;
+                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Mode" + "\",\"DB" + blockIndex + ".DBX2." + index + "\",Bool,1,R/W,100,,,,,,,,,,\"\",");
+                    index++;
+                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Valvula" + "\",\"DB" + blockIndex + ".DBX2." + index + "\",Bool,1,R/W,100,,,,,,,,,,\"\",");
+                    index++;
 
                     index = 4;
 
@@ -488,9 +504,18 @@ namespace WindowsFormsApplication4.Asistente.OPC
                     bit++; if (bit > 7) { direccion++; bit = 0; }
                     w.WriteLine("\"RAMPAS.VACIADO." + z.Nombre + "." + "Activar" + "\",\"DB" + blockIndex + ".DBX " + direccion + "." + bit + "\",Bool,1,R/W,100,,,,,,,,,,\"\",");
                     bit++; if (bit > 7) { direccion++; bit = 0; }
+                    w.WriteLine("\"RAMPAS.VACIADO." + z.Nombre + "." + "Mode" + "\",\"DB" + blockIndex + ".DBX " + direccion + "." + bit + "\",Bool,1,R/W,100,,,,,,,,,,\"\",");
+                    bit++; if (bit > 7) { direccion++; bit = 0; }
 
                     direccion = 2;
                     bit       = 0;
+
+                    w.WriteLine("\"RAMPAS.VACIADO." + z.Nombre + "." + "X" + "\",\"DB" + blockIndex + ".DBW" + direccion + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                    direccion += 2;
+                    w.WriteLine("\"RAMPAS.VACIADO." + z.Nombre + "." + "Y" + "\",\"DB" + blockIndex + ".DBW" + direccion + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                    direccion += 2;
+                    w.WriteLine("\"RAMPAS.VACIADO." + z.Nombre + "." + "n" + "\",\"DB" + blockIndex + ".DBW" + direccion + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                    direccion += 2;
 
                     foreach (SubZona s in z.Children)
                     {
@@ -502,11 +527,19 @@ namespace WindowsFormsApplication4.Asistente.OPC
                                 bit++; if (bit > 7) { direccion++; bit = 0; }
                             } //for
                         } //for
+
+                        if (direccion % 2 == 0)
+                            direccion += 2;
+                        else
+                            direccion += 1;
+
+                        direccion += 4;     // 2 palabras de 16 bits
+                        bit = 0;
                     } //foreach subzona
 
                     blockIndex++;
                 } //foreach zona
-
+                
                 w.Close();
             }//using
         }
@@ -568,6 +601,8 @@ namespace WindowsFormsApplication4.Asistente.OPC
                     w.WriteLine("   VAR ");
                     w.WriteLine("       Cooling : Bool := false;");
                     w.WriteLine("       Activar : Bool := false;");
+                    w.WriteLine("       Mode    : Bool := false;");
+                    w.WriteLine("       Valvula : Bool := false;");
                     w.WriteLine("       X : Int;");
                     w.WriteLine("       Y : Int;");
                     w.WriteLine("       n : Int;");
@@ -588,6 +623,8 @@ namespace WindowsFormsApplication4.Asistente.OPC
                     w.WriteLine("   END_VAR");
                     w.WriteLine("");
                     w.WriteLine("BEGIN");
+                    w.WriteLine("");
+                    w.WriteLine("IF #Mode = FALSE THEN //AUTOMATICO");
                     w.WriteLine("");
                     w.WriteLine("\"{0}_TON_1\".TON(IN := #Activar AND NOT #Cooling,", z.Nombre);
                     w.WriteLine("                 PT := t#10s);");
@@ -614,7 +651,11 @@ namespace WindowsFormsApplication4.Asistente.OPC
                         w.WriteLine("       \"{0}_TON_2\".TON(IN := TRUE,", z.Nombre);
                         w.WriteLine("                   PT := t#10s);");
                         w.WriteLine("");
+                        w.WriteLine("       #Valvula := TRUE;");
+                        w.WriteLine("");
                         w.WriteLine("       IF \"{0}_TON_2\".Q = TRUE THEN", z.Nombre);
+                        w.WriteLine("");
+                        w.WriteLine("           #Valvula := FALSE;");
                         w.WriteLine("");
                         w.WriteLine("           //SIGUIENTE COORDENADA");
                         w.WriteLine("           IF #ascender = TRUE THEN");
@@ -678,15 +719,17 @@ namespace WindowsFormsApplication4.Asistente.OPC
 
                     w.WriteLine("END_IF;");
                     w.WriteLine("");
-
-                    int acumulado = 0;
-
-                    foreach (SubZona s in z.Children)
-                        acumulado += s.Filas * s.Columnas;
-
                     w.WriteLine("       IF (#n = #matrices) THEN");
                     w.WriteLine("           #Cooling := FALSE;");
+                    w.WriteLine("           #n := 0;");
                     w.WriteLine("       END_IF;");
+                    w.WriteLine("");
+                    w.WriteLine("ELSE //Modo manual");
+                    w.WriteLine("");
+                    w.WriteLine("   #Cooling := FALSE;");
+                    w.WriteLine("   #Activar := FALSE;");
+                    w.WriteLine("");
+                    w.WriteLine("END_IF;");
                     w.WriteLine("");
                     w.WriteLine("END_FUNCTION_BLOCK");
                     w.WriteLine("");
@@ -737,31 +780,116 @@ namespace WindowsFormsApplication4.Asistente.OPC
                     w.WriteLine("   VAR ");
                     w.WriteLine("       Emptying : Bool := false;");
                     w.WriteLine("       Activar : Bool := false;");
-                    
+                    w.WriteLine("       Mode : Bool := false;");
+                    w.WriteLine("       X : Int;");
+                    w.WriteLine("       Y : Int;");
+                    w.WriteLine("       n : Int;");
+
+                    int contador = 0;
+
                     foreach(SubZona s in z.Children)
-                        w.WriteLine("       tempMatrix : Array[0..{0}, 0..{1}] of Bool;", s.Filas - 1, s.Columnas - 1);
+                    {
+                        w.WriteLine("       tempMatrix_{0} : Array[0..{1}, 0..{2}] of Bool;", contador, s.Filas - 1, s.Columnas - 1);
+                        w.WriteLine("       Filas_{0} : Int := {1};", contador, s.Filas - 1);
+                        w.WriteLine("       Columnas_{0} : Int := {1};", contador, s.Columnas - 1);
+                        contador++;
+                    }
+                    w.WriteLine("       matrices : Int := {0};", z.Children.Count);
+                    w.WriteLine("       ascender : Bool;");
+                    w.WriteLine("       contador : Int;");
+                    w.WriteLine("       Activar_LastValue : Bool := false;");
 
                     w.WriteLine("   END_VAR");
                     w.WriteLine("");
                     w.WriteLine("BEGIN");
                     w.WriteLine("");
-                    w.WriteLine("IF #Emptying = FALSE THEN");
-                    w.WriteLine("   \"{0}_TON_1\".TON(IN := #Activar,", z.Nombre);
-                    w.WriteLine("                   PT := t#10s);");
-                    w.WriteLine("   IF \"{0}_TON_1\".Q = TRUE THEN", z.Nombre);
-                    w.WriteLine("       #Emptying := TRUE;");
-                    w.WriteLine("       \"{0}_TON_1\".TON(IN := FALSE,", z.Nombre);
-                    w.WriteLine("                       PT := t#10s);");
-                    w.WriteLine("   END_IF;");
-                    w.WriteLine("ELSE");
-                    w.WriteLine("   \"{0}_TON_1\".TON(IN := #Emptying,", z.Nombre);
-                    w.WriteLine("                   PT := t#10s);");
-                    w.WriteLine("   IF \"{0}_TON_1\".Q = TRUE THEN", z.Nombre);
-                    w.WriteLine("       #Emptying := FALSE;");
-                    w.WriteLine("       \"{0}_TON_1\".TON(IN := FALSE,", z.Nombre);
-                    w.WriteLine("                       PT := t#10s);");
-                    w.WriteLine("   END_IF;");
+                    w.WriteLine("IF #Mode = FALSE THEN      //MODO AUTOMÁTICO");
+                    w.WriteLine("");
+                    w.WriteLine("IF (#Activar = TRUE AND #Activar_LastValue = FALSE) THEN");
+                    w.WriteLine("   #Emptying := TRUE;");
+                    w.WriteLine("   #X := 0;");
+                    w.WriteLine("   #Y := 0;");
+                    w.WriteLine("   #n := 0;");
+                    w.WriteLine("   #ascender := TRUE;");
+                    w.WriteLine("   #contador := 0;");
                     w.WriteLine("END_IF;");
+                    w.WriteLine("");
+                    w.WriteLine("IF #Emptying = TRUE THEN");
+
+                    contador = 0;
+
+                    foreach (SubZona s in z.Children)
+                    {
+                        w.WriteLine("IF #n = {0} THEN", contador);
+                        w.WriteLine("   IF #tempMatrix_{0}[#X, #Y] = TRUE THEN", contador);
+                        w.WriteLine("       \"v1_TON_1\".TON(IN := TRUE,");
+                        w.WriteLine("                       PT := t#3s);");
+                        w.WriteLine("");
+                        w.WriteLine("       IF \"v1_TON_1\".Q = TRUE THEN");
+                        w.WriteLine("           IF #ascender = TRUE THEN");
+                        w.WriteLine("               IF #Y = #Columnas_{0} THEN", contador);
+                        w.WriteLine("                   #X := #X + 1;");
+                        w.WriteLine("                   #ascender := FALSE;");
+                        w.WriteLine("               ELSE");
+                        w.WriteLine("                   #Y := #Y + 1;");
+                        w.WriteLine("               END_IF;");
+                        w.WriteLine("           ELSE");
+                        w.WriteLine("               IF #Y = 0 THEN");
+                        w.WriteLine("                   #X := #X + 1;");
+                        w.WriteLine("                   #ascender := TRUE;");
+                        w.WriteLine("               ELSE");
+                        w.WriteLine("                   #Y := #Y - 1;");
+                        w.WriteLine("               END_IF;");
+                        w.WriteLine("           END_IF;");
+                        w.WriteLine("           \"v1_TON_1\".TON(IN := FALSE,");
+                        w.WriteLine("                           PT := t#3s);");
+                        w.WriteLine("           #contador := #contador + 1;");
+                        w.WriteLine("       END_IF;");
+                        w.WriteLine("   ELSE");
+                        w.WriteLine("       IF #ascender = TRUE THEN");
+                        w.WriteLine("           IF #Y = #Columnas_{0} THEN", contador);
+                        w.WriteLine("               #X := #X + 1;");
+                        w.WriteLine("               #ascender := FALSE;");
+                        w.WriteLine("           ELSE");
+                        w.WriteLine("               #Y := #Y + 1;");
+                        w.WriteLine("           END_IF;");
+                        w.WriteLine("       ELSE");
+                        w.WriteLine("           IF #Y = 0 THEN");
+                        w.WriteLine("               #X := #X + 1;");
+                        w.WriteLine("               #ascender := TRUE;");
+                        w.WriteLine("           ELSE");
+                        w.WriteLine("               #Y := #Y - 1;");
+                        w.WriteLine("           END_IF;");
+                        w.WriteLine("       END_IF;");
+                        w.WriteLine("       \"v1_TON_1\".TON(IN := FALSE,");
+                        w.WriteLine("                       PT := t#3s);");
+                        w.WriteLine("       #contador := #contador + 1;");
+                        w.WriteLine("   END_IF;");
+                        w.WriteLine("");
+                        w.WriteLine("   IF (#contador = (#Filas_{0} + 1) * (#Columnas_{0} + 1)) THEN", contador);
+                        w.WriteLine("       #X := 0;");
+                        w.WriteLine("       #Y := 0;");
+                        w.WriteLine("       #n := #n + 1;");
+                        w.WriteLine("       #contador := 0;");
+                        w.WriteLine("       #ascender := true;");
+                        w.WriteLine("   END_IF;");
+                        w.WriteLine("END_IF;");
+
+                        contador++;
+                    }
+                    w.WriteLine("END_IF;");
+                    w.WriteLine("");
+                    w.WriteLine("IF (#n = #matrices) THEN");
+                    w.WriteLine("   #Emptying := FALSE;");
+                    w.WriteLine("   #Activar := FALSE;");
+                    w.WriteLine("END_IF;");
+                    w.WriteLine("");
+                    w.WriteLine("#Activar_LastValue := #Activar;");
+                    w.WriteLine("");
+                    w.WriteLine("ELSE // MODO MANUAL");
+                    w.WriteLine("   #Activar  := FALSE;");
+                    w.WriteLine("END_IF;");
+                    w.WriteLine("");
                     w.WriteLine("END_FUNCTION_BLOCK");
                     w.WriteLine("");
 

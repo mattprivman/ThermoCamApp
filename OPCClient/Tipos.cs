@@ -6,6 +6,18 @@ using System.Threading.Tasks;
 
 namespace OPC
 {
+    public class OPCAsyncWriteArgs
+    {
+        public AsyncWriteStruct operation { get; set; }
+    }
+
+    public struct AsyncWriteStruct
+    {
+        public Branch branch;
+        public int transactionID;
+        public int cancelID;
+    }
+
     public class OPCGroupValues
     {
         public string             Path  { get; set; }

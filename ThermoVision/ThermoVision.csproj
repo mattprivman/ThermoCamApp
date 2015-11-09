@@ -81,6 +81,12 @@
     <Compile Include="CustomControls\CamConfigControl.Designer.cs">
       <DependentUpon>CamConfigControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\CamCannonControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\CamCannonControl.Designer.cs">
+      <DependentUpon>CamCannonControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ColorUtils.cs" />
     <Compile Include="CustomControls\CamControl.cs">
       <SubType>UserControl</SubType>
@@ -108,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\CamControl.resx">
       <DependentUpon>CamControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\CamCannonControl.resx">
+      <DependentUpon>CamCannonControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\NumericTextBox.resx">
       <DependentUpon>NumericTextBox.cs</DependentUpon>

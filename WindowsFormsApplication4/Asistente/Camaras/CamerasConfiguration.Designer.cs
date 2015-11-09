@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WindowsFormsApplication4.Asistente.Camaras
+namespace ThermoCamApp.Asistente.Camaras
 {
     partial class CamerasConfiguration
     {

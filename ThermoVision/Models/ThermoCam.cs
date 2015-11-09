@@ -349,7 +349,38 @@ namespace ThermoVision.Models
                     this.SubZonas.Remove(s);
             }
         }
-        
+
+        public void selectSubZonaCoordinate(SubZona s, int fila, int columna)
+        {
+            for (int x = 0; x < s.tempMatrix.GetLength(0); x++)
+            {
+                for (int y = 0; y < s.tempMatrix.GetLength(1); y++)
+                {
+                    if (x == fila && y == columna)
+                        s.tempMatrix[x, y].selected = true;
+                    else
+                        s.tempMatrix[x, y].selected = false;
+                }//for y
+            }//for x
+        }
+        public void unSelectSubZonaCoordinates()
+        {
+            foreach (SubZona s in this.SubZonas)
+            {
+                if (s.tempMatrix != null)
+                {
+                    //Deseleccioanr todas las coordenadas
+                    for (int x = 0; x < s.tempMatrix.GetLength(0); x++)
+                    {
+                        for (int y = 0; y < s.tempMatrix.GetLength(1); y++)
+                        {
+                            s.tempMatrix[x, y].selected = false;
+                        }//for y
+                    }//for x
+                }//if tempMatrix not null
+            }//foreach subzona
+        }
+
         #endregion
 
         #endregion
@@ -528,53 +559,92 @@ namespace ThermoVision.Models
         }
         private void procesarImagen()               
         {
-            #region "Dibujar en blanco y negro"
+            #region "Dibujar"
 
-            maxZonaNoUtil = 0x0;             // Reinicializar las variables 
-            minZonaNoUtil = 0xFFFF;          // para
-
-            //Buscar los extremos para dibujar la imagen en blanco y negro
-            for (int i = 0; i < this.imgData.GetLength(0); i++)
+            if (this._configuracionMode == true)
             {
-                for (int j = 0; j < this.imgData.GetLength(1); j++)
+                maxZonaNoUtil = 0x0;             // Reinicializar las variables 
+                minZonaNoUtil = 0xFFFF;          // para
+
+                //Buscar los extremos para dibujar la imagen en blanco y negro
+                for (int i = 0; i < this.imgData.GetLength(0); i++)
                 {
-                    if ((ushort)this.imgData[i, j] > this.maxZonaNoUtil)
-                        this.maxZonaNoUtil = (ushort) this.imgData[i, j];
-
-                    if ((ushort)imgData[i, j] < minZonaNoUtil)
-                        this.minZonaNoUtil = (ushort) this.imgData[i, j];
-                }
-            }
-
-            //Definir rango
-            rangeZonaNoUtil = maxZonaNoUtil - minZonaNoUtil;
-
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// PROCESAR IMAGENES CON ESCALA DE GRISES 
-            ////////////////// Se procesa la parte de la imagen no correspondiente a la zona útil con escala de GRISES
-            ////////////////// y la parte correspondiente a la zona util se procesa  con escala RAINBOW
-
-            for (int i = 0; i < this._width; i++)
-            {
-                for (int j = 0; j < this._height; j++)
-                {
-                    this.Val = (uint) this.imgData[i, j];
-
-                    //////////////////////////////////////////////// NO PERTENECE A LA ZONA ÚTIL O NO ESTA EL MODO DE CONFIGURACIÓN
-                    // Escalar valores a escala 255- 0
-                    try
+                    for (int j = 0; j < this.imgData.GetLength(1); j++)
                     {
-                        this.pixel = ((this.Val - this.minZonaNoUtil) * 255) / this.rangeZonaNoUtil;
+                        if ((ushort)this.imgData[i, j] > this.maxZonaNoUtil)
+                            this.maxZonaNoUtil = (ushort)this.imgData[i, j];
+
+                        if ((ushort)imgData[i, j] < minZonaNoUtil)
+                            this.minZonaNoUtil = (ushort)this.imgData[i, j];
+                    }
+                }
+
+                //Definir rango
+                rangeZonaNoUtil = maxZonaNoUtil - minZonaNoUtil;
+
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////// PROCESAR IMAGENES CON ESCALA DE GRISES 
+                ////////////////// Se procesa la parte de la imagen no correspondiente a la zona útil con escala de GRISES
+                ////////////////// y la parte correspondiente a la zona util se procesa  con escala RAINBOW
+
+                for (int i = 0; i < this._width; i++)
+                {
+                    for (int j = 0; j < this._height; j++)
+                    {
+                        this.Val = (uint)this.imgData[i, j];
+
+                        //////////////////////////////////////////////// NO PERTENECE A LA ZONA ÚTIL O NO ESTA EL MODO DE CONFIGURACIÓN
+                        // Escalar valores a escala 255- 0
+                        try
+                        {
+                            this.pixel = ((this.Val - this.minZonaNoUtil) * 255) / this.rangeZonaNoUtil;
+
+                            // Dibujar pixel
+                            this.bmp.SetPixel(i, j, System.Drawing.Color.FromArgb((int)pixel, (int)pixel, (int)pixel));
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message.Contains("No se puede evaluar la expresión porque el código está optimizado o existe un marco nativo en la parte superior de la pila de llamadas."))
+                                return;
+                            ex.ToString();
+                        }//try
+                    }//for j
+                }//for i
+            }
+            else
+            {
+                //Calcular los másximos y los mínimos de todas las divisones
+                uint maxValue = 0x0000;
+                uint minValue = 0xFFFF;
+                uint range;
+
+                for (int x = 0; x < this.imgData.GetLength(0); x++)
+                {
+                    for (int y = 0; y < this.imgData.GetLength(1); y++)
+                    {
+                        if (this.imgData[x, y] > maxValue)
+                            maxValue = (uint) this.imgData[x, y];
+                        if (this.imgData[x, y] < minValue)
+                            minValue = (uint) imgData[x, y];
+                    }//for y
+                }//for x
+
+                range = maxValue - minValue;
+
+                for (int x = 0; x < this._width; x++)
+                {
+                    for (int y = 0; y < this._height; y++)
+                    {
+                        this.Val = (uint)this.imgData[x, y];
+
+                        //////////////////////////////////////////////// NO PERTENECE A LA ZONA ÚTIL O NO ESTA EL MODO DE CONFIGURACIÓN
+                        // Escalar valores a escala 255- 0
+
+                        this.pixel = (uint) (((this.Val - minValue) * 255) / range);
 
                         // Dibujar pixel
-                        this.bmp.SetPixel(i, j, System.Drawing.Color.FromArgb((int)pixel, (int)pixel, (int)pixel));
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex.Message.Contains("No se puede evaluar la expresión porque el código está optimizado o existe un marco nativo en la parte superior de la pila de llamadas."))
-                            return;
-                        ex.ToString();
-                    }
-                }
+                        this.bmp.SetPixel(x, y, this.colorPalette[(int)this.pixel]); 
+                    }//for j
+                }//for i
             }
 
             #endregion
@@ -670,6 +740,36 @@ namespace ThermoVision.Models
                                                 s.Inicio.Y + 2));
                                     }//Using font
                                 }//Using raphics
+
+                                //Dibujar celda seleccionada
+
+                                if (s.tempMatrix != null)
+                                {
+                                    int colWidth = ((s.Fin.X - s.Inicio.X) / s.Columnas);
+                                    int filHeigth = ((s.Fin.Y - s.Inicio.Y) / s.Filas);
+
+                                    for (int i = 0; i < s.tempMatrix.GetLength(0); i++)
+                                    {
+                                        for (int j = 0; j < s.tempMatrix.GetLength(1); j++)
+                                        {
+                                            if (s.tempMatrix[i, j].selected)
+                                            {
+                                                //Dibujar bordes horizontales
+                                                for (int x = j * ((s.Fin.X - s.Inicio.X) / s.Columnas); x < (j + 1) * ((s.Fin.X - s.Inicio.X) / s.Columnas); x++)
+                                                {
+                                                    this.bmp.SetPixel(s.Inicio.X + x, s.Inicio.Y + i * ((s.Fin.Y - s.Inicio.Y) / s.Filas), Color.White);
+                                                    this.bmp.SetPixel(s.Inicio.X + x, s.Inicio.Y + (i + 1) * ((s.Fin.Y - s.Inicio.Y) / s.Filas), Color.White);
+                                                }//for x
+                                                //Dibujar bordes verticales
+                                                for (int y = i * ((s.Fin.Y - s.Inicio.Y) / s.Filas); y < (i + 1) * ((s.Fin.Y - s.Inicio.Y) / s.Filas); y++)
+                                                {
+                                                    this.bmp.SetPixel(s.Inicio.X + j * ((s.Fin.X - s.Inicio.X) / s.Columnas), s.Inicio.Y + y, Color.White);
+                                                    this.bmp.SetPixel(s.Inicio.X + (j + 1) * ((s.Fin.X - s.Inicio.X) / s.Columnas), s.Inicio.Y + y, Color.White);
+                                                }//for x
+                                            }//if
+                                        }//for j
+                                    }//for i
+                                }//tempMatrix not null
                             }//if selected
                         }//if selected
                     }//foreach subzona
@@ -754,10 +854,6 @@ namespace ThermoVision.Models
                                     }//for y
                                 }//for x
 
-                                if (s._maxTemp == 0)
-                                {
-                                    Console.WriteLine("aa");
-                                }
                             }//lock lockRejilla
                         }//foreach subzona
                     }//lockSubzonas
@@ -781,7 +877,6 @@ namespace ThermoVision.Models
                 ThermoCamImgReceived(this, new ThermoCamImgArgs()
                 {
                     Imagen = this.bmp,
-                    //tempMatrix = this.tempMatrix,
                     MaxTemp = this.maxTemp,
                     MinTemp = this.minTemp,
                 });
@@ -844,7 +939,6 @@ namespace ThermoVision.Models
                 case 2:
                    //EVENTO CONECTADO
                     this.start();
-
                     break;
 
                 case 3:
@@ -853,7 +947,6 @@ namespace ThermoVision.Models
 
                     if (this.ThermoCamDisConnected != null)
                         this.ThermoCamDisConnected(this, null);
-
                     break;
 
                 case 4:
@@ -862,13 +955,11 @@ namespace ThermoVision.Models
 
                     if (this.ThermoCamDisConnected != null)
                         this.ThermoCamDisConnected(this, null);
-
                     break;
 
                 case 5:
                     //DEVICE RECCONECTED FROM BROKEN CONNECTION
                     this.start();
-
                     break;
 
                 case 6:
@@ -890,7 +981,6 @@ namespace ThermoVision.Models
                 case 10:
                     //LUT Table Uptdated
                     getLutTable();
-
                     break;
 
                 case 11:
@@ -915,7 +1005,6 @@ namespace ThermoVision.Models
 
                         short status = this.camara.SetCameraProperty(43, frames[0]);
                     }
-
                     break;
 
                 case 15:
@@ -927,7 +1016,6 @@ namespace ThermoVision.Models
                         if (this.ThermoCamFrameRateChanged != null)
                             this.ThermoCamFrameRateChanged(this, ((double)frame).ToString());
                     }
-
                     break;
 
                 case 16:

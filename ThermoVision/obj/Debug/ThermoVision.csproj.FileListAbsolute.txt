@@ -29,3 +29,4 @@ E:\Repositories\ThermoCamApp\ThermoVision\bin\Debug\ThermoVision.dll
 E:\Repositories\ThermoCamApp\ThermoVision\bin\Debug\ThermoVision.pdb
 E:\Repositories\ThermoCamApp\ThermoVision\bin\Debug\OPCClient.dll
 E:\Repositories\ThermoCamApp\ThermoVision\bin\Debug\OPCClient.pdb
+E:\Repositories\ThermoCamApp\ThermoVision\obj\Debug\ThermoVision.CustomControls.CamCannonControl.resources

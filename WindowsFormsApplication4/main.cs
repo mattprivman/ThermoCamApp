@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using ThermoVision.Models;
 using ThermoVision.CustomControls;
 
-namespace WindowsFormsApplication4
+namespace ThermoCamApp
 {
     public partial class main : Asistente.flowControl
     {
@@ -27,11 +27,13 @@ namespace WindowsFormsApplication4
         private System.Windows.Forms.Label[]                labelsEstadoCamaras;
         private System.Windows.Forms.Label                  label2;
         private ThermoVision.CustomControls.NumericTextBox  numericTextBoxTempLimiteVaciado;
-        private System.Windows.Forms.Label[]                EstadosLabels;
+        private Controls.cannonControl[]                    ccs;
+        private Controls.RejillasControl[]                  rcs;
         private System.Windows.Forms.Button                 buttonAsistente;
         private System.Windows.Forms.DataGridView           listViewEventos;
 
         PictureBox pictureBoxRampa;
+        PictureBox pictureBoxRejillas;
 
         public main(Sistema _system)                                                    
         {
@@ -185,50 +187,70 @@ namespace WindowsFormsApplication4
                 this.pictureBoxRampa = new PictureBox();
                 ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRampa)).BeginInit();
                 // 
-                // pictureBox1
+                // pictureBoxRampa
                 // 
-                this.pictureBoxRampa.Location = new System.Drawing.Point(10, 500);
-                this.pictureBoxRampa.Name = "pictureBox1";
-                this.pictureBoxRampa.Size = new System.Drawing.Size(this.Width - 40, 262);
-                this.pictureBoxRampa.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-                this.pictureBoxRampa.TabIndex = 0;
-                this.pictureBoxRampa.TabStop = false;
+                this.pictureBoxRampa.Location   = new System.Drawing.Point(10, 486);
+                this.pictureBoxRampa.Name       = "pictureBoxRampa";
+                this.pictureBoxRampa.Size       = new System.Drawing.Size(this.Width - 40, 235);
+                this.pictureBoxRampa.SizeMode   = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+                this.pictureBoxRampa.TabIndex   = 0;
+                this.pictureBoxRampa.TabStop    = false;
                 this.pictureBoxRampa.BorderStyle = BorderStyle.FixedSingle;
 
                 this.Controls.Add(this.pictureBoxRampa);
 
                 ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRampa)).EndInit();
 
-                this.EstadosLabels = new Label[this._system.Zonas.Count];
+                this.pictureBoxRejillas = new PictureBox();
+                ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRejillas)).BeginInit();
+                // 
+                // pictureBoxRejillas
+                // 
+                this.pictureBoxRejillas.Location    = new System.Drawing.Point(10, this.pictureBoxRampa.Location.Y + this.pictureBoxRampa.Height + 110);
+                this.pictureBoxRejillas.Name        = "pictureBoxRejillas";
+                this.pictureBoxRejillas.Size        = new System.Drawing.Size(this.Width - 40, 26);
+                this.pictureBoxRejillas.SizeMode    = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+                this.pictureBoxRejillas.TabIndex    = 0;
+                this.pictureBoxRejillas.TabStop     = false;
+                this.pictureBoxRejillas.BorderStyle = BorderStyle.FixedSingle;
 
-                for (int i = 0; i < this._system.Zonas.Count; i++)
-                {
-                    this.EstadosLabels[i] = new Label();
-                    // 
-                    // label3
-                    //
-                    int xPos = i * (this.Width / this._system.Zonas.Count) + (this.Width / this._system.Zonas.Count) / 2;
+                this.Controls.Add(this.pictureBoxRejillas);
 
-                    this.EstadosLabels[i].AutoSize  = true;
-                    this.EstadosLabels[i].Location  = new System.Drawing.Point(xPos, 262 + 500 + 15);
-                    this.EstadosLabels[i].Name      = "label" + i.ToString();
-                    this.EstadosLabels[i].Size      = new System.Drawing.Size(40, 13);
-                    this.EstadosLabels[i].TabIndex  = 4;
-                    this.EstadosLabels[i].Text      = "Estado";
-                    this.EstadosLabels[i].Font = new Font(
-                                                   new FontFamily("Microsoft Sans Serif"),
-                                                   16,
-                                                   FontStyle.Regular,
-                                                   GraphicsUnit.Pixel);
-                    this.EstadosLabels[i].Padding = new Padding() { All = 10 };
-                    this.EstadosLabels[i].BorderStyle = BorderStyle.FixedSingle;
+                ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRejillas)).EndInit();
+
+                //this.EstadosLabels = new Label[this._system.Zonas.Count];
+
+                //for (int i = 0; i < this._system.Zonas.Count; i++)
+                //{
+                //    this.EstadosLabels[i] = new Label();
+                //    // 
+                //    // label3
+                //    //
+                //    int xPos = i * (this.Width / this._system.Zonas.Count) + (this.Width / this._system.Zonas.Count) / 2;
+
+                //    this.EstadosLabels[i].AutoSize  = true;
+                //    this.EstadosLabels[i].Location  = new System.Drawing.Point(xPos, 262 + 500 + 15);
+                //    this.EstadosLabels[i].Name      = "label" + i.ToString();
+                //    this.EstadosLabels[i].Size      = new System.Drawing.Size(40, 13);
+                //    this.EstadosLabels[i].TabIndex  = 4;
+                //    this.EstadosLabels[i].Text      = "Vacio";
+                //    this.EstadosLabels[i].Font = new Font(
+                //                                   new FontFamily("Microsoft Sans Serif"),
+                //                                   16,
+                //                                   FontStyle.Regular,
+                //                                   GraphicsUnit.Pixel);
+                //    this.EstadosLabels[i].Padding = new Padding() { All = 10 };
+                //    this.EstadosLabels[i].BorderStyle = BorderStyle.FixedSingle;
                     
 
-                    this._system.Zonas[i].Posicion  = i;
-                    this._system.Zonas[i].zonaStateChanged += main_stateChanged;
-                    this._system.Zonas[i].zonaCoolingStop += main_zonaCoolingStop;
-                    this._system.Zonas[i].zonaEmptyingStop += main_zonaEmptyingStop;
-                }
+                //    this._system.Zonas[i].Posicion  = i;
+                //    this._system.Zonas[i].zonaStateChanged += main_stateChanged;
+                //    this._system.Zonas[i].zonaCoolingStop += main_zonaCoolingStop;
+                //    this._system.Zonas[i].zonaEmptyingStop += main_zonaEmptyingStop;
+
+                //    this.Controls.Add(this.EstadosLabels[i]);
+                //}                    
+
                 // 
                 // numericTextBoxTempApagadoLimite
                 // 
@@ -263,12 +285,10 @@ namespace WindowsFormsApplication4
                 this.numericTextBoxTempLimiteVaciado.Size = new System.Drawing.Size(102, 20);
                 this.numericTextBoxTempLimiteVaciado.textoCambiado += numericTextBoxTempLimiteVaciado_textoCambiado;
 
-                for(int i = 0; i < this.EstadosLabels.Length; i++)
-                    this.Controls.Add(this.EstadosLabels[i]);
-                this.Controls.Add(this.label2);
-                this.Controls.Add(this.numericTextBoxTempLimiteVaciado);
-                this.Controls.Add(this.label1);
-                this.Controls.Add(this.numericTextBoxTempApagadoLimite);
+                //this.Controls.Add(this.label2);
+                //this.Controls.Add(this.numericTextBoxTempLimiteVaciado);
+                //this.Controls.Add(this.label1);
+                //this.Controls.Add(this.numericTextBoxTempApagadoLimite);
 
                 this._system.estados.ThermoCamImgCuadradosGenerated += estados_ThermoCamImgCuadradosGenerated;
             }
@@ -277,11 +297,102 @@ namespace WindowsFormsApplication4
             this.ResumeLayout();
 
             this.FormClosing    += main_FormClosing;
-
-            this._system.conectarClienteOPC();
             this._system.modoConfiguracion = false;
 
-            this.containVaciadoZones();            
+            Action[] actions = new Action[2];
+            actions[0] = new Action(conectarOPC);
+            actions[1] = new Action(containVaciadoZones);
+
+            Parallel.Invoke(actions);
+
+            if (this._system.Mode == "Rampas")
+            {
+                ccs = new ThermoCamApp.Controls.cannonControl[this._system.Zonas.Count];
+
+                for (int i = 0; i < ccs.Count(); i++)
+                {
+                    ccs[i] = new Controls.cannonControl(this,
+                            this._system.Zonas[i],
+                            new Point(i * (this.Width / this._system.Zonas.Count) + (this.Width / this._system.Zonas.Count) / 2,
+                            this.pictureBoxRampa.Location.Y + this.pictureBoxRampa.Height + 5),
+                            i,
+                            new Controls.cannonControl.cannonControlBoolParameterCallback(this._system.changeCannonModeState),
+                            new Controls.cannonControl.cannonControlBoolParameterCallback(this._system.changeCannonActivation),
+                            new Controls.cannonControl.cannonControlParameterCallback(this._system.decrementCannonXCoordinate),
+                            new Controls.cannonControl.cannonControlParameterCallback(this._system.decrementCannonYCoordinate),
+                            new Controls.cannonControl.cannonControlParameterCallback(this._system.incrementCannonYCoordinate),
+                            new Controls.cannonControl.cannonControlParameterCallback(this._system.incrementCannonXCoordinate),
+                            new Controls.cannonControl.cannonControlBoolCallback(this._system.readCannonState));
+
+                    this._system.Zonas[i].Posicion          = i;
+                    this._system.Zonas[i].zonaStateChanged += main_stateChanged;
+                    this._system.Zonas[i].zonaCoolingStop  += main_zonaCoolingStop;
+                    this._system.Zonas[i].zonaEmptyingStop += main_zonaEmptyingStop;
+
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(this._system.Zonas[i].Nombre).ToString(),
+                        "Mode",
+                        ccs[i].cannonModeChanged);
+                }
+
+                foreach (Zona z in this._system.Zonas)
+                {
+                    try
+                    {
+                        this._system.getCannonCoordinates(z);
+                    }
+                    catch (Exception ex)
+                    {
+                        addElementToListBox(this.listViewEventos, new Evento(DateTime.Now, "Grave", ex.Message));
+                    }
+
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(z.Nombre).ToString(),
+                        "X",
+                        new Action<object>(z.coordinateXChanged));
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(z.Nombre).ToString(),
+                       "Y",
+                       new Action<object>(z.coordinateYChanged));
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(z.Nombre).ToString(),
+                       "n",
+                       new Action<object>(z.subZonaNChanged));
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(z.Nombre).ToString(),
+                       "Valvula",
+                       new Action<object>(z.ValvulaStateChanged));
+                }
+
+                rcs = new Controls.RejillasControl[this._system.ZonasVaciado.Count];
+
+                for (int i = 0; i < rcs.Length; i++)
+                {
+                    rcs[i] = new Controls.RejillasControl(
+                        this,
+                        i,
+                        this._system.ZonasVaciado[i],
+                        new Point(i * (this.Width / this._system.ZonasVaciado.Count) + (this.Width / this._system.ZonasVaciado.Count) / 2,
+                            this.pictureBoxRampa.Location.Y + this.pictureBoxRampa.Height + 110 + 26 + 10));
+
+                }
+
+                foreach (Zona z in this._system.ZonasVaciado)
+                {
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.VACIADO.").Append(z.Nombre).ToString(),
+                        "X",
+                        new Action<object>(z.coordinateXVaciadoChanged));
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.VACIADO.").Append(z.Nombre).ToString(),
+                        "Y",
+                        new Action<object>(z.coordinateYVaciadoChanged));
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.VACIADO.").Append(z.Nombre).ToString(),
+                        "n",
+                        new Action<object>(z.subZonaNVaciadoChanged));
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.VACIADO.").Append(z.Nombre).ToString(),
+                        "Emptying",
+                        new Action<object>(z.emptyingStateChanged));
+                }
+            }
+        }
+
+        void conectarOPC()
+        {
+            this._system.conectarClienteOPC();
         }
 
         void camara_ThermoCamConnected(object sender, EventArgs e)                      
@@ -308,7 +419,7 @@ namespace WindowsFormsApplication4
                 {
                     if (this.camaras[i].camara.Equals((sender as ThermoCam)))
                     {
-                        addElementToListBox(this.listViewEventos, new Evento(DateTime.Now, "Evento", "Camara " + (i + 1) + ": Desconectada"));
+                        addElementToListBox(this.listViewEventos, new Evento(DateTime.Now, "Grave", "Camara " + (i + 1) + ": Desconectada"));
 
                         updateLabelTextProperty(this.labelsEstadoCamaras[i], "Camara " + (i + 1) + ": Desconectada");
                         updateLabelBackColor(this.labelsEstadoCamaras[i], Color.Red);
@@ -319,7 +430,10 @@ namespace WindowsFormsApplication4
 
         void containVaciadoZones()                                                      
         {
+            object _lock = new object();
+
             foreach (Zona zVaciado in this._system.ZonasVaciado)
+            //Parallel.ForEach<Zona>(this._system.ZonasVaciado, (zVaciado) =>
             {
                 foreach (SubZona s in zVaciado.Children)
                 {
@@ -335,53 +449,35 @@ namespace WindowsFormsApplication4
                                 int sWidth = s.Fin.X - s.Inicio.X;
                                 int sHeight = s.Fin.Y - s.Inicio.Y;
 
-                                //Esquina superior izquierda
-                                if (s.Inicio.X > sApagado.Inicio.X && s.Inicio.X < sApagado.Fin.X &&
-                                    s.Inicio.Y > sApagado.Inicio.Y && s.Inicio.Y < sApagado.Fin.Y)
+                                if (s.Inicio.Y <= sApagado.Fin.Y && s.Fin.Y >= sApagado.Fin.Y &&
+                                    s.Inicio.X <= sApagado.Fin.X && s.Fin.X >= sApagado.Fin.X)
                                 {
                                     //PERTENECE
                                     if (!s.Parent.zonasContenidas.Contains(zApagado))
                                     {
-                                        s.Parent.zonasContenidas.Add(zApagado);
+                                        lock (_lock)
+                                            s.Parent.zonasContenidas.Add(zApagado);
+                                    }
+                                    if (!zApagado.zonasContenidas.Contains(s.Parent))
+                                    {
+                                        lock (_lock)
+                                            zApagado.zonasContenidas.Add(s.Parent);
                                     }
                                 }
-                                //Esquina superior derecha
-                                if (s.Inicio.X + sWidth > sApagado.Inicio.X && s.Inicio.X + sWidth < sApagado.Fin.X &&
-                                    s.Inicio.Y + sHeight > sApagado.Inicio.Y && s.Inicio.Y < sApagado.Fin.Y)
+
+                                if (s.Inicio.Y <= sApagado.Inicio.Y && s.Fin.Y >= sApagado.Inicio.Y &&
+                                    s.Inicio.X <= sApagado.Inicio.X && s.Fin.X >= sApagado.Inicio.X)
                                 {
                                     //PERTENECE
                                     if (!s.Parent.zonasContenidas.Contains(zApagado))
                                     {
-                                        s.Parent.zonasContenidas.Add(zApagado);
+                                        lock (_lock)
+                                            s.Parent.zonasContenidas.Add(zApagado);
                                     }
-                                }
-                                //Esquina inferior izquierda
-                                if (s.Inicio.X > sApagado.Inicio.X && s.Inicio.X < sApagado.Fin.X &&
-                                    s.Inicio.Y + sHeight > sApagado.Inicio.Y && s.Inicio.Y + sHeight < sApagado.Fin.Y)
-                                {
-                                    //PERTENECE
-                                    if (!s.Parent.zonasContenidas.Contains(zApagado))
+                                    if (!zApagado.zonasContenidas.Contains(s.Parent))
                                     {
-                                        s.Parent.zonasContenidas.Add(zApagado);
-                                    }
-                                }
-                                //Esquina inferior derecha
-                                if (s.Inicio.X + sWidth > sApagado.Inicio.X && s.Inicio.X + sWidth < sApagado.Fin.X &&
-                                    s.Inicio.Y + sHeight > sApagado.Inicio.Y && s.Inicio.Y + sHeight < sApagado.Fin.Y)
-                                {
-                                    //PERTENECE
-                                    if (!s.Parent.zonasContenidas.Contains(zApagado))
-                                    {
-                                        s.Parent.zonasContenidas.Add(zApagado);
-                                    }
-                                }
-                                if (s.Inicio.X <= sApagado.Inicio.X && s.Fin.X >= sApagado.Fin.X ||
-                                s.Inicio.Y <= sApagado.Inicio.Y && s.Fin.Y >= sApagado.Fin.Y)
-                                {
-                                    //PERTENECE
-                                    if (!s.Parent.zonasContenidas.Contains(zApagado))
-                                    {
-                                        s.Parent.zonasContenidas.Add(zApagado);
+                                        lock (_lock)
+                                            zApagado.zonasContenidas.Add(s.Parent);
                                     }
                                 }
                             }
@@ -415,10 +511,16 @@ namespace WindowsFormsApplication4
         }
         void OPCClient_Disconnected(object sender, EventArgs e)                         
         {
-            addElementToListBox(this.listViewEventos, new Evento(DateTime.Now, "Evento", "Cliente OPC desconectado."));
+            addElementToListBox(this.listViewEventos, new Evento(DateTime.Now, "Grave", "Cliente OPC desconectado."));
 
             updateLabelTextProperty(this.labelEstadoOPC, "OPC Desconectado");
             updateLabelBackColor(this.labelEstadoOPC, Color.Red);
+
+            this._system.OPCClient.Connected        -= OPCClient_Connected;
+            this._system.OPCClient.DataSent         -= OPCClient_DataSent;
+            this._system.OPCClient.Disconnected     -= OPCClient_Disconnected;
+            this._system.OPCClient.OPCError         -= OPCClient_OPCError;
+            this._system.OPCClient.OPCWrittingError -= OPCClient_OPCWrittingError;
 
             //if (!this._system.OPCClient._connected && !this._system.OPCClient._connecting)
             //{
@@ -446,22 +548,28 @@ namespace WindowsFormsApplication4
         }
         void main_stateChanged(object sender, Zona.States state)                        
         {
-            updateLabelTextProperty(EstadosLabels[((Zona) sender).Posicion], state.ToString());
+            updateLabelTextProperty(ccs[((Zona) sender).Posicion].labelEstado, state.ToString());
 
             switch (state)
             {
+                case Zona.States.Manual:
+                    updateLabelBackColor(ccs[((Zona)sender).Posicion].labelEstado, Color.Yellow);
+                    break;
                 case Zona.States.Vacio:
-                    updateLabelBackColor(EstadosLabels[((Zona)sender).Posicion], Color.Transparent);
+                    updateLabelBackColor(ccs[((Zona) sender).Posicion].labelEstado, Color.Transparent);
                     break;
                 case Zona.States.Lleno:
-                    updateLabelBackColor(EstadosLabels[((Zona)sender).Posicion], Color.Green);
+                    updateLabelBackColor(ccs[((Zona)sender).Posicion].labelEstado, Color.Green);
                     break;
                 case Zona.States.Enfriando:
-                    updateLabelBackColor(EstadosLabels[((Zona)sender).Posicion], Color.Orange);
+                    updateLabelBackColor(ccs[((Zona)sender).Posicion].labelEstado, Color.Orange);
                     addElementToListBox(this.listViewEventos, new Evento(DateTime.Now, "Estado", "Zona " + (sender as Zona).Posicion + ": Empieza a enfriar."));
                     break;
+                case Zona.States.Esperando:
+                    updateLabelBackColor(ccs[((Zona)sender).Posicion].labelEstado, Color.Gray);
+                    break;
                 case Zona.States.Vaciando:
-                    updateLabelBackColor(EstadosLabels[((Zona)sender).Posicion], Color.Blue);
+                    updateLabelBackColor(ccs[((Zona)sender).Posicion].labelEstado, Color.Blue);
                     addElementToListBox(this.listViewEventos, new Evento(DateTime.Now, "Estado", "Zona " + (sender as Zona).Posicion + ": Empieza a vaciar."));
                     break;
             }
@@ -486,7 +594,8 @@ namespace WindowsFormsApplication4
 
         void estados_ThermoCamImgCuadradosGenerated(object sender, ThermoVision.Tipos.ThemoCamImgCuadradosArgs e) 
         {
-            updatePictureBox(this.pictureBoxRampa, ref e.Imagen);
+            updatePictureBox(this.pictureBoxRampa, ref e.ImagenRampa);
+            updatePictureBox(this.pictureBoxRejillas, ref e.ImagenRejillas);
         }
 
         void main_FormClosing(object sender, FormClosingEventArgs e)                    
@@ -593,7 +702,10 @@ namespace WindowsFormsApplication4
 
                     l.Refresh();
                 }
-                catch { }
+                catch(Exception ex) 
+                {
+                    ex.ToString();
+                }
             }
         }
     }
