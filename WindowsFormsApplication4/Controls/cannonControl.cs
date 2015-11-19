@@ -12,8 +12,12 @@ namespace ThermoCamApp.Controls
     {
         public int posicion;
         public ThermoVision.Models.Zona zona;
+        public ThermoVision.Models.Zona.States LastState;
+
+        public GroupBox groupBox;
 
         public CheckBox buttonMode;
+        public Button buttonReset;
         public Button buttonUp;
         public Button buttonLeft;
         public Button buttonActivar;
@@ -33,7 +37,7 @@ namespace ThermoCamApp.Controls
         public cannonControlParameterCallback buttonRigthAction;
         public cannonControlParameterCallback buttonDownAction;
 
-        public cannonControlBoolCallback CheckCannonMode;
+        //public cannonControlBoolCallback CheckCannonMode;
 
         public cannonControl(
             Form f,
@@ -45,8 +49,7 @@ namespace ThermoCamApp.Controls
             cannonControlParameterCallback      buttonUpAction,
             cannonControlParameterCallback      buttonLeftAction,
             cannonControlParameterCallback      buttonRigthAction,
-            cannonControlParameterCallback      buttonDownAction,
-            cannonControlBoolCallback           checkCannonMode)
+            cannonControlParameterCallback      buttonDownAction)
         {
             this.posicion   = pos;
             this.zona       = z;
@@ -57,9 +60,9 @@ namespace ThermoCamApp.Controls
             this.buttonLeftAction       = buttonLeftAction;
             this.buttonRigthAction      = buttonRigthAction;
             this.buttonDownAction       = buttonDownAction;
-            this.CheckCannonMode        = checkCannonMode;
 
             this.buttonMode     = new CheckBox();
+            this.buttonReset    = new Button();
             this.buttonUp       = new Button();
             this.buttonLeft     = new Button();
             this.buttonActivar  = new Button();
@@ -69,11 +72,22 @@ namespace ThermoCamApp.Controls
             this.labelEstado = new Label();
 
             #region "TOP Buttons"
+            //
+            // groupBox
+            //
+            this.groupBox = new GroupBox();
+            
+            this.groupBox.Location = new System.Drawing.Point(p.X - 100 - 50 - 20, p.Y);
+            this.groupBox.Name = "groupBox2";
+            this.groupBox.Size = new System.Drawing.Size(100 * 3 + 10 * 4, 
+                                                            5 * 5 + 3 * 30);
+            this.groupBox.TabIndex = 61;
+            this.groupBox.TabStop = false;
             // 
             // buttonMode
             // 
             this.buttonMode.Appearance = Appearance.Button;
-            this.buttonMode.Location = new System.Drawing.Point(p.X - 100 - 10 - 100, p.Y);
+            this.buttonMode.Location = new System.Drawing.Point(this.groupBox.Location.X - 100 - 10, p.Y);
             this.buttonMode.Name = "buttonMode";
             this.buttonMode.Size = new System.Drawing.Size(100, 30);
             this.buttonMode.TabIndex = 5;
@@ -81,11 +95,21 @@ namespace ThermoCamApp.Controls
             this.buttonMode.TextAlign = ContentAlignment.MiddleCenter;
             this.buttonMode.UseVisualStyleBackColor = true;
             this.buttonMode.CheckedChanged += buttonMode_CheckedChanged;
-            this.buttonMode.Checked = this.CheckCannonMode(this.posicion);
+            //this.buttonMode.Checked = this.CheckCannonMode(this.posicion);
+            // 
+            // buttonReset
+            // 
+            this.buttonReset.Location = new System.Drawing.Point(this.buttonMode.Location.X - 100 - 15, p.Y);
+            this.buttonReset.Name = "buttonUp";
+            this.buttonReset.Size = new System.Drawing.Size(100, 30);
+            this.buttonReset.TabIndex = 5;
+            this.buttonReset.Text = "Reset";
+            this.buttonReset.UseVisualStyleBackColor = true;
+            this.buttonReset.Click += buttonReset_Click;
             // 
             // buttonUp
             // 
-            this.buttonUp.Location = new System.Drawing.Point(p.X - 50, p.Y);
+            this.buttonUp.Location = new System.Drawing.Point(this.groupBox.Width / 2 - 50, 10);
             this.buttonUp.Name = "buttonUp";
             this.buttonUp.Size = new System.Drawing.Size(100, 30);
             this.buttonUp.TabIndex = 5;
@@ -96,7 +120,7 @@ namespace ThermoCamApp.Controls
             // Estado
             // 
             this.labelEstado.AutoSize = true;
-            this.labelEstado.Location = new System.Drawing.Point(p.X + 100 + 10, p.Y);
+            this.labelEstado.Location = new System.Drawing.Point(p.X + 100 + 30 + 50, p.Y);
             this.labelEstado.AutoSize = false;
             this.labelEstado.Name = "label";
             this.labelEstado.Size = new System.Drawing.Size(100, 30);
@@ -115,7 +139,7 @@ namespace ThermoCamApp.Controls
             // 
             // buttonLeft
             // 
-            this.buttonLeft.Location = new System.Drawing.Point(p.X - 50 - 10 - 100, p.Y + 35);
+            this.buttonLeft.Location = new System.Drawing.Point(this.groupBox.Width / 2 - 50 - 10 - 100, 10 + 35);
             this.buttonLeft.Name = "buttonLeft";
             this.buttonLeft.Size = new System.Drawing.Size(100, 30);
             this.buttonLeft.TabIndex = 5;
@@ -130,7 +154,7 @@ namespace ThermoCamApp.Controls
             // 
             // buttonActivar
             // 
-            this.buttonActivar.Location = new System.Drawing.Point(p.X - 50, p.Y + 35);
+            this.buttonActivar.Location = new System.Drawing.Point(this.groupBox.Width / 2 - 50, 10 + 35);
             this.buttonActivar.Name = "buttonActivar";
             this.buttonActivar.Size = new System.Drawing.Size(100, 30);
             this.buttonActivar.TabIndex = 5;
@@ -141,7 +165,7 @@ namespace ThermoCamApp.Controls
             // 
             // buttonRight
             // 
-            this.buttonRigth.Location = new System.Drawing.Point(p.X + 50 + 10, p.Y + 35);
+            this.buttonRigth.Location = new System.Drawing.Point(this.groupBox.Width / 2 + 50 + 10, 10 + 35);
             this.buttonRigth.Name = "buttonRigth";
             this.buttonRigth.Size = new System.Drawing.Size(100, 30);
             this.buttonRigth.TabIndex = 5;
@@ -161,7 +185,7 @@ namespace ThermoCamApp.Controls
             // 
             // buttonDown
             // 
-            this.buttonDown.Location = new System.Drawing.Point(p.X - 50, p.Y + 70);
+            this.buttonDown.Location = new System.Drawing.Point(this.groupBox.Width / 2 - 50, 10 + 70);
             this.buttonDown.Name = "buttonDown";
             this.buttonDown.Size = new System.Drawing.Size(100, 30);
             this.buttonDown.TabIndex = 5;
@@ -172,27 +196,47 @@ namespace ThermoCamApp.Controls
             #endregion
 
             f.Controls.Add(this.buttonMode);
-            f.Controls.Add(this.buttonUp);
+            f.Controls.Add(this.buttonReset);
+            this.groupBox.Controls.Add(this.buttonUp);
             f.Controls.Add(this.labelEstado);
-            f.Controls.Add(this.buttonLeft);
-            f.Controls.Add(this.buttonActivar);
-            f.Controls.Add(this.buttonRigth);
-            f.Controls.Add(this.buttonDown);
+            this.groupBox.Controls.Add(this.buttonLeft);
+            this.groupBox.Controls.Add(this.buttonActivar);
+            this.groupBox.Controls.Add(this.buttonRigth);
+            this.groupBox.Controls.Add(this.buttonDown);
+            f.Controls.Add(this.groupBox);
 
             changeButtonsState(this.buttonMode.Checked);
         }
 
-        public void cannonModeChanged(Object value)
+        void buttonReset_Click(object sender, EventArgs e)
+        {
+            this.LastState = ThermoVision.Models.Zona.States.Vacio;
+        }
+
+        public void cannonModeChanged(Object value)                  
         {
             if (value is bool)
             {
+                this.buttonMode.CheckedChanged -= buttonMode_CheckedChanged;
+
                 this.buttonMode.Checked = (bool)value;
+
                 changeButtonsState(this.buttonMode.Checked);
-                if((bool) value)
+                if ((bool)value)
+                {
+                    if(this.zona.State != ThermoVision.Models.Zona.States.Manual)
+                        this.LastState = this.zona.State;
                     this.zona.triggerStateChangedEvent(ThermoVision.Models.Zona.States.Manual);
+                }
                 else
-                    this.zona.triggerStateChangedEvent(ThermoVision.Models.Zona.States.Vacio);
-            }
+                {
+                    if (this.LastState == ThermoVision.Models.Zona.States.Enfriando)
+                        this.LastState = ThermoVision.Models.Zona.States.Esperando;
+                      this.zona.triggerStateChangedEvent(this.LastState);
+                }
+
+                this.buttonMode.CheckedChanged += buttonMode_CheckedChanged;
+            } //if
         }
 
         void buttonDown_Click(object sender, EventArgs e)            
@@ -242,11 +286,19 @@ namespace ThermoCamApp.Controls
             else
                 this.buttonMode.Text = "Automatico";
 
-            this.buttonUp.Visible = state;
-            this.buttonLeft.Visible = state;
-            this.buttonActivar.Visible = state;
-            this.buttonRigth.Visible = state;
-            this.buttonDown.Visible = state;
+            this.buttonReset.Enabled    = state;
+            this.groupBox.Visible       = state;
+            this.groupBox.BringToFront();
+            this.buttonUp.Visible       = state;
+            this.buttonUp.BringToFront();
+            this.buttonLeft.Visible     = state;
+            this.buttonLeft.BringToFront();
+            this.buttonActivar.Visible  = state;
+            this.buttonActivar.BringToFront();
+            this.buttonRigth.Visible    = state;
+            this.buttonRigth.BringToFront();
+            this.buttonDown.Visible     = state;
+            this.buttonDown.BringToFront();
         }
     }
 }

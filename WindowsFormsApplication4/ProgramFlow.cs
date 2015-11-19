@@ -32,7 +32,8 @@ namespace ThermoCamApp
 
             //Borrar archivo de datos
             //System.IO.File.Delete("Data.ocl");
-            //_system = Helpers.deserializeSistema("data.ocl");
+            if(System.IO.File.Exists("data.ocl"));
+                _system = Helpers.deserializeSistema("data.ocl");
 
             if (_system != null)
             {
@@ -119,7 +120,7 @@ namespace ThermoCamApp
                                     //Guardar sistema
                                     //Helpers.serializeSistema(cc.Sistema, "data.ocl");
                                 }
-
+                                                                
                                 _system = cc.Sistema;
                                 cc.Dispose();
                             }
@@ -252,6 +253,8 @@ namespace ThermoCamApp
                                     //SIGUIENTE
                                     step = (int)windowIds.salir;
                                 }
+
+                                Helpers.serializeSistema(_system, "data.ocl");
 
                                 m.Dispose();
                             }

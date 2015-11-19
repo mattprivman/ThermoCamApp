@@ -170,7 +170,23 @@ namespace ThermoCamApp.Asistente.Camaras
 
             if (this.listBoxZonas.SelectedIndex != -1)
             {
-                this._system.selectZona(this.listBoxZonas.SelectedItem.ToString());
+                if (this._system.Mode == "Rampas")
+                {
+                    foreach (Zona z in this._system.Zonas)
+                    {
+                        foreach (SubZona s in z.Children)
+                            s.Visualizar = true;
+                    }
+                    foreach (Zona z in this._system.ZonasVaciado)
+                    {
+                        foreach (SubZona s in z.Children)
+                            s.Visualizar = false;
+                    }
+                }
+                else
+                {
+                    this._system.selectZona(this.listBoxZonas.SelectedItem.ToString());
+                }
 
                 //Actualizar listBoxes Zonas
                 actualizarListBoxZonas();
@@ -228,7 +244,23 @@ namespace ThermoCamApp.Asistente.Camaras
 
                 if (this.listBoxZonasVaciado.SelectedIndex != -1)
                 {
-                    this._system.selectZonaVaciado(this.listBoxZonasVaciado.SelectedItem.ToString());
+                    if (this._system.Mode == "Rampas")
+                    {
+                        foreach (Zona z in this._system.Zonas)
+                        {
+                            foreach (SubZona s in z.Children)
+                                s.Visualizar = false;
+                        }
+                        foreach (Zona z in this._system.ZonasVaciado)
+                        {
+                            foreach (SubZona s in z.Children)
+                                s.Visualizar = true;
+                        }
+                    }
+                    else
+                    {
+                        this._system.selectZona(this.listBoxZonas.SelectedItem.ToString());
+                    }
 
                     //Actualizar listBoxes Zonas
                     actualizarListBoxZonas();
@@ -686,8 +718,7 @@ namespace ThermoCamApp.Asistente.Camaras
             switch (this._system.Mode)
             {
                 case "Rampas":
-                    foreach (ThermoCam t in this._system.ThermoCams)
-                        t.RampMode = true;
+                  
 
                     break;
                 case "Tuberias":

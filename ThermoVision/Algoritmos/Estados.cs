@@ -15,6 +15,12 @@ namespace ThermoVision.Algoritmos
         public int tempLimiteHayQueEnfriar = 30;
         public int tempLimiteHayMaterial   = 27;
 
+        public float widthFinalRampa = 1;
+        public float heightFinalRampa = 1;
+
+        public float widthFinalTrampilla = 1;
+        public float heightFinalTrampilla = 1;
+
         Bitmap bitmapCuadrados;
         Bitmap bitmapRejillas;
         List<Zona> zonasAlgoritmoVaciar = new List<Zona>();
@@ -31,12 +37,12 @@ namespace ThermoVision.Algoritmos
         public event ThermoCamImgCuadradosCallback  ThermoCamImgCuadradosGenerated;
         #endregion
 
-        public Estados(Sistema s)                                   
+        public Estados(Sistema s)                                                          
         {
             this._system = s;
         }
 
-        public void ejecutarAlgoritmos()                            
+        public void ejecutarAlgoritmos()                                                   
         {
             Action[] actions = new Action[2];
 
@@ -52,11 +58,11 @@ namespace ThermoVision.Algoritmos
             //this._system.dibujarEstados();
         }
 
-        private void algoritmoEnfriar()                             
+        private void algoritmoEnfriar()                                                    
         {
             Parallel.ForEach<Zona>(this._system.Zonas, (z) =>
             {
-                if (!isZonaCooling(z))
+                if (z.State != Zona.States.Manual)
                 {
                     //getCannonCoordinates(z);
 
@@ -77,7 +83,7 @@ namespace ThermoVision.Algoritmos
                                     this._system.enfriarZona(z);
 
                                     foreach (Zona zVaciado in z.zonasContenidas)
-                                        addMaterialEnZona(zVaciado);
+                                        hayMaterialEnZona(zVaciado);
 
                                 }//if
                                 else
@@ -94,7 +100,9 @@ namespace ThermoVision.Algoritmos
                             #endregion
                         case Zona.States.Enfriando:
                             #region "ENFRIANDO"
-                            z.triggerStateChangedEvent(Zona.States.Esperando);
+                            foreach (Zona zVaciado in z.zonasContenidas)
+                                if (zVaciado.State != Zona.States.Manual)
+                                    zVaciado.State = Zona.States.Enfriando;
 
                             break;
                             #endregion
@@ -113,23 +121,20 @@ namespace ThermoVision.Algoritmos
                                 //Vaciar
                                 foreach (Zona zVaciado in z.zonasContenidas)
                                 {
-                                    //Comprobar que no haya ninguna zona enfriando ni con puntos calientes y vaciar
-                                    if (zVaciado.zonasContenidas.Where((x) => x.State == Zona.States.Enfriando || x.State == Zona.States.Manual).Count() == 0 &&
-                                        z.zonasContenidas.Where((x) => x.State == Zona.States.Enfriando).Count() == 0 &&
-                                        this._system.ZonasVaciado.Where((x) => x.State == Zona.States.Vaciando).Count() == 0 &&
-                                        this._system.Zonas.Where((x) => x.State == Zona.States.Vaciando).Count() == 0)
+                                    if (zVaciado.State != Zona.States.Manual)
                                     {
-                                        z.triggerStateChangedEvent(Zona.States.Vaciando);
-                                        zVaciado.State = Zona.States.Vaciando;
-                                        this._system.vaciarZona(zVaciado);
-                                    }
-                                    else
-                                    {
-                                        if (z.zonasContenidas.Where((x) => x.State == Zona.States.Vaciando).Count() == 0)
+                                        //Comprobar que no haya ninguna zona enfriando ni con puntos calientes y vaciar
+                                        if (zVaciado.zonasContenidas.Where((x) => x.State == Zona.States.Enfriando || x.State == Zona.States.Manual).Count() == 0 &&
+                                            /*z.zonasContenidas.Where((x) => x.State == Zona.States.Enfriando).Count() == 0 &&*/
+                                            !hayPuntosCalientesEnZona(zVaciado) &&
+                                            this._system.ZonasVaciado.Where((x) => x.State == Zona.States.Vaciando).Count() == 0 &&
+                                            this._system.Zonas.Where((x) => x.State == Zona.States.Vaciando).Count() == 0)
                                         {
-                                            this._system.noHAyQueVaciar(zVaciado);
-                                            zVaciado.State = Zona.States.Esperando;
+                                            z.triggerStateChangedEvent(Zona.States.Vaciando);
+                                            zVaciado.State = Zona.States.Vaciando;
+                                            this._system.vaciarZona(zVaciado);
                                         }
+                                       
                                     }
                                 }
                             }//else
@@ -143,10 +148,10 @@ namespace ThermoVision.Algoritmos
 
                             foreach (Zona zVaciado in z.zonasContenidas)
                             {
-
-                                if (!isEmptying(zVaciado))
+                                if (!zVaciado.Emptying)
                                 {
-                                    zVaciado.State = Zona.States.Esperando;
+                                    if(zVaciado.State != Zona.States.Manual)
+                                        zVaciado.State = Zona.States.Esperando;
 
                                     //zVaciado.CoolingSubZone = -1;
 
@@ -179,23 +184,28 @@ namespace ThermoVision.Algoritmos
                             {
                                 foreach (Zona zVaciado in z.zonasContenidas)
                                 {
-                                    bool hayMaterial = false;
-                                    foreach (SubZona s in zVaciado.Children)
+                                    if (zVaciado.State != Zona.States.Manual)
                                     {
-                                        for (int x = 0; x < s.tempMatrix.GetLength(0); x++)
-                                            for (int y = 0; y < s.tempMatrix.GetLength(1); y++)
-                                                if (s.tempMatrix[x, y].hayMaterial || s.tempMatrix[x, y].estaCaliente)
-                                                    hayMaterial = true; ;
-                                    }
+                                        bool hayMaterial = false;
+                                        foreach (SubZona s in zVaciado.Children)
+                                        {
+                                            for (int x = 0; x < s.tempMatrix.GetLength(0); x++)
+                                                for (int y = 0; y < s.tempMatrix.GetLength(1); y++)
+                                                    if (s.tempMatrix[x, y].hayMaterial || s.tempMatrix[x, y].estaCaliente)
+                                                        hayMaterial = true; ;
+                                        }
 
-                                    if (hayMaterial &&
-                                        this._system.ZonasVaciado.Where(x => x.State == Zona.States.Vaciando).Count() == 0 &&
-                                        zVaciado.zonasContenidas.Where((x) => x.State == Zona.States.Enfriando || x.State == Zona.States.Manual).Count() == 0 &&
-                                        z.zonasContenidas.Where((x) => x.State == Zona.States.Enfriando).Count() == 0 &&
-                                        this._system.Zonas.Where((x) => x.State == Zona.States.Vaciando).Count() == 1)
-                                    {
-                                        zVaciado.State = Zona.States.Vaciando;
-                                        this._system.vaciarZona(zVaciado);
+                                        if (hayMaterial &&
+                                            zVaciado.State != Zona.States.Manual &&
+                                            this._system.ZonasVaciado.Where(x => x.State == Zona.States.Vaciando).Count() == 0 &&
+                                            zVaciado.zonasContenidas.Where((x) => x.State == Zona.States.Enfriando || x.State == Zona.States.Manual).Count() == 0 &&
+                                            !hayPuntosCalientesEnZona(zVaciado) &&
+                                            /*z.zonasContenidas.Where((x) => x.State == Zona.States.Enfriando).Count() == 0 &&*/
+                                            this._system.Zonas.Where((x) => x.State == Zona.States.Vaciando).Count() == 1)
+                                        {
+                                            zVaciado.State = Zona.States.Vaciando;
+                                            this._system.vaciarZona(zVaciado);
+                                        }
                                     }
                                 }
                             }
@@ -223,20 +233,21 @@ namespace ThermoVision.Algoritmos
                             #endregion
 
                     }//switch
-                }//if zona not cooling
-                else
-                {
-                    if (z.State != Zona.States.Enfriando)
-                        z.triggerStateChangedEvent(Zona.States.Enfriando);
+                }//if zona not manual
+                //else
+                //{
+                //    if (z.State != Zona.States.Enfriando)
+                //        z.triggerStateChangedEvent(Zona.States.Enfriando);
 
-                    foreach (Zona zVaciado in z.zonasContenidas)
-                        zVaciado.State = Zona.States.Enfriando;
-                    //getCannonCoordinates(z);
-                }
+                //    foreach (Zona zVaciado in z.zonasContenidas)
+                //        if(zVaciado.State != Zona.States.Manual)
+                //            zVaciado.State = Zona.States.Enfriando;
+                //    //getCannonCoordinates(z);
+                //}
             });
         }   //AlgoritmoEnfriar
 
-        private bool hayMaterialEnZona(Zona z)                      
+        private bool hayMaterialEnZona(Zona z)                                             
         {
             bool res = false;   //Valor devuelto que indicará si hay material o no en alguna divisón de alguna subzona
 
@@ -265,7 +276,7 @@ namespace ThermoVision.Algoritmos
 
             return res;
         }   //Actualizar subzonas que tienen material          --> Devuelve si hay alguna zona con material
-        private void addMaterialEnZona(Zona z)                      
+        private void addMaterialEnZona(Zona z)                                             
         {
             //Existe material en alguna subzona
             foreach (SubZona s in z.Children)
@@ -286,7 +297,7 @@ namespace ThermoVision.Algoritmos
                 }//if tempMatrix != null
             }//foreach subzona
         }
-        private bool hayPuntosCalientesEnZona(Zona z)               
+        private bool hayPuntosCalientesEnZona(Zona z)                                      
         {
             bool res = false;   //Valor devuelto que indicará si hay material o no en alguna divisón de alguna subzona
 
@@ -314,330 +325,395 @@ namespace ThermoVision.Algoritmos
             return res;
         }   //Actualizar subzonas que tienen puntos calientes  --> Devuelve si hay alguna zona con algun punto caliente
 
-        private bool isZonaCooling(Zona z)                          
-        {
-            bool value = false;
+        //private bool isZonaCooling(Zona z)                                                 
+        //{
+        //    bool value = false;
 
-            try
-            {
-                object res = this._system.OPCClient.readSync(this._system.Path + ".RAMPAS.APAGADO." + z.Nombre, "Cooling");
+        //    try
+        //    {
+        //        object res = this._system.OPCClient.ReadSync(this._system.Path + ".RAMPAS.APAGADO." + z.Nombre, "Cooling");
 
-                if (res is bool)
-                    value = (bool)res;
-            }
-            catch (Exception ex)
-            {
-                ex.ToString();
-            }
+        //        if (res is bool)
+        //            value = (bool)res;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ex.ToString();
+        //    }
 
-            return value;
-        }
-        private bool isEmptying(Zona z)                             
-        {
-            bool value = false;
+        //    return value;
+        //}
+        //private bool isEmptying(Zona z)                                                    
+        //{
+        //    bool value = false;
 
-            try
-            {
-                object res = this._system.OPCClient.readSync(this._system.Path + ".RAMPAS.VACIADO." + z.Nombre, "Emptying");
+        //    try
+        //    {
+        //        object res = this._system.OPCClient.ReadSync(this._system.Path + ".RAMPAS.VACIADO." + z.Nombre, "Emptying");
 
-                if (res is bool)
-                    value = (bool)res;
-            }
-            catch (Exception ex)
-            {
-                ex.ToString();
-            }
+        //        if (res is bool)
+        //            value = (bool)res;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ex.ToString();
+        //    }
 
-            return value;
-        }
+        //    return value;
+        //}
 
         public void crearImagenCuadrados(List<Zona> zonasApagado, List<Zona> zonasVaciado) 
         {
-            //Calcular altura y ancho de la rampa
-            int widthRampa = 0;
-            int heightRampa = 0;
-
-            foreach (Zona z in zonasApagado)
+            lock ("lockRejilla")
             {
-                foreach (SubZona s in z.Children)
-                {
-                    widthRampa += s.Fin.X - s.Inicio.X;
+                //Calcular altura y ancho de la rampa
+                int widthRampa = 0;
+                int heightRampa = 0;
 
-                    if (s.Fin.Y - s.Inicio.Y > heightRampa)
-                    {
-                        heightRampa = s.Fin.Y - s.Inicio.Y;
-                    }//if
-                }//foreach
-            }//foreach
-
-            //Calcular ancho de la zona de rejilla
-            int widthRejilla = 0;
-
-            foreach (Zona z in zonasVaciado)
-            {
-                foreach (SubZona s in z.Children)
-                {
-                    widthRejilla += s.Fin.X - s.Inicio.X;
-                }//Foreach
-            }//foreach
-
-            //int width = (widthRampa > widthRejilla) ? widthRampa : widthRejilla;      //////// 1
-            int width = widthRampa;
-
-            if (widthRampa > 0 && heightRampa > 0)
-            {
-                int height = (int)(heightRampa +
-                                    heightRampa * 0.05);      //margen entre la rampa y las rejillas;
-
-
-                bitmapCuadrados = new Bitmap(width, height);
-                Color c;
-                bitmapRejillas = new Bitmap(widthRejilla, (int) (height * 0.1));
-
-                int offsetX = 0;
-                int inicio = 0;
-
-                //Comprobar si la rejilla es más ancha que la rampa
-                if (widthRejilla > widthRampa)
-                {
-                    offsetX = widthRejilla - widthRampa;
-                    inicio = offsetX;
-                }
-
-                offsetX = 0;    /////////////////////////////////////////////////////////////// 1
-
-                //Dibujar rampa     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                #region rampa
                 foreach (Zona z in zonasApagado)
                 {
-                    int subZoneNumber = 0;
                     foreach (SubZona s in z.Children)
                     {
-                        if (s.tempMatrix != null)
+                        widthRampa += s.Fin.X - s.Inicio.X;
+
+                        if (s.Fin.Y - s.Inicio.Y > heightRampa)
                         {
-                            int diferenciaEjeY = heightRampa - (s.Fin.Y - s.Inicio.Y);
+                            heightRampa = s.Fin.Y - s.Inicio.Y;
+                        }//if
+                    }//foreach
+                }//foreach
 
-                            int colWidth = (int)((s.Fin.X - s.Inicio.X) / s.Columnas) + 1;
-                            int filHeigth = (int)((s.Fin.Y - s.Inicio.Y) / s.Filas) + 1;
+                //Calcular ancho de la zona de rejilla
+                int widthRejilla = 0;
 
-                            int columnaAnterior = 0;
-                            int filaAnterior = 0;
+                foreach (Zona z in zonasVaciado)
+                {
+                    foreach (SubZona s in z.Children)
+                    {
+                        widthRejilla += s.Fin.X - s.Inicio.X;
+                    }//Foreach
+                }//foreach
 
-                            for (int y = 0; y < (s.Fin.Y - s.Inicio.Y); y++)
+                float escalaX = widthFinalRampa / widthRampa;
+                float escalaY = heightFinalRampa / heightRampa;
+
+                float escalaXTramp = widthFinalTrampilla / widthRejilla;
+                float escalaYTramp = heightFinalTrampilla / (int)(heightRampa +
+                                        heightRampa * 0.05); 
+
+                //int width = (widthRampa > widthRejilla) ? widthRampa : widthRejilla;      //////// 1
+                int width = (int)(widthRampa * escalaX);
+
+                if (widthRampa > 0 && heightRampa > 0)
+                {
+                    int height = (int)((heightRampa +
+                                        heightRampa * 0.05) * escalaY);      //margen entre la rampa y las rejillas;
+
+                    int heightReji = (int)(heightRampa +
+                                        heightRampa * 0.05);      //margen entre la rampa y las rejillas;
+
+                    bitmapCuadrados = new Bitmap(width, height);
+                    Color c;
+                    bitmapRejillas = new Bitmap((int)(widthRejilla * escalaXTramp), (int)heightFinalTrampilla);
+
+                    float offsetX = 0;
+                    int inicio = 0;
+
+                    //Comprobar si la rejilla es más ancha que la rampa
+                    if (widthRejilla > widthRampa)
+                    {
+                        offsetX = widthRejilla - widthRampa;
+                        inicio = (int) offsetX;
+                    }
+
+                    offsetX = 0;    /////////////////////////////////////////////////////////////// 1
+
+                    //Dibujar rampa     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    #region rampa
+                    foreach (Zona z in zonasApagado)
+                    {
+                        int subZoneNumber = 0;
+                        foreach (SubZona s in z.Children)
+                        {
+                            if (s.tempMatrix != null)
                             {
-                                for (int x = 0; x < (s.Fin.X - s.Inicio.X); x++)
+                                int diferenciaEjeY = heightRampa - (s.Fin.Y - s.Inicio.Y);
+
+                                float colWidth = (float)((float)((float)s.Fin.X - (float)s.Inicio.X) / (float)s.Columnas) * escalaX ;
+                                float filHeigth = (float)((float)((float)s.Fin.Y - (float)s.Inicio.Y) / (float)s.Filas) * escalaY;
+
+                                int columnaAnterior = 0;
+                                int filaAnterior = 0;
+
+                                for (int y = 0; y < (s.Fin.Y - s.Inicio.Y) * escalaY; y++)
+                                {
+                                    for (int x = 0; x < (s.Fin.X - s.Inicio.X) * escalaX; x++)
+                                    {
+                                        c = Color.LightGray;
+
+                                        //Calcular a que división pertenece estas coordenadas x e y
+                                        int columna = (int)((float)x/ colWidth);
+                                        int fila = (int)((float)y / filHeigth);
+
+                                        if (s.tempMatrix[fila, columna].hayMaterial)
+                                            c = Color.FromArgb(0x3D, 0x3C, 0x3C);
+                                        if (s.tempMatrix[fila, columna].estaCaliente)
+                                            c = Color.Orange;
+                                        if (fila == z.CoolingPoint.X && columna == z.CoolingPoint.Y && z.CoolingSubZone == subZoneNumber && z.Valvula)
+                                            c = Color.Blue;
+                                        if (columna != columnaAnterior)
+                                            c = Color.DarkGray;
+                                        if (fila != filaAnterior)
+                                        {
+                                            c = Color.DarkGray;
+
+                                            for (; x < (s.Fin.X - s.Inicio.X) * escalaX; x++)
+                                            {
+                                                if(offsetX + x < this.bitmapCuadrados.Width)
+                                                    bitmapCuadrados.SetPixel((int)offsetX + x, diferenciaEjeY + y, c);
+                                            }
+                                        }
+                                        else
+                                            if (offsetX + x < this.bitmapCuadrados.Width)
+                                                bitmapCuadrados.SetPixel((int)offsetX + x, diferenciaEjeY + y, c);
+
+                                        columnaAnterior = columna;
+                                        filaAnterior = fila;
+                                    }//FOR
+                                }//FOR
+
+                                //Comprobar que la altura llena la rampa
+                                if (s.Fin.Y - s.Inicio.Y < heightRampa)
                                 {
                                     c = Color.LightGray;
 
-                                    //Calcular a que división pertenece estas coordenadas x e y
-                                    int columna = x / colWidth;
-                                    int fila = y / filHeigth;
-
-                                    if (s.tempMatrix[fila, columna].hayMaterial)
-                                        c = Color.DarkGray;
-                                    if (s.tempMatrix[fila, columna].estaCaliente)
-                                        c = Color.Orange;
-                                    if (fila == z.CoolingPoint.X && columna == z.CoolingPoint.Y && z.CoolingSubZone == subZoneNumber && z.Cooling)
-                                        c = Color.Blue;
-                                    if (columna != columnaAnterior)
-                                        c = Color.DarkBlue;
-                                    if (fila != filaAnterior)
+                                    for (int y = 0; y < diferenciaEjeY; y++)
                                     {
-                                        c = Color.DarkBlue;
-
-                                        for (; x < (s.Fin.X - s.Inicio.X); x++)
+                                        for (int x = 0; x < s.Fin.X - s.Inicio.X; x++)
                                         {
-                                            bitmapCuadrados.SetPixel(offsetX + x, diferenciaEjeY + y, c);
+                                            this.bitmapCuadrados.SetPixel((int)offsetX + x, y, c);
+                                        }//for x
+                                    }//for y
+                                }//if altura
+
+                                //Dibujar valores temperatura
+                                Brush b = Brushes.Black;
+
+                                for (int i = 0; i < s.tempMatrix.GetLength(0); i++)
+                                {
+                                    int filas = s.tempMatrix.GetLength(0);  //4
+                                    int col = s.tempMatrix.GetLength(1);    //6
+                                    for (int j = 0; j < s.tempMatrix.GetLength(1); j++)
+                                    {
+                                        int x = (int)(j * colWidth + colWidth / 2 - colWidth / 4);
+                                        int y = (int)(i * filHeigth + filHeigth / 2 - colWidth / 4);
+
+                                        using (Graphics g = Graphics.FromImage(bitmapCuadrados))
+                                        {
+                                            if (!(s.tempMatrix[i, j].max == 0))
+                                            {
+                                                if (s.tempMatrix[i, j].hayMaterial || s.tempMatrix[i, j].estaCaliente)
+                                                    b = Brushes.White;
+                                                else
+                                                    b = Brushes.Black;
+
+                                                g.DrawString(s.tempMatrix[i, j].max.ToString("0"), new Font("Arial", 10), b, new PointF(offsetX + x, y));
+                                            }
                                         }
                                     }
-                                    else
-                                        bitmapCuadrados.SetPixel(offsetX + x, diferenciaEjeY + y, c);
+                                }
 
-                                    columnaAnterior = columna;
-                                    filaAnterior = fila;
-                                }//FOR
-                            }//FOR
+                                offsetX += (float)((s.Fin.X - s.Inicio.X) * escalaX);
 
-                            //Comprobar que la altura llena la rampa
-                            if (s.Fin.Y - s.Inicio.Y < heightRampa)
-                            {
-                                c = Color.LightGray;
+                            }//IF tempMatrix != null
+                            subZoneNumber++;
+                        }//FOREACH SUBZONA
 
-                                for (int y = 0; y < diferenciaEjeY; y++)
-                                {
-                                    for (int x = 0; x < s.Fin.X - s.Inicio.X; x++)
-                                    {
-                                        this.bitmapCuadrados.SetPixel(offsetX + x, y, c);
-                                    }//for x
-                                }//for y
-                            }//if altura
-
-                            offsetX += s.Fin.X - s.Inicio.X;
-                        }//IF
-                        subZoneNumber++;
-
-                    }//FOREACH SUBZONA
-
-                    //Dibujar coordenadas del cañon
-                    if (true)
-                    {
-                        int y0 = (int)(heightRampa +
-                            heightRampa * 0.05 / 2);
-
-                        int x0 = offsetX - z.Width / 2;
-
-                        //Calcular coordenadas del cañon en la imagen
-
-                        int ancho = 0;
-                        int ColWidth = 0;
-                        for (int i = 0; i < z.Children.Count; i++)
+                        //Dibujar coordenadas del cañon
+                        if (true)
                         {
-                            if (i < z.CoolingSubZone)
-                                ancho += z.Children[i].Fin.X - z.Children[i].Inicio.X;
-                            if (i == z.CoolingSubZone)
+                            int y0 = (int) ((heightRampa +
+                                heightRampa * 0.05 / 2) * escalaY);
+
+                            int x0 = ((int)offsetX - (int)(z.Width / 2 * escalaX));
+
+                            //Calcular coordenadas del cañon en la imagen
+
+                            int ancho = 0;
+                            int ColWidth = 0;
+                            for (int i = 0; i < z.Children.Count; i++)
                             {
-                                ColWidth = (z.Children[i].Fin.X - z.Children[i].Inicio.X) / z.Children[i].Columnas;
-                                break;
+                                if (i < z.CoolingSubZone)
+                                    ancho += z.Children[i].Fin.X - z.Children[i].Inicio.X;
+                                if (i == z.CoolingSubZone)
+                                {
+                                    ColWidth = (int)(((z.Children[i].Fin.X - z.Children[i].Inicio.X) / z.Children[i].Columnas) * escalaX);
+                                    break;
+                                }
+                            }
+
+                            int x1 = (((int)offsetX - (int)(z.Width * escalaX) + (int)(ancho * escalaX) + z.CoolingPoint.Y * ColWidth + ColWidth / 2));
+
+                            int diferenciaEjeY = (int)((heightRampa - (z.Children[z.CoolingSubZone].Fin.Y - z.Children[z.CoolingSubZone].Inicio.Y)) * escalaY);
+                            int FilHeight = (int)(((z.Children[z.CoolingSubZone].Fin.Y - z.Children[z.CoolingSubZone].Inicio.Y) / z.Children[z.CoolingSubZone].Filas) * escalaY);
+                            int y1 = (diferenciaEjeY + z.CoolingPoint.X * FilHeight + FilHeight / 2);
+
+                            using (Graphics g = Graphics.FromImage(bitmapCuadrados))
+                            {
+                                g.DrawLine(new Pen(Color.DarkBlue, 4), new Point(x0, y0), new Point(x1, y1));
                             }
                         }
 
-                        int x1 = offsetX - z.Width + ancho + z.CoolingPoint.Y * ColWidth + ColWidth / 2;
+                    }//FOREACH ZONA
 
-                        int diferenciaEjeY  = heightRampa - (z.Children[z.CoolingSubZone].Fin.Y - z.Children[z.CoolingSubZone].Inicio.Y);
-                        int FilHeight       = (z.Children[z.CoolingSubZone].Fin.Y - z.Children[z.CoolingSubZone].Inicio.Y) / z.Children[z.CoolingSubZone].Filas;
-                        int y1              = diferenciaEjeY + z.CoolingPoint.X * FilHeight + FilHeight / 2;
+                    int borderX = 0;
 
-                        using (Graphics g = Graphics.FromImage(bitmapCuadrados))
-                        {
-                            g.DrawLine(Pens.DarkBlue, new Point(x0, y0), new Point(x1, y1));
-                        }
-                    }
-
-                }//FOREACH ZONA
-
-                int borderX = 0;
-
-                for(int i = 0; i < this._system.Zonas.Count - 1; i++)
-                {
-                    for (int j = 0; j < this._system.Zonas[i].Children.Count; j++)
+                    for (int i = 0; i < this._system.Zonas.Count - 1; i++)
                     {
-                        borderX += this._system.Zonas[i].Children[j].Fin.X - this._system.Zonas[i].Children[j].Inicio.X;
-                    }
-
-                    //Dibujar separacion de rejilla
-                    for (int y = 0; y < heightRampa; y++)
-                    {
-                        try
+                        for (int j = 0; j < this._system.Zonas[i].Children.Count; j++)
                         {
-                            bitmapCuadrados.SetPixel(borderX, y, Color.Black);
+                            borderX += this._system.Zonas[i].Children[j].Fin.X - this._system.Zonas[i].Children[j].Inicio.X;
                         }
-                        catch (Exception ex)
+
+                        //Dibujar separacion de rejilla
+                        for (int y = 0; y < heightRampa * escalaY; y++)
                         {
-                            ex.ToString();
-                        }
-                    }//for
-                }//for
-
-                #endregion
-
-                //Dibujar zona de las trampillas ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                #region "TRAMPILLAS"
-                if (widthRampa > widthRejilla)
-                {
-                    offsetX = widthRampa - widthRejilla;
-                    inicio = offsetX;
-                }
-                else
-                {
-                    offsetX = 0;
-                    inicio = 0;
-                }
-                offsetX = 0;                                    ////////////////////////////////////// 1
-                int offsetY = 0;
-                //int offsetY = (int) (heightRampa +
-                //                    heightRampa * 0.05);
-
-                foreach (Zona zonaVaciado in zonasVaciado)
-                {
-                    int subZoneApagadoNumber = 0;
-                    foreach (SubZona s in zonaVaciado.Children)
-                    {
-                        int diferenciaEjeY = heightRampa - (s.Fin.Y - s.Inicio.Y);
-
-                        if (s.tempMatrix != null)
-                        {
-                            int colWidth = (int)((s.Fin.X - s.Inicio.X) / s.Columnas) + 1;
-                            int filHeigth = (int)((s.Fin.Y - s.Inicio.Y) / s.Filas) + 1;
-
-                            int columnaAnterior = 0;
-
-                            for (int y = 0; y < (int)(heightRampa * 0.1); y++)
+                            try
                             {
-                                for (int x = 0; x < (s.Fin.X - s.Inicio.X); x++)
-                                {
-                                    c = Color.LightGray;
-
-                                    //Calcular a que división pertenece estas coordenadas x e y
-                                    int columna = x / colWidth;
-                                    int fila = y / filHeigth;
-
-                                    if (s.tempMatrix[fila, columna].hayMaterial && !s.tempMatrix[fila, columna].estaCaliente)
-                                        c = Color.Green;
-                                    if (s.tempMatrix[fila, columna].estaCaliente)
-                                        c = Color.Green;
-                                    if (fila == zonaVaciado.CoolingPoint.X && columna == zonaVaciado.CoolingPoint.Y && zonaVaciado.CoolingSubZone == subZoneApagadoNumber && zonaVaciado.Emptying)
-                                        c = Color.Blue;
-
-                                    if (columna != columnaAnterior)
-                                        c = Color.DarkBlue;
-
-                                    this.bitmapRejillas.SetPixel(offsetX + x, offsetY + y, c);
-
-                                    columnaAnterior = columna;
-
-                                }//for x
-                            }//for y
-                        }//tempMatrix != null
-                        offsetX += s.Fin.X - s.Inicio.X;
-                        subZoneApagadoNumber++;
-                    }//foreach subzona
-                }//FOREACH zona
-
-                //Dibujar separación entre zonas de apagado
-                borderX = 0;
-
-                for (int i = 0; i < this._system.ZonasVaciado.Count; i++)
-                {
-                    for(int j = 0; j < this._system.ZonasVaciado[i].Children.Count; j++)
-                    {
-                        borderX += this._system.ZonasVaciado[i].Children[j].Fin.X - this._system.ZonasVaciado[i].Children[j].Inicio.X;
+                                bitmapCuadrados.SetPixel((int)(borderX * escalaX), y, Color.Black);
+                                bitmapCuadrados.SetPixel((int)(borderX * escalaX - 1), y, Color.Black);
+                            }
+                            catch (Exception ex)
+                            {
+                                ex.ToString();
+                            }
+                        }//for
                     }//for
 
-                    for (int y = 0; y < (int)(heightRampa * 0.1); y++)
+                    #endregion
+
+                    //Dibujar zona de las trampillas ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    #region "TRAMPILLAS"
+                    if (widthRampa > widthRejilla)
                     {
-                        if (inicio + borderX < bitmapCuadrados.Width)
+                        offsetX = widthRampa - widthRejilla;
+                        inicio = (int)offsetX;
+                    }
+                    else
+                    {
+                        offsetX = 0;
+                        inicio = 0;
+                    }
+                    offsetX = 0;                                    ////////////////////////////////////// 1
+                    int offsetY = 0;
+                    //int offsetY = (int) (heightRampa +
+                    //                    heightRampa * 0.05);
+
+                    foreach (Zona zonaVaciado in zonasVaciado)
+                    {
+                        int subZoneApagadoNumber = 0;
+                        foreach (SubZona s in zonaVaciado.Children)
                         {
-                            this.bitmapRejillas.SetPixel(inicio + borderX - 1, offsetY + y, Color.Black);
-                            this.bitmapRejillas.SetPixel(inicio + borderX, offsetY + y, Color.Black);
+                            int diferenciaEjeY = heightRampa - (s.Fin.Y - s.Inicio.Y);
+
+                            if (s.tempMatrix != null)
+                            {
+                                int colWidth = (int)((((s.Fin.X - s.Inicio.X) / s.Columnas) + 1) * escalaXTramp);
+                                int filHeigth = (int)((((s.Fin.Y - s.Inicio.Y) / s.Filas) + 1) * escalaYTramp);
+
+                                int columnaAnterior = 0;
+
+                                for (int y = 0; y < bitmapRejillas.Height; y++)
+                                {
+                                    for (int x = 0; x < (s.Fin.X - s.Inicio.X) * escalaXTramp; x++)
+                                    {
+                                        c = Color.LightGray;
+
+                                        //Calcular a que división pertenece estas coordenadas x e y
+                                        int columna = x / colWidth;
+                                        int fila = 0;
+
+                                        if (s.tempMatrix[fila, columna].hayMaterial && !s.tempMatrix[fila, columna].estaCaliente)
+                                            c = Color.FromArgb(0x3D, 0x3C, 0x3C);
+                                        if (s.tempMatrix[fila, columna].estaCaliente)
+                                            c = Color.FromArgb(0x3D, 0x3C, 0x3C);
+                                        if(s.tempMatrix[fila, columna].activo)
+                                            c = Color.White;
+                                        //if (fila == zonaVaciado.CoolingPoint.X && columna == zonaVaciado.CoolingPoint.Y && zonaVaciado.CoolingSubZone == subZoneApagadoNumber && zonaVaciado.Emptying)
+                                        //    c = Color.White;
+
+                                        if (columna != columnaAnterior)
+                                            c = Color.DarkGray;
+
+                                        if(offsetX + x < this.bitmapRejillas.Width)
+                                            this.bitmapRejillas.SetPixel((int)offsetX + x, offsetY + y, c);
+
+                                        columnaAnterior = columna;
+
+                                    }//for x
+                                }//for y
+                            }//tempMatrix != null
+                            offsetX += (float)((s.Fin.X - s.Inicio.X) * escalaXTramp);
+
+                            for (int y = 0; y < this.bitmapRejillas.Height; y++)
+                            {
+                                if (offsetX - 1 < this.bitmapRejillas.Width)
+                                    this.bitmapRejillas.SetPixel((int)offsetX - 1, y, Color.DarkGray);
+                            }
+
+                            subZoneApagadoNumber++;
+                        }//foreach subzona
+
+                        for (int y = 0; y < this.bitmapRejillas.Height; y++)
+                        {
+                            if (offsetX - 1 < this.bitmapRejillas.Width)
+                            {
+                                this.bitmapRejillas.SetPixel((int)offsetX - 1, y, Color.Black);
+                                this.bitmapRejillas.SetPixel((int)offsetX - 2, y, Color.Black);
+                            }
                         }
-                    }//for
-                }//for
+
+                    }//FOREACH zona
+
+                    ////Dibujar separación entre zonas de apagado
+                    //borderX = 0;
+
+                    //for (int i = 0; i < this._system.ZonasVaciado.Count; i++)
+                    //{
+                    //    for (int j = 0; j < this._system.ZonasVaciado[i].Children.Count; j++)
+                    //    {
+                    //        borderX += this._system.ZonasVaciado[i].Children[j].Fin.X - this._system.ZonasVaciado[i].Children[j].Inicio.X;
+                    //    }//for
+
+                    //    borderX = (int)(borderX * escalaXTramp);
+                    //    inicio = (int) (inicio * escalaXTramp);
+
+                    //    for (int y = 0; y < bitmapRejillas.Height; y++)
+                    //    {
+                    //        if (inicio + borderX < bitmapRejillas.Width)
+                    //        {
+                    //            this.bitmapRejillas.SetPixel(inicio + borderX - 1, offsetY + y, Color.Black);
+                    //            this.bitmapRejillas.SetPixel(inicio + borderX, offsetY + y, Color.Black);
+                    //        }
+                    //    }//for
+                    //}//for
 
 
-                #endregion
+                    #endregion
 
-                //LanzarEvento
-                if (this.ThermoCamImgCuadradosGenerated != null)
-                {
-                    this.ThermoCamImgCuadradosGenerated(this, new ThemoCamImgCuadradosArgs()
+                    //LanzarEvento
+                    if (this.ThermoCamImgCuadradosGenerated != null)
                     {
-                        ImagenRampa = bitmapCuadrados,
-                        ImagenRejillas = bitmapRejillas
-                    });
-                }//if alguien suscrito
-                
-                //bitmapCuadrados.Dispose();
-            }//IF WIDHT AND HEIGHT > 0
+                        this.ThermoCamImgCuadradosGenerated(this, new ThemoCamImgCuadradosArgs()
+                        {
+                            ImagenRampa = bitmapCuadrados,
+                            ImagenRejillas = bitmapRejillas
+                        });
+                    }//if alguien suscrito
+
+                    //bitmapCuadrados.Dispose();
+                }//IF WIDHT AND HEIGHT > 0
+            }
         }
     }
 }

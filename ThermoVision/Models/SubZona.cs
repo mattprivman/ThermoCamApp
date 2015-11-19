@@ -42,6 +42,10 @@ namespace ThermoVision.Models
         public float   _minTemp;
         public double  _meanTemp;
 
+        public bool accessed;
+
+        public bool vaciado = false;
+
         #endregion
 
         #region "Eventos"
@@ -92,6 +96,11 @@ namespace ThermoVision.Models
             {
                 this._selected = value;
             }
+        }
+        public bool     Visualizar                   // -rw 
+        {
+            get;
+            set;
         }
 
         //ZONA DE PERTENENCIA
@@ -200,6 +209,16 @@ namespace ThermoVision.Models
 
             this._filas     = 1;
             this._columnas  = 1;
+
+            this.tempMatrix = new tempElement[this._filas, this._columnas];
+
+            for (int i = 0; i < this._filas; i++)
+            {
+                for (int j = 0; j < this._columnas; j++)
+                {
+                    tempMatrix[i, j] = new tempElement();
+                }
+            }
         }
         protected SubZona(SerializationInfo info, StreamingContext ctxt)        
         {
@@ -211,6 +230,16 @@ namespace ThermoVision.Models
             this._inicio        = (Point)     info.GetValue("Inicio",       typeof(Point));
             this._fin           = (Point)     info.GetValue("Fin",          typeof(Point));
             this._thermoParent  = (ThermoCam) info.GetValue("ThermoParent", typeof(ThermoCam));
+
+            this.tempMatrix = new tempElement[this._filas, this._columnas];
+
+            for (int i = 0; i < this._filas; i++)
+            {
+                for (int j = 0; j < this._columnas; j++)
+                {
+                    tempMatrix[i, j] = new tempElement();
+                }
+            }
         }
 
         #endregion

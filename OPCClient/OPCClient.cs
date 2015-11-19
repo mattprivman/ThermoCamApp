@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using OPCAutomation;
 
 namespace OPC
@@ -28,6 +29,7 @@ namespace OPC
 
         //Variable para los asyncWrites
         Hashtable  AsyncWrites;
+        Hashtable  AsyncReads;
         int        _transactionID = 0;
 
         #endregion
@@ -80,7 +82,8 @@ namespace OPC
 
         public OPCClient(string serverName)                             
         {
-            AsyncWrites = new Hashtable();
+            this.AsyncWrites = new Hashtable();
+            this.AsyncReads = new Hashtable();
 
             this._serverName = serverName;
             this._OPCServer  = new OPCServer();
@@ -183,7 +186,8 @@ namespace OPC
                     if (this.OPCWrittingError != null)
                         this.OPCWrittingError(this, "Fallo", "No se ha podido encontrar la rama " + group);
 
-                    throw new Exception("No se ha podido encontrar la rama " +  group);
+                    return false;
+                    //throw new Exception("No se ha podido encontrar la rama " +  group);
                 }
 
                 try
@@ -207,7 +211,7 @@ namespace OPC
                     if (this.OPCWrittingError != null)
                         this.OPCWrittingError(this, "Fallo", "Fallo en la operación de escritura síncrona de la variable " + item + " en la ruta " + group + ".");
 
-                    throw new Exception("Fallo en la operación de escritura síncrona de la variable " + item + " en la ruta " + group + ".");
+                    //throw new Exception("Fallo en la operación de escritura síncrona de la variable " + item + " en la ruta " + group + ".");
                 }
                 return false;
             }
@@ -228,7 +232,8 @@ namespace OPC
                     if (this.OPCWrittingError != null)
                         this.OPCWrittingError(this, "Fallo", "No se ha podido encontrar la rama " + group);
 
-                    throw new Exception("No se ha podido encontrar la rama " + group);
+                    return;
+                    //throw new Exception("No se ha podido encontrar la rama " + group);
                 }
 
                 if (b.Leafs.Exists((x) => x.Name == item))
@@ -251,46 +256,42 @@ namespace OPC
                         new int[1] { 1 },
                         new int[1] { 1 });
 
-                    lock (_lock)
+                    AsyncWriteStruct a = new AsyncWriteStruct()
                     {
-                        AsyncWriteStruct a = new AsyncWriteStruct()
-                        {
-                            branch = b,
-                            transactionID = this._transactionID,
-                        };
+                        branch = b,
+                    };
 
-                        try
-                        {
-                            this.AsyncWrites.Add(a.transactionID, a);
-                            b.OPCGroup.AsyncWriteComplete += OPCGroup_AsyncWriteComplete;
-                            b.OPCGroup.AsyncWrite(1, ref serverHandles, ref values, out errors, a.transactionID, out a.cancelID);
+                    lock (this._lock)
+                    {
+                        a.transactionID = this._transactionID;
+                        this._transactionID++;
 
-                            if (this.DataSent != null)
-                                this.DataSent(this, null);
-                        }
-                        catch (Exception e)
-                        {
-                            if (this.AsyncWrites.Contains(a.transactionID))
-                                this.AsyncWrites.Remove(a.transactionID);
+                    } //lock
 
-                            b.OPCGroup.AsyncWriteComplete -= OPCGroup_AsyncWriteComplete;
+                    try
+                    {
+                        this.AsyncWrites.Add(a.transactionID, a);
+                        b.OPCGroup.AsyncWriteComplete += OPCGroup_AsyncWriteComplete;
+                        b.OPCGroup.AsyncWrite(1, ref serverHandles, ref values, out errors, a.transactionID, out a.cancelID);
 
-                            if (this.OPCWrittingError != null)
-                                if (this.OPCWrittingError != null)
-                                    this.OPCWrittingError(this, "Fallo", "Fallo en la operación de escritura asíncrona de la variable " + item + " en la ruta " + group + ".");
-
-                            throw new Exception("Fallo en la operación de escritura asíncrona de la variable " + item + " en la ruta " + group + ".");
-                        }
-                        finally
-                        {
-                            System.Threading.Interlocked.Increment(ref this._transactionID);
-                        }
+                        if (this.DataSent != null)
+                            this.DataSent(this, null);
                     }
+                    catch (Exception e)
+                    {
+                        if (this.AsyncWrites.Contains(a.transactionID))
+                            this.AsyncWrites.Remove(a.transactionID);
+
+                        b.OPCGroup.AsyncWriteComplete -= OPCGroup_AsyncWriteComplete;
+
+                        if (this.OPCWrittingError != null)
+                            if (this.OPCWrittingError != null)
+                                this.OPCWrittingError(this, "Fallo", "Fallo en la operación de escritura asíncrona de la variable " + item + " en la ruta " + group + ".");
+
+                        //throw new Exception("Fallo en la operación de escritura asíncrona de la variable " + item + " en la ruta " + group + ".");
+                    }                    
                 }
-            }
-            else
-            {
-            }
+            }//if conected
         }
         public void WriteAsync(OPCGroupValues gv)                       
         {
@@ -303,7 +304,8 @@ namespace OPC
                     if (this.OPCWrittingError != null)
                         this.OPCWrittingError(this, "Fallo", "No se ha podido encontrar la rama " + gv.Path);
 
-                    throw new Exception("No se ha podido encontrar la rama especificada " + gv.Path);
+                    return;
+                    //throw new Exception("No se ha podido encontrar la rama especificada " + gv.Path);
                 }
 
                 int count = 0; //Coincidencias
@@ -347,47 +349,144 @@ namespace OPC
                 #endregion
 
                 #region "Estructura para controlar la operación asincrona"
-                lock (_lock)
+
+                AsyncWriteStruct a = new AsyncWriteStruct()
                 {
-                    AsyncWriteStruct a = new AsyncWriteStruct()
+                    branch = g
+                };
+                #endregion
+
+                lock (this._lock)
+                {
+                    a.transactionID = this._transactionID;
+                    this._transactionID++;
+                }
+
+                try
+                {
+                    //VBHelpers.Helpers.WritteAsync(g.OPCGroup);
+                    this.AsyncWrites.Add(a.transactionID, a);
+                    g.OPCGroup.AsyncWriteComplete += OPCGroup_AsyncWriteComplete;
+                    g.OPCGroup.AsyncWrite(count, ref serverHandles, ref values, out errors, a.transactionID, out a.cancelID);
+
+                    if (this.DataSent != null)
+                        this.DataSent(this, null);
+                }
+                catch (Exception e)
+                {
+                    if (this.AsyncWrites.Contains(a.transactionID))
+                        this.AsyncWrites.Remove(a.transactionID);
+
+                    g.OPCGroup.AsyncWriteComplete -= OPCGroup_AsyncWriteComplete;
+
+                    if (this.OPCWrittingError != null)
+                        this.OPCWrittingError(this, "Fallo", "Fallo en la operación de escritura asíncrona con el grupo de variables " + gv.Path + ".");
+
+                    //throw new Exception("Fallo en la operación de escritura asíncrona con el grupo de variables " + gv.Path + ".");
+                }         
+            }//if connected
+        }
+
+        public void ReadAsync(OPCGroupRead gv)                          
+        {
+            if (this._connected)
+            {
+                Branch g = GetBranch(gv.Path);
+
+                if (g == null)
+                {
+                    if (this.OPCWrittingError != null)
+                        this.OPCWrittingError(this, "Fallo", "No se ha podido encontrar la rama " + gv.Path);
+
+                    return;
+                    //throw new Exception("No se ha podido encontrar la rama especificada " + gv.Path);
+                }
+
+                int count = 0; //Coincidencias
+                #region "Buscar cuantos elementos coincidentes hay"
+
+                for (int i = 0; i < gv.Items.Count; i++)
+                {
+                    if (g.Leafs.Exists(x => x.Name == gv.Items[i].Item))
                     {
-                        branch = g,
-                        transactionID = this._transactionID,
-                    };
+                        count++;
+                    }
+                }
+                #endregion
+
+                #region "Crear arrays"
+                Array serverHandles = Array.CreateInstance(typeof(int),
+                    new int[1] { count },
+                    new int[1] { 1 });
+
+                Array errors = Array.CreateInstance(typeof(int),
+                    new int[1] { count },
+                    new int[1] { 1 }); ;
+                #endregion
+
+
+                #region "Rellenar Arays"
+                int index = 1;
+                for (int i = 0; i < gv.Items.Count; i++)
+                {
+                    if (g.Leafs.Exists(x => x.Name == gv.Items[i].Item))
+                    {
+                        serverHandles.SetValue(
+                            (g.Leafs.Where(x => x.Name == gv.Items[i].Item).First()).ServerHandle,
+                                index);
+                        index++;
+                    }
+                }
+                #endregion
+
+
+                #region "Estructura para controlar la operación asincrona"
+                AsyncReadStruct a = new AsyncReadStruct()
+                {
+                    branch = g,
+                    transactionID = this._transactionID
+                };
+
+                a.HashtableActions = new Hashtable();
+
+                for (int i = 0; i < gv.Items.Count; i++)
+                {
+                    if (g.Leafs.Exists(x => x.Name == gv.Items[i].Item))
+                    {
+                        a.HashtableActions.Add(g.Leafs.Where(x => x.Name == gv.Items[i].Item).First().ClientHandle, gv.Items[i].action);
+                        index++;
+                    }
+                }
 
                 #endregion
 
-                    try
-                    {
-                        //VBHelpers.Helpers.WritteAsync(g.OPCGroup);
-                        this.AsyncWrites.Add(a.transactionID, a);
-                        g.OPCGroup.AsyncWriteComplete += OPCGroup_AsyncWriteComplete;
-                        g.OPCGroup.AsyncWrite(count, ref serverHandles, ref values, out errors, a.transactionID, out a.cancelID);
+                try
+                {
+                    //VBHelpers.Helpers.WritteAsync(g.OPCGroup);
+                    this.AsyncReads.Add(a.transactionID, a);
+                    g.OPCGroup.AsyncReadComplete += OPCGroup_AsyncReadComplete;
+                    g.OPCGroup.AsyncRead(count, ref serverHandles, out errors, a.transactionID, out a.cancelID);
 
-                        if (this.DataSent != null)
-                            this.DataSent(this, null);
-                    }
-                    catch (Exception e)
-                    {
-                        if (this.AsyncWrites.Contains(a.transactionID))
-                            this.AsyncWrites.Remove(a.transactionID);
+                    if (this.DataSent != null)
+                        this.DataSent(this, null);
+                }
+                catch (Exception e)
+                {
+                    if (this.AsyncReads.Contains(a.transactionID))
+                        this.AsyncReads.Remove(a.transactionID);
 
-                        g.OPCGroup.AsyncWriteComplete -= OPCGroup_AsyncWriteComplete;
+                    g.OPCGroup.AsyncReadComplete -= OPCGroup_AsyncReadComplete;
 
-                        if (this.OPCWrittingError != null)
-                            this.OPCWrittingError(this, "Fallo", "Fallo en la operación de escritura asíncrona con el grupo de variables " + gv.Path + ".");
-
-                        throw new Exception("Fallo en la operación de escritura asíncrona con el grupo de variables " + gv.Path + ".");
-                    }
-                    finally
-                    {
-                        System.Threading.Interlocked.Increment(ref this._transactionID);
-                    }
+                    if (this.OPCWrittingError != null)
+                        this.OPCWrittingError(this, "Fallo", "Fallo en la operación de lectura asíncrona con el grupo de variables " + gv.Path + ".");
+                }
+                finally
+                {
+                    System.Threading.Interlocked.Increment(ref this._transactionID);
                 }
             }
         }
-
-        public object readSync(string path, string Item)                
+        public object ReadSync(string path, string Item)                
         {
             if (this._connected)
             {
@@ -402,7 +501,8 @@ namespace OPC
                     if (this.OPCWrittingError != null)
                         this.OPCWrittingError(this, "Fallo", "No se ha podido encontrar la rama especificada");
 
-                    throw new Exception("No se ha podido encontrar la rama " + path);
+                    return null;
+                    //throw new Exception("No se ha podido encontrar la rama " + path);
                 }
 
                 if (b.Leafs.Exists(x => x.Name == Item))
@@ -418,13 +518,44 @@ namespace OPC
                 if (this.OPCWrittingError != null)
                     this.OPCWrittingError(this, "Fallo", "Fallo en la operación de lectura sincrona de la variable " + Item + " con ruta " + path + ".");
 
-                throw new Exception("Fallo en la operación de lectura sincrona de la variable " + Item + " con ruta " + path + ".");
+                //throw new Exception("Fallo en la operación de lectura sincrona de la variable " + Item + " con ruta " + path + ".");
             }
             else
             {
             }
 
             return null;
+        }
+
+        public void RefreshAsync(string group)
+        {
+            if (this._connected)
+            {
+                Branch g = GetBranch(group);
+
+                if (g == null)
+                {
+                    if (this.OPCWrittingError != null)
+                        this.OPCWrittingError(this, "Fallo", "No se ha podido encontrar la rama " + group);
+
+                    return;
+                    //throw new Exception("No se ha podido encontrar la rama especificada " + gv.Path);
+                }
+
+                int cancelID = 0;
+
+                try
+                {
+                    g.OPCGroup.AsyncRefresh((short)OPCDataSource.OPCDevice, this._transactionID, out cancelID);
+                }
+                catch
+                {
+                    if (this.OPCWrittingError != null)
+                        if (this.OPCWrittingError != null)
+                            this.OPCWrittingError(this, "Fallo", "Fallo en la operación de lectura asíncrona en la ruta " + group + ".");
+
+                }
+            }
         }
 
         public bool SuscribeGroup (string Group, string Item, Action<object> action)    
@@ -438,18 +569,18 @@ namespace OPC
 
             return false;
         }
-        public bool UnsuscribeGroup ( string Group, string Item)        
+        public bool UnsuscribeGroup ( string Group, string Item, Action<object> action)                        
         {
             Branch b = GetBranch(Group);
 
             if (b != null)
             {
-                return b.UnSuscribe(Item);
+                return b.UnSuscribe(Item, action);
             }
 
             return false;
         }
-        public Branch GetBranch   (string Group)                        
+        public Branch GetBranch   (string Group)                                        
         {
             if (this._OPCBrowser != null)
             {
@@ -576,6 +707,7 @@ namespace OPC
                                 {
                                     this.AsyncWriteError(this, new OPCAsyncWriteArgs() { operation = (AsyncWriteStruct)this.AsyncWrites[TransactionID] }); //AsyncWriteError
                                 }//if
+                                throw new Exception("Error en la operación de lectura asíncrona con ID: " + TransactionID + ".");
                             }//if
                         }//if
                     }//for
@@ -597,13 +729,58 @@ namespace OPC
             }
             finally
             {
-                if (this.AsyncWrites.Contains(TransactionID))
+                try
                 {
-                    AsyncWriteStruct a = (AsyncWriteStruct)this.AsyncWrites[TransactionID];
-                    a.branch.OPCGroup.AsyncWriteComplete -= OPCGroup_AsyncWriteComplete;
+                    if (this.AsyncWrites.Contains(TransactionID))
+                    {
+                        AsyncWriteStruct a = (AsyncWriteStruct)this.AsyncWrites[TransactionID];
+                        a.branch.OPCGroup.AsyncWriteComplete -= OPCGroup_AsyncWriteComplete;
 
-                    this.AsyncWrites.Remove(TransactionID);
+                        this.AsyncWrites.Remove(TransactionID);
+                    }
                 }
+                catch { }
+            }
+        }
+        void OPCGroup_AsyncReadComplete(int TransactionID, int NumItems, ref Array ClientHandles, ref Array ItemValues, ref Array Qualities, ref Array TimeStamps, ref Array Errors)
+        {
+            try
+            {
+                if (this.AsyncReads.Contains(TransactionID))
+                {
+                    AsyncReadStruct a = (AsyncReadStruct)this.AsyncReads[TransactionID];
+
+                    for (int i = ClientHandles.GetLowerBound(0); i <= ClientHandles.GetUpperBound(0); i++)
+                    {
+                        if (a.HashtableActions.Contains(ClientHandles.GetValue(i)))
+                        {
+                            Action<object> action = (Action<object>)a.HashtableActions[ClientHandles.GetValue(i)];
+                            action(ItemValues.GetValue(i));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (this.AsyncReads.Contains(TransactionID))
+                {
+                    if (this.OPCError != null)
+                        this.OPCError(this, "Fallo", "Error en la operación de lectura asíncrona con ID: " + TransactionID + ".");
+                }
+            }
+            finally
+            {
+                try
+                {
+                    if (this.AsyncReads.Contains(TransactionID))
+                    {
+                        AsyncReadStruct a = (AsyncReadStruct)this.AsyncReads[TransactionID];
+                        a.HashtableActions.Clear();
+
+                        this.AsyncReads.Remove(TransactionID);
+                    }
+                }
+                catch { }
             }
         }
         private void _OPCBranch_DataChanged(object sender, EventArgs e) 
@@ -793,7 +970,7 @@ namespace OPC
             if(_HasOPCGroup)
                 this._OPCGroup.DataChange -= _OPCGroup_DataChange;
 
-            if (this._HasChildren)
+            if (this._HasChildren && this.Children != null)
             {
                 foreach (Branch b in this._Children)
                     b.Dispose();
@@ -810,7 +987,8 @@ namespace OPC
                 this._HasLeafs = false;
             }
 
-            this.actionsHastable.Clear();
+            if(this.actionsHastable != null)
+                this.actionsHastable.Clear();
         }
 
         public bool Suscribe(string leaf, Action<object> action)  
@@ -824,10 +1002,22 @@ namespace OPC
                     this._OPCGroup.DataChange += _OPCGroup_DataChange;
                     this._OPCGroup.IsSubscribed = true;
 
+                    List<Action<object>> actions;
+
+                    if (this.actionsHastable.Contains(l.ClientHandle) && ((List<Action<object>>)this.actionsHastable[l.ClientHandle]) != null)
+                        actions = (List<Action<object>>)this.actionsHastable[l.ClientHandle];
+                    else
+                        actions = new List<Action<object>>();
+
+                    lock (this._lock)
+                    {
+                        actions.Add(action);
+                    }
+
                     if (!this.actionsHastable.Contains(l.ClientHandle))
                     {
-                        lock(_lock)
-                            actionsHastable.Add(l.ClientHandle, action);
+                        lock(this._lock)
+                            actionsHastable.Add(l.ClientHandle, actions);
 
                         return true;
                     } //if
@@ -836,7 +1026,7 @@ namespace OPC
 
             return false;
         }
-        public bool UnSuscribe(string leaf)                       
+        public bool UnSuscribe(string leaf, Action<Object> action)                       
         {
             if (this._HasOPCGroup)
             {
@@ -844,13 +1034,31 @@ namespace OPC
                 {
                     Leaf l = this._Leafs.Where((x) => x.Name == leaf).First();
 
-                    if (!this.actionsHastable.Contains(l.ClientHandle))
+                    if (this.actionsHastable.Contains(l.ClientHandle))
                     {
-                        this._OPCGroup.DataChange   -= _OPCGroup_DataChange;
-                        this._OPCGroup.IsSubscribed  = false;
+                        List<Action<object>> list = (List<Action<Object>>)this.actionsHastable[l.ClientHandle];
+                        if (list.Count <= 1 && list.Contains(action))
+                        {
+                            lock (this._lock)
+                            {
+                                list.Remove(action);
+                                actionsHastable.Remove(l.ClientHandle);
+                            }
+                        }
+                        else
+                        {
+                            if (list.Contains(action))
+                            {
+                                lock(this._lock)
+                                    list.Remove(action);
+                            }
+                        }
 
-                        lock(_lock)
-                            actionsHastable.Remove(l.ClientHandle);
+                        if (this.actionsHastable.Count == 0)
+                        {
+                            this._OPCGroup.DataChange -= _OPCGroup_DataChange;
+                            this._OPCGroup.IsSubscribed = false;
+                        }
 
                         return true;
                     } //if
@@ -898,13 +1106,19 @@ namespace OPC
         {
             for (int i = ClientHandles.GetLowerBound(0); i <= ClientHandles.GetUpperBound(0); i++)
             {
-                lock (this._lock)
+                int c = (int)ClientHandles.GetValue(i);
+
+                if (this.actionsHastable.Contains(ClientHandles.GetValue(i)))
                 {
-                    if (this.actionsHastable.Contains(ClientHandles.GetValue(i)))
+                    //((Action<object>)this.actionsHastable[ClientHandles.GetValue(i)])(ItemValues.GetValue(i));
+                    lock (this._lock)
                     {
-                        ((Action<object>)this.actionsHastable[ClientHandles.GetValue(i)])(ItemValues.GetValue(i));
+                        foreach (Action<Object> action in (List<Action<Object>>)this.actionsHastable[ClientHandles.GetValue(i)])
+                        {
+                            action(ItemValues.GetValue(i));
+                        }
                     }
-                }
+                }               
             }
 
             if (DataChanged != null)

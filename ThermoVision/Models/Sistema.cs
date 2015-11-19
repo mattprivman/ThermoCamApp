@@ -645,21 +645,21 @@ namespace ThermoVision.Models
             }
         }
 
-        public void getCannonCoordinates(Zona z)
+        public void getCannonCoordinates(Zona z)        
         {
             int n = 0;
             bool v = false;
             z.CoolingPoint = getCoolingCoordinates(z, ref n, ref v);
             z.CoolingSubZone = n;
-            z.Cooling = v;
+            z.Valvula = v;
         }
-        public Point getCoolingCoordinates(Zona z, ref int n, ref bool estadoValvula)
+        public Point getCoolingCoordinates(Zona z, ref int n, ref bool estadoValvula)   
         {
-            object resX = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "X");
-            object resY = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "Y");
-            object resN = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "n");
-            object resV = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "Valvula");
-            object resM = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "Mode");
+            object resX = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "X");
+            object resY = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "Y");
+            object resN = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "n");
+            object resV = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "Valvula");
+            object resM = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "Mode");
 
             if (resM != null)
             {
@@ -681,11 +681,11 @@ namespace ThermoVision.Models
             throw new Exception("Imposible leer las coordenadas de la zona " + z.Nombre + ".");
         }
 
-        private void getEmptyingCoordinates(Zona z)
+        private void getEmptyingCoordinates(Zona z)     
         {
-            object resX = this.OPCClient.readSync(this.Path + ".RAMPAS.VACIADO." + z.Nombre, "X");
-            object resY = this.OPCClient.readSync(this.Path + ".RAMPAS.VACIADO." + z.Nombre, "Y");
-            object resN = this.OPCClient.readSync(this.Path + ".RAMPAS.VACIADO." + z.Nombre, "n");
+            object resX = this.OPCClient.ReadSync(this.Path + ".RAMPAS.VACIADO." + z.Nombre, "X");
+            object resY = this.OPCClient.ReadSync(this.Path + ".RAMPAS.VACIADO." + z.Nombre, "Y");
+            object resN = this.OPCClient.ReadSync(this.Path + ".RAMPAS.VACIADO." + z.Nombre, "n");
 
             if (resX != null && resY != null && resN != null)
             {
@@ -710,23 +710,23 @@ namespace ThermoVision.Models
         }
         #endregion
 
-        public bool readCannonState(int CannonNumber)                   
-        {
-            object res = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "Mode");
+        //public bool readCannonState(int CannonNumber)
+        //{
+        //    object res = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "Mode");
 
-            if (res is bool)
-                return (bool) res;
+        //    if (res is bool)
+        //        return (bool)res;
 
-            return false;
-        }
+        //    return false;
+        //}
         public void changeCannonModeState(int CannonNumber, bool state) 
         {
-            this.OPCClient.WritteSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "Mode", (object)state);
+            this.OPCClient.WriteAsync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "Mode", (object)state);
         }
         public void incrementCannonXCoordinate(int CannonNumber)        
         {
-            object resX = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "X");
-            object resN = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "n");
+            object resX = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "xPos");
+            object resN = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "nPos");
 
             if (resX is int && resN is int)
             {
@@ -734,26 +734,26 @@ namespace ThermoVision.Models
                 int N = (int)resN;
 
                 if(X < this.Zonas[CannonNumber].Children[N].Filas - 1)
-                    this.OPCClient.WritteSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "X", X + 1);
+                    this.OPCClient.WriteAsync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "xPos", X + 1);
             }
         }
         public void decrementCannonXCoordinate(int CannonNumber)        
         {
-            object resX = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "X");
+            object resX = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "xPos");
 
             if (resX is int)
             {
                 int X = (int)resX;
 
                 if (X > 0)
-                    this.OPCClient.WritteSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "X", X - 1);
+                    this.OPCClient.WriteAsync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "xPos", X - 1);
             }
         }
         public void incrementCannonYCoordinate(int CannonNumber)        
         {
-            object resX = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "X");
-            object resY = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "Y");
-            object resN = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "n");
+            object resX = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "xPos");
+            object resY = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "yPos");
+            object resN = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "nPos");
 
             if (resY is int && resN is int && resX is int)
             {
@@ -762,7 +762,7 @@ namespace ThermoVision.Models
                 int N = (int)resN;
 
                 if (Y < this.Zonas[CannonNumber].Children[N].Columnas - 1)
-                    this.OPCClient.WritteSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "Y", Y + 1);
+                    this.OPCClient.WriteAsync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "yPos", Y + 1);
                 else
                 {
                     if (N < this.Zonas[CannonNumber].Children.Count - 1)
@@ -773,18 +773,18 @@ namespace ThermoVision.Models
                         if (X > this.Zonas[CannonNumber].Children[N].Filas - 1)
                             X = this.Zonas[CannonNumber].Children[N].Filas - 1;
 
-                        this.OPCClient.WritteSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "X", X);
-                        this.OPCClient.WritteSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "Y", Y);
-                        this.OPCClient.WritteSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "n", N);
+                        this.OPCClient.WriteAsync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "xPos", X);
+                        this.OPCClient.WriteAsync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "yPos", Y);
+                        this.OPCClient.WriteAsync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "nPos", N);
                     }
                 }
             }
         }
         public void decrementCannonYCoordinate(int CannonNumber)        
         {
-            object resX = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "X");
-            object resY = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "Y");
-            object resN = this.OPCClient.readSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "n");
+            object resX = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "xPos");
+            object resY = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "yPos");
+            object resN = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "nPos");
 
             if (resY is int && resN is int && resX is int)
             {
@@ -793,7 +793,7 @@ namespace ThermoVision.Models
                 int N = (int)resN;
 
                 if(Y > 0)
-                    this.OPCClient.WritteSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "Y", Y - 1);
+                    this.OPCClient.WriteAsync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "yPos", Y - 1);
                 else
                 {
                     if(N > 0)
@@ -804,21 +804,33 @@ namespace ThermoVision.Models
                         if (X > this.Zonas[CannonNumber].Children[N].Filas - 1)
                             X = this.Zonas[CannonNumber].Children[N].Filas - 1;
 
-                        this.OPCClient.WritteSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "X", X);
-                        this.OPCClient.WritteSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "Y", Y);
-                        this.OPCClient.WritteSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "n", N);
+                        this.OPCClient.WriteAsync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "xPos", X);
+                        this.OPCClient.WriteAsync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "yPos", Y);
+                        this.OPCClient.WriteAsync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "nPos", N);
                     }
                 }
             }
         }
         public void changeCannonActivation(int CannonNumber, bool state)
         {
-            this.OPCClient.WritteSync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "Valvula", state);
+            this.OPCClient.WriteAsync(this.Path + ".RAMPAS.APAGADO." + this.Zonas[CannonNumber].Nombre, "Valvula", state);
+        }
+
+        public void changeTrampillaModeState(int ZoneNumber, bool state)
+        {
+            this.OPCClient.WriteAsync(this.Path + ".RAMPAS.VACIADO." + this.ZonasVaciado[ZoneNumber].Nombre, "Mode", (object)state);
         }
 
         public void suscribeOPCItem(string branch, string Item, Action<Object> action)
         {
             this.OPCClient.SuscribeGroup(new StringBuilder(this.Path).Append(".").Append(branch).ToString(), Item, action);
+        }
+
+        public void activateRejillaAsync(Zona z, int subzona, int col, bool activar)
+        {
+            this.OPCClient.WriteAsync(new StringBuilder(this.Path).Append(".RAMPAS.VACIADO.").Append(z.Nombre).Append(".").Append(subzona).Append("_OUTPUTS").ToString(),
+                new StringBuilder("[").Append(col).Append(",").Append(0).Append("]").ToString(),
+                activar);
         }
 
         #endregion

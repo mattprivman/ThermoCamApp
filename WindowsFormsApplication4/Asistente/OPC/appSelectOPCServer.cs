@@ -4,7 +4,6 @@ using System.Linq;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -445,37 +444,55 @@ namespace ThermoCamApp.Asistente.OPC
             {
                 w.WriteLine("Tag Name,Address,Data Type,Respect Data Type,Client Access,Scan Rate,Scaling,Raw Low,Raw High,Scaled Low,Scaled High,Scaled Data Type,Clamp Low,Clamp High,Eng Units,Description,Negate Value");
 
-                int blockIndex = 3;
+                int blockIndex = 1;
+                int dir = 0;
+                w.WriteLine("\"RAMPAS.CONFIGURACION." + "TempEnfriar" + "\",\"DB" + blockIndex + ".DBW" + dir + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                dir += 2;
+                w.WriteLine("\"RAMPAS.CONFIGURACION." + "CoolingTime" + "\",\"DB" + blockIndex + ".DBW" + dir + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                dir += 2;
+                w.WriteLine("\"RAMPAS.CONFIGURACION." + "CoolingStartTime" + "\",\"DB" + blockIndex + ".DBW" + dir + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                dir += 2;
+                w.WriteLine("\"RAMPAS.CONFIGURACION." + "EmptyingTime" + "\",\"DB" + blockIndex + ".DBW" + dir + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                dir += 2;
+
+                blockIndex += 3;
 
                 foreach (Zona z in this._system.Zonas)
                 {
                     int index = 0;
 
-                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Cooling" + "\",\"DB" + blockIndex + ".DBX2." + index + "\",Bool,1,R/W,100,,,,,,,,,,\"\",");
+                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Cooling" + "\",\"DB" + blockIndex + ".DBX0." + index + "\",Bool,1,R/W,100,,,,,,,,,,\"\",");
                     index++;
-                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Activar" + "\",\"DB" + blockIndex + ".DBX2." + index + "\",Bool,1,R/W,100,,,,,,,,,,\"\",");
+                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Activar" + "\",\"DB" + blockIndex + ".DBX0." + index + "\",Bool,1,R/W,100,,,,,,,,,,\"\",");
                     index++;
-                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Mode" + "\",\"DB" + blockIndex + ".DBX2." + index + "\",Bool,1,R/W,100,,,,,,,,,,\"\",");
+                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Mode" + "\",\"DB" + blockIndex + ".DBX0." + index + "\",Bool,1,R/W,100,,,,,,,,,,\"\",");
                     index++;
-                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Valvula" + "\",\"DB" + blockIndex + ".DBX2." + index + "\",Bool,1,R/W,100,,,,,,,,,,\"\",");
+                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Valvula" + "\",\"DB" + blockIndex + ".DBX0." + index + "\",Bool,1,R/W,100,,,,,,,,,,\"\",");
                     index++;
 
-                    index = 4;
+                    index = 2;
 
                     //COORDENADAS DE POSICIÓN DEL CAÑON
-                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "X" + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "X" + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R,100,,,,,,,,,,\"\",");
                     index += 2;
-                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Y" + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Y" + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R,100,,,,,,,,,,\"\",");
                     index += 2;
-                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "n" + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "n" + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R,100,,,,,,,,,,\"\",");
+                    index += 2;
+
+                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "xPos" + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R,100,,,,,,,,,,\"\",");
+                    index += 2;
+                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "yPos" + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R,100,,,,,,,,,,\"\",");
+                    index += 2;
+                    w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "nPos" + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R,100,,,,,,,,,,\"\",");
                     index += 2;
 
                     foreach (SubZona s in z.Children)
                     {
                         //LIMITES DE LA MATRIZ
-                        w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Filas_" + s.Nombre + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                        w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Filas_" + s.Nombre + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R,100,,,,,,,,,,\"\",");
                         index += 2;
-                        w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Columnas_" + s.Nombre + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                        w.WriteLine("\"RAMPAS.APAGADO." + z.Nombre + "." + "Columnas_" + s.Nombre + "\",\"DB" + blockIndex + ".DBW" + index + "\",Int,1,R,100,,,,,,,,,,\"\",");
                         index += 2;
 
                         for (int x = 0; x < s.Filas; x++)
@@ -510,11 +527,11 @@ namespace ThermoCamApp.Asistente.OPC
                     direccion = 2;
                     bit       = 0;
 
-                    w.WriteLine("\"RAMPAS.VACIADO." + z.Nombre + "." + "X" + "\",\"DB" + blockIndex + ".DBW" + direccion + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                    w.WriteLine("\"RAMPAS.VACIADO." + z.Nombre + "." + "X" + "\",\"DB" + blockIndex + ".DBW" + direccion + "\",Int,1,R,100,,,,,,,,,,\"\",");
                     direccion += 2;
-                    w.WriteLine("\"RAMPAS.VACIADO." + z.Nombre + "." + "Y" + "\",\"DB" + blockIndex + ".DBW" + direccion + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                    w.WriteLine("\"RAMPAS.VACIADO." + z.Nombre + "." + "Y" + "\",\"DB" + blockIndex + ".DBW" + direccion + "\",Int,1,R,100,,,,,,,,,,\"\",");
                     direccion += 2;
-                    w.WriteLine("\"RAMPAS.VACIADO." + z.Nombre + "." + "n" + "\",\"DB" + blockIndex + ".DBW" + direccion + "\",Int,1,R/W,100,,,,,,,,,,\"\",");
+                    w.WriteLine("\"RAMPAS.VACIADO." + z.Nombre + "." + "n" + "\",\"DB" + blockIndex + ".DBW" + direccion + "\",Int,1,R,100,,,,,,,,,,\"\",");
                     direccion += 2;
 
                     foreach (SubZona s in z.Children)
@@ -533,9 +550,28 @@ namespace ThermoCamApp.Asistente.OPC
                         else
                             direccion += 1;
 
-                        direccion += 4;     // 2 palabras de 16 bits
                         bit = 0;
+
+                        for (int x = 0; x < s.Columnas; x++)
+                        {
+                            for (int y = 0; y < s.Filas; y++)
+                            {
+                                w.WriteLine("\"RAMPAS.VACIADO." + z.Nombre + "." + s.Nombre + "_OUTPUTS." + "[" + x + "," + y + "]" + "\",\"DB" + blockIndex + ".DBX" + direccion + "." + bit + "\",Bool,1,R,100,,,,,,,,,,\"\",");
+                                bit++; if (bit > 7) { direccion++; bit = 0; }
+                            } //for
+                        } //for
+
+                        if (direccion % 2 == 0)
+                            direccion += 2;
+                        else
+                            direccion += 1;
+
+                        direccion += 4;
+                        bit = 0;
+
                     } //foreach subzona
+
+                    
 
                     blockIndex++;
                 } //foreach zona
@@ -547,6 +583,25 @@ namespace ThermoCamApp.Asistente.OPC
         {
             using (System.IO.StreamWriter w = new System.IO.StreamWriter(ruta, false))
             {
+                w.WriteLine("/////////////////////////////////////////////// CONFIG_DB");
+                w.WriteLine("");
+                w.WriteLine("DATA_BLOCK \"CONFIG_DB\"");
+                w.WriteLine("{ S7_Optimized_Access := 'FALSE' }");
+                w.WriteLine("VERSION : 0.1");
+                w.WriteLine("NON_RETAIN");
+                w.WriteLine("   VAR ");
+                w.WriteLine("      TempEnfriar : Int;");
+                w.WriteLine("      CoolingTime : Int;");
+                w.WriteLine("      CoolingStartTime : Int;");
+                w.WriteLine("      EmptyingTime : Int;");
+                w.WriteLine("   END_VAR");
+                w.WriteLine("");
+                w.WriteLine("BEGIN");
+                w.WriteLine("   TempEnfriar := 30;");        //Default values
+                w.WriteLine("   CoolingTime := 5000;");
+                w.WriteLine("   CoolingStartTime := 5000;");
+                w.WriteLine("   EmptyingTime := 5000;");
+                w.WriteLine("END_DATA_BLOCK");
                 
                 //////////////////////////////////////////////////////////////////////////////////////////////APAGADO
                 foreach (Zona z in this._system.Zonas)
@@ -591,12 +646,9 @@ namespace ThermoCamApp.Asistente.OPC
                     //////////////////////////////////////////////////////////// Function Block
                     w.WriteLine("//////////////////////////////////////////////////////////// Function Block");
                     w.WriteLine("");
-                    w.WriteLine("FUNCTION_BLOCK \"{0}_FB\"", z.Nombre);
+                    w.WriteLine("FUNCTION_BLOCK \"{0}_APAGADO_FB\"", z.Nombre);
                     w.WriteLine("{ S7_Optimized_Access := 'FALSE' }");
                     w.WriteLine("VERSION : 0.1");
-                    w.WriteLine("   VAR_INPUT ");
-                    w.WriteLine("       maxTemp : Int;");
-                    w.WriteLine("   END_VAR");
                     w.WriteLine("");
                     w.WriteLine("   VAR ");
                     w.WriteLine("       Cooling : Bool := false;");
@@ -606,6 +658,9 @@ namespace ThermoCamApp.Asistente.OPC
                     w.WriteLine("       X : Int;");
                     w.WriteLine("       Y : Int;");
                     w.WriteLine("       n : Int;");
+                    w.WriteLine("       xPos : Int;");
+                    w.WriteLine("       yPos : Int;");
+                    w.WriteLine("       nPos : Int;");
 
                     int contador = 0;
 
@@ -627,7 +682,7 @@ namespace ThermoCamApp.Asistente.OPC
                     w.WriteLine("IF #Mode = FALSE THEN //AUTOMATICO");
                     w.WriteLine("");
                     w.WriteLine("\"{0}_TON_1\".TON(IN := #Activar AND NOT #Cooling,", z.Nombre);
-                    w.WriteLine("                 PT := t#10s);");
+                    w.WriteLine("                 PT := INT_TO_TIME(\"CONFIG_DB\".CoolingStartTime));");
                     w.WriteLine("");
                     w.WriteLine("IF \"{0}_TON_1\".Q = TRUE THEN", z.Nombre);
                     w.WriteLine("   #Cooling := TRUE;");
@@ -646,11 +701,14 @@ namespace ThermoCamApp.Asistente.OPC
                     foreach (SubZona s in z.Children)
                     {
                         w.WriteLine("IF #n = {0} THEN", contador);
-                        w.WriteLine("   IF #tempMatrix_{0}[#X, #Y] >= #maxTemp THEN", contador);
+                        w.WriteLine("   IF #tempMatrix_{0}[#X, #Y] >= \"CONFIG_DB\".TempEnfriar THEN", contador);
                         w.WriteLine("");
                         w.WriteLine("       \"{0}_TON_2\".TON(IN := TRUE,", z.Nombre);
-                        w.WriteLine("                   PT := t#10s);");
+                        w.WriteLine("                   PT := INT_TO_TIME(\"CONFIG_DB\".CoolingTime));");
                         w.WriteLine("");
+                        w.WriteLine("       #xPos := #X;");
+                        w.WriteLine("       #yPos := #Y;");
+                        w.WriteLine("       #nPos := #n;");
                         w.WriteLine("       #Valvula := TRUE;");
                         w.WriteLine("");
                         w.WriteLine("       IF \"{0}_TON_2\".Q = TRUE THEN", z.Nombre);
@@ -683,7 +741,7 @@ namespace ThermoCamApp.Asistente.OPC
                         w.WriteLine("           END_IF;");
                         w.WriteLine("");
                         w.WriteLine("       \"{0}_TON_2\".TON(IN := FALSE,", z.Nombre);
-                        w.WriteLine("                         PT := t#2s);");
+                        w.WriteLine("                         PT := INT_TO_TIME(\"CONFIG_DB\".CoolingTime));");
                         w.WriteLine("       END_IF;");
                         w.WriteLine("   ELSE");
                         w.WriteLine("       //SIGUIENTE COORDENADA");
@@ -736,11 +794,11 @@ namespace ThermoCamApp.Asistente.OPC
                     ////////////////////////////////////////////////////////// Function Block DB
                     w.WriteLine("////////////////////////////////////////////////////////// Function Block DB");
                     w.WriteLine("");
-                    w.WriteLine("DATA_BLOCK \"{0}_DB\"", z.Nombre);
+                    w.WriteLine("DATA_BLOCK \"{0}_APAGADO_DB\"", z.Nombre);
                     w.WriteLine("{ S7_Optimized_Access := 'FALSE' }");
                     w.WriteLine("VERSION : 0.1");
                     w.WriteLine("NON_RETAIN");
-                    w.WriteLine("\"{0}_FB\"", z.Nombre);
+                    w.WriteLine("\"{0}_APAGADO_FB\"", z.Nombre);
                     w.WriteLine("");
                     w.WriteLine("BEGIN");
                     w.WriteLine("");
@@ -774,7 +832,7 @@ namespace ThermoCamApp.Asistente.OPC
                     //////////////////////////////////////////////////////////// Function Block
                     w.WriteLine("//////////////////////////////////////////////////////////// Function Block");
                     w.WriteLine("");
-                    w.WriteLine("FUNCTION_BLOCK \"{0}_FB\"", z.Nombre);
+                    w.WriteLine("FUNCTION_BLOCK \"{0}_VACIADO_FB\"", z.Nombre);
                     w.WriteLine("{ S7_Optimized_Access := 'FALSE' }");
                     w.WriteLine("VERSION : 0.1");
                     w.WriteLine("   VAR ");
@@ -790,6 +848,7 @@ namespace ThermoCamApp.Asistente.OPC
                     foreach(SubZona s in z.Children)
                     {
                         w.WriteLine("       tempMatrix_{0} : Array[0..{1}, 0..{2}] of Bool;", contador, s.Filas - 1, s.Columnas - 1);
+                        w.WriteLine("       rejilla_{0} : Array[0..{1}, 0..{2}] of Bool;", contador, s.Filas - 1, s.Columnas - 1);
                         w.WriteLine("       Filas_{0} : Int := {1};", contador, s.Filas - 1);
                         w.WriteLine("       Columnas_{0} : Int := {1};", contador, s.Columnas - 1);
                         contador++;
@@ -822,10 +881,15 @@ namespace ThermoCamApp.Asistente.OPC
                     {
                         w.WriteLine("IF #n = {0} THEN", contador);
                         w.WriteLine("   IF #tempMatrix_{0}[#X, #Y] = TRUE THEN", contador);
-                        w.WriteLine("       \"v1_TON_1\".TON(IN := TRUE,");
-                        w.WriteLine("                       PT := t#3s);");
+                        w.WriteLine("       \"{0}_TON_1\".TON(IN := TRUE,", z.Nombre);
+                        w.WriteLine("                       PT := INT_TO_TIME(\"CONFIG_DB\".EmptyingTime));");
                         w.WriteLine("");
-                        w.WriteLine("       IF \"v1_TON_1\".Q = TRUE THEN");
+                        w.WriteLine("       #rejilla_{0}[#X, #Y] := TRUE;", contador);
+                        w.WriteLine("");
+                        w.WriteLine("       IF \"{0}_TON_1\".Q = TRUE THEN", z.Nombre);
+                        w.WriteLine("");
+                        w.WriteLine("           #rejilla_{0}[#X, #Y] := FALSE;", contador);
+                        w.WriteLine("");
                         w.WriteLine("           IF #ascender = TRUE THEN");
                         w.WriteLine("               IF #Y = #Columnas_{0} THEN", contador);
                         w.WriteLine("                   #X := #X + 1;");
@@ -841,7 +905,7 @@ namespace ThermoCamApp.Asistente.OPC
                         w.WriteLine("                   #Y := #Y - 1;");
                         w.WriteLine("               END_IF;");
                         w.WriteLine("           END_IF;");
-                        w.WriteLine("           \"v1_TON_1\".TON(IN := FALSE,");
+                        w.WriteLine("           \"{0}_TON_1\".TON(IN := FALSE,", z.Nombre);
                         w.WriteLine("                           PT := t#3s);");
                         w.WriteLine("           #contador := #contador + 1;");
                         w.WriteLine("       END_IF;");
@@ -861,7 +925,7 @@ namespace ThermoCamApp.Asistente.OPC
                         w.WriteLine("               #Y := #Y - 1;");
                         w.WriteLine("           END_IF;");
                         w.WriteLine("       END_IF;");
-                        w.WriteLine("       \"v1_TON_1\".TON(IN := FALSE,");
+                        w.WriteLine("       \"{0}_TON_1\".TON(IN := FALSE,", z.Nombre);
                         w.WriteLine("                       PT := t#3s);");
                         w.WriteLine("       #contador := #contador + 1;");
                         w.WriteLine("   END_IF;");
@@ -896,11 +960,11 @@ namespace ThermoCamApp.Asistente.OPC
                     ////////////////////////////////////////////////////////// Function Block DB
                     w.WriteLine("////////////////////////////////////////////////////////// Function Block DB");
                     w.WriteLine("");
-                    w.WriteLine("DATA_BLOCK \"{0}_DB\"", z.Nombre);
+                    w.WriteLine("DATA_BLOCK \"{0}_VACIADO_DB\"", z.Nombre);
                     w.WriteLine("{ S7_Optimized_Access := 'FALSE' }");
                     w.WriteLine("VERSION : 0.1");
                     w.WriteLine("NON_RETAIN");
-                    w.WriteLine("\"{0}_FB\"", z.Nombre);
+                    w.WriteLine("\"{0}_VACIADO_FB\"", z.Nombre);
                     w.WriteLine("");
                     w.WriteLine("BEGIN");
                     w.WriteLine("");
@@ -917,9 +981,9 @@ namespace ThermoCamApp.Asistente.OPC
                 w.WriteLine("");
                 w.WriteLine("BEGIN");
                 foreach (Zona z in this._system.Zonas)
-                    w.WriteLine("   \"{0}_DB\"({1});", z.Nombre, this._system.estados.tempLimiteHayQueEnfriar);
+                    w.WriteLine("   \"{0}_APAGADO_DB\"();", z.Nombre);
                 foreach (Zona z in this._system.ZonasVaciado)
-                    w.WriteLine("   \"{0}_DB\"();", z.Nombre);
+                    w.WriteLine("   \"{0}_VACIADO_DB\"();", z.Nombre);
                 w.WriteLine("");
                 w.WriteLine("END_ORGANIZATION_BLOCK");
                 w.WriteLine("");

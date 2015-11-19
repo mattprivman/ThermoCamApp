@@ -1,3 +1,20 @@
+/////////////////////////////////////////////// CONFIG_DB
+
+DATA_BLOCK "CONFIG_DB"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+NON_RETAIN
+   VAR 
+      TempEnfriar : Int;
+      CoolingTime : Int;
+      CoolingStartTime : Int;
+   END_VAR
+
+BEGIN
+   TempEnfriar := 30;
+   CoolingTime := 5000;
+   CoolingStartTime := 5000;
+END_DATA_BLOCK
 ////////////////////////////////////////////////////////// TON1_DB
 
 DATA_BLOCK "c1_TON_1"
@@ -50,9 +67,9 @@ VERSION : 0.1
        X : Int;
        Y : Int;
        n : Int;
-       Filas_0 : Int := 2;
-       Columnas_0 : Int := 2;
-       tempMatrix_0 : Array[0..2, 0..2] of Int;
+       Filas_0 : Int := 4;
+       Columnas_0 : Int := 13;
+       tempMatrix_0 : Array[0..4, 0..13] of Int;
        ascender : Bool;
        matrices : Int := 1;
        contador : Int;
@@ -63,7 +80,7 @@ BEGIN
 IF #Mode = FALSE THEN //AUTOMATICO
 
 "c1_TON_1".TON(IN := #Activar AND NOT #Cooling,
-                 PT := t#10s);
+                 PT := INT_TO_TIME("CONFIG_DB".CoolingStartTime));
 
 IF "c1_TON_1".Q = TRUE THEN
    #Cooling := TRUE;
@@ -77,10 +94,10 @@ END_IF;
 
 IF #Cooling = TRUE THEN
 IF #n = 0 THEN
-   IF #tempMatrix_0[#X, #Y] >= #maxTemp THEN
+   IF #tempMatrix_0[#X, #Y] >= "CONFIG_DB".TempEnfriar THEN
 
        "c1_TON_2".TON(IN := TRUE,
-                   PT := t#10s);
+                   PT := INT_TO_TIME("CONFIG_DB".CoolingTime));
 
        #Valvula := TRUE;
 
@@ -114,7 +131,7 @@ IF #n = 0 THEN
            END_IF;
 
        "c1_TON_2".TON(IN := FALSE,
-                         PT := t#2s);
+                         PT := INT_TO_TIME("CONFIG_DB".CoolingTime));
        END_IF;
    ELSE
        //SIGUIENTE COORDENADA
@@ -224,14 +241,11 @@ VERSION : 0.1
        X : Int;
        Y : Int;
        n : Int;
-       Filas_0 : Int := 1;
-       Columnas_0 : Int := 1;
-       tempMatrix_0 : Array[0..1, 0..1] of Int;
-       Filas_1 : Int := 1;
-       Columnas_1 : Int := 1;
-       tempMatrix_1 : Array[0..1, 0..1] of Int;
+       Filas_0 : Int := 4;
+       Columnas_0 : Int := 13;
+       tempMatrix_0 : Array[0..4, 0..13] of Int;
        ascender : Bool;
-       matrices : Int := 2;
+       matrices : Int := 1;
        contador : Int;
    END_VAR
 
@@ -240,7 +254,7 @@ BEGIN
 IF #Mode = FALSE THEN //AUTOMATICO
 
 "c2_TON_1".TON(IN := #Activar AND NOT #Cooling,
-                 PT := t#10s);
+                 PT := INT_TO_TIME("CONFIG_DB".CoolingStartTime));
 
 IF "c2_TON_1".Q = TRUE THEN
    #Cooling := TRUE;
@@ -254,10 +268,10 @@ END_IF;
 
 IF #Cooling = TRUE THEN
 IF #n = 0 THEN
-   IF #tempMatrix_0[#X, #Y] >= #maxTemp THEN
+   IF #tempMatrix_0[#X, #Y] >= "CONFIG_DB".TempEnfriar THEN
 
        "c2_TON_2".TON(IN := TRUE,
-                   PT := t#10s);
+                   PT := INT_TO_TIME("CONFIG_DB".CoolingTime));
 
        #Valvula := TRUE;
 
@@ -291,7 +305,7 @@ IF #n = 0 THEN
            END_IF;
 
        "c2_TON_2".TON(IN := FALSE,
-                         PT := t#2s);
+                         PT := INT_TO_TIME("CONFIG_DB".CoolingTime));
        END_IF;
    ELSE
        //SIGUIENTE COORDENADA
@@ -313,74 +327,6 @@ IF #n = 0 THEN
 
        #contador := #contador + 1;
        IF #contador = (#Filas_0 + 1) * (#Columnas_0 + 1) THEN
-           #contador := 0;
-           #n := #n + 1;
-           #X := 0;
-           #Y := 0;
-       END_IF;
-
-   END_IF;
-END_IF;
-IF #n = 1 THEN
-   IF #tempMatrix_1[#X, #Y] >= #maxTemp THEN
-
-       "c2_TON_2".TON(IN := TRUE,
-                   PT := t#10s);
-
-       #Valvula := TRUE;
-
-       IF "c2_TON_2".Q = TRUE THEN
-
-           #Valvula := FALSE;
-
-           //SIGUIENTE COORDENADA
-           IF #ascender = TRUE THEN
-               IF #Y = #Columnas_1 THEN
-                   #X := #X + 1;
-                   #ascender := FALSE;
-               ELSE
-                   #Y := #Y + 1;
-               END_IF;
-           ELSE
-               IF #Y = 0 THEN
-                   #X := #X + 1;
-                   #ascender := TRUE;
-               ELSE
-                   #Y := #Y - 1;
-               END_IF;
-           END_IF;
-
-           #contador := #contador + 1;
-           IF #contador = ((#Filas_1 + 1) * (#Columnas_1 + 1)) THEN
-               #contador := 0;
-               #n := #n + 1;
-               #X := 0;
-               #Y := 0;
-           END_IF;
-
-       "c2_TON_2".TON(IN := FALSE,
-                         PT := t#2s);
-       END_IF;
-   ELSE
-       //SIGUIENTE COORDENADA
-       IF #ascender = TRUE THEN
-           IF #Y = #Columnas_1 THEN
-               #X := #X + 1;
-               #ascender := FALSE;
-           ELSE
-               #Y := #Y + 1;
-           END_IF;
-       ELSE
-           IF #Y = 0 THEN
-               #X := #X + 1;
-               #ascender := TRUE;
-           ELSE
-               #Y := #Y - 1;
-           END_IF;
-       END_IF;
-
-       #contador := #contador + 1;
-       IF #contador = (#Filas_1 + 1) * (#Columnas_1 + 1) THEN
            #contador := 0;
            #n := #n + 1;
            #X := 0;
@@ -419,180 +365,6 @@ END_DATA_BLOCK
 
 ////////////////////////////////////////////////////////// TON1_DB
 
-DATA_BLOCK "c3_TON_1"
-{OriginalPartName := 'IEC_TIMER';
-
-VersionGUID := 'b68d17d6-3fcc-4468-818a-b36d847990bb';
-S7_Optimized_Access := 'TRUE' }
-AUTHOR : Simatic
-FAMILY : IEC
-NAME : IEC_TMR
-VERSION : 1.0
-NON_RETAIN
-IEC_TIMER
-
-BEGIN
-
-END_DATA_BLOCK
-
-///////////////////////////////////////////////////////// TON2_DB
-
-DATA_BLOCK "c3_TON_2"
-{OriginalPartName := 'IEC_TIMER';
-VersionGUID := 'b68d17d6-3fcc-4468-818a-b36d847990bb';
-S7_Optimized_Access := 'TRUE' }
-AUTHOR : Simatic
-FAMILY : IEC
-NAME : IEC_TMR
-VERSION : 1.0
-NON_RETAIN
-IEC_TIMER
-
-BEGIN
-
-END_DATA_BLOCK
-
-//////////////////////////////////////////////////////////// Function Block
-
-FUNCTION_BLOCK "c3_FB"
-{ S7_Optimized_Access := 'FALSE' }
-VERSION : 0.1
-   VAR_INPUT 
-       maxTemp : Int;
-   END_VAR
-
-   VAR 
-       Cooling : Bool := false;
-       Activar : Bool := false;
-       Mode    : Bool := false;
-       Valvula : Bool := false;
-       X : Int;
-       Y : Int;
-       n : Int;
-       Filas_0 : Int := 2;
-       Columnas_0 : Int := 2;
-       tempMatrix_0 : Array[0..2, 0..2] of Int;
-       ascender : Bool;
-       matrices : Int := 1;
-       contador : Int;
-   END_VAR
-
-BEGIN
-
-IF #Mode = FALSE THEN //AUTOMATICO
-
-"c3_TON_1".TON(IN := #Activar AND NOT #Cooling,
-                 PT := t#10s);
-
-IF "c3_TON_1".Q = TRUE THEN
-   #Cooling := TRUE;
-   #Activar := FALSE;
-   #ascender := TRUE;
-   #contador := 0;
-   #X := 0;
-   #Y := 0;
-   #n := 0;
-END_IF;
-
-IF #Cooling = TRUE THEN
-IF #n = 0 THEN
-   IF #tempMatrix_0[#X, #Y] >= #maxTemp THEN
-
-       "c3_TON_2".TON(IN := TRUE,
-                   PT := t#10s);
-
-       #Valvula := TRUE;
-
-       IF "c3_TON_2".Q = TRUE THEN
-
-           #Valvula := FALSE;
-
-           //SIGUIENTE COORDENADA
-           IF #ascender = TRUE THEN
-               IF #Y = #Columnas_0 THEN
-                   #X := #X + 1;
-                   #ascender := FALSE;
-               ELSE
-                   #Y := #Y + 1;
-               END_IF;
-           ELSE
-               IF #Y = 0 THEN
-                   #X := #X + 1;
-                   #ascender := TRUE;
-               ELSE
-                   #Y := #Y - 1;
-               END_IF;
-           END_IF;
-
-           #contador := #contador + 1;
-           IF #contador = ((#Filas_0 + 1) * (#Columnas_0 + 1)) THEN
-               #contador := 0;
-               #n := #n + 1;
-               #X := 0;
-               #Y := 0;
-           END_IF;
-
-       "c3_TON_2".TON(IN := FALSE,
-                         PT := t#2s);
-       END_IF;
-   ELSE
-       //SIGUIENTE COORDENADA
-       IF #ascender = TRUE THEN
-           IF #Y = #Columnas_0 THEN
-               #X := #X + 1;
-               #ascender := FALSE;
-           ELSE
-               #Y := #Y + 1;
-           END_IF;
-       ELSE
-           IF #Y = 0 THEN
-               #X := #X + 1;
-               #ascender := TRUE;
-           ELSE
-               #Y := #Y - 1;
-           END_IF;
-       END_IF;
-
-       #contador := #contador + 1;
-       IF #contador = (#Filas_0 + 1) * (#Columnas_0 + 1) THEN
-           #contador := 0;
-           #n := #n + 1;
-           #X := 0;
-           #Y := 0;
-       END_IF;
-
-   END_IF;
-END_IF;
-END_IF;
-
-       IF (#n = #matrices) THEN
-           #Cooling := FALSE;
-           #n := 0;
-       END_IF;
-
-ELSE //Modo manual
-
-   #Cooling := FALSE;
-   #Activar := FALSE;
-
-END_IF;
-
-END_FUNCTION_BLOCK
-
-////////////////////////////////////////////////////////// Function Block DB
-
-DATA_BLOCK "c3_DB"
-{ S7_Optimized_Access := 'FALSE' }
-VERSION : 0.1
-NON_RETAIN
-"c3_FB"
-
-BEGIN
-
-END_DATA_BLOCK
-
-////////////////////////////////////////////////////////// TON1_DB
-
 DATA_BLOCK "v1_TON_1"
 {OriginalPartName := 'IEC_TIMER';
 
@@ -617,12 +389,13 @@ VERSION : 0.1
    VAR 
        Emptying : Bool := false;
        Activar : Bool := false;
+       Mode : Bool := false;
        X : Int;
        Y : Int;
        n : Int;
-       tempMatrix_0 : Array[0..0, 0..3] of Bool;
+       tempMatrix_0 : Array[0..0, 0..1] of Bool;
        Filas_0 : Int := 0;
-       Columnas_0 : Int := 3;
+       Columnas_0 : Int := 1;
        matrices : Int := 1;
        ascender : Bool;
        contador : Int;
@@ -630,6 +403,8 @@ VERSION : 0.1
    END_VAR
 
 BEGIN
+
+IF #Mode = FALSE THEN      //MODO AUTOMÁTICO
 
 IF (#Activar = TRUE AND #Activar_LastValue = FALSE) THEN
    #Emptying := TRUE;
@@ -704,6 +479,10 @@ END_IF;
 
 #Activar_LastValue := #Activar;
 
+ELSE // MODO MANUAL
+   #Activar  := FALSE;
+END_IF;
+
 END_FUNCTION_BLOCK
 
 ////////////////////////////////////////////////////////// Function Block DB
@@ -744,15 +523,284 @@ VERSION : 0.1
    VAR 
        Emptying : Bool := false;
        Activar : Bool := false;
+       Mode : Bool := false;
        X : Int;
        Y : Int;
        n : Int;
        tempMatrix_0 : Array[0..0, 0..1] of Bool;
        Filas_0 : Int := 0;
        Columnas_0 : Int := 1;
-       tempMatrix_1 : Array[0..0, 0..1] of Bool;
+       matrices : Int := 1;
+       ascender : Bool;
+       contador : Int;
+       Activar_LastValue : Bool := false;
+   END_VAR
+
+BEGIN
+
+IF #Mode = FALSE THEN      //MODO AUTOMÁTICO
+
+IF (#Activar = TRUE AND #Activar_LastValue = FALSE) THEN
+   #Emptying := TRUE;
+   #X := 0;
+   #Y := 0;
+   #n := 0;
+   #ascender := TRUE;
+   #contador := 0;
+END_IF;
+
+IF #Emptying = TRUE THEN
+IF #n = 0 THEN
+   IF #tempMatrix_0[#X, #Y] = TRUE THEN
+       "v1_TON_1".TON(IN := TRUE,
+                       PT := t#3s);
+
+       IF "v1_TON_1".Q = TRUE THEN
+           IF #ascender = TRUE THEN
+               IF #Y = #Columnas_0 THEN
+                   #X := #X + 1;
+                   #ascender := FALSE;
+               ELSE
+                   #Y := #Y + 1;
+               END_IF;
+           ELSE
+               IF #Y = 0 THEN
+                   #X := #X + 1;
+                   #ascender := TRUE;
+               ELSE
+                   #Y := #Y - 1;
+               END_IF;
+           END_IF;
+           "v1_TON_1".TON(IN := FALSE,
+                           PT := t#3s);
+           #contador := #contador + 1;
+       END_IF;
+   ELSE
+       IF #ascender = TRUE THEN
+           IF #Y = #Columnas_0 THEN
+               #X := #X + 1;
+               #ascender := FALSE;
+           ELSE
+               #Y := #Y + 1;
+           END_IF;
+       ELSE
+           IF #Y = 0 THEN
+               #X := #X + 1;
+               #ascender := TRUE;
+           ELSE
+               #Y := #Y - 1;
+           END_IF;
+       END_IF;
+       "v1_TON_1".TON(IN := FALSE,
+                       PT := t#3s);
+       #contador := #contador + 1;
+   END_IF;
+
+   IF (#contador = (#Filas_0 + 1) * (#Columnas_0 + 1)) THEN
+       #X := 0;
+       #Y := 0;
+       #n := #n + 1;
+       #contador := 0;
+       #ascender := true;
+   END_IF;
+END_IF;
+END_IF;
+
+IF (#n = #matrices) THEN
+   #Emptying := FALSE;
+   #Activar := FALSE;
+END_IF;
+
+#Activar_LastValue := #Activar;
+
+ELSE // MODO MANUAL
+   #Activar  := FALSE;
+END_IF;
+
+END_FUNCTION_BLOCK
+
+////////////////////////////////////////////////////////// Function Block DB
+
+DATA_BLOCK "v2_DB"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+NON_RETAIN
+"v2_FB"
+
+BEGIN
+
+END_DATA_BLOCK
+
+////////////////////////////////////////////////////////// TON1_DB
+
+DATA_BLOCK "v3_TON_1"
+{OriginalPartName := 'IEC_TIMER';
+
+VersionGUID := 'b68d17d6-3fcc-4468-818a-b36d847990bb';
+S7_Optimized_Access := 'TRUE' }
+AUTHOR : Simatic
+FAMILY : IEC
+NAME : IEC_TMR
+VERSION : 1.0
+NON_RETAIN
+IEC_TIMER
+
+BEGIN
+
+END_DATA_BLOCK
+
+//////////////////////////////////////////////////////////// Function Block
+
+FUNCTION_BLOCK "v3_FB"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+   VAR 
+       Emptying : Bool := false;
+       Activar : Bool := false;
+       Mode : Bool := false;
+       X : Int;
+       Y : Int;
+       n : Int;
+       tempMatrix_0 : Array[0..0, 0..1] of Bool;
+       Filas_0 : Int := 0;
+       Columnas_0 : Int := 1;
+       matrices : Int := 1;
+       ascender : Bool;
+       contador : Int;
+       Activar_LastValue : Bool := false;
+   END_VAR
+
+BEGIN
+
+IF #Mode = FALSE THEN      //MODO AUTOMÁTICO
+
+IF (#Activar = TRUE AND #Activar_LastValue = FALSE) THEN
+   #Emptying := TRUE;
+   #X := 0;
+   #Y := 0;
+   #n := 0;
+   #ascender := TRUE;
+   #contador := 0;
+END_IF;
+
+IF #Emptying = TRUE THEN
+IF #n = 0 THEN
+   IF #tempMatrix_0[#X, #Y] = TRUE THEN
+       "v1_TON_1".TON(IN := TRUE,
+                       PT := t#3s);
+
+       IF "v1_TON_1".Q = TRUE THEN
+           IF #ascender = TRUE THEN
+               IF #Y = #Columnas_0 THEN
+                   #X := #X + 1;
+                   #ascender := FALSE;
+               ELSE
+                   #Y := #Y + 1;
+               END_IF;
+           ELSE
+               IF #Y = 0 THEN
+                   #X := #X + 1;
+                   #ascender := TRUE;
+               ELSE
+                   #Y := #Y - 1;
+               END_IF;
+           END_IF;
+           "v1_TON_1".TON(IN := FALSE,
+                           PT := t#3s);
+           #contador := #contador + 1;
+       END_IF;
+   ELSE
+       IF #ascender = TRUE THEN
+           IF #Y = #Columnas_0 THEN
+               #X := #X + 1;
+               #ascender := FALSE;
+           ELSE
+               #Y := #Y + 1;
+           END_IF;
+       ELSE
+           IF #Y = 0 THEN
+               #X := #X + 1;
+               #ascender := TRUE;
+           ELSE
+               #Y := #Y - 1;
+           END_IF;
+       END_IF;
+       "v1_TON_1".TON(IN := FALSE,
+                       PT := t#3s);
+       #contador := #contador + 1;
+   END_IF;
+
+   IF (#contador = (#Filas_0 + 1) * (#Columnas_0 + 1)) THEN
+       #X := 0;
+       #Y := 0;
+       #n := #n + 1;
+       #contador := 0;
+       #ascender := true;
+   END_IF;
+END_IF;
+END_IF;
+
+IF (#n = #matrices) THEN
+   #Emptying := FALSE;
+   #Activar := FALSE;
+END_IF;
+
+#Activar_LastValue := #Activar;
+
+ELSE // MODO MANUAL
+   #Activar  := FALSE;
+END_IF;
+
+END_FUNCTION_BLOCK
+
+////////////////////////////////////////////////////////// Function Block DB
+
+DATA_BLOCK "v3_DB"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+NON_RETAIN
+"v3_FB"
+
+BEGIN
+
+END_DATA_BLOCK
+
+////////////////////////////////////////////////////////// TON1_DB
+
+DATA_BLOCK "v4_TON_1"
+{OriginalPartName := 'IEC_TIMER';
+
+VersionGUID := 'b68d17d6-3fcc-4468-818a-b36d847990bb';
+S7_Optimized_Access := 'TRUE' }
+AUTHOR : Simatic
+FAMILY : IEC
+NAME : IEC_TMR
+VERSION : 1.0
+NON_RETAIN
+IEC_TIMER
+
+BEGIN
+
+END_DATA_BLOCK
+
+//////////////////////////////////////////////////////////// Function Block
+
+FUNCTION_BLOCK "v4_FB"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+   VAR 
+       Emptying : Bool := false;
+       Activar : Bool := false;
+       Mode : Bool := false;
+       X : Int;
+       Y : Int;
+       n : Int;
+       tempMatrix_0 : Array[0..0, 0..0] of Bool;
+       Filas_0 : Int := 0;
+       Columnas_0 : Int := 0;
+       tempMatrix_1 : Array[0..0, 0..0] of Bool;
        Filas_1 : Int := 0;
-       Columnas_1 : Int := 1;
+       Columnas_1 : Int := 0;
        matrices : Int := 2;
        ascender : Bool;
        contador : Int;
@@ -760,6 +808,8 @@ VERSION : 0.1
    END_VAR
 
 BEGIN
+
+IF #Mode = FALSE THEN      //MODO AUTOMÁTICO
 
 IF (#Activar = TRUE AND #Activar_LastValue = FALSE) THEN
    #Emptying := TRUE;
@@ -888,15 +938,19 @@ END_IF;
 
 #Activar_LastValue := #Activar;
 
+ELSE // MODO MANUAL
+   #Activar  := FALSE;
+END_IF;
+
 END_FUNCTION_BLOCK
 
 ////////////////////////////////////////////////////////// Function Block DB
 
-DATA_BLOCK "v2_DB"
+DATA_BLOCK "v4_DB"
 { S7_Optimized_Access := 'FALSE' }
 VERSION : 0.1
 NON_RETAIN
-"v2_FB"
+"v4_FB"
 
 BEGIN
 
@@ -904,7 +958,7 @@ END_DATA_BLOCK
 
 ////////////////////////////////////////////////////////// TON1_DB
 
-DATA_BLOCK "v3_TON_1"
+DATA_BLOCK "v5_TON_1"
 {OriginalPartName := 'IEC_TIMER';
 
 VersionGUID := 'b68d17d6-3fcc-4468-818a-b36d847990bb';
@@ -922,18 +976,19 @@ END_DATA_BLOCK
 
 //////////////////////////////////////////////////////////// Function Block
 
-FUNCTION_BLOCK "v3_FB"
+FUNCTION_BLOCK "v5_FB"
 { S7_Optimized_Access := 'FALSE' }
 VERSION : 0.1
    VAR 
        Emptying : Bool := false;
        Activar : Bool := false;
+       Mode : Bool := false;
        X : Int;
        Y : Int;
        n : Int;
-       tempMatrix_0 : Array[0..0, 0..4] of Bool;
+       tempMatrix_0 : Array[0..0, 0..1] of Bool;
        Filas_0 : Int := 0;
-       Columnas_0 : Int := 4;
+       Columnas_0 : Int := 1;
        matrices : Int := 1;
        ascender : Bool;
        contador : Int;
@@ -941,6 +996,8 @@ VERSION : 0.1
    END_VAR
 
 BEGIN
+
+IF #Mode = FALSE THEN      //MODO AUTOMÁTICO
 
 IF (#Activar = TRUE AND #Activar_LastValue = FALSE) THEN
    #Emptying := TRUE;
@@ -1015,15 +1072,287 @@ END_IF;
 
 #Activar_LastValue := #Activar;
 
+ELSE // MODO MANUAL
+   #Activar  := FALSE;
+END_IF;
+
 END_FUNCTION_BLOCK
 
 ////////////////////////////////////////////////////////// Function Block DB
 
-DATA_BLOCK "v3_DB"
+DATA_BLOCK "v5_DB"
 { S7_Optimized_Access := 'FALSE' }
 VERSION : 0.1
 NON_RETAIN
-"v3_FB"
+"v5_FB"
+
+BEGIN
+
+END_DATA_BLOCK
+
+////////////////////////////////////////////////////////// TON1_DB
+
+DATA_BLOCK "v6_TON_1"
+{OriginalPartName := 'IEC_TIMER';
+
+VersionGUID := 'b68d17d6-3fcc-4468-818a-b36d847990bb';
+S7_Optimized_Access := 'TRUE' }
+AUTHOR : Simatic
+FAMILY : IEC
+NAME : IEC_TMR
+VERSION : 1.0
+NON_RETAIN
+IEC_TIMER
+
+BEGIN
+
+END_DATA_BLOCK
+
+//////////////////////////////////////////////////////////// Function Block
+
+FUNCTION_BLOCK "v6_FB"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+   VAR 
+       Emptying : Bool := false;
+       Activar : Bool := false;
+       Mode : Bool := false;
+       X : Int;
+       Y : Int;
+       n : Int;
+       tempMatrix_0 : Array[0..0, 0..1] of Bool;
+       Filas_0 : Int := 0;
+       Columnas_0 : Int := 1;
+       matrices : Int := 1;
+       ascender : Bool;
+       contador : Int;
+       Activar_LastValue : Bool := false;
+   END_VAR
+
+BEGIN
+
+IF #Mode = FALSE THEN      //MODO AUTOMÁTICO
+
+IF (#Activar = TRUE AND #Activar_LastValue = FALSE) THEN
+   #Emptying := TRUE;
+   #X := 0;
+   #Y := 0;
+   #n := 0;
+   #ascender := TRUE;
+   #contador := 0;
+END_IF;
+
+IF #Emptying = TRUE THEN
+IF #n = 0 THEN
+   IF #tempMatrix_0[#X, #Y] = TRUE THEN
+       "v1_TON_1".TON(IN := TRUE,
+                       PT := t#3s);
+
+       IF "v1_TON_1".Q = TRUE THEN
+           IF #ascender = TRUE THEN
+               IF #Y = #Columnas_0 THEN
+                   #X := #X + 1;
+                   #ascender := FALSE;
+               ELSE
+                   #Y := #Y + 1;
+               END_IF;
+           ELSE
+               IF #Y = 0 THEN
+                   #X := #X + 1;
+                   #ascender := TRUE;
+               ELSE
+                   #Y := #Y - 1;
+               END_IF;
+           END_IF;
+           "v1_TON_1".TON(IN := FALSE,
+                           PT := t#3s);
+           #contador := #contador + 1;
+       END_IF;
+   ELSE
+       IF #ascender = TRUE THEN
+           IF #Y = #Columnas_0 THEN
+               #X := #X + 1;
+               #ascender := FALSE;
+           ELSE
+               #Y := #Y + 1;
+           END_IF;
+       ELSE
+           IF #Y = 0 THEN
+               #X := #X + 1;
+               #ascender := TRUE;
+           ELSE
+               #Y := #Y - 1;
+           END_IF;
+       END_IF;
+       "v1_TON_1".TON(IN := FALSE,
+                       PT := t#3s);
+       #contador := #contador + 1;
+   END_IF;
+
+   IF (#contador = (#Filas_0 + 1) * (#Columnas_0 + 1)) THEN
+       #X := 0;
+       #Y := 0;
+       #n := #n + 1;
+       #contador := 0;
+       #ascender := true;
+   END_IF;
+END_IF;
+END_IF;
+
+IF (#n = #matrices) THEN
+   #Emptying := FALSE;
+   #Activar := FALSE;
+END_IF;
+
+#Activar_LastValue := #Activar;
+
+ELSE // MODO MANUAL
+   #Activar  := FALSE;
+END_IF;
+
+END_FUNCTION_BLOCK
+
+////////////////////////////////////////////////////////// Function Block DB
+
+DATA_BLOCK "v6_DB"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+NON_RETAIN
+"v6_FB"
+
+BEGIN
+
+END_DATA_BLOCK
+
+////////////////////////////////////////////////////////// TON1_DB
+
+DATA_BLOCK "v7_TON_1"
+{OriginalPartName := 'IEC_TIMER';
+
+VersionGUID := 'b68d17d6-3fcc-4468-818a-b36d847990bb';
+S7_Optimized_Access := 'TRUE' }
+AUTHOR : Simatic
+FAMILY : IEC
+NAME : IEC_TMR
+VERSION : 1.0
+NON_RETAIN
+IEC_TIMER
+
+BEGIN
+
+END_DATA_BLOCK
+
+//////////////////////////////////////////////////////////// Function Block
+
+FUNCTION_BLOCK "v7_FB"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+   VAR 
+       Emptying : Bool := false;
+       Activar : Bool := false;
+       Mode : Bool := false;
+       X : Int;
+       Y : Int;
+       n : Int;
+       tempMatrix_0 : Array[0..0, 0..1] of Bool;
+       Filas_0 : Int := 0;
+       Columnas_0 : Int := 1;
+       matrices : Int := 1;
+       ascender : Bool;
+       contador : Int;
+       Activar_LastValue : Bool := false;
+   END_VAR
+
+BEGIN
+
+IF #Mode = FALSE THEN      //MODO AUTOMÁTICO
+
+IF (#Activar = TRUE AND #Activar_LastValue = FALSE) THEN
+   #Emptying := TRUE;
+   #X := 0;
+   #Y := 0;
+   #n := 0;
+   #ascender := TRUE;
+   #contador := 0;
+END_IF;
+
+IF #Emptying = TRUE THEN
+IF #n = 0 THEN
+   IF #tempMatrix_0[#X, #Y] = TRUE THEN
+       "v1_TON_1".TON(IN := TRUE,
+                       PT := t#3s);
+
+       IF "v1_TON_1".Q = TRUE THEN
+           IF #ascender = TRUE THEN
+               IF #Y = #Columnas_0 THEN
+                   #X := #X + 1;
+                   #ascender := FALSE;
+               ELSE
+                   #Y := #Y + 1;
+               END_IF;
+           ELSE
+               IF #Y = 0 THEN
+                   #X := #X + 1;
+                   #ascender := TRUE;
+               ELSE
+                   #Y := #Y - 1;
+               END_IF;
+           END_IF;
+           "v1_TON_1".TON(IN := FALSE,
+                           PT := t#3s);
+           #contador := #contador + 1;
+       END_IF;
+   ELSE
+       IF #ascender = TRUE THEN
+           IF #Y = #Columnas_0 THEN
+               #X := #X + 1;
+               #ascender := FALSE;
+           ELSE
+               #Y := #Y + 1;
+           END_IF;
+       ELSE
+           IF #Y = 0 THEN
+               #X := #X + 1;
+               #ascender := TRUE;
+           ELSE
+               #Y := #Y - 1;
+           END_IF;
+       END_IF;
+       "v1_TON_1".TON(IN := FALSE,
+                       PT := t#3s);
+       #contador := #contador + 1;
+   END_IF;
+
+   IF (#contador = (#Filas_0 + 1) * (#Columnas_0 + 1)) THEN
+       #X := 0;
+       #Y := 0;
+       #n := #n + 1;
+       #contador := 0;
+       #ascender := true;
+   END_IF;
+END_IF;
+END_IF;
+
+IF (#n = #matrices) THEN
+   #Emptying := FALSE;
+   #Activar := FALSE;
+END_IF;
+
+#Activar_LastValue := #Activar;
+
+ELSE // MODO MANUAL
+   #Activar  := FALSE;
+END_IF;
+
+END_FUNCTION_BLOCK
+
+////////////////////////////////////////////////////////// Function Block DB
+
+DATA_BLOCK "v7_DB"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+NON_RETAIN
+"v7_FB"
 
 BEGIN
 
@@ -1036,12 +1365,15 @@ TITLE = "Main Program Sweep (Cycle)"
 VERSION : 0.1
 
 BEGIN
-   "c1_DB"(30);
-   "c2_DB"(30);
-   "c3_DB"(30);
+   "c1_DB"();
+   "c2_DB"();
    "v1_DB"();
    "v2_DB"();
    "v3_DB"();
+   "v4_DB"();
+   "v5_DB"();
+   "v6_DB"();
+   "v7_DB"();
 
 END_ORGANIZATION_BLOCK
 

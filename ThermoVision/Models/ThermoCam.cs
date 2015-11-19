@@ -45,7 +45,10 @@ namespace ThermoVision.Models
 
         bool                    connected;
 
-        bool                    _rejilla;
+        bool                    _escalaGrises;
+        bool                    _rejillaApagado;
+        bool                    _rejillaVaciado;
+        bool                    _rejillaHornos;
         bool                    _configuracionMode;
         bool                    _rampMode;
         bool                    _matrixTemp;
@@ -68,6 +71,10 @@ namespace ThermoVision.Models
 
 
         List    <Color>         colorPalette;
+
+        public int nHornos;
+        public int hornoStart;
+        public int hornoFin;
 
         #endregion
 
@@ -112,15 +119,48 @@ namespace ThermoVision.Models
             }
         }
 
-        public bool   Rejilla                       // -w  
+        public bool   RejillaApagado                // -rw 
         {
             get
             {
-                return this._rejilla;
+                return this._rejillaApagado;
             }
             set
             {
-               this._rejilla = value;
+                this._rejillaApagado = value;
+            }
+        }
+        public bool   RejillaVaciado                // -rw 
+        {
+            get
+            {
+                return this._rejillaVaciado;
+            }
+            set
+            {
+                this._rejillaVaciado = value;
+            }
+        }
+        public bool   RejillaHornos                 // -rw 
+        {
+            get
+            {
+                return this._rejillaHornos;
+            }
+            set
+            {
+                this._rejillaHornos = value;
+            }
+        }
+        public bool   EscalaGrises                  // -rw 
+        {
+            get
+            {
+                return this._escalaGrises;
+            }
+            set
+            {
+                this._escalaGrises = value;
             }
         }
         public bool   ConfiguracionMode             // -w  
@@ -228,13 +268,17 @@ namespace ThermoVision.Models
         #region "DESERIALIZE"
         public ThermoCam(SerializationInfo info, StreamingContext ctxt)   
         {
-            this._name          = (string)          info.GetValue("Nombre"   , typeof(string));
-            this._address       = (string)          info.GetValue("Address"  , typeof(string));
-            this._camType       = (CameraType)      info.GetValue("CamType"  , typeof(CameraType));
-            this._devType       = (DeviceType)      info.GetValue("DevType"  , typeof(DeviceType));
-            this._interfaceType = (InterfaceType)   info.GetValue("InterType", typeof(InterfaceType));
-            this.SubZonas       = (List<SubZona>)   info.GetValue("SubZonas" , typeof(List<SubZona>));
-            this.Parent         = (Sistema)         info.GetValue("Parent"   , typeof(Sistema));
+            this._name           = (string)          info.GetValue("Nombre"         ,typeof(string));
+            this._address        = (string)          info.GetValue("Address"        ,typeof(string));
+            this._camType        = (CameraType)      info.GetValue("CamType"        ,typeof(CameraType));
+            this._devType        = (DeviceType)      info.GetValue("DevType"        ,typeof(DeviceType));
+            this._interfaceType  = (InterfaceType)   info.GetValue("InterType"      ,typeof(InterfaceType));
+            this.SubZonas        = (List<SubZona>)   info.GetValue("SubZonas"       ,typeof(List<SubZona>));
+            this.Parent          = (Sistema)         info.GetValue("Parent"         ,typeof(Sistema));
+            this._rejillaApagado = (bool)            info.GetValue("RejillaApagado" ,typeof(bool));
+            this._rejillaVaciado = (bool)            info.GetValue("RejillaVaciado" ,typeof(bool));
+            this._rejillaHornos  = (bool)            info.GetValue("RejillaHornos"  ,typeof(bool));
+            this._escalaGrises   = (bool)            info.GetValue("EscalaGrises"   ,typeof(bool));
 
         }
         public void InitializeForm(System.Windows.Forms.Form f)           
@@ -260,13 +304,17 @@ namespace ThermoVision.Models
 
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)    
         {
-            info.AddValue("Nombre"   , this.Nombre);
-            info.AddValue("Address"  , this.Address);
-            info.AddValue("CamType"  , this._camType);
-            info.AddValue("DevType"  , this._devType);
-            info.AddValue("InterType", this._interfaceType);
-            info.AddValue("SubZonas" , this.SubZonas);
-            info.AddValue("Parent"   , this.Parent);
+            info.AddValue("Nombre"          ,this.Nombre);
+            info.AddValue("Address"         ,this.Address);
+            info.AddValue("CamType"         ,this._camType);
+            info.AddValue("DevType"         ,this._devType);
+            info.AddValue("InterType"       ,this._interfaceType);
+            info.AddValue("SubZonas"        ,this.SubZonas);
+            info.AddValue("Parent"          ,this.Parent);
+            info.AddValue("RejillaApagado"  ,this._rejillaApagado);
+            info.AddValue("RejillaVaciado"  ,this.RejillaVaciado);
+            info.AddValue("RejillaHornos"   ,this.RejillaHornos);
+            info.AddValue("EscalaGrises"    ,this._escalaGrises);
         }
 
         #endregion
@@ -561,7 +609,7 @@ namespace ThermoVision.Models
         {
             #region "Dibujar"
 
-            if (this._configuracionMode == true)
+            if (this._configuracionMode == true || this._escalaGrises)
             {
                 maxZonaNoUtil = 0x0;             // Reinicializar las variables 
                 minZonaNoUtil = 0xFFFF;          // para
@@ -665,7 +713,7 @@ namespace ThermoVision.Models
 
                     foreach (SubZona s in this.SubZonas)
                     {
-                        if (s.Selected || this._rampMode)
+                        if (s.Selected || s.Visualizar)
                         {
                             for (int x = s.Inicio.X; x < s.Fin.X; x++)
                             {
@@ -684,7 +732,7 @@ namespace ThermoVision.Models
                     // Se dibujan las zonas en escala Raibow
                     foreach (SubZona s in SubZonas)
                     {
-                        if (s.Selected || this._rampMode)
+                        if (s.Selected || s.Visualizar)
                         {
                             //Dibujar subzonas con escala rainbow
                             for (int x = s.Inicio.X; x < s.Fin.X; x++)
@@ -701,29 +749,43 @@ namespace ThermoVision.Models
                                 }//for y
                             }//for x
 
-                            if (s.Selected)
+                            if (s.Selected || s.Visualizar)
                             {
                                 //Columnas
-                                for (int i = 1; i < s.Columnas; i++)
+                                for (int i = 0; i < s.Columnas + 1; i++)
                                 {
                                     int x = (i * (s.Fin.X - s.Inicio.X) / s.Columnas) + s.Inicio.X;
 
                                     for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
                                     {
-                                        this.bmp.SetPixel(x, y, Color.Black);
-                                    }//For  y
-                                }//for columnas
+                                        if (x > 0 && x < this.bmp.Width &&
+                                            y > 0 && y < this.bmp.Height)
+                                            this.bmp.SetPixel(x, y, Color.Black);
+
+                                        if (i == 0)
+                                            this.bmp.SetPixel(x + 1, y, Color.Black);
+                                        if (i == s.Columnas)
+                                            this.bmp.SetPixel(x - 1, y, Color.Black);
+
+                                    } //for  y
+                                } //for columnas
 
                                 //Filas
-                                for (int i = 1; i < s.Filas; i++)
+                                for (int i = 0; i < s.Filas + 1; i++)
                                 {
                                     int y = (i * (s.Fin.Y - s.Inicio.Y) / s.Filas) + s.Inicio.Y;
 
                                     for (int x = s.Inicio.X; x < s.Fin.X; x++)
                                     {
-                                        this.bmp.SetPixel(x, y, Color.Black);
-                                    }//For x
-                                }//For filas
+                                        if (x > 0 && x < this.bmp.Width &&
+                                            y > 0 && y < this.bmp.Height)
+                                            this.bmp.SetPixel(x, y, Color.Black);
+                                        if (i == 0)
+                                            this.bmp.SetPixel(x, y + 1, Color.Black);
+                                        if (i == s.Filas)
+                                            this.bmp.SetPixel(x, y - 1, Color.Black);
+                                    } //for x
+                                } //for filas
 
                                 //Escribir el nombre de la división
                                 using (Graphics graphics = Graphics.FromImage(this.bmp))
@@ -780,6 +842,132 @@ namespace ThermoVision.Models
 
             #region "Modo funcionamiento"
 
+            if (!this._configuracionMode)
+            {
+                foreach (SubZona s in this.SubZonas)
+                {
+                    Color c = (this.EscalaGrises) ? Color.White : Color.Black;
+                    Brush b = (this.EscalaGrises) ? Brushes.White : Brushes.Black;
+
+                    ////////// HORNOS
+                    if (RejillaHornos)
+                    {
+                        if (s.Selected)
+                        {
+                            using (Graphics g = Graphics.FromImage(this.bmp))
+                            {
+                                //Linea Horizontal hornos
+                                g.DrawLine(new Pen(c, 1), new Point(s.Inicio.X, s.Inicio.Y - 20), new Point(s.Fin.X, s.Inicio.Y - 20));
+
+                                int index = 0;
+                                for (int i = hornoStart; i < hornoFin; i++)
+                                {
+                                    g.DrawString((hornoFin - index).ToString(), new Font("Arial", 6), b, new PointF(s.Inicio.X + index * (s.Fin.X - s.Inicio.X) / nHornos + 3,
+                                       s.Inicio.Y - 28));
+                                    g.DrawLine(new Pen(c, 1), new Point(s.Inicio.X + index * (s.Fin.X - s.Inicio.X) / nHornos, s.Inicio.Y - 20),
+                                        new Point(s.Inicio.X + index * (s.Fin.X - s.Inicio.X) / nHornos, 0));
+                                    index++;
+                                    g.DrawLine(new Pen(c, 1), new Point(s.Inicio.X + index * (s.Fin.X - s.Inicio.X) / nHornos, s.Inicio.Y - 20),
+                                        new Point(s.Inicio.X + index * (s.Fin.X - s.Inicio.X) / nHornos, 0));
+                                }
+                            }
+                        }
+                    }
+
+                    //////////// REJILLA
+                    if (this.RejillaApagado == true)
+                    {
+                        if (s.Selected)
+                        {
+                            //Columnas
+                            for (int i = 0; i < s.Columnas + 1; i++)
+                            {
+                                int x = (i * (s.Fin.X - s.Inicio.X) / s.Columnas) + s.Inicio.X;
+
+                                for (int y = s.Inicio.Y; y < s.Fin.Y; y++)
+                                {
+                                    if (x > 0 && x < this.bmp.Width &&
+                                        y > 0 && y < this.bmp.Height)
+                                        this.bmp.SetPixel(x, y, c);
+
+                                    if (i == 0)
+                                        this.bmp.SetPixel(x + 1, y, c);
+                                    if (i == s.Columnas)
+                                        this.bmp.SetPixel(x - 1, y, c);
+
+                                } //for  y
+                            } //for columnas
+
+                            //Filas
+                            for (int i = 0; i < s.Filas + 1; i++)
+                            {
+                                int y = (i * (s.Fin.Y - s.Inicio.Y) / s.Filas) + s.Inicio.Y;
+
+                                for (int x = s.Inicio.X; x < s.Fin.X; x++)
+                                {
+                                    if (x > 0 && x < this.bmp.Width &&
+                                        y > 0 && y < this.bmp.Height)
+                                        this.bmp.SetPixel(x, y, c);
+                                    if (i == 0)
+                                        this.bmp.SetPixel(x, y + 1, c);
+                                    if (i == s.Filas)
+                                        this.bmp.SetPixel(x, y - 1, c);
+                                } //for x
+                            } //for filas
+
+                            using (Graphics graphics = Graphics.FromImage(this.bmp))
+                            {
+                                using (Font arialFont = new Font("Calibri Light", 6))
+                                {
+                                    //test1 = (((j) * this._widthPerCol) + this._inicio.X);
+                                    //test2 = (((i + 1) * this._heigthPerRow) + this._inicio.Y) - 10;
+                                    graphics.DrawString(s.Parent.Nombre,
+                                        arialFont,
+                                        b,
+                                        new Point(
+                                            s.Inicio.X + 2,
+                                            s.Inicio.Y + 2));
+                                }//Using font
+                            }//Using raphics
+                        } //IF subzona selected
+                    } //rejillaApagado
+
+                    ////////////// VACIADO
+
+                    if (this._rejillaVaciado)
+                    {
+                        if (s.vaciado)
+                        {
+                            using (Graphics g = Graphics.FromImage(this.bmp))
+                            {
+
+                                //Linea Horizontal vaciado
+                                g.DrawLine(new Pen(c, 1), new Point(s.Inicio.X, s.Fin.Y + 20), new Point(s.Fin.X, s.Fin.Y + 20));
+
+                                //Lineas verticales
+                                if (s.Parent.Children[0].Equals(s))
+                                    g.DrawLine(new Pen(c, 1), new Point(s.Inicio.X, s.Fin.Y + 30), new Point(s.Inicio.X, s.Fin.Y + 10));
+                                else
+                                    g.DrawLine(new Pen(c, 1), new Point(s.Inicio.X, s.Fin.Y + 25), new Point(s.Inicio.X, s.Fin.Y + 15));
+
+                                if (s.Parent.Children[s.Parent.Children.Count - 1].Equals(s))
+                                    g.DrawLine(new Pen(c, 1), new Point(s.Fin.X, s.Fin.Y + 30), new Point(s.Fin.X, s.Fin.Y + 10));
+                                else
+                                    g.DrawLine(new Pen(c, 1), new Point(s.Fin.X, s.Fin.Y + 25), new Point(s.Fin.X, s.Fin.Y + 15));
+
+                                for (int i = 0; i < s.Columnas - 1; i++)
+                                {
+                                    g.DrawLine(new Pen(c, 1), new Point(s.Inicio.X + (s.Fin.X - s.Inicio.X) / 2, s.Fin.Y + 25),
+                                        new Point(s.Inicio.X + (s.Fin.X - s.Inicio.X) / 2, s.Fin.Y + 15));
+                                }
+
+                                g.DrawString(s.Parent.Nombre, new Font("Arial", 6), b, new PointF(s.Inicio.X + 5, s.Fin.Y + 20 - 9));
+                            }
+                        }
+                    }
+                }//foreach
+            }
+
             if (this.Parent != null && this.Parent.accessingTempElements == false)
             {
                 try
@@ -799,8 +987,19 @@ namespace ThermoVision.Models
                                 s._meanTemp = 0D;
 
                                 //Redimensionar matriz de temperaturas
-                                if (s.tempMatrix == null || s.tempMatrix.GetLength(0) != s.Filas || s.tempMatrix.GetLength(1) != s.Columnas)
-                                    s.tempMatrix = new tempElement[s.Filas, s.Columnas];
+                                if(this._configuracionMode)
+                                    if (s.tempMatrix == null || s.tempMatrix.GetLength(0) != s.Filas || s.tempMatrix.GetLength(1) != s.Columnas)
+                                    {
+                                        s.tempMatrix = new tempElement[s.Filas, s.Columnas];
+
+                                        for (int i = 0; i < s.Filas; i++)
+                                        {
+                                            for (int j = 0; j < s.Columnas; j++)
+                                            {
+                                                s.tempMatrix[i, j] = new tempElement();
+                                            }
+                                        }
+                                    }
 
                                 //Reinicializar variables
                                 for (int i = 0; i < s.Filas; i++)
@@ -852,11 +1051,11 @@ namespace ThermoVision.Models
 
                                         s._meanTemp += (this.lutTable[this.imgData[x, y]] - 273.15f) / (Heigth * Width);                        //Media división
                                     }//for y
-                                }//for x
-
+                                }//for x       
                             }//lock lockRejilla
                         }//foreach subzona
                     }//lockSubzonas
+
                     this.Parent.accessingTempElements = false;
                 }
                 catch (Exception ex)

@@ -68,3 +68,6 @@ E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCamApp.Asi
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCamApp.Asistente.selectAppType.resources
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCamApp.Asistente.OPC.appSelectOPCServer.resources
 E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCamApp.main.resources
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\bin\Debug\Resources\logoEmpresa.bmp
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCamApp.Forms.RampaConfig.resources
+E:\Repositories\ThermoCamApp\WindowsFormsApplication4\obj\Debug\ThermoCamApp.Forms.VisualizacionConfig.resources

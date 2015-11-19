@@ -109,6 +109,11 @@ namespace ThermoVision.Models
             get;
             set;
         }
+        public bool Valvula                   // -rw      
+        {
+            get;
+            set;
+        }
         public bool Emptying                  // -rw      
         {
             get;
@@ -243,7 +248,21 @@ namespace ThermoVision.Models
 
         public void coolingStateChanged(object state)
         {
-            
+            if (state is bool && this.State != States.Manual)
+            {
+                this.Cooling = (bool)state;
+
+                if (this.Cooling)
+                {
+                    if (this.State != States.Enfriando)
+                        this.triggerStateChangedEvent(States.Enfriando);
+                }
+                else
+                {
+                    if (this.State != States.Esperando)
+                        this.triggerStateChangedEvent(States.Esperando);
+                }
+            }
         }
         public void coordinateXChanged(object x)        
         {
@@ -263,7 +282,7 @@ namespace ThermoVision.Models
         public void ValvulaStateChanged(object state)   
         {
             if(state is bool)
-                this.Cooling = (bool) state;
+                this.Valvula = (bool) state;
         }
 
         public void coordinateXVaciadoChanged(object x) 
@@ -319,6 +338,10 @@ namespace ThermoVision.Models
                 if (this.Emptying)
                 {
                     this.State = States.Vaciando;
+                }
+                else
+                {
+                    this.State = States.Esperando;
                 }
             }
         }

@@ -21,19 +21,28 @@ namespace ThermoCamApp
         }
         private List<CamControl> camaras = new List<CamControl>();
 
-        private ThermoVision.CustomControls.NumericTextBox  numericTextBoxTempApagadoLimite;
-        private System.Windows.Forms.Label                  label1;
         private System.Windows.Forms.Label                  labelEstadoOPC;
         private System.Windows.Forms.Label[]                labelsEstadoCamaras;
-        private System.Windows.Forms.Label                  label2;
-        private ThermoVision.CustomControls.NumericTextBox  numericTextBoxTempLimiteVaciado;
         private Controls.cannonControl[]                    ccs;
         private Controls.RejillasControl[]                  rcs;
+        private System.Windows.Forms.Label[]                labelsCannonNames;
+        private System.Windows.Forms.Label                  labelTitulo;
+        private System.Windows.Forms.Button buttonVisualizacion;
+        private System.Windows.Forms.Button                 buttonConfiguracion;
         private System.Windows.Forms.Button                 buttonAsistente;
+        private System.Windows.Forms.Button                 buttonSalir;
         private System.Windows.Forms.DataGridView           listViewEventos;
+        private System.Windows.Forms.Label                  labelTime;
+        private System.Timers.Timer                         timerHora;
 
         PictureBox pictureBoxRampa;
         PictureBox pictureBoxRejillas;
+        PictureBox pictureBoxLogo;
+        PictureBox pictureBoxLogoCliente;
+
+        GroupBox groupBox;
+
+        int nHornos = 22;
 
         public main(Sistema _system)                                                    
         {
@@ -55,10 +64,15 @@ namespace ThermoCamApp
                 // 
                 CamControl c = new CamControl();
 
-                c.Location = new System.Drawing.Point(c.Width * counter, 0);
+                c.Location = new System.Drawing.Point(c.Width * counter, 100);
                 c.Name = "camControl1";
                 c.Size = new System.Drawing.Size(c.Width, c.Height);
                 c.TabIndex = 100 + counter;
+
+                t.nHornos = nHornos / this._system.ThermoCams.Count;
+
+                t.hornoStart = (this._system.ThermoCams.Count - counter - 1) * t.nHornos;
+                t.hornoFin = (this._system.ThermoCams.Count - counter) * t.nHornos;
 
                 c.Initialize(this, t);
                 camaras.Add(c);
@@ -90,53 +104,171 @@ namespace ThermoCamApp
             this.listViewEventos.Columns["Descripcion"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             if(camaras.Count == 1 || camaras.Count == 2)
-                this.listViewEventos.Location = new System.Drawing.Point(camaras.Count * camaras[0].Width + 5, 10);
+                this.listViewEventos.Location = new System.Drawing.Point(camaras.Count * camaras[0].Width + 5, 100);
 
             this.listViewEventos.Name = "listView1";
             
             switch(camaras.Count)
             {
                 case 1:
-                    this.listViewEventos.Size = new System.Drawing.Size(camaras[0].Width * 2 - 15, camaras[0].Height -10);
+                    this.listViewEventos.Size = new System.Drawing.Size(camaras[0].Width * 2 - 15, camaras[0].Height);
                     break;
                 case 2:
-                    this.listViewEventos.Size = new System.Drawing.Size(camaras[0].Width - 10, camaras[0].Height - 10);
+                    this.listViewEventos.Size = new System.Drawing.Size(camaras[0].Width - 10, camaras[0].Height);
                     break;
             }
             this.listViewEventos.TabIndex = 0;
             this.Controls.Add(this.listViewEventos);
             ((System.ComponentModel.ISupportInitialize)(this.listViewEventos)).EndInit();
             //
+            // groupBox
+            //
+            this.groupBox = new GroupBox();
+
+            this.groupBox.Location = new System.Drawing.Point(10, this.Height - 60);
+            this.groupBox.Name = "groupBox2";
+            this.groupBox.Size = new System.Drawing.Size(this.Width - 40, 60);
+            //this.groupBox.BackColor = Color.Gray;
+            this.groupBox.TabIndex = 61;
+            this.groupBox.TabStop = false;
+            
+            this.Controls.Add(this.groupBox);
+            // 
+            // pictureBoxLogo
+            // 
+            this.pictureBoxLogo = new PictureBox();
+            this.pictureBoxLogo.SizeMode   = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxLogo.Location = new System.Drawing.Point(10, 10);
+            this.pictureBoxLogo.Name = "pictureBoxLogo";
+            this.pictureBoxLogo.Size = new System.Drawing.Size(270, 80);
+            this.pictureBoxLogo.TabIndex = 16;
+            this.pictureBoxLogo.TabStop = false;
+            this.pictureBoxLogo.Image = System.Drawing.Bitmap.FromFile("Resources\\logo.jpg");
+            this.Controls.Add(this.pictureBoxLogo);
+            //
+            // labelTime
+            //
+            this.labelTime = new Label();
+            this.labelTime.AutoSize = false;
+            this.labelTime.Name = "labelEstadoOPC";
+            this.labelTime.Size = new System.Drawing.Size(250, 50);
+            this.labelTime.TabIndex = 4;
+            this.labelTime.Text = "Hora";
+            this.labelTime.Location = new System.Drawing.Point(this.pictureBoxLogo.Location.X + this.pictureBoxLogo.Width + 35, 40);
+            this.labelTime.Font = new Font(
+                                           new FontFamily("Microsoft Sans Serif"),
+                                           20,
+                                           FontStyle.Bold,
+                                           GraphicsUnit.Pixel);
+            //this.labelTitulo.Padding = new Padding() { All = 7 };
+            //this.labelTitulo.BorderStyle = BorderStyle.FixedSingle;
+
+            this.Controls.Add(this.labelTime);
+
+            this.timerHora = new System.Timers.Timer(1000);
+            this.timerHora.Enabled = true;
+            this.timerHora.Elapsed += timerHora_Elapsed;
+            //
+            //pictureBoxLogoCliente
+            // 
+            this.pictureBoxLogoCliente = new PictureBox();
+            this.pictureBoxLogoCliente.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxLogoCliente.Location = new System.Drawing.Point(this.Width - 550, 10);
+            this.pictureBoxLogoCliente.Name = "pictureBoxLogo";
+            this.pictureBoxLogoCliente.Size = new System.Drawing.Size(525, 80);
+            this.pictureBoxLogoCliente.TabIndex = 16;
+            this.pictureBoxLogoCliente.TabStop = false;
+            this.pictureBoxLogoCliente.Image = System.Drawing.Bitmap.FromFile("Resources\\logoEmpresa.bmp");
+
+            this.Controls.Add(this.pictureBoxLogoCliente);
+            //
+            // labelTitulo
+            //
+            this.labelTitulo = new Label();
+            this.labelTitulo.AutoSize = true;
+            this.labelTitulo.Name = "labelEstadoOPC";
+            this.labelTitulo.Size = new System.Drawing.Size(150, 50);
+            this.labelTitulo.TabIndex = 4;
+            this.labelTitulo.Text = "APLICACIÓN PARA EL APAGADO AUTOMATIZADO DE RAMPAS DE COQUE";
+            this.labelTitulo.Location = new System.Drawing.Point(this.Width / 2 - 400, 30);
+            this.labelTitulo.Font = new Font(
+                                           new FontFamily("Microsoft Sans Serif"),
+                                           20,
+                                           FontStyle.Regular,
+                                           GraphicsUnit.Pixel);
+            this.labelTitulo.Padding = new Padding() { All = 7 };
+            this.labelTitulo.BorderStyle = BorderStyle.FixedSingle;
+
+            this.Controls.Add(this.labelTitulo);
+            //
+            // buttonConfiguracion
+            //
+            this.buttonConfiguracion = new System.Windows.Forms.Button();
+            this.buttonConfiguracion.Location = new System.Drawing.Point(this.groupBox.Width - 3 * 95 - 2 * 15 - 50 - 20 - 75, 15);
+            this.buttonConfiguracion.Name = "button1";
+            this.buttonConfiguracion.Size = new System.Drawing.Size(95, 30);
+            this.buttonConfiguracion.TabIndex = 0;
+            this.buttonConfiguracion.Text = "Configuración";
+            this.buttonConfiguracion.UseVisualStyleBackColor = true;
+            this.buttonConfiguracion.Click += buttonConfiguracion_Click;
+
+            this.groupBox.Controls.Add(this.buttonConfiguracion);
+            //
+            // buttonVisualizacion
+            //
+            this.buttonVisualizacion = new System.Windows.Forms.Button();
+            this.buttonVisualizacion.Location = new System.Drawing.Point(this.buttonConfiguracion.Location.X - 95 - 15, 15);
+            this.buttonVisualizacion.Name = "button1";
+            this.buttonVisualizacion.Size = new System.Drawing.Size(95, 30);
+            this.buttonVisualizacion.TabIndex = 0;
+            this.buttonVisualizacion.Text = "Visualizacion";
+            this.buttonVisualizacion.UseVisualStyleBackColor = true;
+            this.buttonVisualizacion.Click += buttonVisualizacion_Click;
+
+            this.groupBox.Controls.Add(this.buttonVisualizacion);
+            //
             // buttonAsistente
             //
             this.buttonAsistente = new System.Windows.Forms.Button();
-            this.buttonAsistente.Location = new System.Drawing.Point(this.Width - 95  - 50, this.Height - 77 - 50);
+            this.buttonAsistente.Location = new System.Drawing.Point(this.groupBox.Width - 2 * 95 - 15 - 50, 15);
             this.buttonAsistente.Name = "button1";
-            this.buttonAsistente.Size = new System.Drawing.Size(95, 77);
+            this.buttonAsistente.Size = new System.Drawing.Size(95, 30);
             this.buttonAsistente.TabIndex = 0;
             this.buttonAsistente.Text = "Asistente";
             this.buttonAsistente.UseVisualStyleBackColor = true;
             this.buttonAsistente.Click += buttonAsistente_Click;
-            this.Controls.Add(this.buttonAsistente);
+            this.groupBox.Controls.Add(this.buttonAsistente);
+            //
+            // buttonSalir
+            //
+            this.buttonSalir = new System.Windows.Forms.Button();
+            this.buttonSalir.Location = new System.Drawing.Point(this.groupBox.Width - 95 - 50, 15);
+            this.buttonSalir.Name = "button1";
+            this.buttonSalir.Size = new System.Drawing.Size(95, 30);
+            this.buttonSalir.TabIndex = 0;
+            this.buttonSalir.Text = "Salir";
+            this.buttonSalir.UseVisualStyleBackColor = true;
+            this.buttonSalir.Click += buttonSalir_Click;
+            this.groupBox.Controls.Add(this.buttonSalir);
             //
             // labelEstadoOPC
             //
             this.labelEstadoOPC = new Label();
             this.labelEstadoOPC.AutoSize = false;
-            this.labelEstadoOPC.Location = new System.Drawing.Point(10, this.Height - 100);
+            this.labelEstadoOPC.Location = new System.Drawing.Point(10, 15);
             this.labelEstadoOPC.Name = "labelEstadoOPC";
-            this.labelEstadoOPC.Size = new System.Drawing.Size(170, 40);
+            this.labelEstadoOPC.Size = new System.Drawing.Size(150, 30);
             this.labelEstadoOPC.TabIndex = 4;
             this.labelEstadoOPC.Text = "OPC No conectado";
             this.labelEstadoOPC.Font = new Font(
                                            new FontFamily("Microsoft Sans Serif"),
-                                           16,
+                                           12,
                                            FontStyle.Regular,
                                            GraphicsUnit.Pixel);
             this.labelEstadoOPC.Padding = new Padding() { All = 7 };
             this.labelEstadoOPC.BorderStyle = BorderStyle.FixedSingle;
 
-            this.Controls.Add(this.labelEstadoOPC);
+            this.groupBox.Controls.Add(this.labelEstadoOPC);
             //
             // labelsEstadoCamaras
             //
@@ -147,52 +279,42 @@ namespace ThermoCamApp
                 this.labelsEstadoCamaras[i] = new Label();
                 this.labelsEstadoCamaras[i].AutoSize = false;
                 this.labelsEstadoCamaras[i].Name = "labelEstadoCamara";
-                this.labelsEstadoCamaras[i].Size = new System.Drawing.Size(250, 40);
+                this.labelsEstadoCamaras[i].Size = new System.Drawing.Size(150, 30);
                 this.labelsEstadoCamaras[i].Location = new System.Drawing.Point(
-                    2 * 10 + this.labelEstadoOPC.Width + i * (this.labelsEstadoCamaras[i].Width + 10), 
-                    this.Height - 100);
+                    this.labelEstadoOPC.Location.X + this.labelEstadoOPC.Width + 20 + i * (this.labelsEstadoCamaras[i].Width + 10),
+                     15);
                 this.labelsEstadoCamaras[i].TabIndex = 4;
                 this.labelsEstadoCamaras[i].Text = "Camara " + (i + 1) + ": Desconectada";
                 this.labelsEstadoCamaras[i].BackColor = Color.Red;
                 this.labelsEstadoCamaras[i].Font = new Font(
                                                new FontFamily("Microsoft Sans Serif"),
-                                               16,
+                                               12,
                                                FontStyle.Regular,
                                                GraphicsUnit.Pixel);
                 this.labelsEstadoCamaras[i].Padding = new Padding() { All = 7 };
                 this.labelsEstadoCamaras[i].BorderStyle = BorderStyle.FixedSingle;
+                this.labelsEstadoCamaras[i].Click += main_Click;
 
-                this.Controls.Add(this.labelsEstadoCamaras[i]);
+                this.groupBox.Controls.Add(this.labelsEstadoCamaras[i]);
 
                 this.camaras[i].camara.ThermoCamConnected += camara_ThermoCamConnected;
                 this.camaras[i].camara.ThermoCamDisConnected += camara_ThermoCamDisConnected;
             }
 
+            //
+
             #region "Rampas"
             if (this._system.Mode == "Rampas")
             {
-                this.numericTextBoxTempApagadoLimite = new NumericTextBox();
-                this.numericTextBoxTempLimiteVaciado = new NumericTextBox();
-                this.label1 = new Label();
-                this.label2 = new Label();
-
-                this.numericTextBoxTempApagadoLimite.maxVal = 2000;
-                this.numericTextBoxTempApagadoLimite.minVal = 0;
-                this.numericTextBoxTempLimiteVaciado.maxVal = 2000;
-                this.numericTextBoxTempLimiteVaciado.minVal = 0;
-
-                this.numericTextBoxTempApagadoLimite.Texto = this._system.estados.tempLimiteHayQueEnfriar.ToString(); ;
-                this.numericTextBoxTempLimiteVaciado.Texto = this._system.estados.tempLimiteHayMaterial.ToString();
-
                 this.pictureBoxRampa = new PictureBox();
                 ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRampa)).BeginInit();
                 // 
                 // pictureBoxRampa
                 // 
-                this.pictureBoxRampa.Location   = new System.Drawing.Point(10, 486);
+                this.pictureBoxRampa.Location = new System.Drawing.Point(10, this.camaras[0].Location.Y + this.camaras[0].Height + 25);
                 this.pictureBoxRampa.Name       = "pictureBoxRampa";
                 this.pictureBoxRampa.Size       = new System.Drawing.Size(this.Width - 40, 235);
-                this.pictureBoxRampa.SizeMode   = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+                //this.pictureBoxRampa.SizeMode   = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
                 this.pictureBoxRampa.TabIndex   = 0;
                 this.pictureBoxRampa.TabStop    = false;
                 this.pictureBoxRampa.BorderStyle = BorderStyle.FixedSingle;
@@ -206,7 +328,7 @@ namespace ThermoCamApp
                 // 
                 // pictureBoxRejillas
                 // 
-                this.pictureBoxRejillas.Location    = new System.Drawing.Point(10, this.pictureBoxRampa.Location.Y + this.pictureBoxRampa.Height + 110);
+                this.pictureBoxRejillas.Location    = new System.Drawing.Point(10, this.pictureBoxRampa.Location.Y + this.pictureBoxRampa.Height + 45);
                 this.pictureBoxRejillas.Name        = "pictureBoxRejillas";
                 this.pictureBoxRejillas.Size        = new System.Drawing.Size(this.Width - 40, 26);
                 this.pictureBoxRejillas.SizeMode    = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -249,46 +371,7 @@ namespace ThermoCamApp
                 //    this._system.Zonas[i].zonaEmptyingStop += main_zonaEmptyingStop;
 
                 //    this.Controls.Add(this.EstadosLabels[i]);
-                //}                    
-
-                // 
-                // numericTextBoxTempApagadoLimite
-                // 
-                this.numericTextBoxTempApagadoLimite.Location = new System.Drawing.Point(this.camaras[0].Width * counter + 148, this.Height - 140);
-                this.numericTextBoxTempApagadoLimite.Name = "numericTextBoxTempApagadoLimite";
-                this.numericTextBoxTempApagadoLimite.Size = new System.Drawing.Size(102, 20);
-                this.numericTextBoxTempApagadoLimite.TabIndex = 0;
-                this.numericTextBoxTempApagadoLimite.textoCambiado += numericTextBoxTempApagadoLimite_textoCambiado;
-                // 
-                // label1
-                // 
-                this.label1.AutoSize = true;
-                this.label1.Location = new System.Drawing.Point(this.camaras[0].Width * counter + 10, this.Height - 140);
-                this.label1.Name = "label1";
-                this.label1.Size = new System.Drawing.Size(138, 13);
-                this.label1.TabIndex = 1;
-                this.label1.Text = "Temperatura limite apagado";
-                // 
-                // label2
-                // 
-                this.label2.AutoSize = true;
-                this.label2.Location = new System.Drawing.Point(this.camaras[0].Width * counter + 10, this.Height - 90);
-                this.label2.Name = "label2";
-                this.label2.Size = new System.Drawing.Size(134, 13);
-                this.label2.TabIndex = 3;
-                this.label2.Text = "Temperatura limite vaciado";
-                // 
-                // numericTextBoxTempLimiteVaciado
-                // 
-                this.numericTextBoxTempLimiteVaciado.Location = new System.Drawing.Point(this.camaras[0].Width * counter + 148, this.Height - 90);
-                this.numericTextBoxTempLimiteVaciado.Name = "numericTextBoxTempLimiteVaciado";
-                this.numericTextBoxTempLimiteVaciado.Size = new System.Drawing.Size(102, 20);
-                this.numericTextBoxTempLimiteVaciado.textoCambiado += numericTextBoxTempLimiteVaciado_textoCambiado;
-
-                //this.Controls.Add(this.label2);
-                //this.Controls.Add(this.numericTextBoxTempLimiteVaciado);
-                //this.Controls.Add(this.label1);
-                //this.Controls.Add(this.numericTextBoxTempApagadoLimite);
+                //}                
 
                 this._system.estados.ThermoCamImgCuadradosGenerated += estados_ThermoCamImgCuadradosGenerated;
             }
@@ -305,8 +388,36 @@ namespace ThermoCamApp
 
             Parallel.Invoke(actions);
 
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////// ZONAS DE APAGADO ////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
             if (this._system.Mode == "Rampas")
             {
+                this.labelsCannonNames = new Label[this._system.Zonas.Count];
+
+                for (int i = 0; i < this.labelsCannonNames.Length; i++)
+                {                    
+                    // 
+                    // label1
+                    // 
+                    this.labelsCannonNames[i] = new Label();
+                    this.labelsCannonNames[i].AutoSize = true;
+                    this.labelsCannonNames[i].Location = new System.Drawing.Point(i * (this.Width / this._system.Zonas.Count) + (this.Width / this._system.Zonas.Count) / 2 - 70, 
+                                                                            this.pictureBoxRampa.Location.Y - 23);
+                    this.labelsCannonNames[i].Name = "label1";
+                    this.labelsCannonNames[i].Size = new System.Drawing.Size(140, 13);
+                    this.labelsCannonNames[i].TabIndex = 1;
+                    this.labelsCannonNames[i].Text = this._system.Zonas[i].Nombre;
+                    this.labelsCannonNames[i].Font = new Font(
+                                                  new FontFamily("Microsoft Sans Serif"),
+                                                  16,
+                                                  FontStyle.Regular,
+                                                  GraphicsUnit.Pixel);
+
+                    this.Controls.Add(this.labelsCannonNames[i]);
+                }
+
                 ccs = new ThermoCamApp.Controls.cannonControl[this._system.Zonas.Count];
 
                 for (int i = 0; i < ccs.Count(); i++)
@@ -321,8 +432,7 @@ namespace ThermoCamApp
                             new Controls.cannonControl.cannonControlParameterCallback(this._system.decrementCannonXCoordinate),
                             new Controls.cannonControl.cannonControlParameterCallback(this._system.decrementCannonYCoordinate),
                             new Controls.cannonControl.cannonControlParameterCallback(this._system.incrementCannonYCoordinate),
-                            new Controls.cannonControl.cannonControlParameterCallback(this._system.incrementCannonXCoordinate),
-                            new Controls.cannonControl.cannonControlBoolCallback(this._system.readCannonState));
+                            new Controls.cannonControl.cannonControlParameterCallback(this._system.incrementCannonXCoordinate));
 
                     this._system.Zonas[i].Posicion          = i;
                     this._system.Zonas[i].zonaStateChanged += main_stateChanged;
@@ -336,6 +446,10 @@ namespace ThermoCamApp
 
                 foreach (Zona z in this._system.Zonas)
                 {
+                    foreach (SubZona s in z.Children)
+                    {
+                        s.Selected = true;
+                    }
                     try
                     {
                         this._system.getCannonCoordinates(z);
@@ -345,21 +459,37 @@ namespace ThermoCamApp
                         addElementToListBox(this.listViewEventos, new Evento(DateTime.Now, "Grave", ex.Message));
                     }
 
-                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(z.Nombre).ToString(),
-                        "X",
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(z.Nombre).ToString(), /////////////////////////////////////////////////////
+                        "xPos",
                         new Action<object>(z.coordinateXChanged));
-                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(z.Nombre).ToString(),
-                       "Y",
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(z.Nombre).ToString(), /////////////////////////////////////////////////////
+                       "yPos",
                        new Action<object>(z.coordinateYChanged));
-                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(z.Nombre).ToString(),
-                       "n",
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(z.Nombre).ToString(), /////////////////////////////////////////////////////
+                       "nPos",
                        new Action<object>(z.subZonaNChanged));
-                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(z.Nombre).ToString(),
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(z.Nombre).ToString(), /////////////////////////////////////////////////////
                        "Valvula",
                        new Action<object>(z.ValvulaStateChanged));
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.APAGADO.").Append(z.Nombre).ToString(),
+                        "Cooling",
+                        new Action<object>(z.coolingStateChanged));
+
+                    this._system.OPCClient.RefreshAsync(new StringBuilder(this._system.Path).Append(".RAMPAS.APAGADO.").Append(z.Nombre).ToString());
                 }
 
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ///////////////////////////////////////// ZONAS DE VACIADO ////////////////////////////////////////////////////////////////////////////////////////
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
                 rcs = new Controls.RejillasControl[this._system.ZonasVaciado.Count];
+
+                int totalWidth = 0;
+
+                for (int i = 0; i < this._system.ZonasVaciado.Count; i++)
+                {
+                    totalWidth += this._system.ZonasVaciado[i].Width;
+                }
 
                 for (int i = 0; i < rcs.Length; i++)
                 {
@@ -367,30 +497,155 @@ namespace ThermoCamApp
                         this,
                         i,
                         this._system.ZonasVaciado[i],
-                        new Point(i * (this.Width / this._system.ZonasVaciado.Count) + (this.Width / this._system.ZonasVaciado.Count) / 2,
-                            this.pictureBoxRampa.Location.Y + this.pictureBoxRampa.Height + 110 + 26 + 10));
+                        new Point(calcularCoordenadaXInicioZona(i) + this.pictureBoxRejillas.Location.X,
+                            this.pictureBoxRejillas.Location.Y + this.pictureBoxRejillas.Height + 10),
+                            totalWidth,
+                            this.pictureBoxRejillas.Width,
+                            new Controls.RejillasControl.trampillaControlBoolParameterCallback(this._system.changeTrampillaModeState),
+                            new Controls.RejillasControl.cambiarTrampillaEstadoCallback(this._system.activateRejillaAsync));
+
+                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.VACIADO.").Append(this._system.ZonasVaciado[i].Nombre).ToString(),
+                        "Mode",
+                        new Action<object>(rcs[i].trampillaModeChanged));
+
+                    this._system.OPCClient.RefreshAsync(new StringBuilder(this._system.Path).Append(".RAMPAS.VACIADO.").Append(this._system.ZonasVaciado[i].Nombre).ToString());
 
                 }
 
                 foreach (Zona z in this._system.ZonasVaciado)
                 {
-                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.VACIADO.").Append(z.Nombre).ToString(),
-                        "X",
-                        new Action<object>(z.coordinateXVaciadoChanged));
-                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.VACIADO.").Append(z.Nombre).ToString(),
-                        "Y",
-                        new Action<object>(z.coordinateYVaciadoChanged));
-                    this._system.suscribeOPCItem(new StringBuilder("RAMPAS.VACIADO.").Append(z.Nombre).ToString(),
-                        "n",
-                        new Action<object>(z.subZonaNVaciadoChanged));
+                    int index = 1;
+
+                    foreach (SubZona s in z.Children)
+                    {
+                        s.vaciado = true;
+
+                        for (int i = 0; i < s.tempMatrix.GetLength(0); i++)
+                        {
+                            for (int j = 0; j < s.tempMatrix.GetLength(1); j++)
+                            {
+                                this._system.suscribeOPCItem(new StringBuilder("RAMPAS.VACIADO.").Append(z.Nombre).Append(".").Append(index).Append("_OUTPUTS").ToString(),
+                                    new StringBuilder("[").Append(j).Append(",").Append(i).Append("]").ToString(),
+                                    new Action<object>(s.tempMatrix[i, j].stateChanged));
+
+                                this._system.OPCClient.RefreshAsync(new StringBuilder(this._system.Path).Append(".RAMPAS.VACIADO.").Append(z.Nombre).Append(".").Append(index).Append("_OUTPUTS").ToString());
+                            }
+                        }
+                        
+                        index++;
+                    }
+
+                    //this._system.suscribeOPCItem(new StringBuilder("RAMPAS.VACIADO.").Append(z.Nombre).ToString(),
+                    //    "X",
+                    //    new Action<object>(z.coordinateXVaciadoChanged));
+                    //this._system.suscribeOPCItem(new StringBuilder("RAMPAS.VACIADO.").Append(z.Nombre).ToString(),
+                    //    "Y",
+                    //    new Action<object>(z.coordinateYVaciadoChanged));
+                    //this._system.suscribeOPCItem(new StringBuilder("RAMPAS.VACIADO.").Append(z.Nombre).ToString(),
+                    //    "n",
+                    //    new Action<object>(z.subZonaNVaciadoChanged));
                     this._system.suscribeOPCItem(new StringBuilder("RAMPAS.VACIADO.").Append(z.Nombre).ToString(),
                         "Emptying",
                         new Action<object>(z.emptyingStateChanged));
+
+                    this._system.OPCClient.RefreshAsync(new StringBuilder(this._system.Path).Append(".RAMPAS.VACIADO.").Append(z.Nombre).ToString());
+                }
+
+                this._system.estados.widthFinalRampa = this.pictureBoxRampa.Width;
+                this._system.estados.heightFinalRampa = this.pictureBoxRampa.Height;
+
+                this._system.estados.widthFinalTrampilla = this.pictureBoxRejillas.Width;
+                this._system.estados.heightFinalTrampilla = this.pictureBoxRejillas.Height;
+
+                this._system.OPCClient.SuscribeGroup(new StringBuilder(this._system.Path).Append(".RAMPAS.CONFIGURACION").ToString(), "TempEnfriar", new Action<object>(setTemEnfriar));
+                this._system.OPCClient.RefreshAsync(new StringBuilder(this._system.Path).Append(".RAMPAS.CONFIGURACION").ToString());
+
+                //foreach(Zona z in this._system.ZonasVaciado)
+                //    this._system.OPCClient.RefreshAsync(new StringBuilder(this._system.Path).Append(".RAMPAS.VACIADO.").Append(z.Nombre).ToString());
+
+            }
+        }
+
+        void buttonVisualizacion_Click(object sender, EventArgs e)                      
+        {
+            Forms.VisualizacionConfig f = new Forms.VisualizacionConfig(this._system);
+            f.ShowDialog();
+            f.Dispose();
+        }
+        void timerHora_Elapsed(object sender, System.Timers.ElapsedEventArgs e)         
+        {
+            changeTextLabel(this.labelTime, DateTime.Now.ToString());
+        }
+
+        delegate void changeTextLabelCallback(Label l, string text);
+        void changeTextLabel(Label l, string text)                                      
+        {
+            try
+            {
+                if (l.InvokeRequired)
+                {
+                    l.Invoke(new changeTextLabelCallback(changeTextLabel), l, text);
+                }
+                else
+                {
+                    l.Text = text;
+                }
+            }
+            catch { }
+        }
+
+        void setTemEnfriar(object Value)                                                
+        {
+            if (Value is int)
+                this._system.estados.tempLimiteHayQueEnfriar = (int)Value;
+        }
+
+        void buttonConfiguracion_Click(object sender, EventArgs e)                      
+        {
+            Forms.RampaConfig f = new Forms.RampaConfig(this._system);
+            f.ShowDialog();
+            f.Dispose();
+        }
+
+        void main_Click(object sender, EventArgs e)                                     
+        {
+            for (int i = 0; i < this.labelsEstadoCamaras.Length; i++)
+            {
+                if(this.labelsEstadoCamaras[i].Equals(sender))
+                {
+                    if(!this._system.ThermoCams[i].Conectado)
+                        this._system.ThermoCams[i].Conectar();
                 }
             }
         }
 
-        void conectarOPC()
+        void buttonSalir_Click(object sender, EventArgs e)                              
+        {
+            this.Close();
+        }
+
+        int calcularCoordenadaXInicioZona(int posicion)                                 
+        {
+            int res = 0;
+
+            for (int i = 0; i < posicion; i++)
+            {
+                res += this._system.ZonasVaciado[i].Width;
+            }
+
+            int totalWidth = 0;
+
+            for (int i = 0; i < this._system.ZonasVaciado.Count; i++)
+            {
+                totalWidth += this._system.ZonasVaciado[i].Width;
+            }
+
+            res = res * this.pictureBoxRejillas.Width / totalWidth;
+
+            return res;
+        }
+
+        void conectarOPC()                                                              
         {
             this._system.conectarClienteOPC();
         }
@@ -435,10 +690,10 @@ namespace ThermoCamApp
             foreach (Zona zVaciado in this._system.ZonasVaciado)
             //Parallel.ForEach<Zona>(this._system.ZonasVaciado, (zVaciado) =>
             {
+                zVaciado.zonasContenidas.Clear();
+
                 foreach (SubZona s in zVaciado.Children)
                 {
-                    s.Parent.zonasContenidas.Clear();
-
                     //Buscar zonas de apagado superpuestas 
                     foreach (Zona zApagado in this._system.Zonas)
                     {
@@ -451,6 +706,22 @@ namespace ThermoCamApp
 
                                 if (s.Inicio.Y <= sApagado.Fin.Y && s.Fin.Y >= sApagado.Fin.Y &&
                                     s.Inicio.X <= sApagado.Fin.X && s.Fin.X >= sApagado.Fin.X)
+                                {
+                                    //PERTENECE
+                                    if (!s.Parent.zonasContenidas.Contains(zApagado))
+                                    {
+                                        lock (_lock)
+                                            s.Parent.zonasContenidas.Add(zApagado);
+                                    }
+                                    if (!zApagado.zonasContenidas.Contains(s.Parent))
+                                    {
+                                        lock (_lock)
+                                            zApagado.zonasContenidas.Add(s.Parent);
+                                    }
+                                }
+
+                                if (sApagado.Inicio.Y <= s.Fin.Y && sApagado.Fin.Y >= s.Fin.Y &&
+                                    sApagado.Inicio.X <= s.Fin.X && sApagado.Fin.X >= s.Fin.X)
                                 {
                                     //PERTENECE
                                     if (!s.Parent.zonasContenidas.Contains(zApagado))
@@ -480,6 +751,21 @@ namespace ThermoCamApp
                                             zApagado.zonasContenidas.Add(s.Parent);
                                     }
                                 }
+                                if (sApagado.Inicio.Y <= s.Inicio.Y && sApagado.Fin.Y >= s.Inicio.Y &&
+                                    sApagado.Inicio.X <= s.Inicio.X && sApagado.Fin.X >= s.Inicio.X)
+                                {
+                                    //PERTENECE
+                                    if (!s.Parent.zonasContenidas.Contains(zApagado))
+                                    {
+                                        lock (_lock)
+                                            s.Parent.zonasContenidas.Add(zApagado);
+                                    }
+                                    if (!zApagado.zonasContenidas.Contains(s.Parent))
+                                    {
+                                        lock (_lock)
+                                            zApagado.zonasContenidas.Add(s.Parent);
+                                    }
+                                }
                             }
                         }//foreach
                     }//foreach
@@ -489,10 +775,10 @@ namespace ThermoCamApp
 
         void _system_OPCClientOnConnecting(object sender, EventArgs e)                  
         {            
-            this._system.OPCClient.Connected += OPCClient_Connected;
-            this._system.OPCClient.DataSent += OPCClient_DataSent;
+            this._system.OPCClient.Connected    += OPCClient_Connected;
+            this._system.OPCClient.DataSent     += OPCClient_DataSent;
             this._system.OPCClient.Disconnected += OPCClient_Disconnected;
-            this._system.OPCClient.OPCError += OPCClient_OPCError;
+            this._system.OPCClient.OPCError     += OPCClient_OPCError;
             this._system.OPCClient.OPCWrittingError += OPCClient_OPCWrittingError;
         }
 
@@ -583,15 +869,6 @@ namespace ThermoCamApp
             addElementToListBox(this.listViewEventos, new Evento(DateTime.Now, "Estado", "Zona " + (sender as Zona).Posicion + ": Ha parado de vaciar."));
         }
 
-        void numericTextBoxTempApagadoLimite_textoCambiado(object sender, EventArgs e)  
-        {
-            this._system.estados.tempLimiteHayQueEnfriar = int.Parse(this.numericTextBoxTempApagadoLimite.Texto);
-        }
-        void numericTextBoxTempLimiteVaciado_textoCambiado(object sender, EventArgs e)  
-        {
-            this._system.estados.tempLimiteHayMaterial = int.Parse(this.numericTextBoxTempLimiteVaciado.Texto);
-        }
-
         void estados_ThermoCamImgCuadradosGenerated(object sender, ThermoVision.Tipos.ThemoCamImgCuadradosArgs e) 
         {
             updatePictureBox(this.pictureBoxRampa, ref e.ImagenRampa);
@@ -655,6 +932,17 @@ namespace ThermoCamApp
                 l.BackColor = c;
             }
         }
+        private void updateLabelTextColor(Label l, Color c)                             
+        {
+            if (l.InvokeRequired)
+            {
+                l.Invoke(new updateLabelBackColorDelegate(updateLabelBackColor), l, c);
+            }
+            else
+            {
+                l.ForeColor = c;
+            }
+        }
 
         private delegate void addElementToListBoxCallback(DataGridView l, Evento element);
         private void addElementToListBox(DataGridView l, Evento element)                
@@ -709,10 +997,9 @@ namespace ThermoCamApp
             }
         }
     }
-
 }
 
-public class Evento
+public class Evento                                                                     
 {
     public DateTime Fecha;
     public string   Message;

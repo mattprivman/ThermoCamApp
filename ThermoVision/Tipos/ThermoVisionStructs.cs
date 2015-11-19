@@ -19,7 +19,7 @@ namespace ThermoVision.Tipos
         public Bitmap ImagenRejillas;
     }
 
-    public struct tempElement
+    public class tempElement
     {
         public float max;
         public float min;
@@ -27,8 +27,26 @@ namespace ThermoVision.Tipos
 
         public bool hayMaterial;
         public bool estaCaliente;
+        public bool activo;
 
         public Point CannonCoordinate;
         public bool  selected;
+
+        public void stateChanged(object value)
+        {
+            if (value is bool)
+                this.changeStateValue((bool)value);
+        }
+
+        void changeStateValue(bool state)
+        {
+            this.activo = state;
+
+            if (this.activo)
+            {
+                this.hayMaterial = false;
+                this.estaCaliente = false;
+            }
+        }
     }
 }

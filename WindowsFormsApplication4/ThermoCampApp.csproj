@@ -160,6 +160,18 @@
     </Compile>
     <Compile Include="Controls\cannonControl.cs" />
     <Compile Include="Controls\RejillasControl.cs" />
+    <Compile Include="Forms\RampaConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RampaConfig.Designer.cs">
+      <DependentUpon>RampaConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\VisualizacionConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VisualizacionConfig.Designer.cs">
+      <DependentUpon>VisualizacionConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers.cs" />
     <Compile Include="main.cs">
       <SubType>Form</SubType>
@@ -190,6 +202,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Asistente\OPC\appSelectOPCServer.resx">
       <DependentUpon>appSelectOPCServer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RampaConfig.resx">
+      <DependentUpon>RampaConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VisualizacionConfig.resx">
+      <DependentUpon>VisualizacionConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="main.resx">
       <DependentUpon>main.cs</DependentUpon>
@@ -285,6 +303,9 @@
   <ItemGroup>
     <Content Include="Resources\logo.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\logoEmpresa.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
