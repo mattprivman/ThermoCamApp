@@ -14,9 +14,9 @@ namespace ThermoCamApp.Asistente.OPC
 {
     public partial class appSelectOPCServer : flowControl
     {
-        Sistema _system;
+        Rampa _system;
 
-        public Sistema Sistema                                                      
+        public Rampa Sistema                                                      
         {
             get
             {
@@ -28,7 +28,7 @@ namespace ThermoCamApp.Asistente.OPC
             }
         }
 
-        public appSelectOPCServer(Sistema _system)                                  
+        public appSelectOPCServer(Rampa _system)                                  
         {           
             this._system = _system;
 

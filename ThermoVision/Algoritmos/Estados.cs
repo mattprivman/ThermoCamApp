@@ -25,7 +25,7 @@ namespace ThermoVision.Algoritmos
         Bitmap bitmapRejillas;
         List<Zona> zonasAlgoritmoVaciar = new List<Zona>();
 
-        Sistema _system;
+        Rampa _system;
         #endregion
 
         #region "Delegados"
@@ -37,7 +37,7 @@ namespace ThermoVision.Algoritmos
         public event ThermoCamImgCuadradosCallback  ThermoCamImgCuadradosGenerated;
         #endregion
 
-        public Estados(Sistema s)                                                          
+        public Estados(Rampa s)                                                          
         {
             this._system = s;
         }
@@ -60,7 +60,7 @@ namespace ThermoVision.Algoritmos
 
         private void algoritmoEnfriar()                                                    
         {
-            Parallel.ForEach<Zona>(this._system.Zonas, (z) =>
+            foreach(Zona z in this._system.Zonas)
             {
                 if (z.State != Zona.States.Manual)
                 {
@@ -244,7 +244,7 @@ namespace ThermoVision.Algoritmos
                 //            zVaciado.State = Zona.States.Enfriando;
                 //    //getCannonCoordinates(z);
                 //}
-            });
+            }
         }   //AlgoritmoEnfriar
 
         private bool hayMaterialEnZona(Zona z)                                             

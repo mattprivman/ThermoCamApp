@@ -217,7 +217,7 @@ namespace ThermoVision.Models
             }
         }
 
-        public Sistema Parent                       // -rw 
+        public Rampa Parent                       // -rw 
         {
             get;
             set;
@@ -274,7 +274,7 @@ namespace ThermoVision.Models
             this._devType        = (DeviceType)      info.GetValue("DevType"        ,typeof(DeviceType));
             this._interfaceType  = (InterfaceType)   info.GetValue("InterType"      ,typeof(InterfaceType));
             this.SubZonas        = (List<SubZona>)   info.GetValue("SubZonas"       ,typeof(List<SubZona>));
-            this.Parent          = (Sistema)         info.GetValue("Parent"         ,typeof(Sistema));
+            this.Parent          = (Rampa)         info.GetValue("Parent"         ,typeof(Rampa));
             this._rejillaApagado = (bool)            info.GetValue("RejillaApagado" ,typeof(bool));
             this._rejillaVaciado = (bool)            info.GetValue("RejillaVaciado" ,typeof(bool));
             this._rejillaHornos  = (bool)            info.GetValue("RejillaHornos"  ,typeof(bool));

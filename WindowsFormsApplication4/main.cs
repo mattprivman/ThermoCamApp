@@ -14,7 +14,7 @@ namespace ThermoCamApp
 {
     public partial class main : Asistente.flowControl
     {
-        public Sistema _system                                      
+        public Rampa _system                                      
         {
             get;
             set;
@@ -44,7 +44,7 @@ namespace ThermoCamApp
 
         int nHornos = 22;
 
-        public main(Sistema _system)                                                    
+        public main(Rampa _system)                                                    
         {
             this._system = _system;
 

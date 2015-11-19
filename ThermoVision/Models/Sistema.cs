@@ -13,7 +13,7 @@ using ThermoVision.Tipos;
 namespace ThermoVision.Models
 {
     [Serializable]
-    public class Sistema : ISerializable
+    public class Rampa : ISerializable
     {
         #region "Variables"
 
@@ -136,7 +136,7 @@ namespace ThermoVision.Models
 
         #region "Constructores"
 
-        public Sistema()                                                   
+        public Rampa()                                                   
         {
             this.estados = new Estados(this);
 
@@ -144,7 +144,7 @@ namespace ThermoVision.Models
             this._thermoCams   = new List<ThermoCam>();
             this._zonasVaciado = new List<Zona>();
         }
-        protected Sistema(SerializationInfo info, StreamingContext ctxt)   
+        protected Rampa(SerializationInfo info, StreamingContext ctxt)   
         {
             try
             {

@@ -19,7 +19,7 @@ namespace ThermoCamApp.Asistente.Camaras
     {
         #region "Variables"
 
-        Sistema _system;
+        Rampa _system;
         int     selectedIndexZona;
         int     selectedIndexZonaVaciado;
         int     selectedIndexSubZona;
@@ -28,7 +28,7 @@ namespace ThermoCamApp.Asistente.Camaras
 
         #region "Propiedades"
 
-        public Sistema Sistema      // -r   
+        public Rampa Sistema      // -r   
         {
             get 
             {
@@ -38,7 +38,7 @@ namespace ThermoCamApp.Asistente.Camaras
 
         #endregion
 
-        public CamerasConfiguration(int numerocamaras, Sistema _system)         
+        public CamerasConfiguration(int numerocamaras, Rampa _system)         
         {
 
             this.Salir   = true;
@@ -46,7 +46,7 @@ namespace ThermoCamApp.Asistente.Camaras
 
             if (this._system == null)    //Asistente iniciado por primera vez
             {
-                this._system = new Sistema();
+                this._system = new Rampa();
                 InitializeComponent(numerocamaras);
             }
             else
@@ -55,7 +55,7 @@ namespace ThermoCamApp.Asistente.Camaras
                 {
                     string modo          = this._system.Mode;
 
-                    this._system         = new Sistema();
+                    this._system         = new Rampa();
                     this._system.Mode    = modo;
                     InitializeComponent(numerocamaras);
                 }

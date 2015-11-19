@@ -13,7 +13,7 @@ namespace ThermoCamApp
     class Helpers
     {
         //DESERIALIZAR
-        public static void serializeSistema(Sistema sistema, string _file)       
+        public static void serializeSistema(Rampa sistema, string _file)       
         {
             try
             {
@@ -30,9 +30,10 @@ namespace ThermoCamApp
                 ex.ToString();
             }
         }
-        public static Sistema deserializeSistema(string _file)                   
+
+        public static Rampa deserializeSistema(string _file)                   
         {
-            Sistema sistema = null;
+            Rampa sistema = null;
 
             try
             {
@@ -40,7 +41,7 @@ namespace ThermoCamApp
                 {
                     BinaryFormatter bformatter = new BinaryFormatter();
 
-                    sistema = (Sistema)bformatter.Deserialize(stream);
+                    sistema = (Rampa)bformatter.Deserialize(stream);
                     stream.Close();
                 }
             }

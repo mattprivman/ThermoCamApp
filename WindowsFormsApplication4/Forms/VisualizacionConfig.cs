@@ -13,9 +13,9 @@ namespace ThermoCamApp.Forms
 {
     public partial class VisualizacionConfig : Form
     {
-        Sistema _system;
+        Rampa _system;
 
-        public VisualizacionConfig(Sistema _system)
+        public VisualizacionConfig(Rampa _system)
         {
             if (_system == null)
                 return;

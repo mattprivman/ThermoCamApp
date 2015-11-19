@@ -22,7 +22,7 @@ namespace ThermoCamApp.Asistente
             get;
             set;
         }
-        public ThermoVision.Models.Sistema _system                                  
+        public ThermoVision.Models.Rampa _system                                  
         {
             get;
             set;
@@ -49,7 +49,7 @@ namespace ThermoCamApp.Asistente
                 3
             };          
         }
-        public selectAppType(int nCamaras, ThermoVision.Models.Sistema sistem)
+        public selectAppType(int nCamaras, ThermoVision.Models.Rampa sistem)
         {
             this._system = sistem;
 
@@ -118,7 +118,7 @@ namespace ThermoCamApp.Asistente
 
             if (this.openFileDialog1.FileName != null && this.openFileDialog1.FileName != "")
             {
-                ThermoVision.Models.Sistema s = Helpers.deserializeSistema(this.openFileDialog1.FileName);
+                ThermoVision.Models.Rampa s = Helpers.deserializeSistema(this.openFileDialog1.FileName);
 
                 if (s != null && s.ThermoCams.Count > 0)
                 {

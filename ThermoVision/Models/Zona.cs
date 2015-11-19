@@ -28,7 +28,7 @@ namespace ThermoVision.Models
 
         List<SubZona>           _children;
 
-        Sistema                 _parent;
+        Rampa                 _parent;
 
         public float            _maxTemp;
         public float            _minTemp;
@@ -60,7 +60,7 @@ namespace ThermoVision.Models
                 return this._children;
             }
         }
-        public Sistema       Parent           // -r       
+        public Rampa       Parent           // -r       
         {
             get
             {
@@ -151,7 +151,7 @@ namespace ThermoVision.Models
 
         #region "Constructores"
 
-        public Zona(String Name, Sistema parent)                        
+        public Zona(String Name, Rampa parent)                        
         {
             this._nombre = Name;
 
@@ -165,7 +165,7 @@ namespace ThermoVision.Models
         {
             this._nombre        = (string)          info.GetValue("Nombre",         typeof(string));
             this._children      = (List<SubZona>)   info.GetValue("Children",       typeof(List<SubZona>));
-            this._parent        = (Sistema)         info.GetValue("Parent",         typeof(Sistema));
+            this._parent        = (Rampa)         info.GetValue("Parent",         typeof(Rampa));
 
             this.CoolingPoint = new Point(0, 0);
         }

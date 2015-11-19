@@ -25,7 +25,7 @@ namespace ThermoCamApp
         {
             int numeroCamaras   = 1;
 
-            Sistema _system     = null;
+            Rampa _system     = null;
 
             bool finAsistente   = false;
             int  step           = 0;
@@ -60,7 +60,7 @@ namespace ThermoCamApp
                         }
                         else
                         {
-                            _system = new Sistema();
+                            _system = new Rampa();
                         }
 
                         using (Asistente.selectAppType AppType = new Asistente.selectAppType(numeroCamaras, _system))
@@ -255,6 +255,7 @@ namespace ThermoCamApp
                                 }
 
                                 Helpers.serializeSistema(_system, "data.ocl");
+                                Helpers.serializeSistema(_system, "data_backup.ocl");
 
                                 m.Dispose();
                             }

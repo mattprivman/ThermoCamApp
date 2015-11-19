@@ -13,7 +13,7 @@ namespace ThermoCamApp.Forms
 {
     public partial class RampaConfig : Form
     {
-        public Sistema _system
+        public Rampa _system
         {
             get;
             set;
@@ -24,7 +24,7 @@ namespace ThermoCamApp.Forms
         Action<object> CoolingStartTimeChangedAction;
         Action<object> EmptyingTimeChangedAction;
 
-        public RampaConfig(Sistema _system)
+        public RampaConfig(Rampa _system)
         {
             this._system = _system;
 
