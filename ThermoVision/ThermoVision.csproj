@@ -100,7 +100,7 @@
     <Compile Include="CustomControls\NumericTextBox.Designer.cs">
       <DependentUpon>NumericTextBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Sistema.cs" />
+    <Compile Include="Models\Rampa.cs" />
     <Compile Include="Models\Zona.cs" />
     <Compile Include="Enumeraciones\Enumerations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

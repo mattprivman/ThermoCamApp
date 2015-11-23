@@ -1,37 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" dslVersion="1.0.0.0" Id="a43320bb-7e2a-4dc0-8d2d-f6504ab4d165" name="createOPCVars" linkedPackageId="70b540e1-57a0-4f2e-9650-2113cd7bee44" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="a43320bb-7e2a-4dc0-8d2d-f6504ab4d165" name="createOPCVarsUseCaseDiagram" linkedPackageId="70b540e1-57a0-4f2e-9650-2113cd7bee44" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
   <ownedCommentsInternal>
-    <comment Id="8c92cf24-4889-47a0-9ce2-f80348843da8">
-      <elementDefinition Id="a834de29-c3b9-430c-b5f2-49441ea88c64" />
-      <body>Temperatura máxima
-Temperatura media
-Temperatura minima</body>
+    <comment Id="a9119520-17b6-4624-8104-d61a02208797">
+      <elementDefinition Id="661a301e-f1fe-4717-892f-fbd3281df3fc" />
+      <body>Solo para aplicación estandar
+</body>
       <annotatedElements>
-        <useCaseMoniker Id="e8b5e40e-68c3-4912-b478-aec75067c815" LastKnownName="Elegir variables a exportar" />
-      </annotatedElements>
-    </comment>
-    <comment Id="d43f510d-aba7-40b1-a506-4a68255458bd">
-      <elementDefinition Id="55089365-0170-4869-af77-28442d40887c" />
-      <body>e.g: DB1.DW0</body>
-      <annotatedElements>
-        <useCaseMoniker Id="d0f3bb13-f776-4eb1-b803-41431c7a42c8" LastKnownName="Definir offset de las variables" />
+        <subsystemMoniker Id="f03ee2cb-f19f-44b3-ac73-ccc0dc5db468" LastKnownName="Aplicacion estandar" />
       </annotatedElements>
     </comment>
   </ownedCommentsInternal>
-  <profileInstances>
-    <packageHasProfileInstances Id="d54f6993-21d3-4805-93e1-a1f5b199a31e">
-      <profileInstance Id="e72baa15-eb61-4bd4-86df-bb66ece0d661" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="8eb156a6-1da5-4a19-be2e-50d837f427f7">
-      <profileInstance Id="9409922c-8d26-44f1-878c-c5db3706f50e" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <useCaseModelRootHasTypes>
       <actor Id="cfa3a401-ec42-44c7-937e-e567ebd08b17" name="User" isAbstract="false" isLeaf="false">
@@ -59,16 +37,10 @@ Temperatura minima</body>
     <useCaseModelRootHasTypes>
       <useCase Id="5b082700-0449-407d-af28-8ad4de488d2e" name="Elegir servidor OPC" isAbstract="false" isLeaf="false">
         <elementDefinition Id="f450fedc-4bae-47de-a80f-8a692b8593c5" />
-        <suppliersInternal>
-          <dependency Id="6dba36e9-485d-42d0-9a9c-2abf55eed745">
-            <artifactMoniker Id="d1a69d23-6a70-471c-907c-7a6bafe81dbd" LastKnownName="createOPCVars.activitydiagram" />
-            <elementDefinition Id="d20697cc-dc0b-43ff-b108-336cf5f0b699" />
-          </dependency>
-        </suppliersInternal>
       </useCase>
     </useCaseModelRootHasTypes>
     <useCaseModelRootHasTypes>
-      <useCase Id="201e8e69-67e0-4ee8-b098-5d45f69e0407" name="Elegir ruta variables en servidor" isAbstract="false" isLeaf="false">
+      <useCase Id="201e8e69-67e0-4ee8-b098-5d45f69e0407" name="Elegir ruta variables en servidor OPC" isAbstract="false" isLeaf="false">
         <elementDefinition Id="3d180c2e-e738-449e-b48a-b49333b93f1b" />
         <additions>
           <include Id="0a8b6b37-3e43-45f0-b0a8-2233381b7daa">
@@ -87,6 +59,9 @@ Temperatura minima</body>
             <elementDefinition Id="0b3d6147-d66b-4532-b879-b2707334cafe" />
           </include>
         </additions>
+        <subjects>
+          <subsystemMoniker Id="f03ee2cb-f19f-44b3-ac73-ccc0dc5db468" LastKnownName="Aplicacion estandar" />
+        </subjects>
       </useCase>
     </useCaseModelRootHasTypes>
     <useCaseModelRootHasTypes>
@@ -98,15 +73,72 @@ Temperatura minima</body>
             <elementDefinition Id="7905fc55-d2c4-4765-8f65-7c89c7a3a0bf" />
           </include>
         </additions>
+        <subjects>
+          <subsystemMoniker Id="f03ee2cb-f19f-44b3-ac73-ccc0dc5db468" LastKnownName="Aplicacion estandar" />
+        </subjects>
       </useCase>
     </useCaseModelRootHasTypes>
     <useCaseModelRootHasTypes>
-      <artifact Id="d1a69d23-6a70-471c-907c-7a6bafe81dbd" name="createOPCVars.activitydiagram" isAbstract="false" isLeaf="false" fileName="RampaModel\Activity Diagrams\createOPCVars.activitydiagram">
-        <elementDefinition Id="34029d12-7fcf-4634-a6d8-8e047914fdbe" />
-      </artifact>
+      <subsystem Id="f03ee2cb-f19f-44b3-ac73-ccc0dc5db468" name="Aplicacion estandar" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <ownedCommentsInternal>
+          <comment Id="8c92cf24-4889-47a0-9ce2-f80348843da8">
+            <elementDefinition Id="a834de29-c3b9-430c-b5f2-49441ea88c64" />
+            <body>Temperatura máxima
+Temperatura media
+Temperatura minima</body>
+            <annotatedElements>
+              <useCaseMoniker Id="e8b5e40e-68c3-4912-b478-aec75067c815" LastKnownName="Elegir variables a exportar" />
+            </annotatedElements>
+          </comment>
+          <comment Id="d43f510d-aba7-40b1-a506-4a68255458bd">
+            <elementDefinition Id="55089365-0170-4869-af77-28442d40887c" />
+            <body>e.g: DB1.DW16</body>
+            <annotatedElements>
+              <useCaseMoniker Id="d0f3bb13-f776-4eb1-b803-41431c7a42c8" LastKnownName="Definir offset de las variables" />
+            </annotatedElements>
+          </comment>
+        </ownedCommentsInternal>
+        <elementDefinition Id="c311a3e1-4e3f-4c04-aae9-3c841fbcddaf" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="33aab815-4533-4e36-b812-caf9857efc1a" name="Generar archivo cfg para servidor OPC" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="80371d2b-52d5-448b-82e0-4fa9734440d4" />
+        <additions>
+          <include Id="7850b2aa-1aeb-4b1e-acec-df1e05269b40">
+            <useCaseMoniker Id="5b082700-0449-407d-af28-8ad4de488d2e" LastKnownName="Elegir servidor OPC" />
+            <elementDefinition Id="7a209a2a-674d-4c4b-8c60-b196366216c7" />
+          </include>
+        </additions>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="9f99da6d-f378-4a93-a3ee-faaf222b4dec" name="Generar programa scl para PLC" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="f730f862-5afe-41bd-8486-ad977e216bba" />
+        <additions>
+          <include Id="b8982aca-7a26-47ac-969b-9155c423a064">
+            <useCaseMoniker Id="33aab815-4533-4e36-b812-caf9857efc1a" LastKnownName="Generar archivo cfg para servidor OPC" />
+            <elementDefinition Id="d1843623-44b2-4850-a60b-4a269e1fa655" />
+          </include>
+        </additions>
+      </useCase>
     </useCaseModelRootHasTypes>
   </packagedElements>
   <package Id="70b540e1-57a0-4f2e-9650-2113cd7bee44" name="RampaModel">
     <elementDefinition Id="d9d09dab-f2b9-4ac9-92da-5916bbb784e6" />
+    <profileInstances>
+      <packageHasProfileInstances Id="d54f6993-21d3-4805-93e1-a1f5b199a31e">
+        <profileInstance Id="e72baa15-eb61-4bd4-86df-bb66ece0d661" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="8eb156a6-1da5-4a19-be2e-50d837f427f7">
+        <profileInstance Id="9409922c-8d26-44f1-878c-c5db3706f50e" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </useCaseModelRoot>

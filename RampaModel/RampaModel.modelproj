@@ -22,47 +22,26 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <Content Include="Activity Diagrams\algoritmo.activitydiagram">
+    <Content Include="Component Diagrams\RampaComponentDiagram.componentdiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Activity Diagrams\algoritmo.activitydiagram.layout">
+    <Content Include="Component Diagrams\RampaComponentDiagram.componentdiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Activity Diagrams\algoritmo.activitydiagram</DependentUpon>
+      <DependentUpon>Component Diagrams\RampaComponentDiagram.componentdiagram</DependentUpon>
     </Content>
-    <Content Include="Activity Diagrams\createOPCVars.activitydiagram">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="Activity Diagrams\createOPCVars.activitydiagram.layout">
-      <SubType>Content</SubType>
-      <DependentUpon>Activity Diagrams\createOPCVars.activitydiagram</DependentUpon>
-    </Content>
-    <Content Include="Activity Diagrams\rampCooling.activitydiagram">
+    <Content Include="Secuence Diagrams\CañonEstados.activitydiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Activity Diagrams\rampCooling.activitydiagram.layout">
+    <Content Include="Secuence Diagrams\CañonEstados.activitydiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Activity Diagrams\rampCooling.activitydiagram</DependentUpon>
+      <DependentUpon>Secuence Diagrams\CañonEstados.activitydiagram</DependentUpon>
     </Content>
-    <Content Include="Activity Diagrams\sendOPCData.activitydiagram">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="Activity Diagrams\sendOPCData.activitydiagram.layout">
-      <SubType>Content</SubType>
-      <DependentUpon>Activity Diagrams\sendOPCData.activitydiagram</DependentUpon>
-    </Content>
-    <Content Include="Secuence Diagrams\OPCDataTransfer\RampasApp\sendOPCDataRampasAppCannon.sequencediagram">
+    <Content Include="Secuence Diagrams\TrampillaEstados.activitydiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Secuence Diagrams\OPCDataTransfer\RampasApp\sendOPCDataRampasAppCannon.sequencediagram.layout">
+    <Content Include="Secuence Diagrams\TrampillaEstados.activitydiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Secuence Diagrams\OPCDataTransfer\RampasApp\sendOPCDataRampasAppCannon.sequencediagram</DependentUpon>
-    </Content>
-    <Content Include="Secuence Diagrams\OPCDataTransfer\StandartApp\sendOPCDataStandarApp.sequencediagram">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="Secuence Diagrams\OPCDataTransfer\StandartApp\sendOPCDataStandarApp.sequencediagram.layout">
-      <SubType>Content</SubType>
-      <DependentUpon>Secuence Diagrams\OPCDataTransfer\StandartApp\sendOPCDataStandarApp.sequencediagram</DependentUpon>
+      <DependentUpon>Secuence Diagrams\TrampillaEstados.activitydiagram</DependentUpon>
     </Content>
     <Content Include="Use Case Diagrams\AppConfig.usecasediagram">
       <SubType>Content</SubType>
@@ -85,16 +64,21 @@
       <SubType>Content</SubType>
       <DependentUpon>Use Case Diagrams\createOPCVars.usecasediagram</DependentUpon>
     </Content>
+    <Content Include="Use Case Diagrams\main.usecasediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Use Case Diagrams\main.usecasediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Use Case Diagrams\main.usecasediagram</DependentUpon>
+    </Content>
     <Folder Include="ModelDefinition\" />
     <Content Include="ModelDefinition\RampaModel.uml">
       <SubType>Content</SubType>
     </Content>
     <Folder Include="Activity Diagrams" />
     <Folder Include="Class Diagrams" />
+    <Folder Include="Component Diagrams" />
     <Folder Include="Secuence Diagrams" />
-    <Folder Include="Secuence Diagrams\OPCDataTransfer" />
-    <Folder Include="Secuence Diagrams\OPCDataTransfer\StandartApp" />
-    <Folder Include="Secuence Diagrams\OPCDataTransfer\RampasApp" />
     <Folder Include="Use Case Diagrams" />
   </ItemGroup>
 </Project>

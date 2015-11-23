@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/UseCaseModel" dslVersion="1.0.0.0" Id="b6f86707-80e0-4cf9-9c9c-49f80fa17faf" name="Cannon Activity Diagram" linkedPackageId="ad7fe269-a025-4466-895a-0406bf74d5cc" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
+  <packagedElements>
+    <activityRootModelHasActivity>
+      <activity Id="0a23bdd1-eee2-4f38-b976-4c7bb1d719b4" name="Cannon Activity Diagram" isAbstract="false" isLeaf="false" isActiveClass="false" isReentrant="false" isReadOnly="false" isSingleExecution="false">
+        <elementDefinition Id="557b39f4-beae-4808-84e1-ca1b18bbc422" />
+        <nodes>
+          <initialNode Id="db135ae9-334a-4ea4-9749-87abdec6e9a8" name="Initial1" isLeaf="false">
+            <elementDefinition Id="d6c11a80-4308-4b94-bbce-578f1bf67520" />
+            <objectFlowTargets>
+              <objectFlow Id="50ca80ea-5389-4db3-9b7c-ceb974e3836d" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="e1f59680-5013-4de9-922d-a4c921dda9dc" LastKnownName="Vacio" />
+                <elementDefinition Id="6102fc2e-d7fd-4ed4-b804-b53c28d0b225" />
+              </objectFlow>
+            </objectFlowTargets>
+          </initialNode>
+          <objectNode Id="e1f59680-5013-4de9-922d-a4c921dda9dc" name="Vacio" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="1e7ea0f3-923e-47da-8d7f-3ba58de16593" />
+            <objectFlowTargets>
+              <objectFlow Id="3463b63d-a2b7-45af-995e-3c2d887c944a" guard="Detección material" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="20d6e2d3-001e-4bd4-a4db-a347cbd384b3" LastKnownName="Lleno" />
+                <elementDefinition Id="7972fe3d-0820-47a9-b4b1-f99a63d60db4" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger Id="c10612db-9557-4f31-a3bc-a81fa3acfd21" name="2147483647" value="2147483647">
+                <elementDefinition Id="41eebcaf-13bc-422c-ace2-1193605c8b10" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="20d6e2d3-001e-4bd4-a4db-a347cbd384b3" name="Lleno" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="bd5be856-87f6-4d1c-9303-406a5c0f0883" />
+            <objectFlowTargets>
+              <objectFlow Id="711e3e76-f5a8-440f-9400-943c7aa76754" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <decisionNodeMoniker Id="7112dc7e-ec8c-4470-b356-65e358df7fd9" LastKnownName="Decision1" />
+                <elementDefinition Id="af0688f8-10b5-4ff5-a926-fe6be72c36fb" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger Id="bbbedbb4-4dd5-4713-a9e7-7e51d56346b7" name="2147483647" value="2147483647">
+                <elementDefinition Id="114c8e3f-9afb-4e1c-aa76-37536c7eab71" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="81258edd-eeba-4dc9-81cc-554b781d2492" name="Enfriando" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="7e5f8bd6-5fac-4bb4-9fb2-31454124f4e8" />
+            <objectFlowTargets>
+              <objectFlow Id="4d18204e-0d41-489c-9a29-945d2f9a3f72" guard="Fin rutina enfriado" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="be97af54-4fae-43b6-b3bd-a30862c4c0ad" LastKnownName="Esperando" />
+                <elementDefinition Id="ae76b331-0f10-4315-a5b2-1ad27d9697d6" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger Id="c15a63cd-9fc1-4ed6-80b5-6c72f847be82" name="2147483647" value="2147483647">
+                <elementDefinition Id="6daecd9f-e24d-4cff-862f-9d37a0053ba4" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="be97af54-4fae-43b6-b3bd-a30862c4c0ad" name="Esperando" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="f8ece9e2-d6ed-4f07-848f-e1b7d0ce635f" />
+            <objectFlowTargets>
+              <objectFlow Id="4868ec05-a419-471b-b0e5-2ce625d92d98" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <decisionNodeMoniker Id="01b77d8d-c730-4ba1-b503-99a9a265d92a" LastKnownName="Decision2" />
+                <elementDefinition Id="c4b5544a-afe1-4c46-9fd8-d3f5cd5d1473" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger Id="22cdae77-b8fb-4984-9c96-7d39420d869f" name="2147483647" value="2147483647">
+                <elementDefinition Id="08609262-a30d-4376-84b4-861d0cd0eadd" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="37d7719b-2d09-4e64-8013-bb8bfc439281" name="Vaciando" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="dc8d5939-37c9-40af-8f1f-3887b9bf615e" />
+            <objectFlowTargets>
+              <objectFlow Id="b051b824-28c5-4f78-ab19-7fb0145d8119" guard="Fin rutina vaciado" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <decisionNodeMoniker Id="abd4d2de-68ca-4904-9ab4-331e618128a6" LastKnownName="Decision3" />
+                <elementDefinition Id="63a8e20c-048c-499c-a0a1-aad77d208b4c" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger Id="4297f261-7ec7-4b84-9f26-24c0e731bb4e" name="2147483647" value="2147483647">
+                <elementDefinition Id="ff889eb4-1986-441d-8517-885297a39860" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <decisionNode Id="7112dc7e-ec8c-4470-b356-65e358df7fd9" name="Decision1" isLeaf="false">
+            <elementDefinition Id="7d5571da-e29c-44b8-9eab-c0f1afaa6ee3" />
+            <objectFlowTargets>
+              <objectFlow Id="9f834e85-4d89-4bf6-88ef-d9ae1f572c31" guard="Material caliente" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="81258edd-eeba-4dc9-81cc-554b781d2492" LastKnownName="Enfriando" />
+                <elementDefinition Id="a2ec248b-d214-4e5b-83e2-2db43b0112b4" />
+              </objectFlow>
+              <objectFlow Id="edfd4792-75ee-4f60-bf0e-17706e7eba26" guard="No hay material" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="e1f59680-5013-4de9-922d-a4c921dda9dc" LastKnownName="Vacio" />
+                <elementDefinition Id="6a89312e-e452-4f0c-b46c-9adb23249989" />
+              </objectFlow>
+            </objectFlowTargets>
+          </decisionNode>
+          <decisionNode Id="01b77d8d-c730-4ba1-b503-99a9a265d92a" name="Decision2" isLeaf="false">
+            <elementDefinition Id="e2ee03b8-7323-483c-a71a-7c3cefdb1411" />
+            <objectFlowTargets>
+              <objectFlow Id="5a33b934-c526-4655-ac03-7df3c608821f" guard="No hay material caliente y se puede vaciar" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="37d7719b-2d09-4e64-8013-bb8bfc439281" LastKnownName="Vaciando" />
+                <elementDefinition Id="8fc15e54-cf33-4a32-bdb4-a3e47abedcf5" />
+              </objectFlow>
+              <objectFlow Id="cc3b252e-c98b-4d9c-acc9-21b380f61d32" guard="Hay material caliente" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="81258edd-eeba-4dc9-81cc-554b781d2492" LastKnownName="Enfriando" />
+                <elementDefinition Id="04e15742-a07c-4ea0-b03e-6f9436f00ec7" />
+              </objectFlow>
+            </objectFlowTargets>
+          </decisionNode>
+          <decisionNode Id="abd4d2de-68ca-4904-9ab4-331e618128a6" name="Decision3" isLeaf="false">
+            <elementDefinition Id="1fe8bea7-5df2-4d71-9228-2bc7ead5c33e" />
+            <flowNodeTargets>
+              <controlFlow Id="9eb60353-a05a-4d3c-9365-cf13ef4308ad" isLeaf="false">
+                <activityFinalNodeMoniker Id="aed72b13-c464-4037-b88c-77be763b10f2" LastKnownName="ActivityFinal1" />
+                <elementDefinition Id="70723590-8700-4493-a1d4-2a35285bf0cf" />
+              </controlFlow>
+            </flowNodeTargets>
+            <objectFlowTargets>
+              <objectFlow Id="f47b0de6-04cd-4ff5-8361-9b6375adb0b7" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="e1f59680-5013-4de9-922d-a4c921dda9dc" LastKnownName="Vacio" />
+                <elementDefinition Id="1afc8422-745f-4105-bf1b-6579a4687b39" />
+              </objectFlow>
+            </objectFlowTargets>
+          </decisionNode>
+          <activityFinalNode Id="aed72b13-c464-4037-b88c-77be763b10f2" name="ActivityFinal1" isLeaf="false">
+            <elementDefinition Id="6a391793-7930-4677-a003-0139f0ba57c9" />
+          </activityFinalNode>
+        </nodes>
+      </activity>
+    </activityRootModelHasActivity>
+  </packagedElements>
+  <package Id="ad7fe269-a025-4466-895a-0406bf74d5cc" name="RampaModel">
+    <elementDefinition Id="d9d09dab-f2b9-4ac9-92da-5916bbb784e6" />
+    <profileInstances>
+      <packageHasProfileInstances Id="95d8b894-e26a-4565-b1bd-c53d43bda69b">
+        <profileInstance Id="7a4eaaab-5a05-43bc-8b39-5e6e8e694afb" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="eb50f6ce-f801-49c1-8a0e-d63d5772bb7c">
+        <profileInstance Id="5c3007ac-ccf4-4a17-87be-8f87f7900d39" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</activityRootModel>

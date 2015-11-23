@@ -1,0 +1,673 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="304e2d48-59b7-46c7-9f42-45855fe691a2" name="mainUseCaseDiagram" linkedPackageId="4160f4bc-6ae2-485c-9114-d9d38f156e9d" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+  <packagedElements>
+    <useCaseModelRootHasTypes>
+      <actor Id="3b06e1e9-2541-4622-a2d4-a08deb9e04e8" name="User" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="93112e7d-1299-4089-94d6-226da100c2c5" />
+        <targetEnds>
+          <association Id="7428128c-e2d5-487c-8053-cbe1e0a8817f" isDerived="false" sourceEndRoleName="User" targetEndRoleName="UseCase1" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="63ab6d00-5ea6-4bee-8a38-b8c6bd6c0523" LastKnownName="Cambiar a modo manual" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="411389b5-ba93-4463-8efa-2fa5f6249928" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="cc829c2e-ff67-45df-880d-f12d3e3787ea" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="6e58ee26-700d-49f9-8554-949f5787cb64" name="UseCase1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="1e9e5052-5b7e-4cac-b7c5-3709422a20e4" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="3d547cab-7ec0-4a51-8db0-b59def701a83" />
+          </association>
+          <association Id="a7203568-bc00-4424-8a76-81820f995bf1" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Cambiar a modo manual" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="307c2f1a-ecce-444b-8347-8dd7ce57f1a9" LastKnownName="Cambiar a modo automático" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="569429d2-5b27-4fc2-816e-237e4d003f61" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="92e31701-2594-4f24-a99c-7959eabdbfcf" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="22a249db-ea6b-4dc7-85f4-d385aa4a00a8" name="Cambiar a modo manual" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="96d9d0b7-468b-494f-a501-4201859d6025" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="f85695bc-8225-48b0-adcf-23b802bf3263" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="ff95881e-a0b7-45c7-ac7f-028d56b88aa5" name="ORDENES CAÑON" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="b027dfee-1a6b-4866-906f-2499673adeda" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="63ab6d00-5ea6-4bee-8a38-b8c6bd6c0523" name="Cambiar a modo manual" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="add4218d-0ccd-4f47-b96e-d80287d70505" />
+        <subjects>
+          <subsystemMoniker Id="ff95881e-a0b7-45c7-ac7f-028d56b88aa5" LastKnownName="ORDENES CAÑON" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="307c2f1a-ecce-444b-8347-8dd7ce57f1a9" name="Cambiar a modo automático" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="2942ee54-5771-445a-a72f-df620f477682" />
+        <targetEnds>
+          <association Id="fddeaf6a-75b4-486c-9d90-b15d00210d2e" isDerived="false" sourceEndRoleName="Cambiar a modo automático" targetEndRoleName="PLC" isLeaf="false" isAbstract="false">
+            <actorMoniker Id="937dedec-4aee-48c4-a5dc-e46306319b39" LastKnownName="PLC" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="8a723c06-e4e5-49b6-9a46-3fa6d2e37dd4" name="Cambiar a modo automático" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="0707200e-3a30-41bc-9069-b608a5c6b279" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="9ad1958f-ebe0-4427-873f-19a153a027c6" name="PLC" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="e386261f-a021-4320-a6d8-587f2c85862d" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="be22ebf5-3da2-49f1-a9df-314905852606" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="ff95881e-a0b7-45c7-ac7f-028d56b88aa5" LastKnownName="ORDENES CAÑON" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="b0c11a26-bab3-4b19-ba14-a07850fc48aa" name="Resetear estados" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="f8d68aa9-129c-4c72-a8fd-44cd1d537f56" />
+        <targetEnds>
+          <association Id="6f63c767-57d6-4c8c-8d8b-577384fc0e0a" isDerived="false" sourceEndRoleName="Resetear estados" targetEndRoleName="PLC" isLeaf="false" isAbstract="false">
+            <actorMoniker Id="937dedec-4aee-48c4-a5dc-e46306319b39" LastKnownName="PLC" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="c9154a2c-d066-4ac9-89d1-88c150dccf37" name="Resetear estados" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="b9431cfb-2cbf-4730-aa5c-27e71b2af099" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b812fea5-8f04-48dd-b339-4b5dc9ff6bfd" name="PLC" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="c6e64918-89eb-45be-96f4-ad3af43aa19a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="b0c390f7-6463-41c3-9ddf-682bd9916c8b" />
+          </association>
+        </targetEnds>
+        <additions>
+          <include Id="70d2e0b7-ea67-488b-be7b-399846103aa8">
+            <useCaseMoniker Id="63ab6d00-5ea6-4bee-8a38-b8c6bd6c0523" LastKnownName="Cambiar a modo manual" />
+            <elementDefinition Id="c26e1934-efd0-4d4b-9ad4-e23a7b4d62eb" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="ff95881e-a0b7-45c7-ac7f-028d56b88aa5" LastKnownName="ORDENES CAÑON" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="19451247-66e5-4cac-a190-a0c80f37e3a3" name="Mover cañon" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="7d867722-8f93-4f0c-b63e-17332f58d494" />
+        <targetEnds>
+          <association Id="ca4ff1cc-53b0-4b8a-bf87-e33a327221d7" isDerived="false" sourceEndRoleName="Mover cañon" targetEndRoleName="PLC" isLeaf="false" isAbstract="false">
+            <actorMoniker Id="937dedec-4aee-48c4-a5dc-e46306319b39" LastKnownName="PLC" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="4d4198de-9ecf-4c8a-be9c-0ac1d4da29ce" name="Mover cañon" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="4d9d6bb6-bb5d-4312-88b1-09cd1d56e192" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="67571cdb-652b-4b24-83fe-d375d6ff303f" name="PLC" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="0f1266db-fcfb-4767-8332-3e4415840f30" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="fa985618-f902-4662-93c2-14aa9c54a746" />
+          </association>
+        </targetEnds>
+        <additions>
+          <include Id="ba52e7dd-44db-4a53-bf56-699176eb1a98">
+            <useCaseMoniker Id="63ab6d00-5ea6-4bee-8a38-b8c6bd6c0523" LastKnownName="Cambiar a modo manual" />
+            <elementDefinition Id="bb3b6c65-176d-4e32-97dd-933862452898" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="ff95881e-a0b7-45c7-ac7f-028d56b88aa5" LastKnownName="ORDENES CAÑON" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="3d5d7ae6-a967-4ce1-b438-93123db769d7" name="Des / Activar cañon" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="2119ba1e-59d9-4545-bd9a-6da794efcadf" />
+        <targetEnds>
+          <association Id="b2b233dd-03fc-4e47-8c62-0e20deec112c" isDerived="false" sourceEndRoleName="Activar cañon" targetEndRoleName="PLC" isLeaf="false" isAbstract="false">
+            <actorMoniker Id="937dedec-4aee-48c4-a5dc-e46306319b39" LastKnownName="PLC" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="13ade428-4a40-4d4e-a073-24f7dc7f62e6" name="Activar cañon" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="baf4e625-e680-47c2-90a0-6fd37049e9ed" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="07ee9d4b-6db6-4ff4-86f9-456a8828a68f" name="PLC" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="14b777c7-8628-44cd-bdb4-262be5e840cf" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="d04b86fc-efd6-4ca9-89cb-7a9d6918026c" />
+          </association>
+        </targetEnds>
+        <additions>
+          <include Id="748ef4d1-dbd8-4359-92ea-12664a20a7f5">
+            <useCaseMoniker Id="63ab6d00-5ea6-4bee-8a38-b8c6bd6c0523" LastKnownName="Cambiar a modo manual" />
+            <elementDefinition Id="f1f21d85-601d-4cbf-aee8-153ebe99cf0a" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="ff95881e-a0b7-45c7-ac7f-028d56b88aa5" LastKnownName="ORDENES CAÑON" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="b0afc9d5-2b9c-45ac-be2f-69322104b758" name="ORDENES TRAMPILLAS VACIADO" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="a2711b68-7793-47a7-a35a-422fada13a7a" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="b4e9cc69-8d73-48eb-aba9-7067c329042d" name="Cambiar a modo manual" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="3c835d9b-c0a6-45e5-8660-86f0da8cc563" />
+        <subjects>
+          <subsystemMoniker Id="b0afc9d5-2b9c-45ac-be2f-69322104b758" LastKnownName="ORDENES TRAMPILLAS VACIADO" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="307b27d1-f19f-4e7f-8b5b-6902760ab372" name="Cambiar a modo automático" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="3d6ce6fb-ca78-4dac-aaea-576da60901d3" />
+        <targetEnds>
+          <association Id="84892930-e19e-475c-90ac-c73cbbdebeba" isDerived="false" sourceEndRoleName="Cambiar a modo automático" targetEndRoleName="PLC" isLeaf="false" isAbstract="false">
+            <actorMoniker Id="2767269a-b49c-461b-934e-86e6e1ff884e" LastKnownName="PLC" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="8ec63e8d-0f28-413f-8e37-ec11a9436126" name="Cambiar a modo automático" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="d13c87a6-89fe-46d4-b496-1190613cca84" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e4843a51-17fa-4ca5-ad5f-5fb7c4e84e89" name="PLC" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="389db886-06dc-4b80-82b6-8b2321ee13dd" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="abb0b452-b873-4972-866b-5318d1ec25e2" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="b0afc9d5-2b9c-45ac-be2f-69322104b758" LastKnownName="ORDENES TRAMPILLAS VACIADO" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <useCaseModelRootHasTypes>
+      <actor Id="937dedec-4aee-48c4-a5dc-e46306319b39" name="PLC" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="22a0cc6e-81ea-42f6-8f5a-592657f91119" />
+        <targetEnds>
+          <association Id="b47f85e0-3097-4740-b5b2-f49ec311dd09" isDerived="false" sourceEndRoleName="PLC" targetEndRoleName="Posicionar" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="f55ef0e2-79eb-422e-a46b-35c5ef35b1de" LastKnownName="Posicionar" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2145a330-5281-4cd9-9f57-badc1902e1f6" name="PLC" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="eb6d6425-3bb7-493c-b1bf-d7ac37b64edc" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="73602a21-1124-4ea2-9921-e6d54ab3209d" name="Posicionar" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="3e07836e-894b-4ec3-870f-7bc520f3e9bc" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="ec034f9a-97d3-4cd9-8aa0-fe9e7825e1f6" />
+          </association>
+          <association Id="9a682f5f-cffb-43f7-bd22-4994a2ae9712" isDerived="false" sourceEndRoleName="PLC" targetEndRoleName="Activar válvula" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="11f41447-0b53-4c67-95d0-1131294b2e5d" LastKnownName="Activar válvula" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="19e192c3-7421-4b00-861b-9274a558b9f2" name="PLC" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="dac2635a-a666-4b06-999b-8e221921e27e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="699036cf-7b24-48e2-b62a-a85f85831fac" name="Activar válvula" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="7dd8b195-f22a-4199-bce4-5e8348cbebfe" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="296d870b-c0fa-4486-ace9-62fd02a2d286" />
+          </association>
+          <association Id="24c0d8c0-d49f-4b36-9de1-80ea35b7670a" isDerived="false" sourceEndRoleName="PLC" targetEndRoleName="Empezar rutina enfriado" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="b1f4f7f6-301f-41dc-a914-aee312db3ec8" LastKnownName="Empezar rutina enfriado" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="3f9cbe9c-4dfe-4dad-8027-659c35141964" name="PLC" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="180079f0-4a25-4c50-8909-9ab1fbad6ce9" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="31eb09b8-d31b-495a-bbd5-b89c44f6e156" name="Empezar rutina enfriado" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="51145fb9-7751-4733-b28f-178d22d45935" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="05763599-2a00-4c07-8f6c-e7c4612d9d7a" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="6f55d832-6d5b-4940-af12-ea6370e386e7" name="CAÑON" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="893de040-cd03-40f7-96e4-542c0526584c" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="f55ef0e2-79eb-422e-a46b-35c5ef35b1de" name="Posicionar" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="4c905020-bc13-4a52-9457-001127fefe90" />
+        <subjects>
+          <subsystemMoniker Id="6f55d832-6d5b-4940-af12-ea6370e386e7" LastKnownName="CAÑON" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="11f41447-0b53-4c67-95d0-1131294b2e5d" name="Activar válvula" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="3ad11d70-07e6-4e9e-bd37-53043630e190" />
+        <subjects>
+          <subsystemMoniker Id="6f55d832-6d5b-4940-af12-ea6370e386e7" LastKnownName="CAÑON" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="b1f4f7f6-301f-41dc-a914-aee312db3ec8" name="Empezar rutina enfriado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="ef390f81-a7e1-4bcb-818f-c77e4baf98f0" />
+        <subjects>
+          <subsystemMoniker Id="6f55d832-6d5b-4940-af12-ea6370e386e7" LastKnownName="CAÑON" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="ea21f070-f70d-4fe0-a9e9-e9c6d47818e9" name="Abrir / Cerrar trampilla" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="200778e1-4330-403f-855b-3eb99756cc7d" />
+        <targetEnds>
+          <association Id="e41a9202-5bca-45f6-9649-0e6e121c7876" isDerived="false" sourceEndRoleName="Abrir / Cerrar trampilla" targetEndRoleName="PLC" isLeaf="false" isAbstract="false">
+            <actorMoniker Id="2767269a-b49c-461b-934e-86e6e1ff884e" LastKnownName="PLC" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="9f48b63a-0c9d-400d-aea7-159f2c353ad2" name="Abrir / Cerrar trampilla" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="ded01367-53a2-4c08-aff7-b35ad63de2cb" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="d655d169-a13a-4cad-b749-482daf5792d2" name="PLC" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="c84093a8-1617-4ebc-9c35-109105a9211d" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="a9a2c768-cdbc-4afa-b78a-1547316a7d66" />
+          </association>
+        </targetEnds>
+        <additions>
+          <include Id="d4162781-d2b2-471a-a644-d982314500d2">
+            <useCaseMoniker Id="b4e9cc69-8d73-48eb-aba9-7067c329042d" LastKnownName="Cambiar a modo manual" />
+            <elementDefinition Id="14893fbe-dde3-4cbd-b361-ae688e14703b" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="b0afc9d5-2b9c-45ac-be2f-69322104b758" LastKnownName="ORDENES TRAMPILLAS VACIADO" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <useCaseModelRootHasTypes>
+      <actor Id="2767269a-b49c-461b-934e-86e6e1ff884e" name="PLC" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="8a9a0d6d-0250-47c3-a918-0ec9994cdcad" />
+        <targetEnds>
+          <association Id="f89d02b3-f56e-400c-9abf-85fde9c95878" isDerived="false" sourceEndRoleName="PLC" targetEndRoleName="Abrir / Cerrar trampilla" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="e762c094-183b-49b0-87ff-9914c62ff8bf" LastKnownName="Abrir / Cerrar trampilla" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ab7983ec-db80-4a0d-83a0-2a43501c8a3c" name="PLC" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="0248e252-0ed8-4020-b3bd-51bfd4e3bbb6" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="0f4d8288-1714-49bb-9059-160e7a44cd0f" name="Abrir / Cerrar trampilla" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="9d2465d4-629f-4f30-9748-80be9d34f282" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="9e9da701-ab54-488f-9f37-2b5a082e6e99" />
+          </association>
+          <association Id="024ce0d4-71ac-44a2-9529-118fe672cadd" isDerived="false" sourceEndRoleName="PLC" targetEndRoleName="Empezar rutina vaciado" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="22016d58-fa10-412a-a9bb-ce68f1ed6640" LastKnownName="Empezar rutina vaciado" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="79a60b98-355d-4f06-9164-8e0d23f1b434" name="PLC" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="1b8d2aa2-fb7a-4bd9-aad6-6e6e14c3fb0a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="37cd2921-ae5f-4d26-a510-45eeb331d29e" name="Empezar rutina vaciado" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="bde630bd-5213-4512-b98d-5bbc5714d8a1" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="8dc333e0-7238-46d1-865c-57cf57d888af" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="b832fda2-5639-410e-9721-89c100e2c8fd" name="Trampilla" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="3a56a70f-5b56-4f2a-9c7d-b0b0f0eaa264" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="e762c094-183b-49b0-87ff-9914c62ff8bf" name="Abrir / Cerrar trampilla" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="720901ff-865b-408f-a7db-e57f5e38c442" />
+        <subjects>
+          <subsystemMoniker Id="b832fda2-5639-410e-9721-89c100e2c8fd" LastKnownName="Trampilla" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="22016d58-fa10-412a-a9bb-ce68f1ed6640" name="Empezar rutina vaciado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="c0a9df97-d76f-449a-8b87-2de408096049" />
+        <subjects>
+          <subsystemMoniker Id="b832fda2-5639-410e-9721-89c100e2c8fd" LastKnownName="Trampilla" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <useCaseModelRootHasTypes>
+      <actor Id="f1b5bd74-fd50-4759-8c67-7ed4ed16939c" name="User" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="574820a7-919d-4010-80d8-a5aca6b7743b" />
+        <targetEnds>
+          <association Id="95b2e6cc-f63f-48cb-9b1c-01b234fbe2ac" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Cambiar a modo automático" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="307b27d1-f19f-4e7f-8b5b-6902760ab372" LastKnownName="Cambiar a modo automático" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="479f3e55-c510-493b-b8ce-6938cbda2c8c" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="c484f731-5e76-49c8-85c1-bc9fefb7a960" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="610c7225-c6c4-48d3-a220-0db698041de4" name="Cambiar a modo automático" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="f8aa7328-b9a1-41f2-a320-6a8daed14067" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="c2cf7088-621f-4c3a-8dd1-ce741912a8b0" />
+          </association>
+          <association Id="1db7994b-363e-47d9-886d-d13cf6b7ea40" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Cambiar a modo manual" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="b4e9cc69-8d73-48eb-aba9-7067c329042d" LastKnownName="Cambiar a modo manual" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f628b102-b644-401c-bbff-7d62213e59ed" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="e1c2c7ad-e3b7-49a6-8dc6-47adb978be83" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="1edc0357-ff70-4583-b9de-2e1eb06989b2" name="Cambiar a modo manual" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="af2d586e-6c68-4937-bcfa-08c4996d0021" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="a54bb1ca-7c4c-438a-9cc0-b541a9723365" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <actor Id="2fc7be11-9d14-485a-8ecf-7ad67e5b5d73" name="User" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="a2a560b0-fc62-49eb-859e-bfb207984424" />
+        <targetEnds>
+          <association Id="5f5f66b5-72c9-4c37-b275-21efc86f0bc0" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Cambiar escala de colres" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="4b7ac584-e974-4402-bdac-db07a5d835f5" LastKnownName="Cambiar escala de colres" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2dcd97be-68c5-4030-b9c7-e803ff41766f" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="a3b50b19-ae95-4e7c-a1f9-5d975ad3b620" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="4ececd22-5568-4722-9d54-40b7298bcc97" name="Cambiar escala de colres" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="380ac5da-cdb2-4aa2-8394-b3d3d3986df9" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="657bcc0d-5e09-4be8-b8d2-e4f82908d4c8" />
+          </association>
+          <association Id="8fc5c1a8-00f2-4e9d-baa2-384a77efa1a5" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Activar / desactivar rejilla" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="840e6261-2707-4d3e-bc0e-d1ca43a94a9f" LastKnownName="Activar / desactivar rejilla" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="185d24ad-0d7b-4ea7-b796-7f757f1ff0f2" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="74750115-74e9-4be1-82d3-9125d97f2975" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="38f5ff0d-84b1-4f44-804c-7c230a601e2d" name="Activar / desactivar rejilla" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="671a4616-c0ec-4fd0-80c1-fe9962fc5b5d" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="3b577916-30e6-4fea-ad69-f7a55165e7d0" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="df0b520f-9cfd-44fb-ab7f-cd0e4cbf4e5b" name="CAMARA" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="606cfaa3-1877-497f-995d-952c8497dd15" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="4b7ac584-e974-4402-bdac-db07a5d835f5" name="Cambiar escala de colres" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="77630446-7464-4d9f-950c-b3fb5fb16742" />
+        <targetEnds>
+          <association Id="9b8f7481-4eca-41f8-85bd-81819f679f97" isDerived="false" sourceEndRoleName="Cambiar escala de colres" targetEndRoleName="Camara" isLeaf="false" isAbstract="false">
+            <actorMoniker Id="c2942e4c-9ae5-4ab0-a830-bc37774a12ab" LastKnownName="Camara" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="81da7cc3-7558-456e-86a4-10ed44fb78a6" name="Cambiar escala de colres" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="c2f068b2-0c4d-45c3-843c-0dcef4c4b99f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="6279815b-0f51-4378-859b-0e1b6d3bc3f0" name="Camara" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="644fdaf2-11c2-46f8-b481-6d0fec209ab7" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="7b51ecea-9056-4ea8-800c-1323950482d0" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="df0b520f-9cfd-44fb-ab7f-cd0e4cbf4e5b" LastKnownName="CAMARA" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="840e6261-2707-4d3e-bc0e-d1ca43a94a9f" name="Activar / desactivar rejilla" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="72a946ca-597f-4e74-a18b-62d63db07767" />
+        <subjects>
+          <subsystemMoniker Id="df0b520f-9cfd-44fb-ab7f-cd0e4cbf4e5b" LastKnownName="CAMARA" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="c9c81836-6452-4f00-911f-100c57a65dac" name="Zonas de apagado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="cf4236af-cf88-45c3-8c2d-dc997a6956d6" />
+        <targetEnds>
+          <association Id="09ec4905-66c6-451d-9630-e34487b1a9e7" isDerived="false" sourceEndRoleName="Zonas de apagado" targetEndRoleName="Camara" isLeaf="false" isAbstract="false">
+            <actorMoniker Id="c2942e4c-9ae5-4ab0-a830-bc37774a12ab" LastKnownName="Camara" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e7656f40-a734-4e81-9ea3-e2251108744c" name="Zonas de apagado" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="30b605ba-3954-4bfe-9c7f-c0d684cc6e7a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="a85f6b42-1870-4be0-8db1-a766d31fc1dc" name="Camara" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="758513e5-ab1b-4e5a-8fa4-dcb0013a5d88" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="28859600-b125-4ead-b97d-1487ef9331b8" />
+          </association>
+        </targetEnds>
+        <additions>
+          <include Id="eb512993-33ec-4844-893f-3a6f5844b349">
+            <useCaseMoniker Id="840e6261-2707-4d3e-bc0e-d1ca43a94a9f" LastKnownName="Activar / desactivar rejilla" />
+            <elementDefinition Id="ed173c6b-7496-474d-9f21-a4b24b3a2b22" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="df0b520f-9cfd-44fb-ab7f-cd0e4cbf4e5b" LastKnownName="CAMARA" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="8a1f31aa-e2ae-4f70-ad46-1f435287b3ca" name="Zonas de vaciado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="5b66f94e-b2da-43fe-b72e-6a6e66e1f46b" />
+        <targetEnds>
+          <association Id="450964db-2b08-4075-a817-e649cb9e3065" isDerived="false" sourceEndRoleName="Zonas de vaciado" targetEndRoleName="Camara" isLeaf="false" isAbstract="false">
+            <actorMoniker Id="c2942e4c-9ae5-4ab0-a830-bc37774a12ab" LastKnownName="Camara" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="134f3d8f-a431-401c-8ad3-591a73c41c31" name="Zonas de vaciado" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="717cdd4c-dbe0-42f7-984d-7e48a7d46a26" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="662ed9f0-96cd-4d2e-b81c-22e97159645b" name="Camara" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="c475eea8-9ed7-4155-903b-7c3f2f33bb31" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="d344d70e-1f15-4246-9fc6-467e19120a9f" />
+          </association>
+        </targetEnds>
+        <additions>
+          <include Id="8b297375-66ce-40a3-91b6-f427d4d69b85">
+            <useCaseMoniker Id="840e6261-2707-4d3e-bc0e-d1ca43a94a9f" LastKnownName="Activar / desactivar rejilla" />
+            <elementDefinition Id="508e6494-883b-4185-8e06-79c036ebbb08" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="df0b520f-9cfd-44fb-ab7f-cd0e4cbf4e5b" LastKnownName="CAMARA" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="c274d171-2343-4487-8374-474b6e5d0f54" name="Hornos" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="9cb798ec-e3ee-4f14-86fc-23273b063e0d" />
+        <targetEnds>
+          <association Id="325ae4b9-d085-4cb0-b65d-7fbe1635be45" isDerived="false" sourceEndRoleName="Hornos" targetEndRoleName="Camara" isLeaf="false" isAbstract="false">
+            <actorMoniker Id="c2942e4c-9ae5-4ab0-a830-bc37774a12ab" LastKnownName="Camara" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="9c22a968-8b17-4080-ad29-c3c90e7dce43" name="Hornos" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="86a49294-6eff-4ba5-b641-9397d8d8c720" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="9687daf8-62c1-4f1d-a5c3-9b44507b547f" name="Camara" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="fcf0b12e-d0f2-45d1-a1ac-9d25962d6274" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="2e571507-6136-4ce2-9fd1-159d9a580088" />
+          </association>
+        </targetEnds>
+        <additions>
+          <include Id="24307e0d-cd62-4103-ad35-2130abed8cb8">
+            <useCaseMoniker Id="840e6261-2707-4d3e-bc0e-d1ca43a94a9f" LastKnownName="Activar / desactivar rejilla" />
+            <elementDefinition Id="13887724-b25d-432e-908d-0111d3fb4bfd" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="df0b520f-9cfd-44fb-ab7f-cd0e4cbf4e5b" LastKnownName="CAMARA" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <useCaseModelRootHasTypes>
+      <actor Id="c2942e4c-9ae5-4ab0-a830-bc37774a12ab" name="Camara" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="26ac838b-cfa4-437c-8228-d7fed0e2ca05" />
+        <targetEnds>
+          <association Id="96c3182b-681c-40f6-88ab-d76eb28374c1" isDerived="false" sourceEndRoleName="Camara" targetEndRoleName="Visualizar imagen" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="cbb24766-ae6e-4b08-b964-6af58c2c14b7" LastKnownName="Visualizar imagen" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2629e26c-b044-4f20-8ad7-6e74e520677a" name="Camara" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="373cee7b-36ff-47a8-8113-e32b1a7c8efc" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="63f179da-12b4-48da-baf1-ee1b2483130b" name="Visualizar imagen" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="bb97eb73-cf68-45b3-b8a5-9c3dd14d67a5" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="7f303172-78a9-47ec-85d5-2ac948e2baa6" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="cbb24766-ae6e-4b08-b964-6af58c2c14b7" name="Visualizar imagen" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="85233257-53a6-457f-ae73-98f4d31016de" />
+        <targetEnds>
+          <association Id="bb058458-dd3b-4c38-97ee-68f73505883e" isDerived="false" sourceEndRoleName="Visualizar imagen" targetEndRoleName="User" isLeaf="false" isAbstract="false">
+            <actorMoniker Id="2fc7be11-9d14-485a-8ecf-7ad67e5b5d73" LastKnownName="User" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ec838b9e-888b-4558-bd20-5e5725e21cb4" name="Visualizar imagen" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="fa44ef11-5015-426b-be71-1d9269c9bacf" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f561fced-b103-4a7f-ab6c-4b36c8679fce" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="a39a991b-4313-4fe5-baf4-d4c94f62d708" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="ada25943-d8aa-453d-95c5-b89932c7aa32" />
+          </association>
+        </targetEnds>
+        <subjects>
+          <subsystemMoniker Id="df0b520f-9cfd-44fb-ab7f-cd0e4cbf4e5b" LastKnownName="CAMARA" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="4160f4bc-6ae2-485c-9114-d9d38f156e9d" name="RampaModel">
+    <elementDefinition Id="d9d09dab-f2b9-4ac9-92da-5916bbb784e6" />
+    <profileInstances>
+      <packageHasProfileInstances Id="9e845929-c00d-468e-a929-71f618aa4001">
+        <profileInstance Id="53baa1fe-1a5d-4057-b73d-4a2b3b7f397b" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="bf5a9a2b-31ee-4c7a-badd-779603cae503">
+        <profileInstance Id="da7eedc1-634c-4515-98e2-4ca913a6ca20" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</useCaseModelRoot>

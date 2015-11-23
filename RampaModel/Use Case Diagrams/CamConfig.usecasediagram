@@ -1,19 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="a45e7a20-b1fc-4422-9994-ea61e639767b" name="CamConfig" linkedPackageId="d454465c-a785-458e-adb3-053a32c53724" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
-  <profileInstances>
-    <packageHasProfileInstances Id="fc2881ad-b5f6-4232-ae95-f7e54bf826cb">
-      <profileInstance Id="954fea0b-badf-4544-b3ab-b1fbe09101e4" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="bd25b210-a74f-49eb-9d1c-02ea961ce2b3">
-      <profileInstance Id="e7b9b631-9db0-4857-a4ec-49842a6686d7" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-  </profileInstances>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="a45e7a20-b1fc-4422-9994-ea61e639767b" name="CamConfig" linkedPackageId="d454465c-a785-458e-adb3-053a32c53724" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
   <packagedElements>
     <useCaseModelRootHasTypes>
       <actor Id="4a9f6a9d-7968-46f7-94e9-7307f10b5972" name="User" isAbstract="false" isLeaf="false">
@@ -115,6 +101,54 @@
             </relationshipOwnedElementsInternal>
             <elementDefinition Id="b4af7a79-f68b-4e08-a1ee-4a6cc40d2202" />
           </association>
+          <association Id="5a798839-fb29-45ff-80d6-3f863b3df8ee" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Conectar" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="d87c173a-3324-462b-bddb-631ed34ac812" LastKnownName="Conectar" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="394b1c0d-97f1-48a9-a8f7-c067ef03e37d" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="0d5c84bc-ec85-40a4-a3e9-ea0f42c03f01" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="8c6bd20e-6ddb-4e23-8387-3117f5f32ad1" name="Conectar" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="5de801aa-cf0d-4208-b56d-ac74e73d7f4c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="327c412d-a4da-4992-a440-620aa788ec91" />
+          </association>
+          <association Id="d5743b1e-12c1-4eb1-af96-69df4ec1ee06" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Desconectar" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="b9dc5ee9-a89c-48db-bbad-7333c970d2e3" LastKnownName="Desconectar" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="8fdf95fe-11f6-4893-a269-16fad2b39259" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="13bc1c0d-83ee-4653-ae2e-668953d5a986" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ac744154-2a81-49b6-b192-48c515491e87" name="Desconectar" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="1db3bdf8-0115-471c-815f-55726b7aef68" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="eb12cc73-e758-4129-927e-b4e60a2abfd1" />
+          </association>
+          <association Id="7ba48b8e-710b-40a6-b7c6-2c7174c7cea9" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Configurar" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="7b03dceb-426c-421d-8587-34760dbff555" LastKnownName="Configurar" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="39c0f87b-55cf-4af9-878d-d42a38f43a04" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="4a6e4239-f303-498f-b735-83234bf578a9" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="c22264b8-3d72-4e60-8a6b-8404e3eb668c" name="Configurar" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="5629e90b-9c1d-451f-96f3-ec77cc725d96" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="cc0f3d14-04bc-4fb7-b4d8-e2a42272b505" />
+          </association>
         </targetEnds>
       </actor>
     </useCaseModelRootHasTypes>
@@ -137,15 +171,12 @@
     <useCaseModelRootHasTypes>
       <subsystem Id="dee35ec9-fcae-418f-ba75-aa7702e59bdb" name="Zonas" isAbstract="false" isLeaf="false" isActiveClass="false">
         <ownedCommentsInternal>
-          <comment Id="e1e59250-d767-4cbf-9edc-7e3add31e4e4">
-            <elementDefinition Id="98ab0d3c-77cc-4c66-8ba4-939882693ad4" />
-            <body>En la aplicación de rampas habrá dos zonas predefinidas que no se podran modificar:
-- ZonaApagado
--ZonaVaciado
-</body>
+          <comment Id="5c8a4d42-08e2-43a2-ad75-930f6519ea00">
+            <elementDefinition Id="fe284e17-9b7f-4c46-8ef7-673c213c4365" />
+            <body>Solo en modo de aplicación de Rampas</body>
             <annotatedElements>
-              <useCaseMoniker Id="de8eccb4-f8ad-4d2c-9cb9-905f7cc5997c" LastKnownName="Agregar zona" />
-              <useCaseMoniker Id="ff34f7f7-dac7-4283-b922-3ff4fd91aa5e" LastKnownName="Borrar zona" />
+              <useCaseMoniker Id="db829623-ec2e-4b0f-b310-4e8154febec8" LastKnownName="Zona de vaciado" />
+              <useCaseMoniker Id="6ff10e21-f59f-4a16-94f9-44d5c2da89be" LastKnownName="Zona de apagado" />
             </annotatedElements>
           </comment>
         </ownedCommentsInternal>
@@ -226,8 +257,149 @@
         </subjects>
       </useCase>
     </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="db829623-ec2e-4b0f-b310-4e8154febec8" name="Zona de vaciado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="7e36cf82-5cca-48d4-a9e6-ce346aa2b40c" />
+        <extendedCases>
+          <extend Id="740db10e-3545-4d19-b5a9-42b1e4df8b74">
+            <useCaseMoniker Id="de8eccb4-f8ad-4d2c-9cb9-905f7cc5997c" LastKnownName="Agregar zona" />
+            <elementDefinition Id="7d1d61d4-4d0e-4aea-81f7-59392dc9d9a8" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker Id="dee35ec9-fcae-418f-ba75-aa7702e59bdb" LastKnownName="Zonas" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="6ff10e21-f59f-4a16-94f9-44d5c2da89be" name="Zona de apagado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="aef133a1-d298-44a3-b649-305f09ab2a7f" />
+        <extendedCases>
+          <extend Id="0ed16259-423a-49bb-8424-4c095307548f">
+            <useCaseMoniker Id="de8eccb4-f8ad-4d2c-9cb9-905f7cc5997c" LastKnownName="Agregar zona" />
+            <elementDefinition Id="729d2177-d6ef-4503-9ebd-405eb88bc39e" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker Id="dee35ec9-fcae-418f-ba75-aa7702e59bdb" LastKnownName="Zonas" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="76dfdfa4-7a0d-4c45-9f13-61883e440e22" name="Camaras" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="15a31392-501c-4fef-8dd3-7c0dd28e5a4a" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="d87c173a-3324-462b-bddb-631ed34ac812" name="Conectar" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="a6144fec-c9c7-4fde-bde0-b363051e3ced" />
+        <subjects>
+          <subsystemMoniker Id="76dfdfa4-7a0d-4c45-9f13-61883e440e22" LastKnownName="Camaras" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="b9dc5ee9-a89c-48db-bbad-7333c970d2e3" name="Desconectar" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="511b1574-c952-4d7d-86cc-605a0a48d5b4" />
+        <subjects>
+          <subsystemMoniker Id="76dfdfa4-7a0d-4c45-9f13-61883e440e22" LastKnownName="Camaras" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="7b03dceb-426c-421d-8587-34760dbff555" name="Configurar" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="c38c6dd5-2e2c-4200-987a-a65d2191fdee" />
+        <subjects>
+          <subsystemMoniker Id="76dfdfa4-7a0d-4c45-9f13-61883e440e22" LastKnownName="Camaras" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="33a3fa99-eec3-4b1f-8d9a-895c0a3ad775" name="Auto enfocar" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="9c7c5fbf-cc93-4366-b3a4-a4d6ce8981ec" />
+        <additions>
+          <include Id="1f858fc6-1b9e-4bde-8aeb-7672fd6d71f9">
+            <useCaseMoniker Id="7b03dceb-426c-421d-8587-34760dbff555" LastKnownName="Configurar" />
+            <elementDefinition Id="a048bb60-211b-4a36-862a-326a786b1767" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="76dfdfa4-7a0d-4c45-9f13-61883e440e22" LastKnownName="Camaras" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="876eae94-f801-4ffa-b2f4-7c85e0a9ce73" name="Auto ajustar" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="930d5120-832d-4538-b6d9-829cc5df5946" />
+        <additions>
+          <include Id="0ac66479-955f-44a5-a167-6ed6efec8e9a">
+            <useCaseMoniker Id="7b03dceb-426c-421d-8587-34760dbff555" LastKnownName="Configurar" />
+            <elementDefinition Id="e2668999-1d9d-453d-be2a-9ad9e6b3762a" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="76dfdfa4-7a0d-4c45-9f13-61883e440e22" LastKnownName="Camaras" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="23739a29-d94e-4f6d-9c7c-51cbeb3d9280" name="Re calibrar" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="d9c7cb88-c6f5-46a4-a035-99624e46cd24" />
+        <additions>
+          <include Id="707054a4-2704-4b04-9efc-d9aac5c52521">
+            <useCaseMoniker Id="7b03dceb-426c-421d-8587-34760dbff555" LastKnownName="Configurar" />
+            <elementDefinition Id="47d8a7b4-341c-446e-8eb1-f0c663fb11be" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="76dfdfa4-7a0d-4c45-9f13-61883e440e22" LastKnownName="Camaras" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="3322d8ee-1f1f-4288-b2ff-7842b2afdc74" name="Corregir imagen internamente" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="d6b6017e-303b-4739-871f-e1c2ec5d5b01" />
+        <additions>
+          <include Id="c816c9c1-9be0-4ad4-94b5-e55a9f523179">
+            <useCaseMoniker Id="7b03dceb-426c-421d-8587-34760dbff555" LastKnownName="Configurar" />
+            <elementDefinition Id="01b6e644-357b-428b-b850-c06fb36f2008" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="76dfdfa4-7a0d-4c45-9f13-61883e440e22" LastKnownName="Camaras" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="b2fa80e5-d7e6-482f-bf88-4c01aff0dd04" name="Corregir imagen externamente" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="d58d9443-a5c2-486c-9b6f-badc63335a49" />
+        <additions>
+          <include Id="52343f5f-c6a9-4993-8e4c-c94c01b46b25">
+            <useCaseMoniker Id="7b03dceb-426c-421d-8587-34760dbff555" LastKnownName="Configurar" />
+            <elementDefinition Id="be3038a2-255c-4ca0-9c36-a2b36853fa25" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="76dfdfa4-7a0d-4c45-9f13-61883e440e22" LastKnownName="Camaras" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
   </packagedElements>
   <package Id="d454465c-a785-458e-adb3-053a32c53724" name="RampaModel">
     <elementDefinition Id="d9d09dab-f2b9-4ac9-92da-5916bbb784e6" />
+    <profileInstances>
+      <packageHasProfileInstances Id="fc2881ad-b5f6-4232-ae95-f7e54bf826cb">
+        <profileInstance Id="954fea0b-badf-4544-b3ab-b1fbe09101e4" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="bd25b210-a74f-49eb-9d1c-02ea961ce2b3">
+        <profileInstance Id="e7b9b631-9db0-4857-a4ec-49842a6686d7" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </useCaseModelRoot>

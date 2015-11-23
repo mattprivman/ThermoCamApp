@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" dslVersion="1.0.0.0" Id="6c659d93-608a-46a7-9077-fbbed1e1e259" name="UMLUseCaseDiagram1" linkedPackageId="a717f2b6-d11c-433d-b5a3-d710a3def1e5" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="6c659d93-608a-46a7-9077-fbbed1e1e259" name="AppConfigUseCase" linkedPackageId="a717f2b6-d11c-433d-b5a3-d710a3def1e5" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
   <packagedElements>
     <useCaseModelRootHasTypes>
       <actor Id="4c07cfb4-ef2f-4c4b-a2bf-6238cabed72b" name="User" isAbstract="false" isLeaf="false">
@@ -21,6 +21,22 @@
             </relationshipOwnedElementsInternal>
             <elementDefinition Id="0aef9a16-6c8d-4467-a3f0-30846f8a8eb7" />
           </association>
+          <association Id="4445cbfe-bc94-49f6-a909-a3ff8b3451aa" isDerived="false" sourceEndRoleName="User" targetEndRoleName="Definir nº de camaras" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="f7587e51-b91d-4e47-af32-cdca951de074" LastKnownName="Definir nº de camaras" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="c12cf1d5-f26a-4fe2-a214-124bf7ec2e72" name="User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="91322448-7a7a-4dc6-929c-40204a98eaab" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="db36886e-cf12-469c-ac0e-071563bd0c5a" name="Definir nº de camaras" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="456346be-ad76-4b8f-a7be-3acdf943bc0e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="2e0ecb06-6879-4c5c-8560-9bed459b80fe" />
+          </association>
         </targetEnds>
       </actor>
     </useCaseModelRootHasTypes>
@@ -35,12 +51,12 @@
     <useCaseModelRootHasTypes>
       <useCase Id="a129194b-8c05-4292-b8ad-82610bc7ce2c" name="Aplicación estandar" isAbstract="false" isLeaf="false">
         <elementDefinition Id="8c5b5c16-8363-45fa-9110-d879afb8e0e5" />
-        <generalsInternal>
-          <generalization Id="71c5421b-1e7a-4bee-9ab1-75c3a3b55ff2" isSubstitutable="false">
+        <additions>
+          <include Id="01477b15-e561-4e6f-8b80-b90128c3c282">
             <useCaseMoniker Id="30002269-eab6-4753-86c2-9bdff9dfa550" LastKnownName="elegir tipo de aplicación" />
-            <elementDefinition Id="f03c56df-d7e2-46f8-bf38-3c805dad5954" />
-          </generalization>
-        </generalsInternal>
+            <elementDefinition Id="ebd35c5f-5062-4fd7-8e0a-8b3e56dddb18" />
+          </include>
+        </additions>
         <subjects>
           <subsystemMoniker Id="60b22aa8-b1b2-4d52-acf9-1fa2525f814e" LastKnownName="Elegir tipo de aplicación" />
         </subjects>
@@ -49,24 +65,10 @@
     <useCaseModelRootHasTypes>
       <useCase Id="8b55eb62-ed9b-4152-8914-83a69f0febf3" name="Aplicación de rampas" isAbstract="false" isLeaf="false">
         <elementDefinition Id="540b4265-8264-47e6-bbe1-669840b05244" />
-        <generalsInternal>
-          <generalization Id="abcf245a-8865-406e-be45-6db9a5f49c8f" isSubstitutable="false">
-            <useCaseMoniker Id="30002269-eab6-4753-86c2-9bdff9dfa550" LastKnownName="elegir tipo de aplicación" />
-            <elementDefinition Id="2ed34a66-a58d-4ea1-aa10-e0ee4b9006be" />
-          </generalization>
-        </generalsInternal>
-        <subjects>
-          <subsystemMoniker Id="60b22aa8-b1b2-4d52-acf9-1fa2525f814e" LastKnownName="Elegir tipo de aplicación" />
-        </subjects>
-      </useCase>
-    </useCaseModelRootHasTypes>
-    <useCaseModelRootHasTypes>
-      <useCase Id="36718df9-dad9-4415-8043-6263d9a78c66" name="Definir nº de cañones" isAbstract="false" isLeaf="false">
-        <elementDefinition Id="5dc3b355-ef43-4740-8369-d161fa5ffa53" />
         <additions>
-          <include Id="cd821053-74bc-4ed5-b255-42b2b945c267">
-            <useCaseMoniker Id="8b55eb62-ed9b-4152-8914-83a69f0febf3" LastKnownName="Aplicación de rampas" />
-            <elementDefinition Id="58e39d7a-9d24-4a17-bae8-44306d79bbee" />
+          <include Id="614467b5-5f6e-4921-9595-8921cf4a9dff">
+            <useCaseMoniker Id="30002269-eab6-4753-86c2-9bdff9dfa550" LastKnownName="elegir tipo de aplicación" />
+            <elementDefinition Id="d5d20397-8f8d-401a-95d1-6eb9c215ec0c" />
           </include>
         </additions>
         <subjects>

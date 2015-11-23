@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/UseCaseModel" dslVersion="1.0.0.0" Id="f9ddcaf4-fe84-4bf8-8f27-7d15d692283f" name="TrampillaEstados" linkedPackageId="55ff3023-160b-4cf5-8f79-9a611d440615" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="43eb849a-cd00-4316-81ef-6f3b26498b41">
+      <profileInstance Id="93b6786d-c8d5-4d23-a5e0-15f29fa62e10" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="650cfe93-ffd3-410b-bbf0-9ed10c49bb25">
+      <profileInstance Id="1d71b1a3-37d5-4e73-8182-2996d9dfd684" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <activityRootModelHasActivity>
+      <activity Id="3599e229-cfe2-4431-a330-cf8d5d762cea" name="TrampillaEstados" isAbstract="false" isLeaf="false" isActiveClass="false" isReentrant="false" isReadOnly="false" isSingleExecution="false">
+        <elementDefinition Id="d95ed228-0df4-4e17-973b-6d1d789519c3" />
+        <nodes>
+          <initialNode Id="22bfad62-99fb-47fd-960e-7c22f45bf56f" name="Initial1" isLeaf="false">
+            <elementDefinition Id="55dd8b4f-3263-4f51-b34f-7c54437ecda3" />
+            <objectFlowTargets>
+              <objectFlow Id="b8eabe01-9230-4853-8714-e0a56ee2ba5d" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="be4be41f-d4f8-4309-9082-d62561c92095" LastKnownName="Esperando" />
+                <elementDefinition Id="420fd349-74f3-4b1b-801a-5a22196282a8" />
+              </objectFlow>
+            </objectFlowTargets>
+          </initialNode>
+          <objectNode Id="be4be41f-d4f8-4309-9082-d62561c92095" name="Esperando" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="6d3258b6-d1b9-4776-a08f-9f349734b1bb" />
+            <objectFlowTargets>
+              <objectFlow Id="2162592e-2b17-44ac-9a17-187e31a23377" guard="Orden vaciar &amp;&amp; Se puede vaciar" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="b645402a-bd28-484f-b121-e4bebe8d2590" LastKnownName="Vaciando" />
+                <elementDefinition Id="1ee23358-c191-418e-bd65-5b33bb55e181" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger Id="80830698-e1de-41ad-95a2-fa719801d36b" name="2147483647" value="2147483647">
+                <elementDefinition Id="05feeba8-043d-4aea-a1e3-300ad859c376" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="b645402a-bd28-484f-b121-e4bebe8d2590" name="Vaciando" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="bcb09b6a-0a54-4065-8e75-58c01bf460ee" />
+            <objectFlowTargets>
+              <objectFlow Id="521e4592-6c78-4d3e-9d9d-966ce45cea1b" guard="Fin rutina vaciado" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <decisionNodeMoniker Id="4afff971-35e0-4707-b1b1-ccf2d2762d97" LastKnownName="Decision1" />
+                <elementDefinition Id="35f4c575-4c78-41f1-8d9f-fb34396a9c87" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger Id="4185fb9c-760e-4946-8b22-833035d1ecbc" name="2147483647" value="2147483647">
+                <elementDefinition Id="d388d16a-c4d3-44d4-abd3-f9d3f6148b5e" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <activityFinalNode Id="a9b7ae7e-7d75-4411-b9f7-72507b279ec2" name="ActivityFinal1" isLeaf="false">
+            <elementDefinition Id="55f9f0b4-7829-4569-bab3-fcc164009da6" />
+          </activityFinalNode>
+          <decisionNode Id="4afff971-35e0-4707-b1b1-ccf2d2762d97" name="Decision1" isLeaf="false">
+            <elementDefinition Id="ada61edb-6266-44c8-a112-03f96bf4466f" />
+            <flowNodeTargets>
+              <controlFlow Id="77ae34cb-70c6-49e2-a652-7bbd2879c410" guard="Fin" isLeaf="false">
+                <activityFinalNodeMoniker Id="a9b7ae7e-7d75-4411-b9f7-72507b279ec2" LastKnownName="ActivityFinal1" />
+                <elementDefinition Id="b5d7e41d-0b3a-4b30-b487-feffa703ea76" />
+              </controlFlow>
+            </flowNodeTargets>
+            <objectFlowTargets>
+              <objectFlow Id="11f23a93-ed03-468c-95f8-c46236bbf78a" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="be4be41f-d4f8-4309-9082-d62561c92095" LastKnownName="Esperando" />
+                <elementDefinition Id="43882487-d0b2-4b0b-942f-a495e6b755cf" />
+              </objectFlow>
+            </objectFlowTargets>
+          </decisionNode>
+        </nodes>
+      </activity>
+    </activityRootModelHasActivity>
+  </packagedElements>
+  <package Id="55ff3023-160b-4cf5-8f79-9a611d440615" name="RampaModel">
+    <elementDefinition Id="d9d09dab-f2b9-4ac9-92da-5916bbb784e6" />
+  </package>
+</activityRootModel>
