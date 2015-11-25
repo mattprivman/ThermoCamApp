@@ -13,7 +13,7 @@ namespace ThermoVision.Models
         #region "Variables"
         
         int         _id;
-        string      _Nombre;
+        string      _nombre;
 
         bool        _selected;
 
@@ -75,11 +75,11 @@ namespace ThermoVision.Models
         {
             get
             {
-                return this._Nombre;
+                return this._nombre;
             }
             set
             {
-                this._Nombre = value;
+                this._nombre = value;
 
                 if (NameChanged != null)
                     NameChanged(this, null);
@@ -205,7 +205,7 @@ namespace ThermoVision.Models
 
         public SubZona(string Name)                                             
         {
-            this._Nombre    = Name;
+            this._nombre    = Name;
 
             this._filas     = 1;
             this._columnas  = 1;
@@ -223,7 +223,7 @@ namespace ThermoVision.Models
         protected SubZona(SerializationInfo info, StreamingContext ctxt)        
         {
             this._id            = (int)       info.GetValue("Id",           typeof(int));
-            this._Nombre        = (string)    info.GetValue("Nombre",       typeof(string));
+            this._nombre        = (string)    info.GetValue("Nombre",       typeof(string));
             this._parent        = (Zona)      info.GetValue("Parent",       typeof(Zona));
             this._filas         = (int)       info.GetValue("Filas",        typeof(int));
             this._columnas      = (int)       info.GetValue("Columnas",     typeof(int));

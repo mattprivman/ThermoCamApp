@@ -11,7 +11,7 @@ namespace ThermoCamApp.Controls
     class RejillasControl
     {
         public int Posicion;
-        public ThermoVision.Models.Zona zona;
+        public ThermoVision.Models.ZonaVaciado zona;
 
         public CheckBox buttonMode;
         public Button[] buttonsRejillas;
@@ -19,14 +19,14 @@ namespace ThermoCamApp.Controls
         public delegate void trampillaControlBoolParameterCallback(int CannonNumber, bool arg);
         public delegate void trampillaControlParameterCallback(int CannonNumber);
         public delegate bool trampillaControlBoolCallback(int CannonNumber);
-        public delegate void cambiarTrampillaEstadoCallback(ThermoVision.Models.Zona z, int subzona, int col, bool activar);
+        public delegate void cambiarTrampillaEstadoCallback(ThermoVision.Models.ZonaVaciado z, int subzona, int col, bool activar);
 
         public trampillaControlBoolParameterCallback buttonModeAction;
         public cambiarTrampillaEstadoCallback        cambiarTrampillaEstadoAction;
 
         public RejillasControl(Form f,
             int posicion,
-            ThermoVision.Models.Zona zona,
+            ThermoVision.Models.ZonaVaciado zona,
             Point p,
             int zonaWidth,
             int totalWidth,
@@ -191,9 +191,9 @@ namespace ThermoCamApp.Controls
                 changeButtonsState(state);
 
                 if (state)
-                    this.zona.triggerStateChangedEvent(ThermoVision.Models.Zona.States.Manual);
+                    this.zona.ChangeState(ThermoVision.Models.Zona.States.Manual);
                 else
-                    this.zona.triggerStateChangedEvent(ThermoVision.Models.Zona.States.Esperando);
+                    this.zona.ChangeState(ThermoVision.Models.Zona.States.Esperando);
 
                 this.buttonMode.CheckedChanged += buttonMode_CheckedChanged;
             }

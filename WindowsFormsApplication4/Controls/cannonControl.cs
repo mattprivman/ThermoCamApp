@@ -226,13 +226,13 @@ namespace ThermoCamApp.Controls
                 {
                     if(this.zona.State != ThermoVision.Models.Zona.States.Manual)
                         this.LastState = this.zona.State;
-                    this.zona.triggerStateChangedEvent(ThermoVision.Models.Zona.States.Manual);
+                    this.zona.ChangeState(ThermoVision.Models.Zona.States.Manual);
                 }
                 else
                 {
                     if (this.LastState == ThermoVision.Models.Zona.States.Enfriando)
                         this.LastState = ThermoVision.Models.Zona.States.Esperando;
-                      this.zona.triggerStateChangedEvent(this.LastState);
+                      this.zona.ChangeState(this.LastState);
                 }
 
                 this.buttonMode.CheckedChanged += buttonMode_CheckedChanged;

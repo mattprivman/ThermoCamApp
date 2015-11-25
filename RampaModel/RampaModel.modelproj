@@ -22,12 +22,36 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <Content Include="Component Diagrams\RampaComponentDiagram.componentdiagram">
+    <Content Include="Class Diagrams\UMLClassDiagram1.classdiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Component Diagrams\RampaComponentDiagram.componentdiagram.layout">
+    <Content Include="Class Diagrams\UMLClassDiagram1.classdiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Component Diagrams\RampaComponentDiagram.componentdiagram</DependentUpon>
+      <DependentUpon>Class Diagrams\UMLClassDiagram1.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Component Diagrams\CamConfig.componentdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Component Diagrams\CamConfig.componentdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Component Diagrams\CamConfig.componentdiagram</DependentUpon>
+    </Content>
+    <Content Include="Component Diagrams\ThermoCamApp.componentdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Component Diagrams\ThermoCamApp.componentdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Component Diagrams\ThermoCamApp.componentdiagram</DependentUpon>
+    </Content>
+    <Content Include="Component Diagrams\Rampa.componentdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Component Diagrams\Rampa.componentdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Component Diagrams\Rampa.componentdiagram</DependentUpon>
+    </Content>
+    <Content Include="ModelDefinition\Package_1743.uml">
+      <SubType>Content</SubType>
     </Content>
     <Content Include="Secuence Diagrams\CañonEstados.activitydiagram">
       <SubType>Content</SubType>
@@ -78,6 +102,7 @@
     <Folder Include="Activity Diagrams" />
     <Folder Include="Class Diagrams" />
     <Folder Include="Component Diagrams" />
+    <Folder Include="Layer Diagrams" />
     <Folder Include="Secuence Diagrams" />
     <Folder Include="Use Case Diagrams" />
   </ItemGroup>

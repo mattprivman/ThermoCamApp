@@ -31,7 +31,7 @@ namespace ThermoVision.Enumeraciones
         Ethernet8bits           = 4,
         FireWire16bits          = 5,
         Ethernet16bits          = 6,
-        EthernetiPort           = 8,
+        EthernetPort           = 8,
         USB                     = 9
     }
     public enum InterfaceType : short

@@ -28,15 +28,13 @@ namespace ThermoVision.Models
 
         List<SubZona>           _children;
 
-        Rampa                 _parent;
+        Rampa                   _parent;
 
         public float            _maxTemp;
         public float            _minTemp;
         public double           _meanTemp;
 
         States                  _state;
-
-        public List<Zona>       zonasContenidas     = new List<Zona>();          //Para zonas de vaciado
 
         #endregion
 
@@ -60,7 +58,7 @@ namespace ThermoVision.Models
                 return this._children;
             }
         }
-        public Rampa       Parent           // -r       
+        public Rampa         Parent           // -r       
         {
             get
             {
@@ -94,31 +92,7 @@ namespace ThermoVision.Models
             }
         }
 
-        public Point CoolingPoint             // -rw      
-        {
-            get;
-            set;
-        }
-        public int CoolingSubZone             // -rw      
-        {
-            get;
-            set;
-        }
-        public bool Cooling                   // -rw      
-        {
-            get;
-            set;
-        }
-        public bool Valvula                   // -rw      
-        {
-            get;
-            set;
-        }
-        public bool Emptying                  // -rw      
-        {
-            get;
-            set;
-        }
+               
 
         public int Width                      // -rw      
         {
@@ -158,16 +132,12 @@ namespace ThermoVision.Models
             this._children = new List<SubZona>();
 
             this._parent = parent;
-
-            this.CoolingPoint = new Point(0, 0);
         }
         protected Zona(SerializationInfo info, StreamingContext ctxt)   
         {
             this._nombre        = (string)          info.GetValue("Nombre",         typeof(string));
             this._children      = (List<SubZona>)   info.GetValue("Children",       typeof(List<SubZona>));
-            this._parent        = (Rampa)         info.GetValue("Parent",         typeof(Rampa));
-
-            this.CoolingPoint = new Point(0, 0);
+            this._parent        = (Rampa)           info.GetValue("Parent",         typeof(Rampa));
         }
 
         #endregion
@@ -200,7 +170,7 @@ namespace ThermoVision.Models
             info.AddValue("Parent",      this._parent);
         }
 
-        public void triggerStateChangedEvent(States state)                                  
+        public void ChangeState(States state)                                  
         {
             this.State = state;
 
@@ -246,105 +216,7 @@ namespace ThermoVision.Models
 
         #endregion
 
-        public void coolingStateChanged(object state)
-        {
-            if (state is bool && this.State != States.Manual)
-            {
-                this.Cooling = (bool)state;
-
-                if (this.Cooling)
-                {
-                    if (this.State != States.Enfriando)
-                        this.triggerStateChangedEvent(States.Enfriando);
-                }
-                else
-                {
-                    if (this.State != States.Esperando)
-                        this.triggerStateChangedEvent(States.Esperando);
-                }
-            }
-        }
-        public void coordinateXChanged(object x)        
-        {
-            if(x is int)
-                this.CoolingPoint = new Point((int) x, this.CoolingPoint.Y);
-        }
-        public void coordinateYChanged(object y)        
-        {
-            if (y is int)
-                this.CoolingPoint = new Point(this.CoolingPoint.X, (int) y);
-        }
-        public void subZonaNChanged(object n)           
-        {
-            if (n is int)
-                this.CoolingSubZone = (int) n;
-        }
-        public void ValvulaStateChanged(object state)   
-        {
-            if(state is bool)
-                this.Valvula = (bool) state;
-        }
-
-        public void coordinateXVaciadoChanged(object x) 
-        {
-            if (x is int)
-            {
-                if (this.CoolingSubZone < this.Children.Count &&
-                   (int) x < this.Children[this.CoolingSubZone].Filas &&
-                   this.CoolingPoint.Y < this.Children[this.CoolingSubZone].Columnas)
-                {
-                    this.CoolingPoint = new Point((int)x, this.CoolingPoint.Y);
-
-                    this.Children[this.CoolingSubZone].tempMatrix[this.CoolingPoint.X, this.CoolingPoint.Y].hayMaterial = false;
-                    this.Children[this.CoolingSubZone].tempMatrix[this.CoolingPoint.X, this.CoolingPoint.Y].estaCaliente = false;
-                }
-            }
-        }
-        public void coordinateYVaciadoChanged(object y) 
-        {
-            if (y is int)
-            {
-                if (this.CoolingSubZone < this.Children.Count &&
-                   this.CoolingPoint.X < this.Children[this.CoolingSubZone].Filas &&
-                   (int) y < this.Children[this.CoolingSubZone].Columnas)
-                {
-                    this.CoolingPoint = new Point(this.CoolingPoint.X, (int)y);
-
-                    this.Children[this.CoolingSubZone].tempMatrix[this.CoolingPoint.X, this.CoolingPoint.Y].hayMaterial = false;
-                    this.Children[this.CoolingSubZone].tempMatrix[this.CoolingPoint.X, this.CoolingPoint.Y].estaCaliente = false;
-                }
-            }
-        }
-        public void subZonaNVaciadoChanged(object n)    
-        {
-            if (n is int)
-            {
-                if ((int) n < this.Children.Count && 
-                    this.CoolingPoint.X < this.Children[this.CoolingSubZone].Filas &&
-                    this.CoolingPoint.Y < this.Children[this.CoolingSubZone].Columnas)
-                {
-                    this.CoolingSubZone = (int)n;
-
-                    this.Children[this.CoolingSubZone].tempMatrix[this.CoolingPoint.X, this.CoolingPoint.Y].hayMaterial = false;
-                    this.Children[this.CoolingSubZone].tempMatrix[this.CoolingPoint.X, this.CoolingPoint.Y].estaCaliente = false;
-                }
-            }
-        }
-        public void emptyingStateChanged(object state)  
-        {
-            if (state is bool)
-            {
-                this.Emptying = (bool)state;
-                if (this.Emptying)
-                {
-                    this.State = States.Vaciando;
-                }
-                else
-                {
-                    this.State = States.Esperando;
-                }
-            }
-        }
+       
 
     }
 }

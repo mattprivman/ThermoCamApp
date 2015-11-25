@@ -9,8 +9,6 @@ namespace ThermoVision.Tipos
         public Bitmap   Imagen;
         public float    MaxTemp;
         public float    MinTemp;
-
-        public tempElement[,] tempMatrix; 
     }
 
     public struct ThemoCamImgCuadradosArgs
@@ -29,7 +27,7 @@ namespace ThermoVision.Tipos
         public bool estaCaliente;
         public bool activo;
 
-        public Point CannonCoordinate;
+        public Point ActiveCoordinate;
         public bool  selected;
 
         public void stateChanged(object value)
@@ -44,7 +42,7 @@ namespace ThermoVision.Tipos
 
             if (this.activo)
             {
-                this.hayMaterial = false;
+                this.hayMaterial  = false;
                 this.estaCaliente = false;
             }
         }

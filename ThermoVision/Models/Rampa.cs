@@ -19,14 +19,13 @@ namespace ThermoVision.Models
 
         string              _mode               = "";
 
-        const int           limitTemp           =  20;
 
         public Estados      estados;
 
-        List<Zona>          _zonas;
         List<ThermoCam>     _thermoCams;
 
-        List<Zona>          _zonasVaciado;      //solo para la aplicación de rampas
+        List<ZonaApagado>   _zonas;
+        List<ZonaVaciado>   _zonasVaciado;      //solo para la aplicación de rampas
 
         string              _OPCServerName;
         OPCClient           _OPCClient;
@@ -53,28 +52,28 @@ namespace ThermoVision.Models
 
         #region "Propiedades"
 
-        public List<Zona>       Zonas                               // -r  
+        public List<ZonaApagado>    Zonas                               // -r  
         {
             get
             {
                 return this._zonas;
             }
         }
-        public List<Zona>       ZonasVaciado                        // -r  
+        public List<ZonaVaciado>    ZonasVaciado                        // -r  
         {
             get
             {
                 return this._zonasVaciado;
             }
         }
-        public List<ThermoCam>  ThermoCams                          // -r  
+        public List<ThermoCam>      ThermoCams                          // -r  
         {
             get
             {
                 return this._thermoCams;
             }
         }
-        public string           OPCServerName                       // -rw 
+        public string               OPCServerName                       // -rw 
         {
             get
             {
@@ -85,7 +84,7 @@ namespace ThermoVision.Models
                 this._OPCServerName = value;
             }
         }
-        public OPCClient        OPCClient                           // -rw 
+        public OPCClient            OPCClient                           // -rw 
         {
             get
             {
@@ -96,7 +95,7 @@ namespace ThermoVision.Models
                 this._OPCClient = value;
             }
         }
-        public string           Path                                // -rw 
+        public string               Path                                // -rw 
         {
             get
             {
@@ -107,7 +106,7 @@ namespace ThermoVision.Models
                 this._path = value;
             }
         }
-        public Zona SelectedZona
+        public Zona                 SelectedZona                               
         {
             get
             {
@@ -120,7 +119,7 @@ namespace ThermoVision.Models
                     this.unSelectSubZonas();
             }
         }
-        public string           Mode                                // -rw 
+        public string               Mode                                // -rw 
         {
             get
             {
@@ -140,16 +139,16 @@ namespace ThermoVision.Models
         {
             this.estados = new Estados(this);
 
-            this._zonas        = new List<Zona>();
+            this._zonas        = new List<ZonaApagado>();
             this._thermoCams   = new List<ThermoCam>();
-            this._zonasVaciado = new List<Zona>();
+            this._zonasVaciado = new List<ZonaVaciado>();
         }
         protected Rampa(SerializationInfo info, StreamingContext ctxt)   
         {
             try
             {
-                this._zonas         = (List<Zona>)      info.GetValue("Zonas",          typeof(List<Zona>));
-                this._zonasVaciado  = (List<Zona>)      info.GetValue("ZonasVaciado",   typeof(List<Zona>));
+                this._zonas         = (List<ZonaApagado>)info.GetValue("Zonas", typeof(List<ZonaApagado>));
+                this._zonasVaciado  = (List<ZonaVaciado>)info.GetValue("ZonasVaciado", typeof(List<ZonaVaciado>));
                 this._thermoCams    = (List<ThermoCam>) info.GetValue("ThermoCams",     typeof(List<ThermoCam>));
                 this._OPCServerName = (string)          info.GetValue("OPCServerName",  typeof(string));
                 this._path          = (string)          info.GetValue("Path",           typeof(string));
@@ -229,7 +228,7 @@ namespace ThermoVision.Models
         }
 
         #region "ZONAS"
-        public void addZona(Zona z)                     
+        public void addZona(ZonaApagado z)              
         {
             lock ("Zonas")
             {
@@ -248,7 +247,7 @@ namespace ThermoVision.Models
                     zonasListChanged(this, null);
             }
         }       //AÑADIR ZONA
-        public void removeZona(Zona z)                  
+        public void removeZona(ZonaApagado z)           
         {
             lock ("Zonas")
             {
@@ -267,7 +266,7 @@ namespace ThermoVision.Models
                     zonasListChanged(this, null);
             }
         }       //BORRAR ZONA
-        public Zona getZona(string Nombre)              
+        public ZonaApagado getZona(string Nombre)              
         {
             if (this._zonas.Exists(x => x.Nombre == Nombre))
                 return this._zonas.Where(x => x.Nombre == Nombre).First();
@@ -299,7 +298,7 @@ namespace ThermoVision.Models
         #endregion
 
         #region "ZONAS VACIADO"
-        public void addZonaVaciado(Zona z)              
+        public void addZonaVaciado(ZonaVaciado z)       
         {
             lock ("Zonas")
             {
@@ -318,7 +317,7 @@ namespace ThermoVision.Models
                     zonasListChanged(this, null);
             }
         }       //AÑADIR ZONA
-        public void removeZonaVaciado(Zona z)           
+        public void removeZonaVaciado(ZonaVaciado z)    
         {
             lock ("Zonas")
             {
@@ -337,7 +336,7 @@ namespace ThermoVision.Models
                     zonasListChanged(this, null);
             }
         }       //BORRAR ZONA
-        public Zona getZonaVaciado(string Nombre)       
+        public ZonaVaciado getZonaVaciado(string Nombre)       
         {
             if (this._zonasVaciado.Exists(x => x.Nombre == Nombre))
                 return this._zonasVaciado.Where(x => x.Nombre == Nombre).First();
@@ -543,7 +542,7 @@ namespace ThermoVision.Models
             //System.Threading.Thread.Sleep(1000);
         }
 
-        public void enfriarZona(Zona z)                 
+        public void enfriarZona(ZonaApagado z)                 
         {
             try
             {
@@ -572,7 +571,7 @@ namespace ThermoVision.Models
                 e.ToString();
             }
         }
-        public void noHayQueEnfriar(Zona z)             
+        public void noHayQueEnfriar(ZonaApagado z)             
         {
             try
             {
@@ -601,7 +600,45 @@ namespace ThermoVision.Models
             }
         }
 
-        public void vaciarZona(Zona z)                  
+
+
+        public void getCannonCoordinates(ZonaApagado z) 
+        {
+            int n = 0;
+            bool v = false;
+            z.CoolingPoint = getCoolingCoordinates(z, ref n, ref v);
+            z.CoolingSubZone = n;
+            z.Valvula = v;
+        }
+        public Point getCoolingCoordinates(ZonaApagado z, ref int n, ref bool estadoValvula)   
+        {
+            object resX = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "X");
+            object resY = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "Y");
+            object resN = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "n");
+            object resV = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "Valvula");
+            object resM = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "Mode");
+
+            if (resM != null)
+            {
+                if (resM is bool)
+                    if ((bool)resM)
+                        z.ChangeState(Zona.States.Manual);
+            }
+
+            if (resX != null && resY != null && resN != null && resV != null)
+            {
+                if (resX is int && resY is int && resN is int && resV is bool)
+                {
+                    n = (int)resN;
+                    estadoValvula = (bool)resV;
+                    return new Point((int)resX, (int)resY);
+                }
+            }
+
+            throw new Exception("Imposible leer las coordenadas de la zona " + z.Nombre + ".");
+        }
+
+        public void vaciarZona(ZonaVaciado z)           
         {
             try
             {
@@ -632,7 +669,7 @@ namespace ThermoVision.Models
             }
 
         }
-        public void noHAyQueVaciar(Zona z)              
+        public void noHAyQueVaciar(ZonaVaciado z)       
         {
             try
             {
@@ -645,43 +682,7 @@ namespace ThermoVision.Models
             }
         }
 
-        public void getCannonCoordinates(Zona z)        
-        {
-            int n = 0;
-            bool v = false;
-            z.CoolingPoint = getCoolingCoordinates(z, ref n, ref v);
-            z.CoolingSubZone = n;
-            z.Valvula = v;
-        }
-        public Point getCoolingCoordinates(Zona z, ref int n, ref bool estadoValvula)   
-        {
-            object resX = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "X");
-            object resY = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "Y");
-            object resN = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "n");
-            object resV = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "Valvula");
-            object resM = this.OPCClient.ReadSync(this.Path + ".RAMPAS.APAGADO." + z.Nombre, "Mode");
-
-            if (resM != null)
-            {
-                if (resM is bool)
-                    if ((bool)resM)
-                        z.triggerStateChangedEvent(Zona.States.Manual);
-            }
-
-            if (resX != null && resY != null && resN != null && resV != null)
-            {
-                if (resX is int && resY is int && resN is int && resV is bool)
-                {
-                    n = (int)resN;
-                    estadoValvula = (bool)resV;
-                    return new Point((int)resX, (int)resY);
-                }
-            }
-
-            throw new Exception("Imposible leer las coordenadas de la zona " + z.Nombre + ".");
-        }
-
-        private void getEmptyingCoordinates(Zona z)     
+        private void getEmptyingCoordinates(ZonaVaciado z)     
         {
             object resX = this.OPCClient.ReadSync(this.Path + ".RAMPAS.VACIADO." + z.Nombre, "X");
             object resY = this.OPCClient.ReadSync(this.Path + ".RAMPAS.VACIADO." + z.Nombre, "Y");
@@ -691,11 +692,11 @@ namespace ThermoVision.Models
             {
                 if (resX is int && resY is int && resN is int)
                 {
-                    z.CoolingPoint = new Point((int)resX, (int)resY);
-                    z.CoolingSubZone = (int) resN;
+                    z.EmptyingPoint = new Point((int)resX, (int)resY);
+                    z.EmptyingSubZone = (int) resN;
 
-                    z.Children[(int) resN].tempMatrix[z.CoolingPoint.X, z.CoolingPoint.Y].hayMaterial  = false;
-                    z.Children[(int) resN].tempMatrix[z.CoolingPoint.X, z.CoolingPoint.Y].estaCaliente = false;
+                    z.Children[(int)resN].tempMatrix[z.EmptyingPoint.X, z.EmptyingPoint.Y].hayMaterial = false;
+                    z.Children[(int)resN].tempMatrix[z.EmptyingPoint.X, z.EmptyingPoint.Y].estaCaliente = false;
                 }
             }
 
@@ -826,7 +827,7 @@ namespace ThermoVision.Models
             this.OPCClient.SuscribeGroup(new StringBuilder(this.Path).Append(".").Append(branch).ToString(), Item, action);
         }
 
-        public void activateRejillaAsync(Zona z, int subzona, int col, bool activar)
+        public void activateRejillaAsync(ZonaVaciado z, int subzona, int col, bool activar)
         {
             this.OPCClient.WriteAsync(new StringBuilder(this.Path).Append(".RAMPAS.VACIADO.").Append(z.Nombre).Append(".").Append(subzona).Append("_OUTPUTS").ToString(),
                 new StringBuilder("[").Append(col).Append(",").Append(0).Append("]").ToString(),

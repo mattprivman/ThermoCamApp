@@ -1,0 +1,421 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<componentModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="64eaaf18-8e7f-447e-af36-1ba208f52c89" name="RampaComponentDiagram" linkedPackageId="2a6f0535-9d05-4d83-94ee-2832e4fc16ce" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="97b18a74-f9b7-4018-8a9b-e495c9752dcb">
+      <profileInstance Id="4cc9fe8e-8cd2-4b5b-ae53-d12533653cc3" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="33d17607-b7af-41d1-b556-c378d2730fa3">
+      <profileInstance Id="8eab1db1-8b31-47d7-9165-bf1066864191" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <componentModelHasComponents>
+      <component Id="c2f564b4-438c-4c31-ba5c-169e16f57498" name="ZonaApagado" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="d432f7c4-c9c6-4c1a-9786-3504e6fa39df" />
+        <ownedAttributesInternal>
+          <providedInterface Id="11d4c8a5-ce58-4a49-9ed8-3ee7ce90dcb1" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="a4dd2e0a-2877-4f4b-93ba-d8c501ad3168" />
+            <type_NamedElement>
+              <interfaceMoniker Id="afd2fa24-70b7-483d-b8ec-82c21a0882c3" LastKnownName="Rutina enfriado" />
+            </type_NamedElement>
+          </providedInterface>
+          <requiredInterface Id="05ab1b17-e550-46ef-af00-0d08b4c1e984" name="Port2" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="a93161aa-7bc8-4ec8-a2e7-d10c978c2503" />
+            <suppliersInternal>
+              <dependency Id="a6f83835-1162-42ab-9926-0dae255e6028">
+                <providedInterfaceMoniker Id="c6d1eb65-78ff-4142-9f7e-7fb787a15035" LastKnownName="Port3" />
+                <elementDefinition Id="b244535e-a0ab-4d40-bb8c-7cbc5c42b035" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="7163f794-5b4c-42fc-aabb-b3cc343a4c0e" LastKnownName="Fin rutina enfriado" />
+            </type_NamedElement>
+          </requiredInterface>
+          <providedInterface Id="ab8f9247-f160-4d81-b72a-ba88103d1f67" name="Port3" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="fb6c1bfb-a752-4b7e-8b3b-2c89125e7483" />
+            <type_NamedElement>
+              <interfaceMoniker Id="73d310dd-76f5-4e68-8036-555a96468d37" LastKnownName="Ir a posicion" />
+            </type_NamedElement>
+          </providedInterface>
+          <providedInterface Id="b5fc2d77-7c9f-4cfd-85f7-f6292faa2ddc" name="Port4" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="5fe104bc-5924-4d25-8ecb-4577d09416b2" />
+            <type_NamedElement>
+              <interfaceMoniker Id="a429122e-54d1-4139-bafe-5d37c5fdb7ef" LastKnownName="Enfriar" />
+            </type_NamedElement>
+          </providedInterface>
+          <requiredInterface Id="1e752e7e-5262-48ff-8cfe-2f3288fe1770" name="Port5" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="61abba34-ab1c-4d95-807a-04398524f62d" />
+            <suppliersInternal>
+              <dependency Id="b146e58e-e545-44ea-a880-288a9b1851d2">
+                <providedInterfaceMoniker Id="6d1912a3-4881-47ed-a754-268566b2c30e" LastKnownName="Port1" />
+                <elementDefinition Id="33bb2f9a-c461-41c1-aa13-acc76364f373" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="a6b00cf5-927f-48dc-9b5a-c47304a67bf3" LastKnownName="tempMatrix" />
+            </type_NamedElement>
+          </requiredInterface>
+          <providedInterface Id="83d42ef2-984c-4d88-98e9-8350a6b1f64e" name="Port6" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="5deedc81-d179-4cc8-918f-39d16c6c524e" />
+            <type_NamedElement>
+              <interfaceMoniker Id="81f301f0-65e4-4625-9054-e6e4150c554a" LastKnownName="Auto / Manual" />
+            </type_NamedElement>
+          </providedInterface>
+          <requiredInterface Id="7039c27b-1f13-41fa-8b2a-d5730bcd15d3" name="Port7" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="8e71b845-878f-444a-bbf7-2b4a726a06d3" />
+            <suppliersInternal>
+              <dependency Id="f36f83fb-5a88-4e1d-a14f-19756fc29543">
+                <providedInterfaceMoniker Id="0fe2ffb2-f289-4d85-a4c3-8e156f02355f" LastKnownName="Port1" />
+                <elementDefinition Id="80dc78fd-7f87-44b5-ad9e-bdd86e6ab8fa" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="58f8d11c-de31-4920-97a0-501264d38364" LastKnownName="Elegir estado" />
+            </type_NamedElement>
+          </requiredInterface>
+        </ownedAttributesInternal>
+      </component>
+    </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="f5edab46-8521-435f-86ae-e0fa40d18967" name="ZonaVaciado" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="df7d359d-83fd-4889-abb6-9c0c1ba694f0" />
+        <ownedAttributesInternal>
+          <providedInterface Id="8e3bcb76-8c90-4360-af96-65825dd34d94" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="dee1850f-db03-4f6e-aecb-ba28036fe873" />
+            <type_NamedElement>
+              <interfaceMoniker Id="d63e3a00-a735-4c75-aa7a-482db0731c76" LastKnownName="Rutina vaciado" />
+            </type_NamedElement>
+          </providedInterface>
+          <requiredInterface Id="674a81dd-70b1-4dc0-bbcb-30cc10c32862" name="Port2" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="37c1e1e3-b3d0-4932-a65e-ebfcac7dacef" />
+            <suppliersInternal>
+              <dependency Id="41e6d148-8346-42a3-8664-9c1873215ac0">
+                <providedInterfaceMoniker Id="88c2e6e2-88c0-4a74-bb1f-9dfac9a56f69" LastKnownName="Port4" />
+                <elementDefinition Id="ac23ff1f-0021-44bc-89f3-14c35ffa3597" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="4ecea0a6-c77d-43c1-857f-ad3e37c4138a" LastKnownName="Fin rutina vaciado" />
+            </type_NamedElement>
+          </requiredInterface>
+          <providedInterface Id="5dc34e76-f439-490f-8ab3-969548a812f3" name="Port3" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="2ed2b364-dd49-4a17-8e6d-fe4d5146ccf5" />
+            <type_NamedElement>
+              <interfaceMoniker Id="116e3afd-3de8-4a59-8611-9e92dbd3fa03" LastKnownName="Vaciar trampilla" />
+            </type_NamedElement>
+          </providedInterface>
+          <requiredInterface Id="c9e47e31-7280-4aa4-a7b4-8d114b2d4fdc" name="Port4" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="cdc6506f-2781-46ee-b230-6ae95793a650" />
+            <suppliersInternal>
+              <dependency Id="8dd34f37-0bfd-4d4d-80ed-a3a3980c50e9">
+                <providedInterfaceMoniker Id="52d19426-c7d0-41d9-8854-806118262ce6" LastKnownName="Port2" />
+                <elementDefinition Id="a0e6a00c-54ec-4666-bff9-d560d96b2e75" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="481d2197-69d4-46ee-825b-288812f385b9" LastKnownName="tempMatrix" />
+            </type_NamedElement>
+          </requiredInterface>
+          <providedInterface Id="7b482940-3310-4c31-b1e8-3b39b321e6b1" name="Port5" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="47b47880-9c46-4f9c-a049-ce573f9f3ac2" />
+            <type_NamedElement>
+              <interfaceMoniker Id="de2e088d-ce1f-4f96-96e2-1450c4adb0af" LastKnownName="Auto / Manual" />
+            </type_NamedElement>
+          </providedInterface>
+          <requiredInterface Id="eb5022d9-d350-4372-85fa-58ecf4eb7d73" name="Port6" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="1f915bed-6202-4f51-9640-72f34db7ad4f" />
+            <suppliersInternal>
+              <dependency Id="653b5499-8ad4-4226-bf5e-537d461d8d16">
+                <providedInterfaceMoniker Id="88d3e471-d053-4eee-9720-f5b9f05f78a3" LastKnownName="Port2" />
+                <elementDefinition Id="6b7fa52e-1cab-4167-8be6-923d2e3806c6" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="de64cfa6-173d-4745-aac1-8275034b5f20" LastKnownName="Elegir estado" />
+            </type_NamedElement>
+          </requiredInterface>
+        </ownedAttributesInternal>
+      </component>
+    </componentModelHasComponents>
+    <componentModelHasComponents>
+      <component Id="879feb35-46c0-4754-9739-38aa4d0f804e" name="OPCClient" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="6c1ff26a-bd5d-49df-be73-d6e4989d0214" />
+        <ownedAttributesInternal>
+          <requiredInterface Id="0f78f36d-3ee9-499c-af3f-3b1ff9aea38e" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="a5346b01-3b90-4832-b4fd-78a2dc8d63bb" />
+            <suppliersInternal>
+              <dependency Id="5bfd4a64-9abd-4848-9705-1f3ab73dab60">
+                <providedInterfaceMoniker Id="11d4c8a5-ce58-4a49-9ed8-3ee7ce90dcb1" LastKnownName="Port1" />
+                <elementDefinition Id="b432d10a-393d-4b14-b49b-80a6a413ba55" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="1796da59-fc86-4978-bf0d-7d6c06113486" LastKnownName="Enfriar" />
+            </type_NamedElement>
+          </requiredInterface>
+          <requiredInterface Id="1e64224e-8e1c-4a44-b9a5-b49508915a36" name="Port2" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="d914eaa2-48cc-4cd6-8bfe-dc8638a6cad1" />
+            <suppliersInternal>
+              <dependency Id="035fa332-9b64-4d7c-a208-abe9709df796">
+                <providedInterfaceMoniker Id="8e3bcb76-8c90-4360-af96-65825dd34d94" LastKnownName="Port1" />
+                <elementDefinition Id="514f3343-2ca5-4ab8-a520-a77dc216eddf" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="896adef8-7df4-4fd9-b9a3-b8b75f562bfa" LastKnownName="Vaciar" />
+            </type_NamedElement>
+          </requiredInterface>
+          <providedInterface Id="c6d1eb65-78ff-4142-9f7e-7fb787a15035" name="Port3" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="b27a0f91-7071-4ed3-83af-bec9fd34d962" />
+            <type_NamedElement>
+              <interfaceMoniker Id="86227022-3007-491a-a91a-4a12ce8acaac" />
+            </type_NamedElement>
+          </providedInterface>
+          <providedInterface Id="88c2e6e2-88c0-4a74-bb1f-9dfac9a56f69" name="Port4" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="ee131831-7a5f-4a16-8f23-7085a4a3ac36" />
+            <type_NamedElement>
+              <interfaceMoniker Id="1a18e892-0451-4d56-b468-de8332de5f93" />
+            </type_NamedElement>
+          </providedInterface>
+          <requiredInterface Id="308bb1fa-5734-4c90-99b1-2a00d4f4d813" name="Port5" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="207577cd-0bb4-4f9f-a460-a908d407ed35" />
+            <suppliersInternal>
+              <dependency Id="b5b4ac45-52e4-4681-bf98-8abd7994a3eb">
+                <providedInterfaceMoniker Id="ab8f9247-f160-4d81-b72a-ba88103d1f67" LastKnownName="Port3" />
+                <elementDefinition Id="f537a3da-419e-4f98-a511-724fa7020bba" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="d317cc6d-8b73-4939-8ab8-75d63474b0c0" LastKnownName="Mover" />
+            </type_NamedElement>
+          </requiredInterface>
+          <requiredInterface Id="9a975a3f-1407-4555-98c0-12a4abb40782" name="Port6" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="eb2b87ea-84d9-46ef-b683-125bd3f75162" />
+            <suppliersInternal>
+              <dependency Id="abb9c732-e126-4120-a447-e87814a79397">
+                <providedInterfaceMoniker Id="b5fc2d77-7c9f-4cfd-85f7-f6292faa2ddc" LastKnownName="Port4" />
+                <elementDefinition Id="1e9a8f82-7c57-4de5-a265-324ebb0b9195" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="a3227a1b-b9bb-4abb-a5fc-81fede3e985e" LastKnownName="Activar valvula" />
+            </type_NamedElement>
+          </requiredInterface>
+          <requiredInterface Id="1c5391f8-db6d-4d21-904c-410a1e23f8e0" name="Port7" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="7ad71d8a-fd5d-43ba-ae7f-c84fb5ffe327" />
+            <suppliersInternal>
+              <dependency Id="a84d6c1b-e069-48cd-b7db-68c95a4ed437">
+                <providedInterfaceMoniker Id="5dc34e76-f439-490f-8ab3-969548a812f3" LastKnownName="Port3" />
+                <elementDefinition Id="a1c2622b-af98-4714-9a68-e5cd5fd93262" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="c5a74339-66e7-44ae-8768-b72a79fb28e4" LastKnownName="Abrir trampilla" />
+            </type_NamedElement>
+          </requiredInterface>
+          <requiredInterface Id="1e2bb1b1-db68-4de9-9964-aaed6a8cef83" name="Port8" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="229ae06c-6de6-453d-a262-8043aa4b4246" />
+            <suppliersInternal>
+              <dependency Id="f7036ded-a41c-411a-a40d-d65a6a9c6a10">
+                <providedInterfaceMoniker Id="83d42ef2-984c-4d88-98e9-8350a6b1f64e" LastKnownName="Port6" />
+                <elementDefinition Id="2a9547af-a2a0-4ebb-ada6-52c84aa805da" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="d58e286f-5253-40c7-9510-432306a02085" LastKnownName="Cambiar modo" />
+            </type_NamedElement>
+          </requiredInterface>
+          <requiredInterface Id="30dc58db-43af-4546-93c9-24f9aca225ce" name="Port9" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="2b32b370-03b3-464a-82e4-37c50cf59e82" />
+            <suppliersInternal>
+              <dependency Id="515a394f-fa40-4258-8254-0e001b3117b7">
+                <providedInterfaceMoniker Id="7b482940-3310-4c31-b1e8-3b39b321e6b1" LastKnownName="Port5" />
+                <elementDefinition Id="042b5b34-7881-4cc1-a0e6-ddbe56db5f4e" />
+              </dependency>
+            </suppliersInternal>
+            <type_NamedElement>
+              <interfaceMoniker Id="ecc29c04-2ef9-4c35-bd8f-0ea13bf714f9" LastKnownName="Cambiar modo" />
+            </type_NamedElement>
+          </requiredInterface>
+        </ownedAttributesInternal>
+      </component>
+    </componentModelHasComponents>
+    <modelContainsNamedElements>
+      <Interface Id="1796da59-fc86-4978-bf0d-7d6c06113486" name="Enfriar" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="fa3420cc-c028-4376-a4ee-e9354f95723f" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="896adef8-7df4-4fd9-b9a3-b8b75f562bfa" name="Vaciar" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="d39f2eff-33c5-414f-a66b-5edab443cbd6" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="afd2fa24-70b7-483d-b8ec-82c21a0882c3" name="Rutina enfriado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="ba517ae8-4b1d-4aa0-8f40-3b63f8e5fe42" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="d63e3a00-a735-4c75-aa7a-482db0731c76" name="Rutina vaciado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="8292bfc4-df57-4735-b50b-6bc0d79b7aee" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="7163f794-5b4c-42fc-aabb-b3cc343a4c0e" name="Fin rutina enfriado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="9504c37e-1382-4c9f-9e5b-13b5e1995a2d" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="86227022-3007-491a-a91a-4a12ce8acaac" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="a886f0f0-fe7b-484b-a674-47ef727c1695" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="4ecea0a6-c77d-43c1-857f-ad3e37c4138a" name="Fin rutina vaciado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="7b0cb4bf-12ac-435e-9df4-7918c4b94f16" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="1a18e892-0451-4d56-b468-de8332de5f93" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="ad68137f-eecf-4871-93ec-9fa27f0c6fd6" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="d317cc6d-8b73-4939-8ab8-75d63474b0c0" name="Mover" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="03f50934-cc1d-40d8-a2a0-3e113d733dc8" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="73d310dd-76f5-4e68-8036-555a96468d37" name="Ir a posicion" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="539ed0c6-aec0-4017-86c8-65014bba09aa" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="a3227a1b-b9bb-4abb-a5fc-81fede3e985e" name="Activar valvula" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="e5c3fe95-af97-446a-9430-e2650d6c0924" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="a429122e-54d1-4139-bafe-5d37c5fdb7ef" name="Enfriar" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="b81c522c-2ee4-42eb-ae18-47cdf570164c" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="c5a74339-66e7-44ae-8768-b72a79fb28e4" name="Abrir trampilla" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="005386e1-f184-4e01-8605-4d5de934aa25" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="116e3afd-3de8-4a59-8611-9e92dbd3fa03" name="Vaciar trampilla" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="615f59fe-9aa5-4270-ba14-15ddc4d6e9b0" />
+      </Interface>
+    </modelContainsNamedElements>
+    <componentModelHasComponents>
+      <component Id="fc4b570a-2329-4734-9531-23cbf965ec80" name="ThermoCams" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="b4ffb162-2321-4da6-85f9-7a473ec1717b" />
+        <ownedAttributesInternal>
+          <providedInterface Id="6d1912a3-4881-47ed-a754-268566b2c30e" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="0d2055ee-afb4-46a8-8c15-10036e84c4a6" />
+            <type_NamedElement>
+              <interfaceMoniker Id="34a8d18b-97c1-4064-a1b3-ae84fa6dc61e" LastKnownName="Actualizar temperaturas" />
+            </type_NamedElement>
+          </providedInterface>
+          <providedInterface Id="52d19426-c7d0-41d9-8854-806118262ce6" name="Port2" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="85a66eed-1fa8-4a93-9b56-0d5c4e8e2839" />
+            <type_NamedElement>
+              <interfaceMoniker Id="fa639cdb-694f-403f-859e-c8a1de172404" LastKnownName="Actualizar temperaturas" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
+      </component>
+    </componentModelHasComponents>
+    <modelContainsNamedElements>
+      <Interface Id="a6b00cf5-927f-48dc-9b5a-c47304a67bf3" name="tempMatrix" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="1679dd55-6305-40be-a098-3d02806f7e19" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="34a8d18b-97c1-4064-a1b3-ae84fa6dc61e" name="Actualizar temperaturas" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="1487ec6e-0731-4ac3-af83-c847add815c8" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="481d2197-69d4-46ee-825b-288812f385b9" name="tempMatrix" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="ba152fc2-e998-4a76-9cc6-eb7a6f43ad65" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="fa639cdb-694f-403f-859e-c8a1de172404" name="Actualizar temperaturas" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="6ac7951f-7944-4d71-b746-9a69e6afac3b" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="d58e286f-5253-40c7-9510-432306a02085" name="Cambiar modo" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="98276026-ea1f-4566-b326-d701a7061bf0" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="ecc29c04-2ef9-4c35-bd8f-0ea13bf714f9" name="Cambiar modo" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="cf97eefd-2e4e-4731-b320-f6858b2543ef" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="81f301f0-65e4-4625-9054-e6e4150c554a" name="Auto / Manual" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="dc39e615-619b-4fdb-821c-066ae97da7b0" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="de2e088d-ce1f-4f96-96e2-1450c4adb0af" name="Auto / Manual" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="d98bf4d0-110c-4b27-a5a2-6b90be692bca" />
+      </Interface>
+    </modelContainsNamedElements>
+    <componentModelHasComponents>
+      <component Id="157fbaa2-9316-4638-9304-86ac51d93f1f" name="Estados" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="838e2c2b-5d19-4fdb-a410-55626febd057" />
+        <ownedAttributesInternal>
+          <providedInterface Id="0fe2ffb2-f289-4d85-a4c3-8e156f02355f" name="Port1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="da042d8c-e53c-4ff6-b422-846b609cf807" />
+            <type_NamedElement>
+              <interfaceMoniker Id="d1f5307a-c969-44c2-86c9-38fdf4d8c92b" LastKnownName="Cambiar estado" />
+            </type_NamedElement>
+          </providedInterface>
+          <providedInterface Id="88d3e471-d053-4eee-9720-f5b9f05f78a3" name="Port2" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isService="false" isBehavior="false">
+            <elementDefinition Id="155c86b1-414e-450d-bd23-62c9639f700b" />
+            <type_NamedElement>
+              <interfaceMoniker Id="bc2eade8-e118-46d6-b50d-257b996ba95e" LastKnownName="Cambiar estado" />
+            </type_NamedElement>
+          </providedInterface>
+        </ownedAttributesInternal>
+      </component>
+    </componentModelHasComponents>
+    <modelContainsNamedElements>
+      <Interface Id="58f8d11c-de31-4920-97a0-501264d38364" name="Elegir estado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="62993b02-1510-4b40-93ab-0fa70bf24cb4" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="de64cfa6-173d-4745-aac1-8275034b5f20" name="Elegir estado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="09e2680b-4091-4905-b9bc-c57b9a42c1bc" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="d1f5307a-c969-44c2-86c9-38fdf4d8c92b" name="Cambiar estado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="25ad1229-74bb-44b3-9140-f4cf38fd72a1" />
+      </Interface>
+    </modelContainsNamedElements>
+    <modelContainsNamedElements>
+      <Interface Id="bc2eade8-e118-46d6-b50d-257b996ba95e" name="Cambiar estado" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="6bb48d66-9088-4c4a-b989-f821410f758c" />
+      </Interface>
+    </modelContainsNamedElements>
+  </packagedElements>
+  <package Id="2a6f0535-9d05-4d83-94ee-2832e4fc16ce" name="RampaModel">
+    <elementDefinition Id="d9d09dab-f2b9-4ac9-92da-5916bbb784e6" />
+  </package>
+</componentModel>

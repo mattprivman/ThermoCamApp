@@ -23,7 +23,6 @@ namespace ThermoVision.Algoritmos
 
         Bitmap bitmapCuadrados;
         Bitmap bitmapRejillas;
-        List<Zona> zonasAlgoritmoVaciar = new List<Zona>();
 
         Rampa _system;
         #endregion
@@ -60,7 +59,7 @@ namespace ThermoVision.Algoritmos
 
         private void algoritmoEnfriar()                                                    
         {
-            foreach(Zona z in this._system.Zonas)
+            foreach(ZonaApagado z in this._system.Zonas)
             {
                 if (z.State != Zona.States.Manual)
                 {
@@ -71,7 +70,7 @@ namespace ThermoVision.Algoritmos
                         case Zona.States.Vacio:
                             #region "VACIO"
                             if (hayMaterialEnZona(z))
-                                z.triggerStateChangedEvent(Zona.States.Lleno);
+                                z.ChangeState(Zona.States.Lleno);
                             break;
                             #endregion
                         case Zona.States.Lleno:
@@ -94,7 +93,7 @@ namespace ThermoVision.Algoritmos
                             else
                             {
                                 this._system.noHayQueEnfriar(z);
-                                z.triggerStateChangedEvent(Zona.States.Vacio);
+                                z.ChangeState(Zona.States.Vacio);
                             }
                             break;
                             #endregion
@@ -119,7 +118,7 @@ namespace ThermoVision.Algoritmos
                             {
                                 this._system.noHayQueEnfriar(z);
                                 //Vaciar
-                                foreach (Zona zVaciado in z.zonasContenidas)
+                                foreach (ZonaVaciado zVaciado in z.zonasContenidas)
                                 {
                                     if (zVaciado.State != Zona.States.Manual)
                                     {
@@ -130,7 +129,7 @@ namespace ThermoVision.Algoritmos
                                             this._system.ZonasVaciado.Where((x) => x.State == Zona.States.Vaciando).Count() == 0 &&
                                             this._system.Zonas.Where((x) => x.State == Zona.States.Vaciando).Count() == 0)
                                         {
-                                            z.triggerStateChangedEvent(Zona.States.Vaciando);
+                                            z.ChangeState(Zona.States.Vaciando);
                                             zVaciado.State = Zona.States.Vaciando;
                                             this._system.vaciarZona(zVaciado);
                                         }
@@ -146,7 +145,7 @@ namespace ThermoVision.Algoritmos
 
                             bool todoVacio = true;
 
-                            foreach (Zona zVaciado in z.zonasContenidas)
+                            foreach (ZonaVaciado zVaciado in z.zonasContenidas)
                             {
                                 if (!zVaciado.Emptying)
                                 {
@@ -182,7 +181,7 @@ namespace ThermoVision.Algoritmos
                             }
                             if (todoVacio == false && this._system.ZonasVaciado.Where(x => x.State == Zona.States.Vaciando).Count() == 0)
                             {
-                                foreach (Zona zVaciado in z.zonasContenidas)
+                                foreach (ZonaVaciado zVaciado in z.zonasContenidas)
                                 {
                                     if (zVaciado.State != Zona.States.Manual)
                                     {
@@ -211,7 +210,7 @@ namespace ThermoVision.Algoritmos
                             }
 
                             if (todoVacio == true && z.zonasContenidas.Where(x => x.State == Zona.States.Vaciando).Count() == 0)
-                                z.triggerStateChangedEvent(Zona.States.Vacio);
+                                z.ChangeState(Zona.States.Vacio);
 
                             break;
                             #endregion
@@ -220,7 +219,7 @@ namespace ThermoVision.Algoritmos
                             hayMaterialEnZona(z);
                             hayPuntosCalientesEnZona(z);
 
-                            foreach (Zona zVaciado in this._system.ZonasVaciado)
+                            foreach (ZonaVaciado zVaciado in this._system.ZonasVaciado)
                             {
                                 if(zVaciado.zonasContenidas.Where((x) => (x.State == Zona.States.Enfriando || x.State == Zona.States.Vaciando || x.State == Zona.States.Esperando)).Count() == 0)
                                 {
@@ -362,7 +361,7 @@ namespace ThermoVision.Algoritmos
         //    return value;
         //}
 
-        public void crearImagenCuadrados(List<Zona> zonasApagado, List<Zona> zonasVaciado) 
+        public void crearImagenCuadrados(List<ZonaApagado> zonasApagado, List<ZonaVaciado> zonasVaciado) 
         {
             lock ("lockRejilla")
             {
@@ -430,7 +429,7 @@ namespace ThermoVision.Algoritmos
 
                     //Dibujar rampa     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     #region rampa
-                    foreach (Zona z in zonasApagado)
+                    foreach (ZonaApagado z in zonasApagado)
                     {
                         int subZoneNumber = 0;
                         foreach (SubZona s in z.Children)
@@ -506,7 +505,7 @@ namespace ThermoVision.Algoritmos
                                     for (int j = 0; j < s.tempMatrix.GetLength(1); j++)
                                     {
                                         int x = (int)(j * colWidth + colWidth / 2 - colWidth / 4);
-                                        int y = (int)(i * filHeigth + filHeigth / 2 - colWidth / 4);
+                                        int y = (int)(i * filHeigth + filHeigth / 2 - filHeigth / 4);
 
                                         using (Graphics g = Graphics.FromImage(bitmapCuadrados))
                                         {

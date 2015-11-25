@@ -444,7 +444,7 @@ namespace ThermoCamApp
                         ccs[i].cannonModeChanged);
                 }
 
-                foreach (Zona z in this._system.Zonas)
+                foreach (ZonaApagado z in this._system.Zonas)
                 {
                     foreach (SubZona s in z.Children)
                     {
@@ -512,7 +512,7 @@ namespace ThermoCamApp
 
                 }
 
-                foreach (Zona z in this._system.ZonasVaciado)
+                foreach (ZonaVaciado z in this._system.ZonasVaciado)
                 {
                     int index = 1;
 
@@ -687,7 +687,7 @@ namespace ThermoCamApp
         {
             object _lock = new object();
 
-            foreach (Zona zVaciado in this._system.ZonasVaciado)
+            foreach (ZonaVaciado zVaciado in this._system.ZonasVaciado)
             //Parallel.ForEach<Zona>(this._system.ZonasVaciado, (zVaciado) =>
             {
                 zVaciado.zonasContenidas.Clear();
@@ -695,7 +695,7 @@ namespace ThermoCamApp
                 foreach (SubZona s in zVaciado.Children)
                 {
                     //Buscar zonas de apagado superpuestas 
-                    foreach (Zona zApagado in this._system.Zonas)
+                    foreach (ZonaApagado zApagado in this._system.Zonas)
                     {
                         foreach (SubZona sApagado in zApagado.Children)
                         {
@@ -708,15 +708,15 @@ namespace ThermoCamApp
                                     s.Inicio.X <= sApagado.Fin.X && s.Fin.X >= sApagado.Fin.X)
                                 {
                                     //PERTENECE
-                                    if (!s.Parent.zonasContenidas.Contains(zApagado))
+                                    if (!((ZonaVaciado)(s.Parent)).zonasContenidas.Contains(zApagado))
                                     {
                                         lock (_lock)
-                                            s.Parent.zonasContenidas.Add(zApagado);
+                                            ((ZonaVaciado)(s.Parent)).zonasContenidas.Add(zApagado);
                                     }
                                     if (!zApagado.zonasContenidas.Contains(s.Parent))
                                     {
                                         lock (_lock)
-                                            zApagado.zonasContenidas.Add(s.Parent);
+                                            zApagado.zonasContenidas.Add((ZonaVaciado)s.Parent);
                                     }
                                 }
 
@@ -724,15 +724,15 @@ namespace ThermoCamApp
                                     sApagado.Inicio.X <= s.Fin.X && sApagado.Fin.X >= s.Fin.X)
                                 {
                                     //PERTENECE
-                                    if (!s.Parent.zonasContenidas.Contains(zApagado))
+                                    if (!((ZonaVaciado)(s.Parent)).zonasContenidas.Contains(zApagado))
                                     {
                                         lock (_lock)
-                                            s.Parent.zonasContenidas.Add(zApagado);
+                                            ((ZonaVaciado)(s.Parent)).zonasContenidas.Add(zApagado);
                                     }
                                     if (!zApagado.zonasContenidas.Contains(s.Parent))
                                     {
                                         lock (_lock)
-                                            zApagado.zonasContenidas.Add(s.Parent);
+                                            zApagado.zonasContenidas.Add((ZonaVaciado)s.Parent);
                                     }
                                 }
 
@@ -740,30 +740,30 @@ namespace ThermoCamApp
                                     s.Inicio.X <= sApagado.Inicio.X && s.Fin.X >= sApagado.Inicio.X)
                                 {
                                     //PERTENECE
-                                    if (!s.Parent.zonasContenidas.Contains(zApagado))
+                                    if (!((ZonaVaciado)(s.Parent)).zonasContenidas.Contains(zApagado))
                                     {
                                         lock (_lock)
-                                            s.Parent.zonasContenidas.Add(zApagado);
+                                            ((ZonaVaciado)(s.Parent)).zonasContenidas.Add(zApagado);
                                     }
                                     if (!zApagado.zonasContenidas.Contains(s.Parent))
                                     {
                                         lock (_lock)
-                                            zApagado.zonasContenidas.Add(s.Parent);
+                                            zApagado.zonasContenidas.Add((ZonaVaciado)s.Parent);
                                     }
                                 }
                                 if (sApagado.Inicio.Y <= s.Inicio.Y && sApagado.Fin.Y >= s.Inicio.Y &&
                                     sApagado.Inicio.X <= s.Inicio.X && sApagado.Fin.X >= s.Inicio.X)
                                 {
                                     //PERTENECE
-                                    if (!s.Parent.zonasContenidas.Contains(zApagado))
+                                    if (!((ZonaVaciado)(s.Parent)).zonasContenidas.Contains(zApagado))
                                     {
                                         lock (_lock)
-                                            s.Parent.zonasContenidas.Add(zApagado);
+                                            ((ZonaVaciado)(s.Parent)).zonasContenidas.Add(zApagado);
                                     }
                                     if (!zApagado.zonasContenidas.Contains(s.Parent))
                                     {
                                         lock (_lock)
-                                            zApagado.zonasContenidas.Add(s.Parent);
+                                            zApagado.zonasContenidas.Add((ZonaVaciado)s.Parent);
                                     }
                                 }
                             }

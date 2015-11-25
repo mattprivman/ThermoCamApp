@@ -209,7 +209,7 @@ namespace ThermoCamApp.Asistente.Camaras
                 {
                     this.selectedIndexZona = this.listBoxZonas.Items.Count;
                     this.selectedIndexZonaVaciado = -1;
-                    this._system.addZona(new Zona(f.zonaName.Trim(), this._system));
+                    this._system.addZona(new ZonaApagado(f.zonaName.Trim(), this._system));
                     f.Dispose();
                     actualizarListBoxZonas();
 
@@ -228,7 +228,7 @@ namespace ThermoCamApp.Asistente.Camaras
             {
                 this.selectedIndexZona--;
                 this.selectedIndexZonaVaciado = -1;
-                this._system.removeZona(this._system.getZona(this.listBoxZonas.SelectedItem.ToString()));
+                this._system.removeZona((ZonaApagado)this._system.getZona(this.listBoxZonas.SelectedItem.ToString()));
             }
         }
 
@@ -279,7 +279,7 @@ namespace ThermoCamApp.Asistente.Camaras
                 {
                     this.selectedIndexZona = -1;
                     this.selectedIndexZonaVaciado = this.listBoxZonasVaciado.Items.Count;
-                    this._system.addZonaVaciado(new Zona(f.zonaName.Trim(), this._system));
+                    this._system.addZonaVaciado(new ZonaVaciado(f.zonaName.Trim(), this._system));
                     f.Dispose();
                     actualizarListBoxZonas();
 
@@ -298,7 +298,7 @@ namespace ThermoCamApp.Asistente.Camaras
                 //Borrar zona
                 this.selectedIndexZona = -1;
                 this.selectedIndexZonaVaciado--;
-                this._system.removeZonaVaciado(this._system.getZonaVaciado(this.listBoxZonasVaciado.SelectedItem.ToString()));
+                this._system.removeZonaVaciado((ZonaVaciado)this._system.getZonaVaciado(this.listBoxZonasVaciado.SelectedItem.ToString()));
             }
         }
 

@@ -152,7 +152,7 @@ namespace ThermoCamApp.Asistente.Cannon
             {
                 if(int.TryParse(this.textBoxYCoordinate.Text, out valueY))
                 {
-                    this.selectedSubZona.tempMatrix[this.X, this.Y].CannonCoordinate = new Point(valueX, valueY);
+                    this.selectedSubZona.tempMatrix[this.X, this.Y].ActiveCoordinate = new Point(valueX, valueY);
                 }//if
             }//if
         }
@@ -166,7 +166,7 @@ namespace ThermoCamApp.Asistente.Cannon
             {
                 if (int.TryParse(this.textBoxYCoordinate.Text, out valueY))
                 {
-                    this.selectedSubZona.tempMatrix[this.X, this.Y].CannonCoordinate = new Point(valueX, valueY);
+                    this.selectedSubZona.tempMatrix[this.X, this.Y].ActiveCoordinate = new Point(valueX, valueY);
                 }//if
             }//if
         }
@@ -182,8 +182,8 @@ namespace ThermoCamApp.Asistente.Cannon
             this.X = e.X;
             this.Y = e.Y;
 
-            updateLabel(this.textBoxXCoordinate, e.s.tempMatrix[e.X, e.Y].CannonCoordinate.X.ToString());
-            updateLabel(this.textBoxYCoordinate, e.s.tempMatrix[e.X, e.Y].CannonCoordinate.Y.ToString());
+            updateLabel(this.textBoxXCoordinate, e.s.tempMatrix[e.X, e.Y].ActiveCoordinate.X.ToString());
+            updateLabel(this.textBoxYCoordinate, e.s.tempMatrix[e.X, e.Y].ActiveCoordinate.Y.ToString());
         }
 
         #region "Actualizar controles"

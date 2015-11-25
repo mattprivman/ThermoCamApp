@@ -103,6 +103,8 @@
     <Compile Include="Models\Rampa.cs" />
     <Compile Include="Models\Zona.cs" />
     <Compile Include="Enumeraciones\Enumerations.cs" />
+    <Compile Include="Models\ZonaApagado.cs" />
+    <Compile Include="Models\ZonaVaciado.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\SubZona.cs" />
     <Compile Include="Models\ThermoCam.cs" />
