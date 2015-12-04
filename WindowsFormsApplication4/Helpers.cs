@@ -30,7 +30,6 @@ namespace ThermoCamApp
                 ex.ToString();
             }
         }
-
         public static Rampa deserializeSistema(string _file)                   
         {
             Rampa sistema = null;

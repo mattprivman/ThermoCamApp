@@ -58,10 +58,6 @@
     <Reference Include="AxInterop.CAMCTRLLib">
       <HintPath>..\..\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\AxInterop.CAMCTRLLib.dll</HintPath>
     </Reference>
-    <Reference Include="Interop.CAMCTRLLib">
-      <HintPath>..\..\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\Interop.CAMCTRLLib.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />

@@ -274,7 +274,7 @@ namespace ThermoVision.Models
             this._devType        = (DeviceType)      info.GetValue("DevType"        ,typeof(DeviceType));
             this._interfaceType  = (InterfaceType)   info.GetValue("InterType"      ,typeof(InterfaceType));
             this.SubZonas        = (List<SubZona>)   info.GetValue("SubZonas"       ,typeof(List<SubZona>));
-            this.Parent          = (Rampa)         info.GetValue("Parent"         ,typeof(Rampa));
+            this.Parent          = (Rampa)           info.GetValue("Parent"         ,typeof(Rampa));
             this._rejillaApagado = (bool)            info.GetValue("RejillaApagado" ,typeof(bool));
             this._rejillaVaciado = (bool)            info.GetValue("RejillaVaciado" ,typeof(bool));
             this._rejillaHornos  = (bool)            info.GetValue("RejillaHornos"  ,typeof(bool));
@@ -320,13 +320,13 @@ namespace ThermoVision.Models
         #endregion
 
         #region "CONEXIÓN"
-        public void Conectar()                  
+        public async void Conectar()                  
         {
             if (this._address != null && this._address != "")
             {
-                Thread tConectar = new Thread(new ThreadStart(_conectar));
-                tConectar.Name = "Thread Conectar";
-                tConectar.Start();
+                System.Threading.Tasks.Task<bool> tConectar = System.Threading.Tasks.Task.Run<bool>(new Func<bool>(this._conectar));
+
+                bool res = await tConectar;
             }
         }
         public void Desconectar()               
@@ -437,7 +437,7 @@ namespace ThermoVision.Models
 
         #region "Conectar"
 
-        private void _conectar()                     
+        private bool _conectar()                     
         {
             try
             {
@@ -449,6 +449,9 @@ namespace ThermoVision.Models
                         (short)this._devType,
                         (short)this._interfaceType,
                         this._address);
+
+                    Thread.Sleep(4000);
+                    return true;
                 }
 
             }
@@ -456,6 +459,8 @@ namespace ThermoVision.Models
             {
                 procesarExcepcion(ex, "Conectar");
             }
+
+            return false;
         }
         private short doCameraAction(short action)   
         {

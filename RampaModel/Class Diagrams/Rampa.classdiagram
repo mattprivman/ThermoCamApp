@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="71020b82-bec0-488a-ba03-01e815612206" name="UMLClassDiagram1" linkedPackageId="0bb10dae-c709-45d5-a08f-25ef0fb0e0ab" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="71020b82-bec0-488a-ba03-01e815612206" name="RampaClassDiagram" linkedPackageId="0bb10dae-c709-45d5-a08f-25ef0fb0e0ab" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <class Id="54467af6-9d6f-4404-9cb6-6a59ac037787" name="Rampa" isAbstract="false" isLeaf="false" isActiveClass="false">
@@ -1173,7 +1173,7 @@
           <property Id="7b8a8d17-3d35-4243-9506-796829ad7c61" name="_thermoParent" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="258671ef-f2fc-45cb-a76d-6a700ce51104" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="b88beb86-070e-487e-ba3c-d42bd7ff180b" LastKnownName="ThermoCam" />
+              <referencedTypeMoniker Id="b88beb86-070e-487e-ba3c-d42bd7ff180b" LastKnownName="camara" />
             </type_NamedElement>
           </property>
           <property Id="8c8db77d-8ca7-4217-b5d4-68928d7bdaf5" name="_inicio" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -1299,7 +1299,7 @@
       </class>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
-      <referencedType Id="b88beb86-070e-487e-ba3c-d42bd7ff180b" name="ThermoCam" isAbstract="false" isLeaf="false" cachedFullName="RampaModel::ThermoCam">
+      <referencedType Id="b88beb86-070e-487e-ba3c-d42bd7ff180b" name="camara" isAbstract="false" isLeaf="false" cachedFullName="RampaModel::camara">
         <elementDefinition Id="f0d6fbd4-15d0-4e8a-8891-717dc6798cb8" />
       </referencedType>
     </packageHasNamedElement>
@@ -1609,22 +1609,6 @@
             </relationshipOwnedElementsInternal>
             <elementDefinition Id="90c434c7-c7d0-4805-852a-965f7584d689" />
           </association>
-          <association Id="1068b3c9-4a3b-4dc6-9726-8d1033c498a5" isDerived="false" sourceEndRoleName="ThermoCam" targetEndRoleName="lookUPTable" isLeaf="false" isAbstract="false">
-            <enumerationMoniker Id="9dbfab20-b5e5-4c33-bc39-1a252cac6bac" LastKnownName="lookUPTable" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd Id="fd0aebba-322c-4ba4-bfba-68906a98866c" name="ThermoCam" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
-                  <elementDefinition Id="643d3ff9-e52a-4dae-b529-e497b38acd6c" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd Id="45433252-9d62-4749-99f6-3d20a636e8f2" name="lookUPTable" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-                  <elementDefinition Id="fbe82504-6bad-4931-bc74-43fbfedafb88" />
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-            <elementDefinition Id="228a017d-3a4d-44ea-8e5e-4d1b4c37de8e" />
-          </association>
           <association Id="d8660ad5-d885-4819-9db8-2f6ccc4789a9" isDerived="false" sourceEndRoleName="ThermoCam" targetEndRoleName="DeviceType" isLeaf="false" isAbstract="false">
             <enumerationMoniker Id="51fb58e3-d23c-4a67-bf9c-46c081aa3c4e" LastKnownName="DeviceType" />
             <relationshipOwnedElementsInternal>
@@ -1656,6 +1640,22 @@
               </associationHasOwnedEnds>
             </relationshipOwnedElementsInternal>
             <elementDefinition Id="7bc951cc-3e22-447f-8f2d-7b2be819c453" />
+          </association>
+          <association Id="a2031a93-dc94-4985-8511-7f3d79148788" isDerived="false" sourceEndRoleName="ThermoCam" targetEndRoleName="lookUPTable" isLeaf="false" isAbstract="false">
+            <enumerationMoniker Id="9dbfab20-b5e5-4c33-bc39-1a252cac6bac" LastKnownName="lookUPTable" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="6629e2b6-014e-4f8c-8cf6-756e8f090660" name="ThermoCam" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="67ad3950-5c1e-4691-90ca-0a50d6fb573c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="892bcae8-e20e-4ac2-bbaf-99f2aaa62409" name="lookUPTable" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="49ef485f-519d-4c4a-8cce-a6b1d12e73d2" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="6867d0ff-ef55-4db5-8151-685f276c76a2" />
           </association>
         </targetEnds>
         <ownedAttributesInternal>
@@ -1912,7 +1912,7 @@
                 <parameter Id="51273c8c-16dc-4f77-afe2-b34a79b67e8a" direction="Return" isUnique="false">
                   <elementDefinition Id="9983114f-cb27-48a3-801d-8df687088b8e" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="b88beb86-070e-487e-ba3c-d42bd7ff180b" LastKnownName="ThermoCam" />
+                    <referencedTypeMoniker Id="b88beb86-070e-487e-ba3c-d42bd7ff180b" LastKnownName="camara" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>

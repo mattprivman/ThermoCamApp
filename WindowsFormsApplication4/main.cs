@@ -65,7 +65,7 @@ namespace ThermoCamApp
                 CamControl c = new CamControl();
 
                 c.Location = new System.Drawing.Point(c.Width * counter, 100);
-                c.Name = "camControl1";
+                c.Name = "camControl";
                 c.Size = new System.Drawing.Size(c.Width, c.Height);
                 c.TabIndex = 100 + counter;
 
@@ -382,11 +382,14 @@ namespace ThermoCamApp
             this.FormClosing    += main_FormClosing;
             this._system.modoConfiguracion = false;
 
-            Action[] actions = new Action[2];
-            actions[0] = new Action(conectarOPC);
-            actions[1] = new Action(containVaciadoZones);
+            //Action[] actions = new Action[2];
+            //actions[0] = new Action(conectarOPC);
+            //actions[1] = new Action(containVaciadoZones);
 
-            Parallel.Invoke(actions);
+            //Parallel.Invoke(actions);
+
+            this.conectarOPC();
+            this.containVaciadoZones();
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             ///////////////////////////////////////// ZONAS DE APAGADO ////////////////////////////////////////////////////////////////////////////////////////

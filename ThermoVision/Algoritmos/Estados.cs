@@ -43,18 +43,18 @@ namespace ThermoVision.Algoritmos
 
         public void ejecutarAlgoritmos()                                                   
         {
-            Action[] actions = new Action[2];
+            //Action[] actions = new Action[2];
 
-            actions[0] = algoritmoEnfriar;
-            actions[1] = this._system.dibujarEstados;
+            //actions[0] = algoritmoEnfriar;
+            //actions[1] = this._system.dibujarEstados;
 
-            Parallel.Invoke(actions);
+            //Parallel.Invoke(actions);
 
 
-            //algoritmoEnfriar();                        //Ejecutar algoritmo ENFRIAR
+            this.algoritmoEnfriar();                        //Ejecutar algoritmo ENFRIAR
 
             ////Dibujar los estados en la imagen
-            //this._system.dibujarEstados();
+            this._system.dibujarEstados();
         }
 
         private void algoritmoEnfriar()                                                    

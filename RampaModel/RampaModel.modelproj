@@ -22,12 +22,26 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <Content Include="Class Diagrams\UMLClassDiagram1.classdiagram">
+    <Content Include="Activity Diagrams\CañonEstados.activitydiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Class Diagrams\UMLClassDiagram1.classdiagram.layout">
+    <Content Include="Activity Diagrams\CañonEstados.activitydiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Class Diagrams\UMLClassDiagram1.classdiagram</DependentUpon>
+      <DependentUpon>Activity Diagrams\CañonEstados.activitydiagram</DependentUpon>
+    </Content>
+    <Content Include="Activity Diagrams\TrampillaEstados.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Activity Diagrams\TrampillaEstados.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Activity Diagrams\TrampillaEstados.activitydiagram</DependentUpon>
+    </Content>
+    <Content Include="Class Diagrams\Rampa.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Class Diagrams\Rampa.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Class Diagrams\Rampa.classdiagram</DependentUpon>
     </Content>
     <Content Include="Component Diagrams\CamConfig.componentdiagram">
       <SubType>Content</SubType>
@@ -53,19 +67,26 @@
     <Content Include="ModelDefinition\Package_1743.uml">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Secuence Diagrams\CañonEstados.activitydiagram">
+    <Content Include="Secuence Diagrams\Cool.sequencediagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Secuence Diagrams\CañonEstados.activitydiagram.layout">
+    <Content Include="Secuence Diagrams\Cool.sequencediagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Secuence Diagrams\CañonEstados.activitydiagram</DependentUpon>
+      <DependentUpon>Secuence Diagrams\Cool.sequencediagram</DependentUpon>
     </Content>
-    <Content Include="Secuence Diagrams\TrampillaEstados.activitydiagram">
+    <Content Include="Secuence Diagrams\OPCRefreshAsync.sequencediagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Secuence Diagrams\TrampillaEstados.activitydiagram.layout">
+    <Content Include="Secuence Diagrams\OPCRefreshAsync.sequencediagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Secuence Diagrams\TrampillaEstados.activitydiagram</DependentUpon>
+      <DependentUpon>Secuence Diagrams\OPCRefreshAsync.sequencediagram</DependentUpon>
+    </Content>
+    <Content Include="Secuence Diagrams\OPCWriteAsync.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Secuence Diagrams\OPCWriteAsync.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Secuence Diagrams\OPCWriteAsync.sequencediagram</DependentUpon>
     </Content>
     <Content Include="Use Case Diagrams\AppConfig.usecasediagram">
       <SubType>Content</SubType>

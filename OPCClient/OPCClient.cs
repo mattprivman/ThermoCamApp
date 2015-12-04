@@ -569,7 +569,7 @@ namespace OPC
 
             return false;
         }
-        public bool UnsuscribeGroup ( string Group, string Item, Action<object> action)                        
+        public bool UnsuscribeGroup ( string Group, string Item, Action<object> action) 
         {
             Branch b = GetBranch(Group);
 
@@ -894,7 +894,7 @@ namespace OPC
             }
         }
 
-        public bool HasLeafs
+        public bool         HasLeafs                            
         {
             get
             {
@@ -959,13 +959,13 @@ namespace OPC
             this._lock = new object();
         }
 
-        public void Branch_DataChanged(object sender, EventArgs e)
+        public void Branch_DataChanged(object sender, EventArgs e)                
         {
             if (DataChanged != null)
                 DataChanged(this, null);
         }
 
-        public void Dispose()                                     
+        public void Dispose()                                                     
         {
             if(_HasOPCGroup)
                 this._OPCGroup.DataChange -= _OPCGroup_DataChange;
@@ -991,7 +991,7 @@ namespace OPC
                 this.actionsHastable.Clear();
         }
 
-        public bool Suscribe(string leaf, Action<object> action)  
+        public bool Suscribe(string leaf, Action<object> action)                  
         {
             if (this._HasOPCGroup)
             {
@@ -1026,7 +1026,7 @@ namespace OPC
 
             return false;
         }
-        public bool UnSuscribe(string leaf, Action<Object> action)                       
+        public bool UnSuscribe(string leaf, Action<Object> action)                
         {
             if (this._HasOPCGroup)
             {
@@ -1068,7 +1068,7 @@ namespace OPC
             return false;
         }
 
-        public void addChildren(Branch branch)                    
+        public void addChildren(Branch branch)                                    
         {
             if (_HasChildren == false)
             {
@@ -1077,7 +1077,7 @@ namespace OPC
 
             this._Children.Add(branch);
         }
-        public void addLeaf(Leaf l)                               
+        public void addLeaf(Leaf l)                                               
         {
             if (this._HasLeafs == false)
                 this._HasLeafs = true;
@@ -1085,7 +1085,7 @@ namespace OPC
             this._Leafs.Add(l);
         }
 
-        public Branch FindBranch(string Name)                     
+        public Branch FindBranch(string Name)                                     
         {
             foreach (Branch b in this._Children)
             {

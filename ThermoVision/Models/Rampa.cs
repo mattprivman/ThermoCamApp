@@ -30,7 +30,7 @@ namespace ThermoVision.Models
         string              _OPCServerName;
         OPCClient           _OPCClient;
 
-        string              _path;
+        string              _path;              //Ruta DEVICE en el servidor OPC
 
         Zona                _selectedZona;
 

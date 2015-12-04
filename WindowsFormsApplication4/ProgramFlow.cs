@@ -7,6 +7,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
+
 namespace ThermoCamApp
 {
     class ProgramFlow
@@ -25,21 +26,21 @@ namespace ThermoCamApp
         {
             int numeroCamaras   = 1;
 
-            Rampa _system     = null;
+            Rampa rampa     = null;
 
             bool finAsistente   = false;
             int  step           = 0;
 
             //Borrar archivo de datos
             //System.IO.File.Delete("Data.ocl");
-            if(System.IO.File.Exists("data.ocl"));
-                _system = Helpers.deserializeSistema("data.ocl");
+            if (System.IO.File.Exists("data.ocl")) ;
+                rampa = Helpers.deserializeSistema("data.ocl");
 
-            if (_system != null)
+            if (rampa != null)
             {
-                if (_system.ThermoCams.Count > 0)
+                if (rampa.ThermoCams.Count > 0)
                 {
-                    numeroCamaras = _system.ThermoCams.Count;
+                    numeroCamaras = rampa.ThermoCams.Count;
                     step          = (int) windowIds.appMain;
                 }
             }
@@ -54,34 +55,33 @@ namespace ThermoCamApp
 
                         //_system = Helpers.deserializeSistema("data.ocl");
 
-                        if (_system != null)
+                        if (rampa != null)
                         {
-                            numeroCamaras = _system.ThermoCams.Count;
+                            numeroCamaras = rampa.ThermoCams.Count;
                         }
                         else
                         {
-                            _system = new Rampa();
+                            rampa = new Rampa();
                         }
 
-                        using (Asistente.selectAppType AppType = new Asistente.selectAppType(numeroCamaras, _system))
+                        using (Asistente.selectAppType AppType = new Asistente.selectAppType(numeroCamaras, rampa))
                         {
                             AppType.ShowDialog();
 
-                            if (AppType.Salir)
+                            if (AppType.Salir)      
                             {
                                 AppType.Dispose();
                                 return;
                             }
                             if (AppType.cargarConfiguracion)
                             {
-                                _system = AppType._system;
-                                Helpers.serializeSistema(_system, "data.ocl");
+                                rampa = AppType._system;
                                 step = (int)windowIds.appMain;
                                 break;
                             }
 
                            //Continuar
-                           _system = AppType._system;
+                           rampa = AppType._system;
 
                             numeroCamaras = AppType.NumeroCamaras;
                             AppType.Dispose();
@@ -95,11 +95,11 @@ namespace ThermoCamApp
 
                         #region "Configurar cámaras"
 
-                        if (numeroCamaras > 0 && _system != null)
+                        if (numeroCamaras > 0 && rampa != null)
                         {
                             //_system = Helpers.deserializeSistema("data.ocl");
-                            _system.SelectedZona = null;
-                            using (Asistente.Camaras.CamerasConfiguration cc = new Asistente.Camaras.CamerasConfiguration(numeroCamaras, _system))
+                            rampa.SelectedZona = null;
+                            using (Asistente.Camaras.CamerasConfiguration cc = new Asistente.Camaras.CamerasConfiguration(numeroCamaras, rampa))
                             {
                                 cc.ShowDialog();
 
@@ -121,7 +121,7 @@ namespace ThermoCamApp
                                     //Helpers.serializeSistema(cc.Sistema, "data.ocl");
                                 }
                                                                 
-                                _system = cc.Sistema;
+                                rampa = cc.Sistema;
                                 cc.Dispose();
                             }
                         }
@@ -137,10 +137,10 @@ namespace ThermoCamApp
 
                         #region "Seleccionar servidor OPC"
 
-                        if (_system != null)
+                        if (rampa != null)
                         {
-                            _system.SelectedZona = null;
-                            using (Asistente.OPC.appSelectOPCServer sos = new Asistente.OPC.appSelectOPCServer(_system))
+                            rampa.SelectedZona = null;
+                            using (Asistente.OPC.appSelectOPCServer sos = new Asistente.OPC.appSelectOPCServer(rampa))
                             {
                                 sos.ShowDialog();
 
@@ -155,13 +155,13 @@ namespace ThermoCamApp
                                 {
                                     //ATRAS
                                     step = (int)windowIds.appCameraConfiguration;
-                                    numeroCamaras = _system.ThermoCams.Count;
+                                    numeroCamaras = rampa.ThermoCams.Count;
                                     //Helpers.serializeSistema(cc.Sistema, "data.ocl");
                                 }
                                 else
                                 {
                                     //SIGUIENTE
-                                    if (_system.Mode == "Rampas")
+                                    if (rampa.Mode == "Rampas")
                                         step = (int)windowIds.appCannonConfig;
                                     else
                                         step = (int)windowIds.appMain;         //step = (int) windowIds.appCameraNumber;
@@ -180,16 +180,15 @@ namespace ThermoCamApp
                         #endregion
 
                         break;
-
                     case (int) windowIds.appCannonConfig:
 
                         #region "Configuración cañon"
-                        if (_system != null)
+                        if (rampa != null)
                         {
-                            _system.SelectedZona = null;
-                            foreach (Zona z in _system.Zonas)
+                            rampa.SelectedZona = null;
+                            foreach (Zona z in rampa.Zonas)
                             {
-                                _system.selectZona(z.Nombre);
+                                rampa.selectZona(z.Nombre);
                                 using (Asistente.Cannon.CannonConfig cnc = new Asistente.Cannon.CannonConfig(z))
                                 {
                                     cnc.ShowDialog();
@@ -228,10 +227,10 @@ namespace ThermoCamApp
 
                         #region "Cargar aplicación"
 
-                        if (_system != null)
+                        if (rampa != null)
                         {
-                            _system.SelectedZona = null;
-                            using (main m = new main(_system))
+                            rampa.SelectedZona = null;
+                            using (main m = new main(rampa))
                             {
                                 m.ShowDialog();
 
@@ -246,7 +245,7 @@ namespace ThermoCamApp
                                 {
                                     //ATRAS
                                     step = (int)windowIds.appMode;
-                                    _system = m._system;
+                                    rampa = m._system;
                                 }
                                 else
                                 {
@@ -254,8 +253,8 @@ namespace ThermoCamApp
                                     step = (int)windowIds.salir;
                                 }
 
-                                Helpers.serializeSistema(_system, "data.ocl");
-                                Helpers.serializeSistema(_system, "data_backup.ocl");
+                                Helpers.serializeSistema(rampa, "data.ocl");
+                                Helpers.serializeSistema(rampa, "data_backup.ocl");
 
                                 m.Dispose();
                             }
@@ -269,13 +268,15 @@ namespace ThermoCamApp
 
                         break;
                     case (int) windowIds.salir:
+
                         finAsistente = true;
+
                         break;
                 }
 
             }
 
-            _system.Dispose();
+            rampa.Dispose();
         }
     }
 }
